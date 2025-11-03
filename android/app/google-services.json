@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "802780236204",
+    "firebase_url": "https://pinkgossip-936f9-default-rtdb.firebaseio.com",
+    "project_id": "pinkgossip-936f9",
+    "storage_bucket": "pinkgossip-936f9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802780236204:android:51b7aa1a51261553245209",
+        "android_client_info": {
+          "package_name": "com.app.pinkgossip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "802780236204-0tpqa1rf029vpk66sg68tlg10omdpoli.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.pinkgossip",
+            "certificate_hash": "d9a246b16b5f928586683024cdfca838bf22460a"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDrM4K1lglIlYsjVYMIPZXx4vulSb03_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Pinkgossip</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>Pinkgossip</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.2</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>pinkgossipapp.com</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>pinkgossipapp</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-802780236204-ios-e4185d174006ae44245209</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.645316594420-97f3h3hctnt1n2nt04hka48h2647hdl6</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Bundle ID</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.app.pinkgossip</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>41</string>
+	<key>FLTEnableImpeller</key>
+	<false/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>NO</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
+	<key>GoogleSignInURLSchemes</key>
+	<array>
+		<string>com.googleusercontent.apps.582628934819-3koa91tmb4j780rk50eaue4j1jt99nur</string>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses your camera to let you take photos or videos, which can be added to your profile or shared within the app.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app accesses your contacts to help you find and connect with people you may know, making it easier to expand your network.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>This app uses the Documents folder to securely store important files, such as saved content, preferences, and cache, to improve performance.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>This app uses Face ID to sign you in quickly and securely, so you don’t have to enter your password every time.</string>
+	<key>NSFileProtectionComplete</key>
+	<string>Complete</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app uses your location to provide location-based features, such as showing nearby content or people, even when the app isn't open.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We use your location in the background to help deliver important features like location-based alerts or suggestions tailored to your area.</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>AIzaSyDSiRz_NuSU1XSIAmKaFYYgEK3xf6XKD8k</key>
+		<string>This app needs temporary access to your precise location to improve accuracy when using maps or location-based tools.</string>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses your location while it's open to show you relevant nearby content or users, and to personalize your experience.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app uses your microphone to let you record audio for features like voice messages, video recordings, or in-app calls.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This app uses motion data to detect your movement and provide smarter suggestions or enhance features like activity tracking.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs permission to save photos or videos you create, so you can keep them in your library for future use.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app accesses your photo library so you can choose and share photos or videos directly from your device.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:pinkgossipapp.com</string>
+	</array>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+</dict>
+</plist>
