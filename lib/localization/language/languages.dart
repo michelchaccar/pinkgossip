@@ -212,6 +212,7 @@ abstract class Languages {
   String get gossiperText;
   String get beautybusinessText;
   String get pleaseselectcategoryText;
+  String get pleaseselecttermandconditonText;
   String get hairsalonText;
   String get estheticsText;
   String get medicoestheticText;
@@ -224,6 +225,7 @@ abstract class Languages {
   String get lashesandbrowsText;
   String get othersText;
   String get editpictureText;
+  String get maximumuploadlimit60secondText;
   String get mapText;
   String get blockText;
   String get reportText;

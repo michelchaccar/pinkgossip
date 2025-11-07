@@ -65,6 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? categorydropdownvalue;
   String loginType = "";
   bool _obscureText = true;
+  bool _isChecked = false;
   bool _confirmobscureText = true;
 
   String fcmToken = "";
@@ -435,7 +436,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       )
                       : Container(),
-                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Checkbox(
+                          activeColor: AppColors.kPinkColor,
+                          value: _isChecked,
+                          onChanged: (val) => _showTermsDialog(),
+                        ),
+                        GestureDetector(
+                          onTap: _showTermsDialog,
+                          child: Text(
+                            'Accept Terms & Conditions',
+                            style: Pallete.Quicksand15blackBold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   Container(
                     height: 55,
                     margin: const EdgeInsets.only(left: 30, right: 30),
@@ -508,6 +529,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           //   _handleSocialLoginOrSignup();
                           // }
                         },
+
                         style: ButtonStyle(
                           backgroundColor: const WidgetStatePropertyAll(
                             AppColors.kPinkColor,
@@ -767,6 +789,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (accounttypedropdownvalue == lang.beautybusinessText &&
         categorydropdownvalue == null) {
       return kToast(lang.pleaseselectcategoryText);
+    }
+    if (_isChecked == false) {
+      return kToast(lang.pleaseselecttermandconditonText);
     }
 
     _handleSocialLoginOrSignup();
@@ -1367,5 +1392,161 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       }
     });
+  }
+
+  void _showTermsDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Pink Gossip – Terms & Conditions',
+            style: Pallete.Quicksand20blackBold,
+          ),
+          content: SingleChildScrollView(
+            child: RichText(
+              text: TextSpan(
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 13,
+                  height: 1.5,
+                ),
+                children: [
+                  TextSpan(
+                    text: '1. Acceptance of Terms\n',
+                    style: Pallete.Quicksand15blackBold,
+                    // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
+                  TextSpan(
+                    text:
+                        'By creating an account on Pink Gossip, scanning salon QR codes, or creating content in-salon (including reviews, photos, and videos), you (“User” or “Gossiper”) agree to these Terms and Conditions.\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '2. User-Generated Content (UGC)\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        'By submitting, uploading, or sharing content (reviews, photos, videos, testimonials, etc.) through Pink Gossip, you grant Pink Gossip and the participating salon a worldwide, royalty-free, non-exclusive, transferable license to use, reproduce, distribute, and publicly display this content for marketing and promotional purposes, including on websites, social media, and advertising campaigns.\n\nYou acknowledge that once content is shared on the platform, it may also be shared externally by Pink Gossip or the salon for visibility purposes.\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '3. Ownership of Content\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        'Users retain ownership of their original content. However, Pink Gossip maintains full rights to use, publish, edit, and promote any content created or shared through the platform. By using Pink Gossip, you waive any claims for compensation regarding the use of your content.\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '4. Data and Privacy\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        'Personal data collected (such as name, email, location data, device information) is used to operate the platform, personalize your experience, and provide salons with insights about their clients. Your data will not be sold to third parties. It may be shared with participating salons for business purposes only (ex: client engagement, loyalty programs, feedback collection).\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '5. Limitations of Liability\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        'Pink Gossip and participating salons are not responsible for:\n- The accuracy of reviews or user content.\n- Any misuse of content by third parties outside the platform.\n- Any technical issues, outages, or unauthorized access.\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '--- Privacy Policy ---\n\n',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: AppColors.kPinkColor,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '1. Information We Collect\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        '- Information you provide (name, email, photos, videos, reviews).\n- Data collected when you scan salon QR codes (salon visited, date/time).\n- Technical information (device type, IP address, location data if enabled).\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '2. How We Use Your Information\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        '- To allow salons to receive and showcase reviews and UGC.\n- To personalize your experience on Pink Gossip.\n- To enable marketing and promotional use of UGC by salons and Pink Gossip.\n- To maintain the safety and performance of the platform.\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '3. Sharing of Information\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        '- With salons you interact with.\n- With third-party service providers (hosting, analytics, email notifications).\n- If legally required (to comply with laws, regulations, or court orders).\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '4. Content & Consent\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        'By scanning a QR code, posting reviews, or uploading content, you consent to the use of your content for marketing and promotional purposes by both Pink Gossip and the salon.\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '5. Your Rights\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        'You may request to access, correct, or delete your personal data at any time by contacting privacy@pinkgossip.com. However, content already shared publicly (ex: in a salon’s marketing materials) cannot be withdrawn retroactively.\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '6. Data Retention\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        'We retain your information and content as long as your account is active, or as needed to provide our services.\n\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                  TextSpan(
+                    text: '7. Contact\n',
+                    style: Pallete.Quicksand15blackBold,
+                  ),
+                  TextSpan(
+                    text:
+                        'For questions about these Terms or Privacy Policy, contact us at privacy@pinkgossip.ca.\n',
+                    style: Pallete.Quicksand13black400,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                setState(() => _isChecked = true);
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'I Agree',
+                style: TextStyle(color: AppColors.kPinkColor),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -92,8 +92,9 @@ class _AddStoryState extends State<AddStory> {
   int _selectedCameraIndex = 0;
   bool isRecording = false;
   double progress = 0.0;
+  VideoPlayerController? controllerVideoDurationChk;
   Timer? _timer;
-  final int videoMaxLength = 15;
+  final int videoMaxLength = 60;
   bool isVideoEnabled = false;
   bool isFilePassed = false;
 
@@ -717,6 +718,7 @@ class _AddStoryState extends State<AddStory> {
                             child: GestureDetector(
                               onTap: () {
                                 _videoController = null;
+                                print("select from gallery$pickStoryType1");
                                 pickStoryType1();
                               },
                               child: Container(
@@ -1024,20 +1026,47 @@ class _AddStoryState extends State<AddStory> {
         maxWidth: 1080,
       );
       if (image == null) return;
-      final imageTemp = File(image.path);
+      if (image.path.endsWith('.mp4') ||
+          image.path.endsWith('.MP4') ||
+          image.path.endsWith('.mov')) {
+        controllerVideoDurationChk = VideoPlayerController.file(
+          File(image.path!),
+        );
+        await controllerVideoDurationChk!.initialize();
+        final Duration duration = controllerVideoDurationChk!.value.duration;
+        print("duration is ==${duration.inSeconds}");
+        if (duration.inSeconds > 60) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                Languages.of(context)!.maximumuploadlimit60secondText,
+              ),
+            ),
+          );
+        } else {
+          selectMedia = File(image.path);
+          _videoController = VideoPlayerController.file(selectMedia!);
+          await _videoController!.initialize();
+        }
 
-      // print("imageTemp == ${imageTemp}");
+        await controllerVideoDurationChk!.dispose();
+        setState(() {});
+      } else {
+        final imageTemp = File(image.path);
 
-      setState(() {
-        selectMedia = File(image.path);
-      });
-      String pathExtension = pathData.extension(selectMedia!.path);
-      print("pathExtension --------------------->$pathExtension");
-      if (pathExtension == ".jpg") {
-        await _cropImage(selectMedia!.path);
+        // print("imageTemp == ${imageTemp}");
+
+        setState(() {
+          selectMedia = File(image.path);
+        });
+        String pathExtension = pathData.extension(selectMedia!.path);
+        print("pathExtension --------------------->$pathExtension");
+        if (pathExtension == ".jpg") {
+          await _cropImage(selectMedia!.path);
+        }
+
+        print("selected selectMedia = ${selectMedia}");
       }
-
-      print("selected selectMedia = ${selectMedia}");
 
       // print("IMAGE PATH = ${image.path}");
     } on PlatformException catch (error) {

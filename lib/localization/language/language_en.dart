@@ -554,4 +554,9 @@ class LanguageEn extends Languages {
   String get hideStoreHours => "Hide Store Hours";
   @override
   String get viewStorehours => "View Store Hours";
+  @override
+  String get pleaseselecttermandconditonText => "Please Select Term & Conditon";
+  @override
+  String get maximumuploadlimit60secondText =>
+      "Maximum upload limit per video is 60 seconds";
 }

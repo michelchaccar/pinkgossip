@@ -616,10 +616,14 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
           );
           await controllerVideoDurationChk!.initialize();
           final Duration duration = controllerVideoDurationChk!.value.duration;
-
-          if (duration.inSeconds > 15) {
+          print("duration is ==${duration.inSeconds}");
+          if (duration.inSeconds > 60) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Video is longer than 15 seconds!')),
+              SnackBar(
+                content: Text(
+                  Languages.of(context)!.maximumuploadlimit60secondText,
+                ),
+              ),
             );
           } else {
             // ScaffoldMessenger.of(context).showSnackBar(

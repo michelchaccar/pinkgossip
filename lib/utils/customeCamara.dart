@@ -26,7 +26,7 @@ class _CameraAppState extends State<CameraApp> {
   bool isRecording = false;
   double progress = 0.0;
   Timer? _timer;
-  final int videoMaxLength = 15;
+  final int videoMaxLength = 60;
   bool isVideoEnabled = false;
   bool isFilePassed = false;
 

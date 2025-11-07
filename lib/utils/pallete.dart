@@ -187,11 +187,23 @@ class Pallete {
     fontWeight: FontWeight.bold,
     fontSize: 15,
   );
+  static TextStyle Quicksand20blackBold = const TextStyle(
+    color: AppColors.kBlackColor,
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
+  );
   static TextStyle Quicksand15grey600 = const TextStyle(
     color: Colors.grey,
     fontFamily: "Quicksand",
     fontWeight: FontWeight.w600,
     fontSize: 15,
+  );
+  static TextStyle Quicksand13black400 = const TextStyle(
+    color: AppColors.kBlackColor,
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
   );
 
   static TextStyle Quicksand15grey400 = const TextStyle(

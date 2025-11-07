@@ -716,4 +716,10 @@ class LanguageFr extends Languages {
   String get hideStoreHours => "Masquer les heures d'ouverture du magasin";
   @override
   String get viewStorehours => "Voir les heures d'ouverture du magasin";
+  @override
+  String get pleaseselecttermandconditonText =>
+      "Veuillez sélectionner les conditions générales";
+  @override
+  String get maximumuploadlimit60secondText =>
+      "La limite maximale de téléchargement par vidéo est de 60 secondes.";
 }

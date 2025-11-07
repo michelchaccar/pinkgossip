@@ -860,9 +860,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
           await controllerVideoDurationChk!.initialize();
           final Duration duration = controllerVideoDurationChk!.value.duration;
 
-          if (duration.inSeconds > 15) {
+          if (duration.inSeconds > 60) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Video is longer than 15 seconds!')),
+              SnackBar(
+                content: Text(
+                  Languages.of(context)!.maximumuploadlimit60secondText,
+                ),
+              ),
             );
           } else {
             otherData = File(result.path);
