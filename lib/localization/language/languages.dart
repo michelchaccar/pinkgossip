@@ -257,4 +257,9 @@ abstract class Languages {
   String get close;
   String get hideStoreHours;
   String get viewStorehours;
+  String get welcomeOnText;
+  String get pinkGossipText;
+  String get salonOnboardingDescPart1;
+  String get salonOnboardingDescPart2;
+  String get letsStartText;
 }

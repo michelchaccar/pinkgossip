@@ -722,4 +722,15 @@ class LanguageFr extends Languages {
   @override
   String get maximumuploadlimit60secondText =>
       "La limite maximale de téléchargement par vidéo est de 60 secondes.";
+
+  @override
+  String get welcomeOnText => "BIENVENUE SUR";
+  @override
+  String get pinkGossipText => "PINK GOSSIP";
+  @override
+  String get salonOnboardingDescPart1 => "Vous êtes sur le point de faire de vos clients vos meilleurs ";
+  @override
+  String get salonOnboardingDescPart2 => "ambassadeurs.";
+  @override
+  String get letsStartText => "C'EST PARTI";
 }

@@ -559,4 +559,15 @@ class LanguageEn extends Languages {
   @override
   String get maximumuploadlimit60secondText =>
       "Maximum upload limit per video is 60 seconds";
+
+  @override
+  String get welcomeOnText => "WELCOME ON";
+  @override
+  String get pinkGossipText => "PINK GOSSIP";
+  @override
+  String get salonOnboardingDescPart1 => "You’re about to turn your beauty salon clients into your best ";
+  @override
+  String get salonOnboardingDescPart2 => "marketers.";
+  @override
+  String get letsStartText => "LET'S START";
 }

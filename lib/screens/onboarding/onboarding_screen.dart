@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:pinkGossip/localization/language/languages.dart';
 import 'dart:ui' as ui;
 
 class OnboardingScreen extends StatefulWidget {
@@ -92,12 +93,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Positioned(
             top: 110,
             right: 20,
+            left: 20, // Constrain width to prevent overflow
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                _buildOutlinedText("WELCOME ON"),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: _buildOutlinedText(Languages.of(context)!.welcomeOnText),
+                ),
                 const SizedBox(height: 0),
-                _buildOutlinedText("PINK GOSSIP"),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: _buildOutlinedText(Languages.of(context)!.pinkGossipText),
+                ),
               ],
             ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
           ),
@@ -123,7 +131,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         border: Border.all(color: Colors.white.withOpacity(0.3)),
                       ),
                       child: Text(
-                        "Skip",
+                        Languages.of(context)!.skipText,
                         style: GoogleFonts.rubik(
                           color: Colors.black87,
                           fontWeight: FontWeight.w500,
@@ -172,9 +180,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             height: 1.2,
                           ),
                           children: [
-                            const TextSpan(text: "You’re about to turn your beauty salon clients into your best "),
+                            TextSpan(text: Languages.of(context)!.salonOnboardingDescPart1),
                             TextSpan(
-                              text: "marketers.",
+                              text: Languages.of(context)!.salonOnboardingDescPart2,
                               style: GoogleFonts.poppins(
                                 color: const Color(0xFFE91E8C),
                                 fontWeight: FontWeight.w800,
@@ -239,7 +247,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           left: 3.0,
                           top: 3.0,
                           child: Text(
-                            "LET'S START",
+                            Languages.of(context)!.letsStartText,
                             style: GoogleFonts.archivoBlack(
                               fontSize: 20,
                               color: const Color(0xFFC51162),
@@ -251,7 +259,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           left: 2.0,
                           top: 2.0,
                           child: Text(
-                            "LET'S START",
+                            Languages.of(context)!.letsStartText,
                             style: GoogleFonts.archivoBlack(
                               fontSize: 20,
                               color: const Color(0xFFC51162),
@@ -263,7 +271,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           left: 1.0,
                           top: 1.0,
                           child: Text(
-                            "LET'S START",
+                            Languages.of(context)!.letsStartText,
                             style: GoogleFonts.archivoBlack(
                               fontSize: 20,
                               color: const Color(0xFFC51162),
@@ -272,7 +280,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         // Main Text (Top)
                         Text(
-                          "LET'S START",
+                          Languages.of(context)!.letsStartText,
                           style: GoogleFonts.archivoBlack(
                             fontSize: 20,
                             color: Colors.white,
