@@ -18,6 +18,8 @@ import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:provider/provider.dart';
+import 'package:pinkGossip/screens/onboarding/onboarding_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -62,6 +64,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     _deepLinkHandler = DeepLinkHandler(navigatorKey: navigatorKey);
     _initializeDeepLinks();
     _createTargets();
+    checkOnboarding();
     pageList = <Widget>[
       HomeScreen(
         searchKey: searchKey,
@@ -89,6 +92,31 @@ class _BottomNavBarState extends State<BottomNavBar> {
     Future.delayed(const Duration(seconds: 2), () {
       tutorialCoachMark.show(context: context);
     });
+  }
+
+  void checkOnboarding() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userId = prefs.getString('userid') ?? "";
+    String userType = prefs.getString('userType') ?? "";
+    
+    // If we don't have a user ID, we can't track onboarding per user, so skip or handle gracefully.
+    // Assuming logged in user always has ID.
+    if (userId.isNotEmpty) {
+      bool isOnboardingCompleted = prefs.getBool('onboarding_completed_$userId') ?? false;
+      if (!isOnboardingCompleted) {
+        // Add a slight delay to ensure the widget is built before navigating
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => OnboardingScreen(
+                userId: userId,
+                userType: userType,
+              ),
+            ),
+          );
+        });
+      }
+    }
   }
 
   void createTutorial() {

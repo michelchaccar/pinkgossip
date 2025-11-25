@@ -481,6 +481,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                             LogoutAlert(context, kSize);
                           },
                         ),
+                        // Debug Button
+                        ListTile(
+                          leading: const Icon(Icons.restart_alt, color: Colors.red),
+                          title: Text(
+                            "Reset Onboarding (Debug)",
+                            style: Pallete.Quicksand15blackwe600.copyWith(color: Colors.red),
+                          ),
+                          onTap: () async {
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            await prefs.remove('onboarding_completed_$userid');
+                            kToast("Onboarding reset! Restart app to see it.");
+                          },
+                        ),
                       ],
                     ),
                   ),
