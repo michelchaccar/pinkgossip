@@ -226,11 +226,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 height: 60,
                 padding: const EdgeInsets.only(left: 24, right: 8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFF94C2),
+                  color: AppColors.onboardingBubblegumPink,
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFFF4081).withOpacity(0.4),
+                      color: AppColors.onboardingShadowPink.withOpacity(0.4),
                       blurRadius: 12,
                       offset: const Offset(0, 6),
                     ),
@@ -250,7 +250,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Languages.of(context)!.letsStartText,
                             style: GoogleFonts.archivoBlack(
                               fontSize: 20,
-                              color: const Color(0xFFC51162),
+                              color: AppColors.onboardingDeepPink,
                             ),
                           ),
                         ),
@@ -262,7 +262,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Languages.of(context)!.letsStartText,
                             style: GoogleFonts.archivoBlack(
                               fontSize: 20,
-                              color: const Color(0xFFC51162),
+                              color: AppColors.onboardingDeepPink,
                             ),
                           ),
                         ),
@@ -274,7 +274,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Languages.of(context)!.letsStartText,
                             style: GoogleFonts.archivoBlack(
                               fontSize: 20,
-                              color: const Color(0xFFC51162),
+                              color: AppColors.onboardingDeepPink,
                             ),
                           ),
                         ),
@@ -294,7 +294,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       width: 44,
                       height: 44,
                       decoration: const BoxDecoration(
-                        color: Color(0xFFF50057),
+                        color: AppColors.onboardingVibrantPink,
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
