@@ -120,21 +120,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: GestureDetector(
                   onTap: _cancelOnboarding,
                   child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: BackdropFilter(
-                    filter:  ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.white.withOpacity(0.3)),
-                      ),
-                      child: Text(
-                        Languages.of(context)!.skipText,
-                        style: GoogleFonts.rubik(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w500,
+                    borderRadius: BorderRadius.circular(20),
+                    child: BackdropFilter(
+                      filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.white.withOpacity(0.3)),
+                        ),
+                        child: Text(
+                          Languages.of(context)!.skipText,
+                          style: GoogleFonts.rubik(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -142,7 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             ),
-          ).animate().fadeIn(duration: 500.ms, delay: 400.ms)),
+          ).animate().fadeIn(duration: 500.ms, delay: 400.ms),
 
           // Description Card (Right-to-left animation)
           Positioned(
@@ -218,96 +219,101 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           // Let's Start Button (Bottom-to-top animation)
           Positioned(
-            bottom: 50,
+            bottom: 0,
             right: 20,
-            child: GestureDetector(
-              onTap: _completeOnboarding,
-              child: Container(
-                height: 60,
-                padding: const EdgeInsets.only(left: 24, right: 8),
-                decoration: BoxDecoration(
-                  color: AppColors.onboardingBubblegumPink,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.onboardingShadowPink.withOpacity(0.4),
-                      blurRadius: 12,
-                      offset: const Offset(0, 6),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: GestureDetector(
+                  onTap: _completeOnboarding,
+                  child: Container(
+                    height: 60,
+                    padding: const EdgeInsets.only(left: 24, right: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.onboardingBubblegumPink,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.onboardingShadowPink.withOpacity(0.4),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Text with 3D Block Shadow (Extrusion)
-                    Stack(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Layer 1 (Deepest)
-                        Positioned(
-                          left: 3.0,
-                          top: 3.0,
-                          child: Text(
-                            Languages.of(context)!.letsStartText,
-                            style: GoogleFonts.archivoBlack(
-                              fontSize: 20,
-                              color: AppColors.onboardingDeepPink,
+                        // Text with 3D Block Shadow (Extrusion)
+                        Stack(
+                          children: [
+                            // Layer 1 (Deepest)
+                            Positioned(
+                              left: 3.0,
+                              top: 3.0,
+                              child: Text(
+                                Languages.of(context)!.letsStartText,
+                                style: GoogleFonts.archivoBlack(
+                                  fontSize: 20,
+                                  color: AppColors.onboardingDeepPink,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        // Layer 2
-                        Positioned(
-                          left: 2.0,
-                          top: 2.0,
-                          child: Text(
-                            Languages.of(context)!.letsStartText,
-                            style: GoogleFonts.archivoBlack(
-                              fontSize: 20,
-                              color: AppColors.onboardingDeepPink,
+                            // Layer 2
+                            Positioned(
+                              left: 2.0,
+                              top: 2.0,
+                              child: Text(
+                                Languages.of(context)!.letsStartText,
+                                style: GoogleFonts.archivoBlack(
+                                  fontSize: 20,
+                                  color: AppColors.onboardingDeepPink,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        // Layer 3 (Closest to top)
-                        Positioned(
-                          left: 1.0,
-                          top: 1.0,
-                          child: Text(
-                            Languages.of(context)!.letsStartText,
-                            style: GoogleFonts.archivoBlack(
-                              fontSize: 20,
-                              color: AppColors.onboardingDeepPink,
+                            // Layer 3 (Closest to top)
+                            Positioned(
+                              left: 1.0,
+                              top: 1.0,
+                              child: Text(
+                                Languages.of(context)!.letsStartText,
+                                style: GoogleFonts.archivoBlack(
+                                  fontSize: 20,
+                                  color: AppColors.onboardingDeepPink,
+                                ),
+                              ),
                             ),
-                          ),
+                            // Main Text (Top)
+                            Text(
+                              Languages.of(context)!.letsStartText,
+                              style: GoogleFonts.archivoBlack(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        // Main Text (Top)
-                        Text(
-                          Languages.of(context)!.letsStartText,
-                          style: GoogleFonts.archivoBlack(
-                            fontSize: 20,
+                        const SizedBox(width: 16),
+                        // Circular Icon
+                        Container(
+                          width: 44,
+                          height: 44,
+                          decoration: const BoxDecoration(
+                            color: AppColors.onboardingVibrantPink,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.keyboard_double_arrow_right_rounded,
                             color: Colors.white,
+                            size: 28,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(width: 16),
-                    // Circular Icon
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: const BoxDecoration(
-                        color: AppColors.onboardingVibrantPink,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.keyboard_double_arrow_right_rounded,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
-          ),
+            ),
+          ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
         ],
       ),
     );
