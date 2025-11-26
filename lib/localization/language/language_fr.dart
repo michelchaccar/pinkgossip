@@ -733,4 +733,14 @@ class LanguageFr extends Languages {
   String get salonOnboardingDescPart2 => "ambassadeurs.";
   @override
   String get letsStartText => "C'EST PARTI";
+  @override
+  String get whatIsPinkGossipText => "Qu'est-ce que\nPink Gossip ?";
+  @override
+  String get salonOnboarding2DescPart1 => "Clients -> en créateurs";
+  @override
+  String get salonOnboarding2DescPart2 => "Avis -> en réservations";
+  @override
+  String get salonOnboarding2DescPart3 => "Votre travail -> en preuve sociale";
+  @override
+  String get salonOnboarding2Title => "Pink Gossip est la première application beauté\nqui transforme :\n";
 }

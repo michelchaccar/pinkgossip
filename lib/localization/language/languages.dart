@@ -262,4 +262,9 @@ abstract class Languages {
   String get salonOnboardingDescPart1;
   String get salonOnboardingDescPart2;
   String get letsStartText;
+  String get whatIsPinkGossipText;
+  String get salonOnboarding2DescPart1;
+  String get salonOnboarding2DescPart2;
+  String get salonOnboarding2DescPart3;
+  String get salonOnboarding2Title;
 }

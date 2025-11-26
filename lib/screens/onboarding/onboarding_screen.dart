@@ -21,6 +21,8 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _pageController = PageController();
+
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onboarding_completed_${widget.userId}', true);
@@ -33,6 +35,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Navigator.of(context).pop();
   }
 
+  void _nextPage() {
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
   // Temporary debug state
   bool _forceSalon = false;
 
@@ -40,6 +49,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
     print("DEBUG: OnboardingScreen received userType: ${widget.userType}");
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -67,75 +82,86 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildSalonOnboarding() {
     return Scaffold(
-      body: Stack(
+      body: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(), // Disable swipe to enforce button navigation
         children: [
-          // Background
-          Positioned.fill(
+          _buildSalonOnboardingStep1(),
+          _buildSalonOnboardingStep2(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSalonOnboardingStep1() {
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Model (Bottom-to-top animation)
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.bottomCenter,
             child: Image.asset(
-              "lib/assets/images/onboarding/salon_bg.png",
+              "lib/assets/images/onboarding/salon_model.png",
               fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height,
             ),
-          ),
+          ).animate().moveY(begin: 600, end: 0, duration: 1200.ms, curve: Curves.easeOut),
+        ),
 
-          // Model (Bottom-to-top animation)
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Image.asset(
-                "lib/assets/images/onboarding/salon_model.png",
-                fit: BoxFit.cover,
-                height: MediaQuery.of(context).size.height,
+        // Title (Top-to-bottom animation)
+        Positioned(
+          top: 110,
+          right: 20,
+          left: 20, // Constrain width to prevent overflow
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: _buildOutlinedText(Languages.of(context)!.welcomeOnText),
               ),
-            ).animate().moveY(begin: 600, end: 0, duration: 1200.ms, curve: Curves.easeOut),
-          ),
+              const SizedBox(height: 0),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: _buildOutlinedText(Languages.of(context)!.pinkGossipText),
+              ),
+            ],
+          ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
+        ),
 
-          // Title (Top-to-bottom animation)
-          Positioned(
-            top: 110,
-            right: 20,
-            left: 20, // Constrain width to prevent overflow
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: _buildOutlinedText(Languages.of(context)!.welcomeOnText),
-                ),
-                const SizedBox(height: 0),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: _buildOutlinedText(Languages.of(context)!.pinkGossipText),
-                ),
-              ],
-            ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
-          ),
-
-          // Skip Button (Fade-in)
-          Positioned(
-            top: 0,
-            right: 20,
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: GestureDetector(
-                  onTap: _cancelOnboarding,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.white.withOpacity(0.3)),
-                        ),
-                        child: Text(
-                          Languages.of(context)!.skipText,
-                          style: GoogleFonts.rubik(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w500,
-                          ),
+        // Skip Button (Fade-in)
+        Positioned(
+          top: 0,
+          right: 20,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: GestureDetector(
+                onTap: _cancelOnboarding,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.white.withOpacity(0.3)),
+                      ),
+                      child: Text(
+                        Languages.of(context)!.skipText,
+                        style: GoogleFonts.rubik(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -143,95 +169,274 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             ),
-          ).animate().fadeIn(duration: 500.ms, delay: 400.ms),
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 400.ms),
 
-          // Description Card (Right-to-left animation)
-          Positioned(
-            right: 20,
-            top: MediaQuery.of(context).size.height * 0.52,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                 // Card Content
-                Container(
-                  width: 280,
-                  padding: const EdgeInsets.all(24),
+        // Description Card (Right-to-left animation)
+        Positioned(
+          right: 20,
+          top: MediaQuery.of(context).size.height * 0.52,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+               // Card Content
+              Container(
+                width: 280,
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.85),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    )
+                  ],
+                ),
+                child: ClipRRect(
+                   borderRadius: BorderRadius.circular(20),
+                   child: BackdropFilter(
+                     filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                     child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: GoogleFonts.poppins(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                          height: 1.2,
+                        ),
+                        children: [
+                          TextSpan(text: Languages.of(context)!.salonOnboardingDescPart1),
+                          TextSpan(
+                            text: Languages.of(context)!.salonOnboardingDescPart2,
+                            style: GoogleFonts.poppins(
+                              color: const Color(0xFFE91E8C),
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                   ),
+                ),
+              ),
+              
+              // Butterfly (Flying animation) - Moved OUTSIDE container to overlap correctly
+              Positioned(
+                top: -150, // Overlapping top
+                left: -160, // Overlapping left
+                child: Image.asset(
+                  "lib/assets/images/onboarding/salon_butterfly.png",
+                  width: 320,
+                  height: 320,
+                )
+                    .animate(onPlay: (controller) => controller.repeat())
+                    .moveY(begin: 0, end: -15, duration: 2000.ms, curve: Curves.easeInOut)
+                    .then()
+                    .moveY(begin: -15, end: 0, duration: 2000.ms, curve: Curves.easeInOut)
+                    .animate()
+                    .moveX(begin: -200, end: 0, duration: 1500.ms, delay: 1200.ms, curve: Curves.easeOut)
+                    .fadeIn(duration: 500.ms, delay: 1200.ms),
+              ),
+            ],
+          ).animate().moveX(begin: 100, end: 0, duration: 800.ms, delay: 1000.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Let's Start Button (Bottom-to-top animation)
+        Positioned(
+          bottom: 0,
+          right: 20,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: GestureDetector(
+                onTap: _nextPage, 
+                child: Container(
+                  height: 60,
+                  padding: const EdgeInsets.only(left: 24, right: 8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.onboardingBubblegumPink,
+                    borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      )
+                        color: AppColors.onboardingShadowPink.withOpacity(0.4),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
+                      ),
                     ],
                   ),
-                  child: ClipRRect(
-                     borderRadius: BorderRadius.circular(20),
-                     child: BackdropFilter(
-                       filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                       child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: GoogleFonts.poppins(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                            height: 1.2,
-                          ),
-                          children: [
-                            TextSpan(text: Languages.of(context)!.salonOnboardingDescPart1),
-                            TextSpan(
-                              text: Languages.of(context)!.salonOnboardingDescPart2,
-                              style: GoogleFonts.poppins(
-                                color: const Color(0xFFE91E8C),
-                                fontWeight: FontWeight.w800,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Text with 3D Block Shadow (Extrusion)
+                      Stack(
+                        children: [
+                          // Layer 1 (Deepest)
+                          Positioned(
+                            left: 3.0,
+                            top: 3.0,
+                            child: Text(
+                              Languages.of(context)!.letsStartText,
+                              style: GoogleFonts.archivoBlack(
+                                fontSize: 20,
+                                color: AppColors.onboardingDeepPink,
                               ),
                             ),
-                          ],
+                          ),
+                          // Layer 2
+                          Positioned(
+                            left: 2.0,
+                            top: 2.0,
+                            child: Text(
+                              Languages.of(context)!.letsStartText,
+                              style: GoogleFonts.archivoBlack(
+                                fontSize: 20,
+                                color: AppColors.onboardingDeepPink,
+                              ),
+                            ),
+                          ),
+                          // Layer 3 (Closest to top)
+                          Positioned(
+                            left: 1.0,
+                            top: 1.0,
+                            child: Text(
+                              Languages.of(context)!.letsStartText,
+                              style: GoogleFonts.archivoBlack(
+                                fontSize: 20,
+                                color: AppColors.onboardingDeepPink,
+                              ),
+                            ),
+                          ),
+                          // Main Text (Top)
+                          Text(
+                            Languages.of(context)!.letsStartText,
+                            style: GoogleFonts.archivoBlack(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 16),
+                      // Circular Icon
+                      Container(
+                        width: 44,
+                        height: 44,
+                        decoration: const BoxDecoration(
+                          color: AppColors.onboardingVibrantPink,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.keyboard_double_arrow_right_rounded,
+                          color: Colors.white,
+                          size: 28,
                         ),
                       ),
-                     ),
+                    ],
                   ),
                 ),
-                
-                // Butterfly (Flying animation) - Moved OUTSIDE container to overlap correctly
-                Positioned(
-                  top: -150, // Overlapping top
-                  left: -160, // Overlapping left
-                  child: Image.asset(
-                    "lib/assets/images/onboarding/salon_butterfly.png",
-                    width: 320,
-                    height: 320,
-                  )
-                      .animate(onPlay: (controller) => controller.repeat())
-                      .moveY(begin: 0, end: -15, duration: 2000.ms, curve: Curves.easeInOut)
-                      .then()
-                      .moveY(begin: -15, end: 0, duration: 2000.ms, curve: Curves.easeInOut)
-                      .animate()
-                      .moveX(begin: -200, end: 0, duration: 1500.ms, delay: 1200.ms, curve: Curves.easeOut)
-                      .fadeIn(duration: 500.ms, delay: 1200.ms),
+              ),
+            ),
+          ),
+        ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
+      ],
+    );
+  }
+
+  Widget _buildSalonOnboardingStep2() {
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Phone Mockup (Center)
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 100), 
+              child: Image.asset(
+                "lib/assets/images/onboarding/salon_phone_mockup.png",
+                fit: BoxFit.contain,
+                // Adjust height/width as needed based on the image aspect ratio
+                height: MediaQuery.of(context).size.height * 0.65, 
+              ),
+            ),
+          ).animate().fadeIn(duration: 800.ms).moveY(begin: 50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Title (Top)
+        Positioned(
+          top: 60,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: _buildOutlinedText(
+              Languages.of(context)!.whatIsPinkGossipText,
+              textAlign: TextAlign.center,
+              fontSize: 40,
+            ),
+          ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Description Card (Bottom)
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(24, 32, 24, 40),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 20,
+                  offset: Offset(0, -5),
                 ),
               ],
-            ).animate().moveX(begin: 100, end: 0, duration: 800.ms, delay: 1000.ms, curve: Curves.easeOut).fadeIn(),
-          ),
-
-          // Let's Start Button (Bottom-to-top animation)
-          Positioned(
-            bottom: 0,
-            right: 20,
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 50),
-                child: GestureDetector(
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                      height: 1.5,
+                    ),
+                    children: [
+                      TextSpan(text: Languages.of(context)!.salonOnboarding2Title),
+                      _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart1),
+                      _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart2),
+                      _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart3),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                // Continue Button
+                GestureDetector(
                   onTap: _completeOnboarding,
                   child: Container(
-                    height: 60,
-                    padding: const EdgeInsets.only(left: 24, right: 8),
+                    height: 56,
+                    width: double.infinity,
                     decoration: BoxDecoration(
                       color: AppColors.onboardingBubblegumPink,
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(28),
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.onboardingShadowPink.withOpacity(0.4),
@@ -241,92 +446,61 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Text with 3D Block Shadow (Extrusion)
-                        Stack(
-                          children: [
-                            // Layer 1 (Deepest)
-                            Positioned(
-                              left: 3.0,
-                              top: 3.0,
-                              child: Text(
-                                Languages.of(context)!.letsStartText,
-                                style: GoogleFonts.archivoBlack(
-                                  fontSize: 20,
-                                  color: AppColors.onboardingDeepPink,
-                                ),
-                              ),
-                            ),
-                            // Layer 2
-                            Positioned(
-                              left: 2.0,
-                              top: 2.0,
-                              child: Text(
-                                Languages.of(context)!.letsStartText,
-                                style: GoogleFonts.archivoBlack(
-                                  fontSize: 20,
-                                  color: AppColors.onboardingDeepPink,
-                                ),
-                              ),
-                            ),
-                            // Layer 3 (Closest to top)
-                            Positioned(
-                              left: 1.0,
-                              top: 1.0,
-                              child: Text(
-                                Languages.of(context)!.letsStartText,
-                                style: GoogleFonts.archivoBlack(
-                                  fontSize: 20,
-                                  color: AppColors.onboardingDeepPink,
-                                ),
-                              ),
-                            ),
-                            // Main Text (Top)
-                            Text(
-                              Languages.of(context)!.letsStartText,
-                              style: GoogleFonts.archivoBlack(
-                                fontSize: 20,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 16),
-                        // Circular Icon
-                        Container(
-                          width: 44,
-                          height: 44,
-                          decoration: const BoxDecoration(
-                            color: AppColors.onboardingVibrantPink,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.keyboard_double_arrow_right_rounded,
+                        Text(
+                          Languages.of(context)!.continueText.toUpperCase(),
+                          style: GoogleFonts.archivoBlack(
+                            fontSize: 18,
                             color: Colors.white,
-                            size: 28,
+                            letterSpacing: 1.0,
                           ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.keyboard_double_arrow_right_rounded,
+                          color: Colors.white,
+                          size: 24,
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
-        ],
-      ),
+          ).animate().moveY(begin: 200, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut),
+        ),
+      ],
     );
   }
 
-  Widget _buildOutlinedText(String text) {
+  TextSpan _buildBulletPoint(String text) {
+    // Helper to format the bullet points with the pink arrow
+    // Since the arrow is likely an emoji or icon in the text, I'll use a simple representation for now
+    // or try to match the image style. The image shows "->".
+    // Let's use a pink arrow emoji or icon if possible, or just text.
+    // The image shows a pink arrow icon. I'll use a unicode arrow or similar.
+    return TextSpan(
+      children: [
+        const TextSpan(text: "• "),
+        TextSpan(
+          text: text.replaceAll("->", "➜"), // Replace -> with a nicer arrow
+          style: const TextStyle(color: Colors.black87),
+        ),
+        const TextSpan(text: "\n"),
+      ],
+    );
+  }
+
+  Widget _buildOutlinedText(String text, {TextAlign textAlign = TextAlign.start, double fontSize = 46}) {
     return Stack(
       children: [
         // Stroke
         Text(
           text,
+          textAlign: textAlign,
           style: GoogleFonts.archivoBlack(
-            fontSize: 46,
+            fontSize: fontSize,
             height: 0.9,
             foreground: Paint()
               ..style = PaintingStyle.stroke
@@ -337,8 +511,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         // Fill
         Text(
           text,
+          textAlign: textAlign,
           style: GoogleFonts.archivoBlack(
-            fontSize: 46,
+            fontSize: fontSize,
             height: 0.9,
             color: const Color(0xFFFFE5F5),
             shadows: [

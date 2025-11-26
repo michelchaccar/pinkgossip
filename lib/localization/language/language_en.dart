@@ -570,4 +570,14 @@ class LanguageEn extends Languages {
   String get salonOnboardingDescPart2 => "marketers.";
   @override
   String get letsStartText => "LET'S START";
+  @override
+  String get whatIsPinkGossipText => "What Is\nPink Gossip?";
+  @override
+  String get salonOnboarding2DescPart1 => "Clients -> into creators";
+  @override
+  String get salonOnboarding2DescPart2 => "Reviews -> into bookings";
+  @override
+  String get salonOnboarding2DescPart3 => "Your work -> into social proof";
+  @override
+  String get salonOnboarding2Title => "Pink Gossip is the first beauty app\nthat transforms:\n";
 }
