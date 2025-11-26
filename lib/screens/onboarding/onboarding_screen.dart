@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'dart:ui' as ui;
+import 'dart:math';
 
 class OnboardingScreen extends StatefulWidget {
   final String userType; // "1" for User, "2" for Salon (Consistent with LoginModel logic)
@@ -91,6 +92,52 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ],
       ),
     );
+  }
+
+  Widget _buildButterflyFlight() {
+    final random = Random();
+    final butterflies = <Widget>[];
+
+    for (int i = 0; i < 8; i++) {
+      // "Heart stream" style: Linear, cohesive, rising from bottom right
+      // Start point: Bottom right of the phone screen area (tight cluster)
+      final double startX = 0 + (random.nextDouble() * 30); // Shifted left (was 30+)
+      final double startY = random.nextDouble() * 20; // Minimal vertical spread at start
+      
+      // End point: Fly up and slightly right (consistent drift)
+      final double endX = startX + 30 + (random.nextDouble() * 40); // Drift right
+      final double endY = - (700 + random.nextDouble() * 100); // Fly high up
+      
+      final double scale = random.nextDouble() * 0.2 + 0.8; // Larger, more consistent scale (0.8 - 1.0)
+      final int delayMs = i * 300; // Strict linear delay for "stream" effect
+      final int durationMs = 3500 + random.nextInt(500); // Consistent speed
+
+      butterflies.add(
+        Positioned(
+          bottom: 220 + startY, // Start position
+          left: MediaQuery.of(context).size.width / 2 + startX - 20,
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_butterfly.png",
+            width: 200 * scale,
+            height: 200 * scale,
+          )
+          .animate(
+            onPlay: (controller) => controller.loop(period: 8.seconds), // Loop every 8s (includes pause)
+          )
+          .fadeIn(duration: 400.ms, delay: delayMs.ms)
+          .move(
+            begin: const Offset(0, 0),
+            end: Offset(endX - startX, endY), // Move relative to start
+            duration: durationMs.ms,
+            curve: Curves.easeOut,
+          )
+          .scale(begin: const Offset(1, 1), end: const Offset(0.8, 0.8), duration: durationMs.ms)
+          .fadeOut(delay: (delayMs + durationMs - 600).ms, duration: 600.ms), // Fade out before loop restarts
+        ),
+      );
+    }
+
+    return Stack(children: butterflies);
   }
 
   Widget _buildSalonOnboardingStep1() {
@@ -287,6 +334,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ).animate().fadeIn(duration: 800.ms).moveY(begin: 50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Butterfly Flight Animation
+        Positioned.fill(
+          child: _buildButterflyFlight(),
         ),
 
         // Title (Top)
