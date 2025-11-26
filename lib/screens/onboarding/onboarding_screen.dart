@@ -304,57 +304,50 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
         // Description Card (Bottom)
         Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
+          bottom: 100, // Moved up to make room for button
+          left: 20,
+          right: 20,
           child: Container(
-            padding: const EdgeInsets.fromLTRB(24, 32, 24, 40),
-            decoration: const BoxDecoration(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
+              borderRadius: BorderRadius.circular(30), // Rounded all corners
               boxShadow: [
                 BoxShadow(
                   color: Colors.black12,
                   blurRadius: 20,
-                  offset: Offset(0, -5),
+                  offset: Offset(0, 5),
                 ),
               ],
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: GoogleFonts.archivoBlack(
-                      fontSize: 18,
-                      color: Colors.black87,
-                      height: 1.5,
-                    ),
-                    children: [
-                      TextSpan(text: Languages.of(context)!.salonOnboarding2Title),
-                      _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart1),
-                      _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart2),
-                      _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart3),
-                    ],
-                  ),
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: GoogleFonts.archivoBlack(
+                  fontSize: 18,
+                  color: Colors.black87,
+                  height: 1.5,
                 ),
-                const SizedBox(height: 24),
-                // Continue Button
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: _build3DButton(
-                    text: Languages.of(context)!.continueText.toUpperCase(),
-                    onPressed: _completeOnboarding,
-                  ),
-                ),
-              ],
+                children: [
+                  TextSpan(text: Languages.of(context)!.salonOnboarding2Title.trim()),
+                  _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart1),
+                  _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart2),
+                  _buildBulletPoint(Languages.of(context)!.salonOnboarding2DescPart3),
+                ],
+              ),
             ),
           ).animate().moveY(begin: 200, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut),
         ),
+
+        // Continue Button (Bottom Right)
+        Positioned(
+          bottom: 30,
+          right: 20,
+          child: _build3DButton(
+            text: Languages.of(context)!.continueText.toUpperCase(),
+            onPressed: _completeOnboarding,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
       ],
     );
   }

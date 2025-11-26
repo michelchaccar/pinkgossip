@@ -579,5 +579,5 @@ class LanguageEn extends Languages {
   @override
   String get salonOnboarding2DescPart3 => "Your work -> into social proof";
   @override
-  String get salonOnboarding2Title => "Pink Gossip is the first beauty app\nthat transforms:\n";
+  String get salonOnboarding2Title => "Pink Gossip is the first beauty app that transforms:";
 }

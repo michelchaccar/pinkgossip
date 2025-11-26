@@ -742,5 +742,5 @@ class LanguageFr extends Languages {
   @override
   String get salonOnboarding2DescPart3 => "Votre travail -> en preuve sociale";
   @override
-  String get salonOnboarding2Title => "Pink Gossip est la première application beauté\nqui transforme :\n";
+  String get salonOnboarding2Title => "Pink Gossip est la première application beauté qui transforme :";
 }
