@@ -329,9 +329,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.archivoBlack(
                       fontSize: 18,
-                      fontWeight: FontWeight.w600,
                       color: Colors.black87,
                       height: 1.5,
                     ),
@@ -345,7 +344,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 const SizedBox(height: 24),
                 // Continue Button
-                Center(
+                Align(
+                  alignment: Alignment.centerRight,
                   child: _build3DButton(
                     text: Languages.of(context)!.continueText.toUpperCase(),
                     onPressed: _completeOnboarding,
@@ -360,19 +360,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   TextSpan _buildBulletPoint(String text) {
-    // Helper to format the bullet points with the pink arrow
-    // Since the arrow is likely an emoji or icon in the text, I'll use a simple representation for now
-    // or try to match the image style. The image shows "->".
-    // Let's use a pink arrow emoji or icon if possible, or just text.
-    // The image shows a pink arrow icon. I'll use a unicode arrow or similar.
+    final parts = text.split("->");
+    final firstPart = parts.isNotEmpty ? parts[0].trim() : "";
+    final secondPart = parts.length > 1 ? parts[1].trim() : "";
+
     return TextSpan(
+      style: GoogleFonts.archivoBlack(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: Colors.black87,
+      ),
       children: [
-        const TextSpan(text: "• "),
-        TextSpan(
-          text: text.replaceAll("->", "➜"), // Replace -> with a nicer arrow
-          style: const TextStyle(color: Colors.black87),
+        const TextSpan(text: "\n• "),
+        TextSpan(text: "$firstPart "),
+        const TextSpan(
+          text: "➜ ",
+          style: TextStyle(
+            color: AppColors.onboardingVibrantPink,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        const TextSpan(text: "\n"),
+        TextSpan(text: secondPart),
       ],
     );
   }
