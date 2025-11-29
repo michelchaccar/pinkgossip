@@ -21,8 +21,10 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen> with TickerProviderStateMixin {
   final PageController _pageController = PageController();
+  late AnimationController _butterflyController;
+  late AnimationController _cycleController;
 
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
@@ -50,11 +52,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
     print("DEBUG: OnboardingScreen received userType: ${widget.userType}");
+    _butterflyController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..repeat();
+
+    _cycleController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    )..repeat();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _butterflyController.dispose();
+    _cycleController.dispose();
     super.dispose();
   }
 
@@ -95,49 +108,87 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildButterflyFlight() {
-    final random = Random();
-    final butterflies = <Widget>[];
+    return AnimatedBuilder(
+      animation: Listenable.merge([_butterflyController, _cycleController]),
+      builder: (context, child) {
+        final butterflies = <Widget>[];
+        final random = Random(42); // Fixed seed for consistent randomness across frames
 
-    for (int i = 0; i < 8; i++) {
-      // "Heart stream" style: Linear, cohesive, rising from bottom right
-      // Start point: Bottom right of the phone screen area (tight cluster)
-      final double startX = 0 + (random.nextDouble() * 30); // Shifted left (was 30+)
-      final double startY = random.nextDouble() * 20; // Minimal vertical spread at start
-      
-      // End point: Fly up and slightly right (consistent drift)
-      final double endX = startX + 30 + (random.nextDouble() * 40); // Drift right
-      final double endY = - (700 + random.nextDouble() * 100); // Fly high up
-      
-      final double scale = random.nextDouble() * 0.2 + 0.8; // Larger, more consistent scale (0.8 - 1.0)
-      final int delayMs = i * 300; // Strict linear delay for "stream" effect
-      final int durationMs = 3500 + random.nextInt(500); // Consistent speed
+        // Calculate global opacity based on cycle progress
+        double globalOpacity = 1.0;
+        double cycleProgress = _cycleController.value;
 
-      butterflies.add(
-        Positioned(
-          bottom: 220 + startY, // Start position
-          left: MediaQuery.of(context).size.width / 2 + startX - 20,
-          child: Image.asset(
-            "lib/assets/images/onboarding/salon_butterfly.png",
-            width: 200 * scale,
-            height: 200 * scale,
-          )
-          .animate(
-            onPlay: (controller) => controller.loop(period: 8.seconds), // Loop every 8s (includes pause)
-          )
-          .fadeIn(duration: 400.ms, delay: delayMs.ms)
-          .move(
-            begin: const Offset(0, 0),
-            end: Offset(endX - startX, endY), // Move relative to start
-            duration: durationMs.ms,
-            curve: Curves.easeOut,
-          )
-          .scale(begin: const Offset(1, 1), end: const Offset(0.8, 0.8), duration: durationMs.ms)
-          .fadeOut(delay: (delayMs + durationMs - 600).ms, duration: 600.ms), // Fade out before loop restarts
-        ),
-      );
-    }
+        if (cycleProgress > 0.7 && cycleProgress <= 0.8) {
+          // Fade out (70% → 80%)
+          globalOpacity = 1.0 - ((cycleProgress - 0.7) / 0.1);
+        } else if (cycleProgress > 0.8 && cycleProgress <= 0.9) {
+          // Pause (80% → 90%)
+          globalOpacity = 0.0;
+        } else if (cycleProgress > 0.9) {
+          // Fade in (90% → 100%)
+          globalOpacity = (cycleProgress - 0.9) / 0.1;
+        }
 
-    return Stack(children: butterflies);
+        // Generate butterflies based on controller value
+        for (int i = 0; i < 8; i++) {
+          // Calculate progress for this butterfly
+          // Offset each butterfly by i/8 of the cycle
+          double progress = (_butterflyController.value + (i / 8)) % 1.0;
+
+          // Flight path parameters
+          // Start point: Bottom right (closer to phone)
+          final double startX = 10 + (random.nextDouble() * 30); 
+          final double startY = random.nextDouble() * 20; 
+          
+          // End point: Fly up and slightly right
+          final double endX = startX + 30 + (random.nextDouble() * 40); 
+          final double flightHeight = 900 + random.nextDouble() * 100; // Fly up higher to cover screen
+
+          // Interpolate position based on progress
+          // Use linear interpolation for constant speed
+          double currentX = startX + (endX - startX) * progress;
+          
+          // Add sway (sine wave)
+          // Sway amplitude: 15.0, Frequency: 2 full waves (4 * pi)
+          currentX += sin(progress * pi * 4) * 15;
+
+          double currentY = (-50 + startY) + flightHeight * progress; // Start from bottom: -50+startY and go UP
+
+          // Scale
+          final double scale = random.nextDouble() * 0.2 + 0.8;
+
+          // Opacity: Fade in at start, fade out at end
+          double opacity = 1.0;
+          if (progress < 0.1) {
+            opacity = progress / 0.1;
+          } else if (progress > 0.8) {
+            opacity = 1.0 - ((progress - 0.8) / 0.2);
+          }
+
+          // Apply global cycle opacity
+          opacity = opacity * globalOpacity;
+
+          butterflies.add(
+            Positioned(
+              bottom: currentY, // Strictly increasing value
+              left: MediaQuery.of(context).size.width / 2 + currentX - 50,
+              child: Opacity(
+                opacity: opacity,
+                child: Transform.rotate(
+                  angle: (progress * 0.5) - 0.25, // Slight rotation during flight
+                  child: Image.asset(
+                    "lib/assets/images/onboarding/salon_butterfly.png",
+                    width: 200 * scale,
+                    height: 200 * scale,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+        return Stack(children: butterflies);
+      },
+    );
   }
 
   Widget _buildSalonOnboardingStep1() {
