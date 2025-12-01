@@ -26,6 +26,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   late AnimationController _butterflyController;
   late AnimationController _cycleController;
 
+  // Consistent Colors
+  static const Color _kVibrantPink = Color(0xFFFF1493); // DeepPink
+  static const Color _kPalePink = Color(0xFFFFE5F5);
+
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onboarding_completed_${widget.userId}', true);
@@ -102,6 +106,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         children: [
           _buildSalonOnboardingStep1(),
           _buildSalonOnboardingStep2(),
+          _buildSalonOnboardingStep3(),
         ],
       ),
     );
@@ -257,9 +262,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                       ),
                       child: Text(
                         Languages.of(context)!.skipText,
-                        style: GoogleFonts.rubik(
+                        style: GoogleFonts.archivoBlack( // Changed to Archivo Black for consistency
                           color: Colors.black87,
                           fontWeight: FontWeight.w500,
+                          fontSize: 14, // Adjusted size for button
                         ),
                       ),
                     ),
@@ -299,9 +305,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                      child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: GoogleFonts.poppins(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                        style: GoogleFonts.archivoBlack( // Changed to Archivo Black for consistency
+                          fontSize: 20, // Slightly reduced from 24 to fit bolder font
                           color: Colors.black87,
                           height: 1.2,
                         ),
@@ -309,8 +314,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                           TextSpan(text: Languages.of(context)!.salonOnboardingDescPart1),
                           TextSpan(
                             text: Languages.of(context)!.salonOnboardingDescPart2,
-                            style: GoogleFonts.poppins(
-                              color: const Color(0xFFE91E8C),
+                            style: GoogleFonts.archivoBlack(
+                              color: _kVibrantPink, // Use consistent pink
                               fontWeight: FontWeight.w800,
                             ),
                           ),
@@ -450,13 +455,190 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           right: 20,
           child: _build3DButton(
             text: Languages.of(context)!.continueText.toUpperCase(),
-            onPressed: _completeOnboarding,
+            onPressed: _nextPage,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
       ],
     );
   }
 
+  Widget _buildSalonOnboardingStep3() {
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Title "How It Works"
+        Positioned(
+          top: 60,
+          left: 20,
+          right: 0,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.9),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: _buildOutlinedText(
+              Languages.of(context)!.salonOnboarding3Title,
+              textAlign: TextAlign.center,
+            ),
+          ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Main Card
+        Positioned(
+          top: 160,
+          left: 20,
+          right: 20,
+          child: Column(
+            children: [
+              // Top Card: "Display your Pink Gossip QR Code"
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF5F5F5),
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.03),
+                      blurRadius: 10,
+                      offset: const Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Transform.rotate(
+                      angle: 0.4, // Match design rotation
+                      child: Transform.flip(
+                        flipX: true,
+                        child: Image.asset(
+                          "lib/assets/images/onboarding/salon_butterfly.png",
+                          width: 90,
+                          height: 90,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        Languages.of(context)!.salonOnboarding3CardTitle,
+                        style: GoogleFonts.poppins(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black87,
+                          height: 1.3,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ).animate().fadeIn(duration: 600.ms, delay: 200.ms).moveX(begin: -50, end: 0),
+
+              const SizedBox(height: 24),
+
+              // QR Code Card
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 15,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "lib/assets/images/onboarding/code_QR.png",
+                      width: 300,
+                      height: 300,
+                    ),
+                  ],
+                ),
+              ).animate().scale(duration: 600.ms, delay: 400.ms, curve: Curves.easeOutBack),
+            ],
+          ),
+        ),
+
+        // Bottom Description Card
+        Positioned(
+          bottom: 110,
+          left: 20,
+          right: 20,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.95),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: RichText(
+              textAlign: TextAlign.left, // Left aligned as per design
+              text: TextSpan(
+                style: GoogleFonts.archivoBlack( // Base style for the whole block
+                  fontSize: 16,
+                  color: Colors.black87,
+                  height: 1.3,
+                ),
+                children: [
+                  TextSpan(
+                    text: Languages.of(context)!.salonOnboarding3DescPart1,
+                    style: GoogleFonts.archivoBlack( // Explicitly use Archivo Black for the pink part
+                      color: _kVibrantPink, // Vibrant Pink
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  TextSpan(
+                    text: Languages.of(context)!.salonOnboarding3DescPart2,
+                    style: GoogleFonts.archivoBlack( // Explicitly use Archivo Black for the black part
+                      color: const Color(0xFF222222), // Darker black for contrast
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut),
+        ),
+
+        // Next Steps Button
+        Positioned(
+          bottom: 30,
+          right: 20,
+          child: _build3DButton(
+            text: Languages.of(context)!.nextStepsText,
+            onPressed: _completeOnboarding,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+      ],
+    );
+  }
   TextSpan _buildBulletPoint(String text) {
     final parts = text.split("->");
     final firstPart = parts.isNotEmpty ? parts[0].trim() : "";
@@ -474,7 +656,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         const TextSpan(
           text: "➜ ",
           style: TextStyle(
-            color: AppColors.onboardingVibrantPink,
+            color: _kVibrantPink,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -558,7 +740,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
               width: 44,
               height: 44,
               decoration: const BoxDecoration(
-                color: AppColors.onboardingVibrantPink,
+                color: _kVibrantPink,
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -586,7 +768,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = 6
-              ..color = const Color(0xFFFF1493),
+              ..color = _kVibrantPink,
           ),
         ),
         // Fill
@@ -596,10 +778,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           style: GoogleFonts.archivoBlack(
             fontSize: fontSize,
             height: 0.9,
-            color: const Color(0xFFFFE5F5),
+            color: _kPalePink,
             shadows: [
               BoxShadow(
-                color: const Color(0xFFFF1493).withOpacity(0.4),
+                color: _kVibrantPink.withOpacity(0.4),
                 blurRadius: 15,
                 offset: const Offset(0, 0),
               )

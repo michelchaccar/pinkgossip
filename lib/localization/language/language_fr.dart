@@ -743,4 +743,14 @@ class LanguageFr extends Languages {
   String get salonOnboarding2DescPart3 => "Votre travail -> en preuve sociale";
   @override
   String get salonOnboarding2Title => "Pink Gossip est la première application beauté qui transforme :";
+  @override
+  String get salonOnboarding3Title => "Comment ça marche";
+  @override
+  String get salonOnboarding3CardTitle => "Affichez votre code QR Pink Gossip";
+  @override
+  String get salonOnboarding3DescPart1 => "Chaque service commence par un simple scan.";
+  @override
+  String get salonOnboarding3DescPart2 => "\nC'est ainsi que Pink Gossip transforme chaque visite en visibilité, avis et nouvelle clientèle pour vous — instantanément.";
+  @override
+  String get nextStepsText => "PROCHAINES ÉTAPES";
 }
