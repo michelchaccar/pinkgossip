@@ -378,7 +378,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             child: Padding(
               padding: const EdgeInsets.only(bottom: 100), 
               child: Image.asset(
-                "lib/assets/images/onboarding/salon_phone_mockup.png",
+                Localizations.localeOf(context).languageCode == 'en'
+                    ? "lib/assets/images/onboarding/salon_phone_mockup_en.png"
+                    : "lib/assets/images/onboarding/salon_phone_mockup_fr.png",
                 fit: BoxFit.contain,
                 // Adjust height/width as needed based on the image aspect ratio
                 height: MediaQuery.of(context).size.height * 0.65, 
