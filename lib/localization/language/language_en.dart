@@ -590,4 +590,18 @@ class LanguageEn extends Languages {
   String get salonOnboarding3DescPart2 => "\nThis is how Pink Gossip transforms every visit into visibility, reviews, and new clientele for you — instantly.";
   @override
   String get nextStepsText => "NEXT STEPS";
+  @override
+  String get salonOnboarding4Title => "THE\nSCAN & GOSSIP\nEFFECT";
+  @override
+  String get salonOnboarding4Card1 => "Client scans before the service begins and take a before photo";
+  @override
+  String get salonOnboarding4Card2 => "During the service client share content on the app";
+  @override
+  String get salonOnboarding4Card3 => "After the service client share AFTER picture , rate service and leave review.";
+  @override
+  String get salonOnboarding4BottomTitle => "Boom — new content + new trust";
+  @override
+  String get salonOnboarding4BottomDesc => "• Their post boosts your visibility instantly and feed your social page!";
+  @override
+  String get whyChooseUsText => "WHY CHOOSE US";
 }

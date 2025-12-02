@@ -107,6 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           _buildSalonOnboardingStep1(),
           _buildSalonOnboardingStep2(),
           _buildSalonOnboardingStep3(),
+          _buildSalonOnboardingStep4(),
         ],
       ),
     );
@@ -633,11 +634,188 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           right: 20,
           child: _build3DButton(
             text: Languages.of(context)!.nextStepsText,
-            onPressed: _completeOnboarding,
+            onPressed: _nextPage,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
       ],
     );
+  }
+
+  Widget _buildSalonOnboardingStep4() {
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Title "THE SCAN & GOSSIP EFFECT"
+        Positioned(
+          top: 60,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: _buildOutlinedText(
+              Languages.of(context)!.salonOnboarding4Title,
+              textAlign: TextAlign.center,
+              fontSize: 40,
+            ),
+          ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // 3 Info Cards
+        Positioned(
+          top: 240,
+          left: 20,
+          right: 20,
+          child: Column(
+            children: [
+              _buildStep4Card(
+                text: Languages.of(context)!.salonOnboarding4Card1,
+                delay: 200,
+              ),
+              const SizedBox(height: 16),
+              _buildStep4Card(
+                text: Languages.of(context)!.salonOnboarding4Card2,
+                delay: 400,
+              ),
+              const SizedBox(height: 16),
+              _buildStep4Card(
+                text: Languages.of(context)!.salonOnboarding4Card3,
+                delay: 600,
+                isRightAligned: true, 
+              ),
+            ],
+          ),
+        ),
+
+        // Bottom "Boom" Section
+        Positioned(
+          bottom: 110,
+          left: 20,
+          right: 20,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.95),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    style: GoogleFonts.archivoBlack(
+                      fontSize: 18,
+                      color: Colors.black87,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "Boom",
+                        style: GoogleFonts.archivoBlack(
+                          color: _kVibrantPink,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const TextSpan(text: " — "),
+                      TextSpan(text: Languages.of(context)!.salonOnboarding4BottomTitle.replaceAll("Boom — ", "")),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  Languages.of(context)!.salonOnboarding4BottomDesc,
+                  style: GoogleFonts.archivoBlack(
+                    fontSize: 14,
+                    color: Colors.black87,
+                    height: 1.3,
+                  ),
+                ),
+              ],
+            ),
+          ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // "WHY CHOOSE US" Button
+        Positioned(
+          bottom: 30,
+          right: 20,
+          child: _build3DButton(
+            text: Languages.of(context)!.whyChooseUsText,
+            onPressed: _completeOnboarding, 
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 1000.ms),
+      ],
+    );
+  }
+
+  Widget _buildStep4Card({required String text, required int delay, bool isRightAligned = false}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F5F5).withOpacity(0.9),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          if (!isRightAligned) ...[
+             Transform.rotate(
+                angle: 0.4, 
+                child: Transform.flip(
+                  flipX: true, 
+                  child: Image.asset(
+                    "lib/assets/images/onboarding/salon_butterfly.png",
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+             ),
+            const SizedBox(width: 12),
+          ],
+          Expanded(
+            child: Text(
+              text,
+              style: GoogleFonts.poppins(
+                fontSize: 17,
+                fontWeight: FontWeight.w400,
+                color: Colors.black87,
+                height: 1.3,
+              ),
+            ),
+          ),
+          if (isRightAligned) ...[
+            const SizedBox(width: 12),
+             Transform.rotate(
+                angle: 0.4,
+                child: Transform.flip(
+                  flipX: true,
+                  child: Image.asset(
+                    "lib/assets/images/onboarding/salon_butterfly.png",
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+             ),
+          ],
+        ],
+      ),
+    ).animate().fadeIn(duration: 600.ms, delay: delay.ms).moveX(begin: isRightAligned ? 50 : -50, end: 0);
   }
   TextSpan _buildBulletPoint(String text) {
     final parts = text.split("->");

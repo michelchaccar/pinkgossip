@@ -272,4 +272,11 @@ abstract class Languages {
   String get salonOnboarding3DescPart1;
   String get salonOnboarding3DescPart2;
   String get nextStepsText;
+  String get salonOnboarding4Title;
+  String get salonOnboarding4Card1;
+  String get salonOnboarding4Card2;
+  String get salonOnboarding4Card3;
+  String get salonOnboarding4BottomTitle;
+  String get salonOnboarding4BottomDesc;
+  String get whyChooseUsText;
 }

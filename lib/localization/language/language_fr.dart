@@ -753,4 +753,18 @@ class LanguageFr extends Languages {
   String get salonOnboarding3DescPart2 => "\nC'est ainsi que Pink Gossip transforme chaque visite en visibilité, avis et nouvelle clientèle pour vous — instantanément.";
   @override
   String get nextStepsText => "PROCHAINES ÉTAPES";
+  @override
+  String get salonOnboarding4Title => "L'EFFET\nSCAN & GOSSIP";
+  @override
+  String get salonOnboarding4Card1 => "Le client scanne avant le début du service et prend une photo avant";
+  @override
+  String get salonOnboarding4Card2 => "Pendant le service, le client partage du contenu sur l'application";
+  @override
+  String get salonOnboarding4Card3 => "Après le service, le client partage une photo APRÈS, note le service et laisse un avis.";
+  @override
+  String get salonOnboarding4BottomTitle => "Boom — nouveau contenu + nouvelle confiance";
+  @override
+  String get salonOnboarding4BottomDesc => "• Leur publication booste votre visibilité instantanément et alimente votre page sociale !";
+  @override
+  String get whyChooseUsText => "POURQUOI NOUS CHOISIR";
 }
