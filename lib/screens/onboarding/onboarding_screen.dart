@@ -245,40 +245,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         ),
 
         // Skip Button (Fade-in)
-        Positioned(
-          top: 0,
-          right: 20,
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: GestureDetector(
-                onTap: _cancelOnboarding,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: BackdropFilter(
-                    filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.white.withOpacity(0.3)),
-                      ),
-                      child: Text(
-                        Languages.of(context)!.skipText,
-                        style: GoogleFonts.archivoBlack( // Changed to Archivo Black for consistency
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14, // Adjusted size for button
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ).animate().fadeIn(duration: 500.ms, delay: 400.ms),
+        _buildSkipButton(),
 
         // Description Card (Right-to-left animation)
         Positioned(
@@ -400,7 +367,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Title (Top)
         Positioned(
-          top: 60,
+          top: 110,
           left: 0,
           right: 0,
           child: Center(
@@ -457,6 +424,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             onPressed: _nextPage,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+
+        // Skip Button
+        _buildSkipButton(),
       ],
     );
   }
@@ -474,7 +444,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Title "How It Works"
         Positioned(
-          top: 60,
+          top: 100,
           left: 20,
           right: 0,
           child: Container(
@@ -503,7 +473,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Main Card
         Positioned(
-          top: 160,
+          top: 180,
           left: 20,
           right: 20,
           child: Column(
@@ -568,10 +538,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 ),
                 child: Column(
                   children: [
-                    Image.asset(
-                      "lib/assets/images/onboarding/code_QR.png",
-                      width: 300,
-                      height: 300,
+                    Transform.scale(
+                      scale: 1.2,
+                      child: Image.asset(
+                        "lib/assets/images/onboarding/code_QR.png",
+                        width: 250,
+                        height: 250,
+                      ),
                     ),
                   ],
                 ),
@@ -582,7 +555,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Bottom Description Card
         Positioned(
-          bottom: 110,
+          bottom: 120,
           left: 20,
           right: 20,
           child: Container(
@@ -635,6 +608,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             onPressed: _nextPage,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+
+        // Skip Button
+        _buildSkipButton(),
       ],
     );
   }
@@ -652,7 +628,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Title "THE SCAN & GOSSIP EFFECT"
         Positioned(
-          top: 60,
+          top: 110,
           left: 0,
           right: 0,
           child: Center(
@@ -753,6 +729,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             onPressed: _nextPage,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 1000.ms),
+
+        // Skip Button
+        _buildSkipButton(),
       ],
     );
   }
@@ -785,7 +764,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Title (Top)
         Positioned(
-          top: 60,
+          top: 110,
           left: 0,
           right: 0,
           child: Center(
@@ -855,6 +834,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             onPressed: _nextPage,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 1200.ms),
+
+        // Skip Button
+        _buildSkipButton(),
       ],
     );
   }
@@ -1117,6 +1099,43 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     );
   }
 
+  Widget _buildSkipButton() {
+    return Positioned(
+      top: 0,
+      right: 20,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: GestureDetector(
+            onTap: _cancelOnboarding,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: BackdropFilter(
+                filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.white.withOpacity(0.3)),
+                  ),
+                  child: Text(
+                    Languages.of(context)!.skipText,
+                    style: GoogleFonts.archivoBlack(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ).animate().fadeIn(duration: 500.ms, delay: 400.ms);
+  }
+
   Widget _buildUserOnboarding() {
     // Keep the previous simple design for User for now, or update if needed.
     // The user only provided design for Salon.
@@ -1210,7 +1229,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         SafeArea(
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               // Title
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -1227,7 +1246,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
               // Butterfly & Text Box
               SizedBox(
-                height: 240, 
+                height: 200, 
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
@@ -1360,6 +1379,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             onPressed: _completeOnboarding,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+
+        // Skip Button
+        _buildSkipButton(),
       ],
     );
   }
