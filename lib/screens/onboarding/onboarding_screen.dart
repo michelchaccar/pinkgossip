@@ -354,16 +354,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Let's Start Button (Bottom-to-top animation)
         Positioned(
-          bottom: 0,
+          bottom: 30,
           right: 20,
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 50),
-              child: _build3DButton(
-                text: Languages.of(context)!.letsStartText,
-                onPressed: _nextPage,
-              ),
-            ),
+          child: _build3DButton(
+            text: Languages.of(context)!.letsStartText,
+            onPressed: _nextPage,
           ),
         ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
       ],
@@ -1224,7 +1219,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   child: _buildOutlinedText(
                     Languages.of(context)!.salonOnboarding6Title,
                     textAlign: TextAlign.center,
-                    fontSize: 42, // Increased font size
+                    fontSize: 42, 
                   ),
                 ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
               ),
