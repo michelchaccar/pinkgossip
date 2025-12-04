@@ -764,7 +764,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Title (Top)
         Positioned(
-          top: 110,
+          top: 90,
           left: 0,
           right: 0,
           child: Center(
@@ -1295,14 +1295,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
                     // Butterfly
                     Positioned(
-                      left: -60, 
-                      top: 0, 
+                      left: -80, 
+                      top: -60, 
                       child: Transform.rotate(
                         angle: -0.15, 
                         child: Image.asset(
                           "lib/assets/images/onboarding/salon_butterfly.png",
-                          width: 250, 
-                          height: 250,
+                          width: 300, 
+                          height: 300,
                         ),
                       ),
                     ),
