@@ -111,6 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           _buildSalonOnboardingStep3(),
           _buildSalonOnboardingStep4(),
           _buildSalonOnboardingStep5(),
+          _buildSalonOnboardingStep6(),
         ],
       ),
     );
@@ -857,7 +858,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           right: 20,
           child: _build3DButton(
             text: Languages.of(context)!.areYouReadyText,
-            onPressed: _completeOnboarding,
+            onPressed: _nextPage,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 1200.ms),
       ],
@@ -1198,5 +1199,175 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         ),
       ),
     );
+    }
+
+  Widget _buildSalonOnboardingStep6() {
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Main Content in a Column for responsiveness
+        SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              // Title
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Center(
+                  child: _buildOutlinedText(
+                    Languages.of(context)!.salonOnboarding6Title,
+                    textAlign: TextAlign.center,
+                    fontSize: 42, // Increased font size
+                  ),
+                ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+              ),
+
+              const Spacer(flex: 4),
+
+              // Butterfly & Text Box
+              SizedBox(
+                height: 240, 
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    // Text Box
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width, 
+                        margin: const EdgeInsets.only(left: 80), 
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10), 
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.0), 
+                          border: Border.all(color: _kVibrantPink, width: 2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 15,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: RichText(
+                          textAlign: TextAlign.center, 
+                          text: TextSpan(
+                            style: GoogleFonts.poppins(
+                              fontSize: 20, 
+                              color: Colors.black87,
+                              height: 1.4,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            children: [
+                              TextSpan(text: Languages.of(context)!.salonOnboarding6Desc.split("Pink Gossip")[0]),
+                              TextSpan(
+                                text: "Pink Gossip",
+                                style: GoogleFonts.poppins(
+                                  color: _kVibrantPink,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              TextSpan(text: Languages.of(context)!.salonOnboarding6Desc.split("Pink Gossip")[1]),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Butterfly
+                    Positioned(
+                      left: -60, 
+                      top: 0, 
+                      child: Transform.rotate(
+                        angle: -0.15, 
+                        child: Image.asset(
+                          "lib/assets/images/onboarding/salon_butterfly.png",
+                          width: 250, 
+                          height: 250,
+                        ),
+                      ),
+                    ),
+                  ],
+                ).animate().fadeIn(duration: 800.ms, delay: 200.ms).moveX(begin: 50, end: 0, curve: Curves.easeOut),
+              ),
+
+              const Spacer(flex: 1),
+
+              // Bottom Section: Phone + QR Code
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // Phone Mockup
+                    Expanded(
+                      flex: 4,
+                      child: Transform.translate(
+                        offset: const Offset(-40, 50), 
+                        child: Transform.scale(
+                          scale: 1.30,
+                          child: Image.asset(
+                            "lib/assets/images/onboarding/phone_2.png",
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ).animate().moveY(begin: 200, end: 0, duration: 800.ms, delay: 400.ms, curve: Curves.easeOut),
+                    ),
+
+                    // QR Code Section
+                    Expanded(
+                      flex: 3,
+                      child: Transform.translate(
+                        offset: const Offset(0, -80), 
+                        child: Transform.scale(
+                          scale: 1.2,
+                          child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Image.asset(
+                                  "lib/assets/images/onboarding/code_QR_2.png",
+                                  width: 200,
+                                  height: 200,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 40), // Space for button alignment
+                          ],
+                        ),
+                      ),
+                      ).animate().scale(duration: 600.ms, delay: 600.ms, curve: Curves.easeOutBack),
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+
+        // "LET'S BEGIN" Button (Bottom Right)
+        Positioned(
+          bottom: 30,
+          right: 20,
+          child: _build3DButton(
+            text: Languages.of(context)!.letsBeginText,
+            onPressed: _completeOnboarding,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+      ],
+    );
   }
 }
+

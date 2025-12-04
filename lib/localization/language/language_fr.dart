@@ -779,4 +779,12 @@ class LanguageFr extends Languages {
   String get salonOnboarding5Bubble4 => "Programme de fidélité intégré\nVous n'avez rien à suivre. L'application récompense vos clients pour leur fidélité — et vous continuez à obtenir des clients réguliers.";
   @override
   String get areYouReadyText => "ÊTES-VOUS PRÊT";
+  @override
+  String get salonOnboarding6Title => "VOUS ÊTES PRÊT\nPOUR LE SUCCÈS";
+  @override
+  String get salonOnboarding6Desc => "Vous faites officiellement partie du\nmouvement Pink Gossip.\nCommençons à collecter\nde vraies preuves sociales et\nà développer votre empire\nde la beauté.";
+  @override
+  String get scanAndGossipText => "SCAN & GOSSIP";
+  @override
+  String get letsBeginText => "COMMENÇONS";
 }

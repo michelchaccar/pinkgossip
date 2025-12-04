@@ -616,4 +616,12 @@ class LanguageEn extends Languages {
   String get salonOnboarding5Bubble4 => "In-app Loyalty program\nYou don’t have to track anything. The app rewards your clients for staying loyal — and you keep getting repeat business.";
   @override
   String get areYouReadyText => "ARE YOU READY";
+  @override
+  String get salonOnboarding6Title => "YOU ARE ALL SET\nFOR SUCCESS";
+  @override
+  String get salonOnboarding6Desc => "You’re officially part of\nthe Pink Gossip\nmovement.\nLet’s start collecting\nreal social proof and\ngrowing your beauty\nempire.";
+  @override
+  String get scanAndGossipText => "SCAN & GOSSIP";
+  @override
+  String get letsBeginText => "LET'S BEGIN";
 }
