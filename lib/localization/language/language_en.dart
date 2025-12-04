@@ -604,4 +604,16 @@ class LanguageEn extends Languages {
   String get salonOnboarding4BottomDesc => "• Their post boosts your visibility instantly and feed your social page!";
   @override
   String get whyChooseUsText => "WHY CHOOSE US";
+  @override
+  String get salonOnboarding5Title => "WHY SALON LOVES\nPINK GOSSIP";
+  @override
+  String get salonOnboarding5Bubble1 => "Authentic proof, not curated ads\nReal clients, real photos, real experiences.";
+  @override
+  String get salonOnboarding5Bubble2 => "Your work stays discoverable\nYour services appear in the Pink Gossip Directory for people searching in your area.";
+  @override
+  String get salonOnboarding5Bubble3 => "System that works for you 24/7:\nClients leave reviews, post before/after photos, and tag your services — even when you're busy working.";
+  @override
+  String get salonOnboarding5Bubble4 => "In-app Loyalty program\nYou don’t have to track anything. The app rewards your clients for staying loyal — and you keep getting repeat business.";
+  @override
+  String get areYouReadyText => "ARE YOU READY";
 }

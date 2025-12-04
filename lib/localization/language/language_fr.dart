@@ -767,4 +767,16 @@ class LanguageFr extends Languages {
   String get salonOnboarding4BottomDesc => "• Leur publication booste votre visibilité instantanément et alimente votre page sociale !";
   @override
   String get whyChooseUsText => "POURQUOI NOUS CHOISIR";
+  @override
+  String get salonOnboarding5Title => "POURQUOI LES SALONS AIMENT\nPINK GOSSIP";
+  @override
+  String get salonOnboarding5Bubble1 => "Preuve authentique, pas de publicités organisées\nVrais clients, vraies photos, vraies expériences.";
+  @override
+  String get salonOnboarding5Bubble2 => "Votre travail reste visible\nVos services apparaissent dans l'annuaire Pink Gossip pour les personnes effectuant une recherche dans votre région.";
+  @override
+  String get salonOnboarding5Bubble3 => "Un système qui travaille pour vous 24h/24 et 7j/7 :\nLes clients laissent des avis, publient des photos avant/après et identifient vos services, même lorsque vous êtes occupé à travailler.";
+  @override
+  String get salonOnboarding5Bubble4 => "Programme de fidélité intégré\nVous n'avez rien à suivre. L'application récompense vos clients pour leur fidélité — et vous continuez à obtenir des clients réguliers.";
+  @override
+  String get areYouReadyText => "ÊTES-VOUS PRÊT";
 }

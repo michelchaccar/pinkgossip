@@ -27,8 +27,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   late AnimationController _cycleController;
 
   // Consistent Colors
+  // Consistent Colors
   static const Color _kVibrantPink = Color(0xFFFF1493); // DeepPink
   static const Color _kPalePink = Color(0xFFFFE5F5);
+
 
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
@@ -108,6 +110,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           _buildSalonOnboardingStep2(),
           _buildSalonOnboardingStep3(),
           _buildSalonOnboardingStep4(),
+          _buildSalonOnboardingStep5(),
         ],
       ),
     );
@@ -752,11 +755,160 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           right: 20,
           child: _build3DButton(
             text: Languages.of(context)!.whyChooseUsText,
-            onPressed: _completeOnboarding, 
+            onPressed: _nextPage,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 1000.ms),
       ],
     );
+  }
+
+  Widget _buildSalonOnboardingStep5() {
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Phone Mockup (Center)
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: Image.asset(
+                "lib/assets/images/onboarding/phone.png",
+                fit: BoxFit.contain,
+                height: MediaQuery.of(context).size.height * 0.7,
+              ),
+            ),
+          ).animate().fadeIn(duration: 800.ms).moveY(begin: 50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Title (Top)
+        Positioned(
+          top: 60,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: _buildOutlinedText(
+              Languages.of(context)!.salonOnboarding5Title,
+              textAlign: TextAlign.center,
+              fontSize: 36,
+            ),
+          ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Message Bubbles (Entering from bottom)
+        Positioned(
+          bottom: 120, // Leave space for button
+          left: 0,
+          right: 0,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildMessageBubble(
+                title: Languages.of(context)!.salonOnboarding5Bubble1.split('\n')[0],
+                subtitle: Languages.of(context)!.salonOnboarding5Bubble1.split('\n').length > 1 
+                    ? Languages.of(context)!.salonOnboarding5Bubble1.split('\n')[1] 
+                    : "",
+                color: const Color(0xFFFFE5F5), // Light Pink
+                delay: 200,
+              ),
+              const SizedBox(height: 12),
+              _buildMessageBubble(
+                title: Languages.of(context)!.salonOnboarding5Bubble2.split('\n')[0],
+                subtitle: Languages.of(context)!.salonOnboarding5Bubble2.split('\n').length > 1
+                    ? Languages.of(context)!.salonOnboarding5Bubble2.split('\n')[1]
+                    : "",
+                color: const Color(0xFFFF69B4), // Hot Pink
+                textColor: Colors.white,
+                delay: 400,
+              ),
+              const SizedBox(height: 12),
+              _buildMessageBubble(
+                title: Languages.of(context)!.salonOnboarding5Bubble3.split('\n')[0],
+                subtitle: Languages.of(context)!.salonOnboarding5Bubble3.split('\n').length > 1
+                    ? Languages.of(context)!.salonOnboarding5Bubble3.split('\n')[1]
+                    : "",
+                color: const Color(0xFFFFE5F5), // Light Pink
+                delay: 600,
+              ),
+              const SizedBox(height: 12),
+              _buildMessageBubble(
+                title: Languages.of(context)!.salonOnboarding5Bubble4.split('\n')[0],
+                subtitle: Languages.of(context)!.salonOnboarding5Bubble4.split('\n').length > 1
+                    ? Languages.of(context)!.salonOnboarding5Bubble4.split('\n')[1]
+                    : "",
+                color: const Color(0xFFFF69B4), // Hot Pink
+                textColor: Colors.white,
+                delay: 800,
+              ),
+            ],
+          ),
+        ),
+
+        // "ARE YOU READY" Button
+        Positioned(
+          bottom: 30,
+          right: 20,
+          child: _build3DButton(
+            text: Languages.of(context)!.areYouReadyText,
+            onPressed: _completeOnboarding,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 1200.ms),
+      ],
+    );
+  }
+
+  Widget _buildMessageBubble({
+    required String title,
+    required String subtitle,
+    required Color color,
+    Color textColor = Colors.black87,
+    required int delay,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.archivoBlack(
+              fontSize: 14,
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          if (subtitle.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                color: textColor.withOpacity(0.9),
+              ),
+            ),
+          ],
+        ],
+      ),
+    ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: delay.ms, curve: Curves.easeOut).fadeIn(delay: delay.ms);
   }
 
   Widget _buildStep4Card({required String text, required int delay, bool isRightAligned = false}) {

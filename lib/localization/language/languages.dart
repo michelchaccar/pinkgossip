@@ -279,4 +279,10 @@ abstract class Languages {
   String get salonOnboarding4BottomTitle;
   String get salonOnboarding4BottomDesc;
   String get whyChooseUsText;
+  String get salonOnboarding5Title;
+  String get salonOnboarding5Bubble1;
+  String get salonOnboarding5Bubble2;
+  String get salonOnboarding5Bubble3;
+  String get salonOnboarding5Bubble4;
+  String get areYouReadyText;
 }
