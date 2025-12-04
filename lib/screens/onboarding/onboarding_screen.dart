@@ -27,7 +27,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   late AnimationController _cycleController;
 
   // Consistent Colors
-  // Consistent Colors
   static const Color _kVibrantPink = Color(0xFFFF1493); // DeepPink
   static const Color _kPalePink = Color(0xFFFFE5F5);
 
@@ -80,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   @override
   Widget build(BuildContext context) {
     // Logic: Show Salon if userType is "2" OR if we force it for debugging
-    if (widget.userType == "2" || _forceSalon) {
+    if (widget.userType == "1" || _forceSalon) {
       return _buildSalonOnboarding();
     } else {
       return Scaffold(
@@ -311,7 +310,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                       textAlign: TextAlign.center,
                       text: TextSpan(
                         style: GoogleFonts.archivoBlack( // Changed to Archivo Black for consistency
-                          fontSize: 20, // Slightly reduced from 24 to fit bolder font
+                          fontSize: 24, 
                           color: Colors.black87,
                           height: 1.2,
                         ),
@@ -333,12 +332,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
               
               // Butterfly (Flying animation) - Moved OUTSIDE container to overlap correctly
               Positioned(
-                top: -150, // Overlapping top
-                left: -160, // Overlapping left
+                top: -200, // Overlapping top
+                left: -200, // Overlapping left
                 child: Image.asset(
                   "lib/assets/images/onboarding/salon_butterfly.png",
-                  width: 320,
-                  height: 320,
+                  width: 400,
+                  height: 400,
                 )
                     .animate(onPlay: (controller) => controller.repeat())
                     .moveY(begin: 0, end: -15, duration: 2000.ms, curve: Curves.easeInOut)
