@@ -591,7 +591,7 @@ class LanguageEn extends Languages {
   @override
   String get nextStepsText => "NEXT STEPS";
   @override
-  String get salonOnboarding4Title => "THE\nSCAN & GOSSIP\nEFFECT";
+  String get salonOnboarding4Title => "SCAN & GOSSIP\nEFFECT";
   @override
   String get salonOnboarding4Card1 => "Client scans before the service begins and take a before photo";
   @override
@@ -605,7 +605,7 @@ class LanguageEn extends Languages {
   @override
   String get whyChooseUsText => "WHY CHOOSE US";
   @override
-  String get salonOnboarding5Title => "WHY SALON LOVES\nPINK GOSSIP";
+  String get salonOnboarding5Title => "SALON LOVES\nPINK GOSSIP";
   @override
   String get salonOnboarding5Bubble1 => "Authentic proof, not curated ads\nReal clients, real photos, real experiences.";
   @override
@@ -617,7 +617,7 @@ class LanguageEn extends Languages {
   @override
   String get areYouReadyText => "ARE YOU READY";
   @override
-  String get salonOnboarding6Title => "YOU ARE ALL SET\nFOR SUCCESS";
+  String get salonOnboarding6Title => "ALL SET\nFOR SUCCESS";
   @override
   String get salonOnboarding6Desc => "You’re officially part of\nthe Pink Gossip\nmovement.\nLet’s start collecting\nreal social proof and\ngrowing your beauty\nempire.";
   @override

@@ -636,6 +636,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
               Languages.of(context)!.salonOnboarding4Title,
               textAlign: TextAlign.center,
               fontSize: 40,
+              height: 1.1,
             ),
           ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
         ),
@@ -772,6 +773,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
               Languages.of(context)!.salonOnboarding5Title,
               textAlign: TextAlign.center,
               fontSize: 36,
+              height: 1.2,
+
             ),
           ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
         ),
@@ -1062,7 +1065,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     );
   }
 
-  Widget _buildOutlinedText(String text, {TextAlign textAlign = TextAlign.start, double fontSize = 46}) {
+  Widget _buildOutlinedText(String text, {TextAlign textAlign = TextAlign.start, double fontSize = 46, double height = 0.9}) {
     return Stack(
       children: [
         // Stroke
@@ -1071,7 +1074,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           textAlign: textAlign,
           style: GoogleFonts.archivoBlack(
             fontSize: fontSize,
-            height: 0.9,
+            height: height,
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = 6
@@ -1084,7 +1087,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           textAlign: textAlign,
           style: GoogleFonts.archivoBlack(
             fontSize: fontSize,
-            height: 0.9,
+            height: height,
             color: _kPalePink,
             shadows: [
               BoxShadow(
