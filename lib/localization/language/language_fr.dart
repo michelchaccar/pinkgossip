@@ -766,9 +766,9 @@ class LanguageFr extends Languages {
   @override
   String get salonOnboarding4BottomDesc => "• Leur publication booste votre visibilité instantanément et alimente votre page sociale !";
   @override
-  String get whyChooseUsText => "POURQUOI NOUS CHOISIR";
+  String get whyChooseUsText => "NOUS CHOISIR";
   @override
-  String get salonOnboarding5Title => "POURQUOI LES SALONS AIMENT\nPINK GOSSIP";
+  String get salonOnboarding5Title => "REJOIGNEZ\nPINK GOSSIP";
   @override
   String get salonOnboarding5Bubble1 => "Preuve authentique, pas de publicités organisées\nVrais clients, vraies photos, vraies expériences.";
   @override
@@ -778,13 +778,13 @@ class LanguageFr extends Languages {
   @override
   String get salonOnboarding5Bubble4 => "Programme de fidélité intégré\nVous n'avez rien à suivre. L'application récompense vos clients pour leur fidélité — et vous continuez à obtenir des clients réguliers.";
   @override
-  String get areYouReadyText => "ÊTES-VOUS PRÊT";
+  String get areYouReadyText => "ÊTES-VOUS PRÊTS";
   @override
-  String get salonOnboarding6Title => "VOUS ÊTES PRÊT\nPOUR LE SUCCÈS";
+  String get salonOnboarding6Title => "PRÊTS POUR LE SUCCÈS";
   @override
   String get salonOnboarding6Desc => "Vous faites officiellement partie du\nmouvement Pink Gossip.\nCommençons à collecter\nde vraies preuves sociales et\nà développer votre empire\nde la beauté.";
   @override
   String get scanAndGossipText => "SCAN & GOSSIP";
   @override
-  String get letsBeginText => "COMMENÇONS";
+  String get letsBeginText => "C'EST PARTI";
 }

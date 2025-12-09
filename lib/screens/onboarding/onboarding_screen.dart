@@ -30,7 +30,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   static const Color _kVibrantPink = Color(0xFFFF1493); // DeepPink
   static const Color _kPalePink = Color(0xFFFFE5F5);
 
-
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onboarding_completed_${widget.userId}', true);
@@ -432,9 +431,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   }
 
   Widget _buildSalonOnboardingStep3() {
+    final config = _ResponsiveConfig(MediaQuery.of(context).size);
+
     return Stack(
       children: [
-        // Background
+        // Layer 1: Background (unchanged)
         Positioned.fill(
           child: Image.asset(
             "lib/assets/images/onboarding/salon_bg.png",
@@ -442,164 +443,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ),
 
-        // Title "How It Works"
-        Positioned(
-          top: 100,
-          left: 20,
-          right: 0,
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.9),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
+        // Layer 2: Scrollable content
+        SafeArea(
+          child: SingleChildScrollView(
+            physics: config.isVerySmall
+                ? const AlwaysScrollableScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: config.topPadding),
+                _buildStep3Title(config),
+                SizedBox(height: config.verticalSpacing),
+                _buildStep3TopCard(config),
+                SizedBox(height: config.verticalSpacing),
+                _buildStep3QRCode(config),
+                SizedBox(height: config.verticalSpacing),
+                _buildStep3Description(config),
+                SizedBox(height: config.bottomSpacing), // Adaptive space for button
               ],
             ),
-            alignment: Alignment.center,
-            child: _buildOutlinedText(
-              Languages.of(context)!.salonOnboarding3Title,
-              textAlign: TextAlign.center,
-            ),
-          ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
-        ),
-
-        // Main Card
-        Positioned(
-          top: 180,
-          left: 20,
-          right: 20,
-          child: Column(
-            children: [
-              // Top Card: "Display your Pink Gossip QR Code"
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF5F5F5),
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
-                      blurRadius: 10,
-                      offset: const Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Transform.rotate(
-                      angle: 0.4, // Match design rotation
-                      child: Transform.flip(
-                        flipX: true,
-                        child: Image.asset(
-                          "lib/assets/images/onboarding/salon_butterfly.png",
-                          width: 90,
-                          height: 90,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        Languages.of(context)!.salonOnboarding3CardTitle,
-                        style: GoogleFonts.poppins(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black87,
-                          height: 1.3,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ).animate().fadeIn(duration: 600.ms, delay: 200.ms).moveX(begin: -50, end: 0),
-
-              const SizedBox(height: 24),
-
-              // QR Code Card
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Transform.scale(
-                      scale: 1.2,
-                      child: Image.asset(
-                        "lib/assets/images/onboarding/code_QR.png",
-                        width: 250,
-                        height: 250,
-                      ),
-                    ),
-                  ],
-                ),
-              ).animate().scale(duration: 600.ms, delay: 400.ms, curve: Curves.easeOutBack),
-            ],
           ),
         ),
 
-        // Bottom Description Card
-        Positioned(
-          bottom: 120,
-          left: 20,
-          right: 20,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.95),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: RichText(
-              textAlign: TextAlign.left, // Left aligned as per design
-              text: TextSpan(
-                style: GoogleFonts.archivoBlack( // Base style for the whole block
-                  fontSize: 16,
-                  color: Colors.black87,
-                  height: 1.3,
-                ),
-                children: [
-                  TextSpan(
-                    text: Languages.of(context)!.salonOnboarding3DescPart1,
-                    style: GoogleFonts.archivoBlack( // Explicitly use Archivo Black for the pink part
-                      color: _kVibrantPink, // Vibrant Pink
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  TextSpan(
-                    text: Languages.of(context)!.salonOnboarding3DescPart2,
-                    style: GoogleFonts.archivoBlack( // Explicitly use Archivo Black for the black part
-                      color: const Color(0xFF222222), // Darker black for contrast
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut),
-        ),
-
-        // Next Steps Button
+        // Layer 3: Fixed UI elements (unchanged)
         Positioned(
           bottom: 30,
           right: 20,
@@ -609,10 +475,162 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
 
-        // Skip Button
         _buildSkipButton(),
       ],
     );
+  }
+
+  // Helper widgets for Screen 3
+  Widget _buildStep3Title(_ResponsiveConfig config) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15),
+            bottomLeft: Radius.circular(15),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: _buildOutlinedText(
+          Languages.of(context)!.salonOnboarding3Title,
+          textAlign: TextAlign.center,
+          fontSize: config.titleFontSize,
+        ),
+      ),
+    ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut);
+  }
+
+  Widget _buildStep3TopCard(_ResponsiveConfig config) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        width: double.infinity,
+        padding: config.cardInsets,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF5F5F5),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 0),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Transform.rotate(
+              angle: 0.4,
+              child: Transform.flip(
+                flipX: true,
+                child: Image.asset(
+                  "lib/assets/images/onboarding/salon_butterfly.png",
+                  width: config.butterflySize,
+                  height: config.butterflySize,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                Languages.of(context)!.salonOnboarding3CardTitle,
+                style: GoogleFonts.poppins(
+                  fontSize: config.cardTitleFontSize,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black87,
+                  height: 1.3,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ).animate().fadeIn(duration: 600.ms, delay: 200.ms).moveX(begin: -50, end: 0);
+  }
+
+  Widget _buildStep3QRCode(_ResponsiveConfig config) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Transform.scale(
+              scale: config.qrCodeScale,
+              child: Image.asset(
+                "lib/assets/images/onboarding/code_QR.png",
+                width: config.qrCodeSize,
+                height: config.qrCodeSize,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ).animate().scale(duration: 600.ms, delay: 400.ms, curve: Curves.easeOutBack);
+  }
+
+  Widget _buildStep3Description(_ResponsiveConfig config) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        padding: EdgeInsets.all(config.cardPadding),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.95),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: RichText(
+          textAlign: TextAlign.left,
+          text: TextSpan(
+            style: GoogleFonts.archivoBlack(
+              fontSize: config.bodyFontSize,
+              color: Colors.black87,
+              height: 1.3,
+            ),
+            children: [
+              TextSpan(
+                text: Languages.of(context)!.salonOnboarding3DescPart1,
+                style: GoogleFonts.archivoBlack(
+                  color: _kVibrantPink,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              TextSpan(
+                text: Languages.of(context)!.salonOnboarding3DescPart2,
+                style: GoogleFonts.archivoBlack(
+                  color: const Color(0xFF222222),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut);
   }
 
   Widget _buildSalonOnboardingStep4() {
@@ -1387,6 +1405,86 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         _buildSkipButton(),
       ],
     );
+  }
+}
+
+// Responsive configuration helper class with linear interpolation
+class _ResponsiveConfig {
+  final Size screenSize;
+
+  _ResponsiveConfig(this.screenSize);
+
+  // Screen height breakpoints
+  static const double minScreenHeight = 667;  // iPhone SE
+  static const double maxScreenHeight = 926;  // iPhone 17 Pro Max
+  static const double verySmallThreshold = 667;
+
+  // Font size ranges
+  static const double minTitleFontSize = 32;
+  static const double maxTitleFontSize = 46;
+  static const double minBodyFontSize = 13;
+  static const double maxBodyFontSize = 18;
+  static const double minCardTitleFontSize = 14;
+  static const double maxCardTitleFontSize = 19;
+
+  // Image size ranges
+  static const double minQrCodeSize = 180;
+  static const double maxQrCodeSize = 280;
+  static const double minQrCodeScale = 1.0;
+  static const double maxQrCodeScale = 1.2;
+  static const double minButterflySize = 70;
+  static const double maxButterflySize = 95;
+
+  // Spacing ranges
+  static const double minVerticalSpacing = 12;
+  static const double maxVerticalSpacing = 24;
+  static const double minCardPadding = 12;
+  static const double maxCardPadding = 24;
+  static const double minTopPadding = 60;
+  static const double maxTopPadding = 40;  // Inverse: smaller on larger screens
+  static const double minBottomSpacing = 100;
+  static const double maxBottomSpacing = 160;
+
+  // Card insets ranges
+  static const double minCardInsetsHorizontal = 12;
+  static const double maxCardInsetsHorizontal = 28;
+  static const double minCardInsetsVertical = 8;
+  static const double maxCardInsetsVertical = 14;
+
+  // Linear interpolation between min and max values based on screen height
+  double _interpolate(double minHeight, double maxHeight, double minValue, double maxValue) {
+    final height = screenSize.height;
+    if (height <= minHeight) return minValue;
+    if (height >= maxHeight) return maxValue;
+
+    // Calculate ratio and interpolate
+    final ratio = (height - minHeight) / (maxHeight - minHeight);
+    return minValue + (maxValue - minValue) * ratio;
+  }
+
+  // Helper: Check if screen is very small (for special cases like scroll)
+  bool get isVerySmall => screenSize.height < verySmallThreshold;
+
+  // Font sizes - smoothly adapt from iPhone SE to Pro Max
+  double get titleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minTitleFontSize, maxTitleFontSize);
+  double get bodyFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBodyFontSize, maxBodyFontSize);
+  double get cardTitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minCardTitleFontSize, maxCardTitleFontSize);
+
+  // Image sizes - smoothly adapt
+  double get qrCodeSize => _interpolate(minScreenHeight, maxScreenHeight, minQrCodeSize, maxQrCodeSize);
+  double get qrCodeScale => _interpolate(minScreenHeight, maxScreenHeight, minQrCodeScale, maxQrCodeScale);
+  double get butterflySize => _interpolate(minScreenHeight, maxScreenHeight, minButterflySize, maxButterflySize);
+
+  // Spacing - smoothly adapt
+  double get verticalSpacing => _interpolate(minScreenHeight, maxScreenHeight, minVerticalSpacing, maxVerticalSpacing);
+  double get cardPadding => _interpolate(minScreenHeight, maxScreenHeight, minCardPadding, maxCardPadding);
+  double get topPadding => _interpolate(minScreenHeight, maxScreenHeight, minTopPadding, maxTopPadding);
+  double get bottomSpacing => _interpolate(minScreenHeight, maxScreenHeight, minBottomSpacing, maxBottomSpacing);
+
+  EdgeInsets get cardInsets {
+    final horizontal = _interpolate(minScreenHeight, maxScreenHeight, minCardInsetsHorizontal, maxCardInsetsHorizontal);
+    final vertical = _interpolate(minScreenHeight, maxScreenHeight, minCardInsetsVertical, maxCardInsetsVertical);
+    return EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical);
   }
 }
 
