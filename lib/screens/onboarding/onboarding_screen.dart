@@ -633,10 +633,113 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut);
   }
 
+  // Helper widgets for Screen 4
+  Widget _buildStep4Title(_ResponsiveConfig config) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Center(
+        child: _buildOutlinedText(
+          Languages.of(context)!.salonOnboarding4Title,
+          textAlign: TextAlign.center,
+          fontSize: config.screen4TitleFontSize,
+          height: 1.1,
+        ),
+      ),
+    ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut);
+  }
+
+  Widget _buildStep4Cards(_ResponsiveConfig config) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          _buildStep4Card(
+            text: Languages.of(context)!.salonOnboarding4Card1,
+            delay: 200,
+            config: config,
+          ),
+          SizedBox(height: config.cardSpacing),
+          _buildStep4Card(
+            text: Languages.of(context)!.salonOnboarding4Card2,
+            delay: 400,
+            config: config,
+          ),
+          SizedBox(height: config.cardSpacing),
+          _buildStep4Card(
+            text: Languages.of(context)!.salonOnboarding4Card3,
+            delay: 600,
+            isRightAligned: true,
+            config: config,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStep4BoomSection(_ResponsiveConfig config) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: config.boomPadding,
+          vertical: config.boomPadding * 0.8,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.95),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+              text: TextSpan(
+                style: GoogleFonts.archivoBlack(
+                  fontSize: config.boomTitleFontSize,
+                  color: Colors.black87,
+                ),
+                children: [
+                  TextSpan(
+                    text: "Boom",
+                    style: GoogleFonts.archivoBlack(
+                      color: _kVibrantPink,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  const TextSpan(text: " — "),
+                  TextSpan(
+                    text: Languages.of(context)!.salonOnboarding4BottomTitle.replaceAll("Boom — ", ""),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              Languages.of(context)!.salonOnboarding4BottomDesc,
+              style: GoogleFonts.archivoBlack(
+                fontSize: config.boomDescFontSize,
+                color: Colors.black87,
+                height: 1.3,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 800.ms, curve: Curves.easeOut);
+  }
+
   Widget _buildSalonOnboardingStep4() {
+    final config = _ResponsiveConfig(MediaQuery.of(context).size);
+
     return Stack(
       children: [
-        // Background
+        // Layer 1: Background
         Positioned.fill(
           child: Image.asset(
             "lib/assets/images/onboarding/salon_bg.png",
@@ -644,102 +747,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ),
 
-        // Title "THE SCAN & GOSSIP EFFECT"
-        Positioned(
-          top: 110,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: _buildOutlinedText(
-              Languages.of(context)!.salonOnboarding4Title,
-              textAlign: TextAlign.center,
-              fontSize: 40,
-              height: 1.1,
+        // Layer 2: Scrollable content
+        SafeArea(
+          child: SingleChildScrollView(
+            physics: config.isVerySmall
+                ? const AlwaysScrollableScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: config.topPadding),
+                _buildStep4Title(config),
+                SizedBox(height: config.verticalSpacing),
+                _buildStep4Cards(config),
+                SizedBox(height: config.verticalSpacing),
+                _buildStep4BoomSection(config),
+                SizedBox(height: config.bottomSpacing),
+              ],
             ),
-          ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
-        ),
-
-        // 3 Info Cards
-        Positioned(
-          top: 240,
-          left: 20,
-          right: 20,
-          child: Column(
-            children: [
-              _buildStep4Card(
-                text: Languages.of(context)!.salonOnboarding4Card1,
-                delay: 200,
-              ),
-              const SizedBox(height: 16),
-              _buildStep4Card(
-                text: Languages.of(context)!.salonOnboarding4Card2,
-                delay: 400,
-              ),
-              const SizedBox(height: 16),
-              _buildStep4Card(
-                text: Languages.of(context)!.salonOnboarding4Card3,
-                delay: 600,
-                isRightAligned: true, 
-              ),
-            ],
           ),
         ),
 
-        // Bottom "Boom" Section
-        Positioned(
-          bottom: 110,
-          left: 20,
-          right: 20,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.95),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.archivoBlack(
-                      fontSize: 18,
-                      color: Colors.black87,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: "Boom",
-                        style: GoogleFonts.archivoBlack(
-                          color: _kVibrantPink,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const TextSpan(text: " — "),
-                      TextSpan(text: Languages.of(context)!.salonOnboarding4BottomTitle.replaceAll("Boom — ", "")),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  Languages.of(context)!.salonOnboarding4BottomDesc,
-                  style: GoogleFonts.archivoBlack(
-                    fontSize: 14,
-                    color: Colors.black87,
-                    height: 1.3,
-                  ),
-                ),
-              ],
-            ),
-          ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 800.ms, curve: Curves.easeOut),
-        ),
-
-        // "WHY CHOOSE US" Button
+        // Layer 3: Fixed UI elements
         Positioned(
           bottom: 30,
           right: 20,
@@ -749,7 +777,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 1000.ms),
 
-        // Skip Button
         _buildSkipButton(),
       ],
     );
@@ -909,7 +936,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: delay.ms, curve: Curves.easeOut).fadeIn(delay: delay.ms);
   }
 
-  Widget _buildStep4Card({required String text, required int delay, bool isRightAligned = false}) {
+  Widget _buildStep4Card({
+    required String text,
+    required int delay,
+    required _ResponsiveConfig config,
+    bool isRightAligned = false,
+  }) {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFFF5F5F5).withOpacity(0.9),
@@ -926,13 +958,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         children: [
           if (!isRightAligned) ...[
              Transform.rotate(
-                angle: 0.4, 
+                angle: 0.4,
                 child: Transform.flip(
-                  flipX: true, 
+                  flipX: true,
                   child: Image.asset(
                     "lib/assets/images/onboarding/salon_butterfly.png",
-                    width: 100,
-                    height: 100,
+                    width: config.cardButterflySize,
+                    height: config.cardButterflySize,
                   ),
                 ),
              ),
@@ -942,7 +974,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             child: Text(
               text,
               style: GoogleFonts.poppins(
-                fontSize: 17,
+                fontSize: config.cardTextFontSize,
                 fontWeight: FontWeight.w400,
                 color: Colors.black87,
                 height: 1.3,
@@ -957,8 +989,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   flipX: true,
                   child: Image.asset(
                     "lib/assets/images/onboarding/salon_butterfly.png",
-                    width: 100,
-                    height: 100,
+                    width: config.cardButterflySize,
+                    height: config.cardButterflySize,
                   ),
                 ),
              ),
@@ -1441,7 +1473,7 @@ class _ResponsiveConfig {
   static const double minCardPadding = 12;
   static const double maxCardPadding = 24;
   static const double minTopPadding = 60;
-  static const double maxTopPadding = 40;  // Inverse: smaller on larger screens
+  static const double maxTopPadding = 80;  // Larger top padding on bigger screens
   static const double minBottomSpacing = 100;
   static const double maxBottomSpacing = 160;
 
@@ -1450,6 +1482,28 @@ class _ResponsiveConfig {
   static const double maxCardInsetsHorizontal = 28;
   static const double minCardInsetsVertical = 8;
   static const double maxCardInsetsVertical = 14;
+
+  // Screen 4 specific - Title font size
+  static const double minScreen4TitleFontSize = 28;
+  static const double maxScreen4TitleFontSize = 40;
+
+  // Screen 4 specific - Card spacing
+  static const double minCardSpacing = 12;
+  static const double maxCardSpacing = 16;
+
+  // Screen 4 specific - Card text & butterfly
+  static const double minCardTextFontSize = 14;
+  static const double maxCardTextFontSize = 17;
+  static const double minCardButterflySize = 80;
+  static const double maxCardButterflySize = 100;
+
+  // Screen 4 specific - Boom section
+  static const double minBoomTitleFontSize = 15;
+  static const double maxBoomTitleFontSize = 18;
+  static const double minBoomDescFontSize = 12;
+  static const double maxBoomDescFontSize = 14;
+  static const double minBoomPadding = 12;
+  static const double maxBoomPadding = 20;
 
   // Linear interpolation between min and max values based on screen height
   double _interpolate(double minHeight, double maxHeight, double minValue, double maxValue) {
@@ -1486,5 +1540,14 @@ class _ResponsiveConfig {
     final vertical = _interpolate(minScreenHeight, maxScreenHeight, minCardInsetsVertical, maxCardInsetsVertical);
     return EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical);
   }
+
+  // Screen 4 specific - Getters
+  double get screen4TitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen4TitleFontSize, maxScreen4TitleFontSize);
+  double get cardSpacing => _interpolate(minScreenHeight, maxScreenHeight, minCardSpacing, maxCardSpacing);
+  double get cardTextFontSize => _interpolate(minScreenHeight, maxScreenHeight, minCardTextFontSize, maxCardTextFontSize);
+  double get cardButterflySize => _interpolate(minScreenHeight, maxScreenHeight, minCardButterflySize, maxCardButterflySize);
+  double get boomTitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBoomTitleFontSize, maxBoomTitleFontSize);
+  double get boomDescFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBoomDescFontSize, maxBoomDescFontSize);
+  double get boomPadding => _interpolate(minScreenHeight, maxScreenHeight, minBoomPadding, maxBoomPadding);
 }
 
