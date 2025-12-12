@@ -1273,9 +1273,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     }
 
   Widget _buildSalonOnboardingStep6() {
+    final config = _ResponsiveConfig(MediaQuery.of(context).size);
+
     return Stack(
       children: [
-        // Background
+        // Layer 1: Background
         Positioned.fill(
           child: Image.asset(
             "lib/assets/images/onboarding/salon_bg.png",
@@ -1283,152 +1285,162 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ),
 
-        // Main Content in a Column for responsiveness
+        // Layer 2: Scrollable content
         SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              // Title
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Center(
-                  child: _buildOutlinedText(
-                    Languages.of(context)!.salonOnboarding6Title,
-                    textAlign: TextAlign.center,
-                    fontSize: 42, 
+          child: SingleChildScrollView(
+            physics: config.isVerySmall
+                ? const AlwaysScrollableScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: config.screen6TitleTop),
+
+                // Title (responsive)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Center(
+                    child: _buildOutlinedText(
+                      Languages.of(context)!.salonOnboarding6Title,
+                      textAlign: TextAlign.center,
+                      fontSize: config.screen6TitleFontSize,
+                      height: 1.05,
+                    ),
                   ),
                 ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
-              ),
 
-              const Spacer(flex: 4),
+                // Spacer dynamique (au lieu de Spacer(flex: 4))
+                SizedBox(height: config.screen6TitleToBoxSpacing),
 
-              // Butterfly & Text Box
-              SizedBox(
-                height: 200, 
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    // Text Box
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width, 
-                        margin: const EdgeInsets.only(left: 80), 
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10), 
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.0), 
-                          border: Border.all(color: _kVibrantPink, width: 2),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 15,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: RichText(
-                          textAlign: TextAlign.center, 
-                          text: TextSpan(
-                            style: GoogleFonts.poppins(
-                              fontSize: 20, 
-                              color: Colors.black87,
-                              height: 1.4,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            children: [
-                              TextSpan(text: Languages.of(context)!.salonOnboarding6Desc.split("Pink Gossip")[0]),
-                              TextSpan(
-                                text: "Pink Gossip",
-                                style: GoogleFonts.poppins(
-                                  color: _kVibrantPink,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                // Butterfly & Text Box (responsive height)
+                SizedBox(
+                  height: config.butterflyBoxHeight,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      // Text Box
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.only(left: 80),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.0),
+                            border: Border.all(color: _kVibrantPink, width: 2),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 15,
+                                offset: const Offset(0, 8),
                               ),
-                              TextSpan(text: Languages.of(context)!.salonOnboarding6Desc.split("Pink Gossip")[1]),
                             ],
                           ),
-                        ),
-                      ),
-                    ),
-
-                    // Butterfly
-                    Positioned(
-                      left: -80, 
-                      top: -60, 
-                      child: Transform.rotate(
-                        angle: -0.15, 
-                        child: Image.asset(
-                          "lib/assets/images/onboarding/salon_butterfly.png",
-                          width: 300, 
-                          height: 300,
-                        ),
-                      ),
-                    ),
-                  ],
-                ).animate().fadeIn(duration: 800.ms, delay: 200.ms).moveX(begin: 50, end: 0, curve: Curves.easeOut),
-              ),
-
-              const Spacer(flex: 1),
-
-              // Bottom Section: Phone + QR Code
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    // Phone Mockup
-                    Expanded(
-                      flex: 4,
-                      child: Transform.translate(
-                        offset: const Offset(-40, 50), 
-                        child: Transform.scale(
-                          scale: 1.30,
-                          child: Image.asset(
-                            "lib/assets/images/onboarding/phone_2.png",
-                            fit: BoxFit.contain,
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              style: GoogleFonts.poppins(
+                                fontSize: config.butterflyBoxTextSize,
+                                color: Colors.black87,
+                                height: 1.4,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              children: [
+                                TextSpan(text: Languages.of(context)!.salonOnboarding6Desc.split("Pink Gossip")[0]),
+                                TextSpan(
+                                  text: "Pink Gossip",
+                                  style: GoogleFonts.poppins(
+                                    color: _kVibrantPink,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(text: Languages.of(context)!.salonOnboarding6Desc.split("Pink Gossip")[1]),
+                              ],
+                            ),
                           ),
                         ),
-                      ).animate().moveY(begin: 200, end: 0, duration: 800.ms, delay: 400.ms, curve: Curves.easeOut),
-                    ),
+                      ),
 
-                    // QR Code Section
-                    Expanded(
-                      flex: 3,
-                      child: Transform.translate(
-                        offset: const Offset(0, -80), 
-                        child: Transform.scale(
-                          scale: 1.2,
-                          child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Image.asset(
-                                  "lib/assets/images/onboarding/code_QR_2.png",
-                                  width: 200,
-                                  height: 200,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 40), // Space for button alignment
-                          ],
+                      // Butterfly (responsive size)
+                      Positioned(
+                        left: -80,
+                        top: -60,
+                        child: Transform.rotate(
+                          angle: -0.15,
+                          child: Image.asset(
+                            "lib/assets/images/onboarding/salon_butterfly.png",
+                            width: config.butterflyImageSize,
+                            height: config.butterflyImageSize,
+                          ),
                         ),
                       ),
-                      ).animate().scale(duration: 600.ms, delay: 600.ms, curve: Curves.easeOutBack),
-                    ),
-                  ],
+                    ],
+                  ).animate().fadeIn(duration: 800.ms, delay: 200.ms).moveX(begin: 50, end: 0, curve: Curves.easeOut),
                 ),
-              ),
-              
-              const SizedBox(height: 20),
-            ],
+
+                // Spacer dynamique (au lieu de Spacer(flex: 1))
+                SizedBox(height: config.verticalSpacing),
+
+                // Bottom Section: Phone + QR Code (responsive scales)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      // Phone Mockup (responsive scale)
+                      Expanded(
+                        flex: 4,
+                        child: Transform.translate(
+                          offset: const Offset(-40, 50),
+                          child: Transform.scale(
+                            scale: config.phoneScale,
+                            child: Image.asset(
+                              "lib/assets/images/onboarding/phone_2.png",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ).animate().moveY(begin: 200, end: 0, duration: 800.ms, delay: 400.ms, curve: Curves.easeOut),
+                      ),
+
+                      // QR Code Section (responsive scale and size)
+                      Expanded(
+                        flex: 3,
+                        child: Transform.translate(
+                          offset: const Offset(0, -80),
+                          child: Transform.scale(
+                            scale: config.qrCodeScale6,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Image.asset(
+                                      "lib/assets/images/onboarding/code_QR_2.png",
+                                      width: config.qrCodeSize6,
+                                      height: config.qrCodeSize6,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 40),
+                              ],
+                            ),
+                          ),
+                        ).animate().scale(duration: 600.ms, delay: 600.ms, curve: Curves.easeOutBack),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: config.screen6BottomSpacing),
+                SizedBox(height: config.bottomSpacing), // Espace pour le bouton
+              ],
+            ),
           ),
         ),
 
-        // "LET'S BEGIN" Button (Bottom Right)
+        // Layer 3: Fixed UI elements
         Positioned(
           bottom: 30,
           right: 20,
@@ -1438,7 +1450,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
 
-        // Skip Button
         _buildSkipButton(),
       ],
     );
@@ -1536,6 +1547,34 @@ class _ResponsiveConfig {
   static const double minBubblesBottom = 100;
   static const double maxBubblesBottom = 120;
 
+  // Screen 6 specific - Title
+  static const double minScreen6TitleFontSize = 32;
+  static const double maxScreen6TitleFontSize = 42;
+  static const double minScreen6TitleTop = 20;
+  static const double maxScreen6TitleTop = 40;
+  static const double minScreen6TitleToBoxSpacing = 30;
+  static const double maxScreen6TitleToBoxSpacing = 60;
+
+  // Screen 6 specific - Butterfly & Text Box
+  static const double minButterflyBoxHeight = 160;
+  static const double maxButterflyBoxHeight = 200;
+  static const double minButterflyBoxTextSize = 16;
+  static const double maxButterflyBoxTextSize = 20;
+  static const double minButterflyImageSize = 240;
+  static const double maxButterflyImageSize = 300;
+
+  // Screen 6 specific - Phone & QR Code
+  static const double minPhoneScale = 1.10;
+  static const double maxPhoneScale = 1.30;
+  static const double minQrCodeScale6 = 1.0;
+  static const double maxQrCodeScale6 = 1.2;
+  static const double minQrCodeSize6 = 160;
+  static const double maxQrCodeSize6 = 200;
+
+  // Screen 6 specific - Spacing
+  static const double minScreen6BottomSpacing = 10;
+  static const double maxScreen6BottomSpacing = 20;
+
   // Linear interpolation between min and max values based on screen height
   double _interpolate(double minHeight, double maxHeight, double minValue, double maxValue) {
     final height = screenSize.height;
@@ -1596,5 +1635,17 @@ class _ResponsiveConfig {
     final v = _interpolate(minScreenHeight, maxScreenHeight, minBubblePaddingV, maxBubblePaddingV);
     return EdgeInsets.symmetric(horizontal: h, vertical: v);
   }
+
+  // Screen 6 specific - Getters
+  double get screen6TitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen6TitleFontSize, maxScreen6TitleFontSize);
+  double get screen6TitleTop => _interpolate(minScreenHeight, maxScreenHeight, minScreen6TitleTop, maxScreen6TitleTop);
+  double get screen6TitleToBoxSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen6TitleToBoxSpacing, maxScreen6TitleToBoxSpacing);
+  double get butterflyBoxHeight => _interpolate(minScreenHeight, maxScreenHeight, minButterflyBoxHeight, maxButterflyBoxHeight);
+  double get butterflyBoxTextSize => _interpolate(minScreenHeight, maxScreenHeight, minButterflyBoxTextSize, maxButterflyBoxTextSize);
+  double get butterflyImageSize => _interpolate(minScreenHeight, maxScreenHeight, minButterflyImageSize, maxButterflyImageSize);
+  double get phoneScale => _interpolate(minScreenHeight, maxScreenHeight, minPhoneScale, maxPhoneScale);
+  double get qrCodeScale6 => _interpolate(minScreenHeight, maxScreenHeight, minQrCodeScale6, maxQrCodeScale6);
+  double get qrCodeSize6 => _interpolate(minScreenHeight, maxScreenHeight, minQrCodeSize6, maxQrCodeSize6);
+  double get screen6BottomSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen6BottomSpacing, maxScreen6BottomSpacing);
 }
 
