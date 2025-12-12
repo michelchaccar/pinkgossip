@@ -783,9 +783,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   }
 
   Widget _buildSalonOnboardingStep5() {
+    final config = _ResponsiveConfig(MediaQuery.of(context).size);
+
     return Stack(
       children: [
-        // Background
+        // Layer 1: Background
         Positioned.fill(
           child: Image.asset(
             "lib/assets/images/onboarding/salon_bg.png",
@@ -793,40 +795,39 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ),
 
-        // Phone Mockup (Center)
+        // Layer 2: Phone Mockup (Center, responsive size)
         Positioned.fill(
           child: Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 50),
+              padding: EdgeInsets.only(bottom: config.phoneBottomPadding),
               child: Image.asset(
                 "lib/assets/images/onboarding/phone.png",
                 fit: BoxFit.contain,
-                height: MediaQuery.of(context).size.height * 0.7,
+                height: MediaQuery.of(context).size.height * config.phoneHeightRatio,
               ),
             ),
           ).animate().fadeIn(duration: 800.ms).moveY(begin: 50, end: 0, duration: 800.ms, curve: Curves.easeOut),
         ),
 
-        // Title (Top)
+        // Layer 3: Title (Top, responsive)
         Positioned(
-          top: 90,
+          top: config.screen5TitleTop,
           left: 0,
           right: 0,
           child: Center(
             child: _buildOutlinedText(
               Languages.of(context)!.salonOnboarding5Title,
               textAlign: TextAlign.center,
-              fontSize: 36,
+              fontSize: config.screen5TitleFontSize,
               height: 1.2,
-
             ),
           ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
         ),
 
-        // Message Bubbles (Entering from bottom)
+        // Layer 4: Message Bubbles (Bottom, responsive)
         Positioned(
-          bottom: 120, // Leave space for button
+          bottom: config.bubblesBottom,
           left: 0,
           right: 0,
           child: Column(
@@ -834,46 +835,50 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             children: [
               _buildMessageBubble(
                 title: Languages.of(context)!.salonOnboarding5Bubble1.split('\n')[0],
-                subtitle: Languages.of(context)!.salonOnboarding5Bubble1.split('\n').length > 1 
-                    ? Languages.of(context)!.salonOnboarding5Bubble1.split('\n')[1] 
+                subtitle: Languages.of(context)!.salonOnboarding5Bubble1.split('\n').length > 1
+                    ? Languages.of(context)!.salonOnboarding5Bubble1.split('\n')[1]
                     : "",
-                color: const Color(0xFFFFE5F5), // Light Pink
+                color: const Color(0xFFFFE5F5),
                 delay: 200,
+                config: config,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: config.bubbleSpacing),
               _buildMessageBubble(
                 title: Languages.of(context)!.salonOnboarding5Bubble2.split('\n')[0],
                 subtitle: Languages.of(context)!.salonOnboarding5Bubble2.split('\n').length > 1
                     ? Languages.of(context)!.salonOnboarding5Bubble2.split('\n')[1]
                     : "",
-                color: const Color(0xFFFF69B4), // Hot Pink
+                color: const Color(0xFFFF69B4),
                 textColor: Colors.white,
                 delay: 400,
+                config: config,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: config.bubbleSpacing),
               _buildMessageBubble(
                 title: Languages.of(context)!.salonOnboarding5Bubble3.split('\n')[0],
                 subtitle: Languages.of(context)!.salonOnboarding5Bubble3.split('\n').length > 1
                     ? Languages.of(context)!.salonOnboarding5Bubble3.split('\n')[1]
                     : "",
-                color: const Color(0xFFFFE5F5), // Light Pink
+                color: const Color(0xFFFFE5F5),
                 delay: 600,
+                config: config,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: config.bubbleSpacing),
               _buildMessageBubble(
                 title: Languages.of(context)!.salonOnboarding5Bubble4.split('\n')[0],
                 subtitle: Languages.of(context)!.salonOnboarding5Bubble4.split('\n').length > 1
                     ? Languages.of(context)!.salonOnboarding5Bubble4.split('\n')[1]
                     : "",
-                color: const Color(0xFFFF69B4), // Hot Pink
+                color: const Color(0xFFFF69B4),
                 textColor: Colors.white,
                 delay: 800,
+                config: config,
               ),
             ],
           ),
         ),
 
-        // "ARE YOU READY" Button
+        // Layer 5: Fixed UI elements
         Positioned(
           bottom: 30,
           right: 20,
@@ -883,7 +888,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 1200.ms),
 
-        // Skip Button
         _buildSkipButton(),
       ],
     );
@@ -895,10 +899,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     required Color color,
     Color textColor = Colors.black87,
     required int delay,
+    required _ResponsiveConfig config,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: config.bubblePadding,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(20),
@@ -916,7 +921,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           Text(
             title,
             style: GoogleFonts.archivoBlack(
-              fontSize: 14,
+              fontSize: config.bubbleTitleFontSize,
               color: textColor,
               fontWeight: FontWeight.bold,
             ),
@@ -926,7 +931,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             Text(
               subtitle,
               style: GoogleFonts.poppins(
-                fontSize: 12,
+                fontSize: config.bubbleSubtitleFontSize,
                 color: textColor.withOpacity(0.9),
               ),
             ),
@@ -1505,6 +1510,32 @@ class _ResponsiveConfig {
   static const double minBoomPadding = 12;
   static const double maxBoomPadding = 20;
 
+  // Screen 5 specific - Title
+  static const double minScreen5TitleFontSize = 26;
+  static const double maxScreen5TitleFontSize = 36;
+  static const double minScreen5TitleTop = 60;
+  static const double maxScreen5TitleTop = 90;
+
+  // Screen 5 specific - Phone mockup
+  static const double minPhoneHeightRatio = 0.50;  // 50% of screen height
+  static const double maxPhoneHeightRatio = 0.65;  // 65% of screen height
+  static const double minPhoneBottomPadding = 30;
+  static const double maxPhoneBottomPadding = 50;
+
+  // Screen 5 specific - Message bubbles
+  static const double minBubbleSpacing = 8;
+  static const double maxBubbleSpacing = 12;
+  static const double minBubblePaddingH = 16;
+  static const double maxBubblePaddingH = 20;
+  static const double minBubblePaddingV = 10;
+  static const double maxBubblePaddingV = 12;
+  static const double minBubbleTitleFontSize = 12;
+  static const double maxBubbleTitleFontSize = 14;
+  static const double minBubbleSubtitleFontSize = 10;
+  static const double maxBubbleSubtitleFontSize = 12;
+  static const double minBubblesBottom = 100;
+  static const double maxBubblesBottom = 120;
+
   // Linear interpolation between min and max values based on screen height
   double _interpolate(double minHeight, double maxHeight, double minValue, double maxValue) {
     final height = screenSize.height;
@@ -1549,5 +1580,21 @@ class _ResponsiveConfig {
   double get boomTitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBoomTitleFontSize, maxBoomTitleFontSize);
   double get boomDescFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBoomDescFontSize, maxBoomDescFontSize);
   double get boomPadding => _interpolate(minScreenHeight, maxScreenHeight, minBoomPadding, maxBoomPadding);
+
+  // Screen 5 specific - Getters
+  double get screen5TitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen5TitleFontSize, maxScreen5TitleFontSize);
+  double get screen5TitleTop => _interpolate(minScreenHeight, maxScreenHeight, minScreen5TitleTop, maxScreen5TitleTop);
+  double get phoneHeightRatio => _interpolate(minScreenHeight, maxScreenHeight, minPhoneHeightRatio, maxPhoneHeightRatio);
+  double get phoneBottomPadding => _interpolate(minScreenHeight, maxScreenHeight, minPhoneBottomPadding, maxPhoneBottomPadding);
+  double get bubbleSpacing => _interpolate(minScreenHeight, maxScreenHeight, minBubbleSpacing, maxBubbleSpacing);
+  double get bubbleTitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBubbleTitleFontSize, maxBubbleTitleFontSize);
+  double get bubbleSubtitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBubbleSubtitleFontSize, maxBubbleSubtitleFontSize);
+  double get bubblesBottom => _interpolate(minScreenHeight, maxScreenHeight, minBubblesBottom, maxBubblesBottom);
+
+  EdgeInsets get bubblePadding {
+    final h = _interpolate(minScreenHeight, maxScreenHeight, minBubblePaddingH, maxBubblePaddingH);
+    final v = _interpolate(minScreenHeight, maxScreenHeight, minBubblePaddingV, maxBubblePaddingV);
+    return EdgeInsets.symmetric(horizontal: h, vertical: v);
+  }
 }
 
