@@ -451,7 +451,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 : const NeverScrollableScrollPhysics(),
             child: Column(
               children: [
-                SizedBox(height: config.topPadding),
+                SizedBox(height: config.screen3TopPadding),
                 _buildStep3Title(config),
                 SizedBox(height: config.verticalSpacing),
                 _buildStep3TopCard(config),
@@ -505,6 +505,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           Languages.of(context)!.salonOnboarding3Title,
           textAlign: TextAlign.center,
           fontSize: config.titleFontSize,
+          height: 1.0,  // Compact line height to reduce vertical spacing on 2-line wrap
         ),
       ),
     ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut);
@@ -575,11 +576,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         child: Column(
           children: [
             Transform.scale(
-              scale: config.qrCodeScale,
+              scale: config.screen3QrCodeScale,
               child: Image.asset(
                 "lib/assets/images/onboarding/code_QR.png",
-                width: config.qrCodeSize,
-                height: config.qrCodeSize,
+                width: config.screen3QrCodeSize,
+                height: config.screen3QrCodeSize,
               ),
             ),
           ],
@@ -1434,7 +1435,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 ),
 
                 SizedBox(height: config.screen6BottomSpacing),
-                SizedBox(height: config.bottomSpacing), // Espace pour le bouton
+                SizedBox(height: config.bottomSpacing), 
               ],
             ),
           ),
@@ -1492,6 +1493,16 @@ class _ResponsiveConfig {
   static const double maxTopPadding = 80;  // Larger top padding on bigger screens
   static const double minBottomSpacing = 100;
   static const double maxBottomSpacing = 160;
+
+  // Screen 3 specific - Top padding
+  static const double minScreen3TopPadding = 25;  // Constant 18px for all devices
+  static const double maxScreen3TopPadding = 25;  // Constant 18px for all devices
+
+  // Screen 3 specific - QR Code
+  static const double minScreen3QrCodeSize = 180;  // Same as min for consistency
+  static const double maxScreen3QrCodeSize = 220;  // Reduced from 280 to 220 to save vertical space
+  static const double minScreen3QrCodeScale = 1.0;  // Constant 1.0 for all devices
+  static const double maxScreen3QrCodeScale = 1.0;  // Constant 1.0 for all devices
 
   // Card insets ranges
   static const double minCardInsetsHorizontal = 12;
@@ -1604,6 +1615,11 @@ class _ResponsiveConfig {
   double get cardPadding => _interpolate(minScreenHeight, maxScreenHeight, minCardPadding, maxCardPadding);
   double get topPadding => _interpolate(minScreenHeight, maxScreenHeight, minTopPadding, maxTopPadding);
   double get bottomSpacing => _interpolate(minScreenHeight, maxScreenHeight, minBottomSpacing, maxBottomSpacing);
+
+  // Screen 3 specific - Getters
+  double get screen3TopPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen3TopPadding, maxScreen3TopPadding);
+  double get screen3QrCodeSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen3QrCodeSize, maxScreen3QrCodeSize);
+  double get screen3QrCodeScale => _interpolate(minScreenHeight, maxScreenHeight, minScreen3QrCodeScale, maxScreen3QrCodeScale);
 
   EdgeInsets get cardInsets {
     final horizontal = _interpolate(minScreenHeight, maxScreenHeight, minCardInsetsHorizontal, maxCardInsetsHorizontal);
