@@ -131,7 +131,7 @@ class LanguageFr extends Languages {
   String get follwersText => "Abonnées";
 
   @override
-  String get followingText => "Suivante";
+  String get followingText => "Abonnement";
 
   @override
   String get followText => "Suivre";
@@ -386,7 +386,7 @@ class LanguageFr extends Languages {
   String get handsText => "Mains";
 
   @override
-  String get likesText => "goûts";
+  String get likesText => "likes";
 
   @override
   String get addtocartText => "Ajouter au panier";
@@ -395,7 +395,7 @@ class LanguageFr extends Languages {
   String get allpostText => "Tous les messages";
 
   @override
-  String get FollowingText => "Suivante";
+  String get FollowingText => "Abonnement";
 
   @override
   String get RemoveText => "Retirer";
@@ -471,10 +471,10 @@ class LanguageFr extends Languages {
   String get nodatafoundText => "Aucune donnée trouvée";
 
   @override
-  String get yourstoryText => "Votre histoire";
+  String get yourstoryText => "Votre story";
 
   @override
-  String get addtostoryText => "Ajouter à l'histoire";
+  String get addtostoryText => "Ajouter à votre story";
 
   @override
   String get addtopostText => "Ajouter à la publication";
@@ -504,21 +504,21 @@ class LanguageFr extends Languages {
   String get sharedapostText => "A partagé une publication";
 
   @override
-  String get shareText => "partagér";
+  String get shareText => "Partager";
 
   @override
-  String get storyreplyText => "Répondre à l'histoire";
+  String get storyreplyText => "Répondre à votre story";
 
   @override
-  String get yourepliedtotheirstoryText => "Vous avez répondu à leur histoire";
+  String get yourepliedtotheirstoryText => "Vous avez répondu à leur story";
 
   @override
-  String get repliedtoyourstoryText => "J'ai répondu à votre histoire";
+  String get repliedtoyourstoryText => "J'ai répondu à votre story";
 
   @override
   String get salonreviewText => "SALONREVIEW";
   @override
-  String get nextText => "Suivante";
+  String get nextText => "Abonnement";
 
   @override
   String get captionText => "Écrire une légende";
@@ -561,7 +561,7 @@ class LanguageFr extends Languages {
   String get uploadimageText => "Télécharger l'image";
 
   @override
-  String get submitstoryText => "Soumettre une histoire";
+  String get submitstoryText => "Soumettre une story";
   @override
   String get submitsalonreviewText => "Soumettre un avis sur le salon";
 
@@ -596,13 +596,13 @@ class LanguageFr extends Languages {
   String get sharepostText => "Partager la publication";
 
   @override
-  String get sharestoryText => "Partager l'histoire";
+  String get sharestoryText => "Partager votre story";
 
   @override
-  String get sharesalonreviewText => "Partager l'avis sur le salon";
+  String get sharesalonreviewText => "Partager votre avis sur le salon";
 
   @override
-  String get gossiperText => "Bavard";
+  String get gossiperText => "Gossiper";
   @override
   String get beautybusinessText => "Entreprise de beauté";
 
@@ -648,9 +648,9 @@ class LanguageFr extends Languages {
   @override
   String get mapText => "Carte";
   @override
-  String get blockText => "Bloc";
+  String get blockText => "Bloquer";
   @override
-  String get reportText => "Rapport";
+  String get reportText => "Rapporter";
   @override
   String get downlaodText => "Télécharger";
   @override
@@ -679,7 +679,7 @@ class LanguageFr extends Languages {
   String get notificationtutorialmsgText =>
       "Restez à jour avec les mentions J'aime, les commentaires et les messages ici.";
   @override
-  String get shareStoryText => "Partager l'histoire";
+  String get shareStoryText => "Partager votre story";
   @override
   String get shareStorytutorialmsgText =>
       "Créez et partagez des moments forts temporaires de votre visite en salon ou de votre transformation beauté qui disparaissent après 24 heures. Parfait pour les looks avant/après ou les conseils beauté rapides !";
