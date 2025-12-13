@@ -488,7 +488,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: EdgeInsets.symmetric(vertical: config.screen3TitlePaddingV),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.9),
           borderRadius: const BorderRadius.only(
@@ -579,7 +579,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         child: Column(
           children: [
             Transform.scale(
-              scale: config.screen3QrCodeScale,
+              scale: _ResponsiveConfig.screen3QrCodeScale,
               child: Image.asset(
                 "lib/assets/images/onboarding/code_QR.png",
                 width: config.screen3QrCodeSize,
@@ -662,13 +662,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             delay: 200,
             config: config,
           ),
-          SizedBox(height: config.cardSpacing),
+          SizedBox(height: config.screen4CardSpacing),
           _buildStep4Card(
             text: Languages.of(context)!.salonOnboarding4Card2,
             delay: 400,
             config: config,
           ),
-          SizedBox(height: config.cardSpacing),
+          SizedBox(height: config.screen4CardSpacing),
           _buildStep4Card(
             text: Languages.of(context)!.salonOnboarding4Card3,
             delay: 600,
@@ -685,8 +685,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: config.boomPadding,
-          vertical: config.boomPadding * 0.8,
+          horizontal: config.screen4BoomPadding,
+          vertical: config.screen4BoomPadding * 0.8,
         ),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.95),
@@ -705,7 +705,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             RichText(
               text: TextSpan(
                 style: GoogleFonts.archivoBlack(
-                  fontSize: config.boomTitleFontSize,
+                  fontSize: config.screen4BoomTitleFontSize,
                   color: Colors.black87,
                 ),
                 children: [
@@ -723,11 +723,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 ],
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: config.screen4BoomTitleSpacing),
             Text(
               Languages.of(context)!.salonOnboarding4BottomDesc,
               style: GoogleFonts.archivoBlack(
-                fontSize: config.boomDescFontSize,
+                fontSize: config.screen4BoomDescFontSize,
                 color: Colors.black87,
                 height: 1.3,
               ),
@@ -804,11 +804,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           child: Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: EdgeInsets.only(bottom: config.phoneBottomPadding),
+              padding: EdgeInsets.only(bottom: config.screen5PhoneBottomPadding),
               child: Image.asset(
                 "lib/assets/images/onboarding/phone.png",
                 fit: BoxFit.contain,
-                height: MediaQuery.of(context).size.height * config.phoneHeightRatio,
+                height: MediaQuery.of(context).size.height * config.screen5PhoneHeightRatio,
               ),
             ),
           ).animate().fadeIn(duration: 800.ms).moveY(begin: 50, end: 0, duration: 800.ms, curve: Curves.easeOut),
@@ -831,7 +831,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Layer 4: Message Bubbles (Bottom, responsive)
         Positioned(
-          bottom: config.bubblesBottom,
+          bottom: config.screen5BubblesBottom,
           left: 0,
           right: 0,
           child: Column(
@@ -846,7 +846,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 delay: 200,
                 config: config,
               ),
-              SizedBox(height: config.bubbleSpacing),
+              SizedBox(height: config.screen5BubbleSpacing),
               _buildMessageBubble(
                 title: Languages.of(context)!.salonOnboarding5Bubble2.split('\n')[0],
                 subtitle: Languages.of(context)!.salonOnboarding5Bubble2.split('\n').length > 1
@@ -857,7 +857,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 delay: 400,
                 config: config,
               ),
-              SizedBox(height: config.bubbleSpacing),
+              SizedBox(height: config.screen5BubbleSpacing),
               _buildMessageBubble(
                 title: Languages.of(context)!.salonOnboarding5Bubble3.split('\n')[0],
                 subtitle: Languages.of(context)!.salonOnboarding5Bubble3.split('\n').length > 1
@@ -867,7 +867,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 delay: 600,
                 config: config,
               ),
-              SizedBox(height: config.bubbleSpacing),
+              SizedBox(height: config.screen5BubbleSpacing),
               _buildMessageBubble(
                 title: Languages.of(context)!.salonOnboarding5Bubble4.split('\n')[0],
                 subtitle: Languages.of(context)!.salonOnboarding5Bubble4.split('\n').length > 1
@@ -907,7 +907,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: config.bubblePadding,
+      padding: config.screen5BubblePadding,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(20),
@@ -925,17 +925,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           Text(
             title,
             style: GoogleFonts.archivoBlack(
-              fontSize: config.bubbleTitleFontSize,
+              fontSize: config.screen5BubbleTitleFontSize,
               color: textColor,
               fontWeight: FontWeight.bold,
             ),
           ),
           if (subtitle.isNotEmpty) ...[
-            const SizedBox(height: 4),
+            SizedBox(height: config.screen5BubbleInnerSpacing),
             Text(
               subtitle,
               style: GoogleFonts.poppins(
-                fontSize: config.bubbleSubtitleFontSize,
+                fontSize: config.screen5BubbleSubtitleFontSize,
                 color: textColor.withOpacity(0.9),
               ),
             ),
@@ -972,8 +972,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   flipX: true,
                   child: Image.asset(
                     "lib/assets/images/onboarding/salon_butterfly.png",
-                    width: config.cardButterflySize,
-                    height: config.cardButterflySize,
+                    width: config.screen4CardButterflySize,
+                    height: config.screen4CardButterflySize,
                   ),
                 ),
              ),
@@ -983,7 +983,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             child: Text(
               text,
               style: GoogleFonts.poppins(
-                fontSize: config.cardTextFontSize,
+                fontSize: config.screen4CardTextFontSize,
                 fontWeight: FontWeight.w400,
                 color: Colors.black87,
                 height: 1.3,
@@ -998,8 +998,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   flipX: true,
                   child: Image.asset(
                     "lib/assets/images/onboarding/salon_butterfly.png",
-                    width: config.cardButterflySize,
-                    height: config.cardButterflySize,
+                    width: config.screen4CardButterflySize,
+                    height: config.screen4CardButterflySize,
                   ),
                 ),
              ),
@@ -1317,7 +1317,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
                 // Butterfly & Text Box (responsive height)
                 SizedBox(
-                  height: config.butterflyBoxHeight,
+                  height: config.screen6ButterflyBoxHeight,
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
@@ -1327,7 +1327,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(left: 80),
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          padding: EdgeInsets.all(config.screen6ButterflyBoxPadding),
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.0),
                             border: Border.all(color: _kVibrantPink, width: 2),
@@ -1343,7 +1343,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                             textAlign: TextAlign.center,
                             text: TextSpan(
                               style: GoogleFonts.poppins(
-                                fontSize: config.butterflyBoxTextSize,
+                                fontSize: config.screen6ButterflyBoxTextSize,
                                 color: Colors.black87,
                                 height: 1.4,
                                 fontWeight: FontWeight.w400,
@@ -1372,8 +1372,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                           angle: -0.15,
                           child: Image.asset(
                             "lib/assets/images/onboarding/salon_butterfly.png",
-                            width: config.butterflyImageSize,
-                            height: config.butterflyImageSize,
+                            width: config.screen6ButterflyImageSize,
+                            height: config.screen6ButterflyImageSize,
                           ),
                         ),
                       ),
@@ -1396,7 +1396,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                         child: Transform.translate(
                           offset: const Offset(-40, 50),
                           child: Transform.scale(
-                            scale: config.phoneScale,
+                            scale: config.screen6PhoneScale,
                             child: Image.asset(
                               "lib/assets/images/onboarding/phone_2.png",
                               fit: BoxFit.contain,
@@ -1411,7 +1411,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                         child: Transform.translate(
                           offset: const Offset(0, -80),
                           child: Transform.scale(
-                            scale: config.qrCodeScale6,
+                            scale: config.screen6QrCodeScale,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1422,8 +1422,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                                     ),
                                     child: Image.asset(
                                       "lib/assets/images/onboarding/code_QR_2.png",
-                                      width: config.qrCodeSize6,
-                                      height: config.qrCodeSize6,
+                                      width: config.screen6QrCodeSize,
+                                      height: config.screen6QrCodeSize,
                                     ),
                                   ),
                                 ),
@@ -1467,11 +1467,16 @@ class _ResponsiveConfig {
   _ResponsiveConfig(this.screenSize);
 
   // Screen height breakpoints
+  // ============================================================
+  // GLOBAL CONSTANTS
+  // ============================================================
+
+  // --- Screen Breakpoints ---
   static const double minScreenHeight = 667;  // iPhone SE
   static const double maxScreenHeight = 926;  // iPhone 17 Pro Max
   static const double verySmallThreshold = 667;
 
-  // Font size ranges
+  // --- Global Font Sizes ---
   static const double minTitleFontSize = 32;
   static const double maxTitleFontSize = 46;
   static const double minBodyFontSize = 13;
@@ -1479,7 +1484,7 @@ class _ResponsiveConfig {
   static const double minCardTitleFontSize = 14;
   static const double maxCardTitleFontSize = 19;
 
-  // Image size ranges
+  // --- Global Image Sizes ---
   static const double minQrCodeSize = 180;
   static const double maxQrCodeSize = 280;
   static const double minQrCodeScale = 1.0;
@@ -1487,111 +1492,150 @@ class _ResponsiveConfig {
   static const double minButterflySize = 70;
   static const double maxButterflySize = 95;
 
-  // Spacing ranges
+  // --- Global Spacing ---
   static const double minVerticalSpacing = 12;
   static const double maxVerticalSpacing = 24;
   static const double minCardPadding = 12;
   static const double maxCardPadding = 24;
   static const double minTopPadding = 60;
-  static const double maxTopPadding = 80;  // Larger top padding on bigger screens
+  static const double maxTopPadding = 80;
   static const double minBottomSpacing = 100;
   static const double maxBottomSpacing = 160;
 
-  // Screen 1 specific - Welcome screen
+  // --- Global Card Insets ---
+  static const double minCardInsetsHorizontal = 12;
+  static const double maxCardInsetsHorizontal = 28;
+  static const double minCardInsetsVertical = 8;
+  static const double maxCardInsetsVertical = 14;
+
+  // ============================================================
+  // SCREEN 1 - WELCOME
+  // ============================================================
+
+  // --- Title Section ---
   static const double minScreen1TitleTop = 90;
   static const double maxScreen1TitleTop = 130;
+
+  // --- Card Section ---
   static const double minScreen1CardWidth = 260;
   static const double maxScreen1CardWidth = 300;
   static const double minScreen1CardPadding = 20;
   static const double maxScreen1CardPadding = 28;
   static const double minScreen1CardTextSize = 20;
   static const double maxScreen1CardTextSize = 26;
+
+  // --- Butterfly Section ---
   static const double minScreen1ButterflySize = 350;
   static const double maxScreen1ButterflySize = 450;
+
+  // --- Button Section ---
   static const double minScreen1ButtonBottom = 25;
   static const double maxScreen1ButtonBottom = 35;
 
-  // Screen 2 specific - What is Pink Gossip
+  // ============================================================
+  // SCREEN 2 - WHAT IS PINK GOSSIP
+  // ============================================================
+
+  // --- Title Section ---
   static const double minScreen2TitleTop = 90;
   static const double maxScreen2TitleTop = 130;
+
+  // --- Phone Mockup Section ---
   static const double minScreen2PhoneBottomPadding = 80;
   static const double maxScreen2PhoneBottomPadding = 120;
   static const double minScreen2PhoneHeightRatio = 0.60;
   static const double maxScreen2PhoneHeightRatio = 0.68;
+
+  // --- Card Section ---
   static const double minScreen2CardBottom = 90;
   static const double maxScreen2CardBottom = 120;
   static const double minScreen2CardPadding = 20;
   static const double maxScreen2CardPadding = 28;
   static const double minScreen2CardTextSize = 16;
   static const double maxScreen2CardTextSize = 20;
+
+  // --- Button Section ---
   static const double minScreen2ButtonBottom = 25;
   static const double maxScreen2ButtonBottom = 35;
 
-  // Screen 3 specific - Top padding
-  static const double minScreen3TopPadding = 25;  // Constant 18px for all devices
-  static const double maxScreen3TopPadding = 25;  // Constant 18px for all devices
+  // ============================================================
+  // SCREEN 3 - QR CODE SCAN
+  // ============================================================
 
-  // Screen 3 specific - QR Code
-  static const double minScreen3QrCodeSize = 180;  // Same as min for consistency
-  static const double maxScreen3QrCodeSize = 220;  // Reduced from 280 to 220 to save vertical space
-  static const double minScreen3QrCodeScale = 1.0;  // Constant 1.0 for all devices
-  static const double maxScreen3QrCodeScale = 1.0;  // Constant 1.0 for all devices
+  // --- Title Section ---
+  static const double minScreen3TopPadding = 25;  // Constant 25px for all devices
+  static const double maxScreen3TopPadding = 25;  // Constant 25px for all devices
+  static const double minScreen3TitlePaddingV = 10;
+  static const double maxScreen3TitlePaddingV = 14;
 
-  // Card insets ranges
-  static const double minCardInsetsHorizontal = 12;
-  static const double maxCardInsetsHorizontal = 28;
-  static const double minCardInsetsVertical = 8;
-  static const double maxCardInsetsVertical = 14;
+  // --- QR Code Section ---
+  static const double minScreen3QrCodeSize = 180;
+  static const double maxScreen3QrCodeSize = 220;
+  static const double screen3QrCodeScale = 1.0;  // Constant 1.0 for all devices
 
-  // Screen 4 specific - Title font size
+  // ============================================================
+  // SCREEN 4 - BOOM ANIMATION
+  // ============================================================
+
+  // --- Title Section ---
   static const double minScreen4TitleFontSize = 28;
   static const double maxScreen4TitleFontSize = 40;
 
-  // Screen 4 specific - Card spacing
-  static const double minCardSpacing = 12;
-  static const double maxCardSpacing = 16;
+  // --- Card Section ---
+  static const double minScreen4CardSpacing = 12;
+  static const double maxScreen4CardSpacing = 16;
+  static const double minScreen4CardTextFontSize = 14;
+  static const double maxScreen4CardTextFontSize = 17;
+  static const double minScreen4CardButterflySize = 80;
+  static const double maxScreen4CardButterflySize = 100;
 
-  // Screen 4 specific - Card text & butterfly
-  static const double minCardTextFontSize = 14;
-  static const double maxCardTextFontSize = 17;
-  static const double minCardButterflySize = 80;
-  static const double maxCardButterflySize = 100;
+  // --- Boom Section ---
+  static const double minScreen4BoomTitleFontSize = 15;
+  static const double maxScreen4BoomTitleFontSize = 18;
+  static const double minScreen4BoomDescFontSize = 12;
+  static const double maxScreen4BoomDescFontSize = 14;
+  static const double minScreen4BoomPadding = 12;
+  static const double maxScreen4BoomPadding = 20;
+  static const double minScreen4BoomTitleSpacing = 6;
+  static const double maxScreen4BoomTitleSpacing = 10;
 
-  // Screen 4 specific - Boom section
-  static const double minBoomTitleFontSize = 15;
-  static const double maxBoomTitleFontSize = 18;
-  static const double minBoomDescFontSize = 12;
-  static const double maxBoomDescFontSize = 14;
-  static const double minBoomPadding = 12;
-  static const double maxBoomPadding = 20;
+  // ============================================================
+  // SCREEN 5 - MESSAGE BUBBLES
+  // ============================================================
 
-  // Screen 5 specific - Title
+  // --- Title Section ---
   static const double minScreen5TitleFontSize = 26;
   static const double maxScreen5TitleFontSize = 36;
   static const double minScreen5TitleTop = 60;
   static const double maxScreen5TitleTop = 90;
 
-  // Screen 5 specific - Phone mockup
-  static const double minPhoneHeightRatio = 0.50;  // 50% of screen height
-  static const double maxPhoneHeightRatio = 0.65;  // 65% of screen height
-  static const double minPhoneBottomPadding = 30;
-  static const double maxPhoneBottomPadding = 50;
+  // --- Phone Mockup Section ---
+  static const double minScreen5PhoneHeightRatio = 0.50;
+  static const double maxScreen5PhoneHeightRatio = 0.65;
+  static const double minScreen5PhoneBottomPadding = 30;
+  static const double maxScreen5PhoneBottomPadding = 50;
 
-  // Screen 5 specific - Message bubbles
-  static const double minBubbleSpacing = 8;
-  static const double maxBubbleSpacing = 12;
-  static const double minBubblePaddingH = 16;
-  static const double maxBubblePaddingH = 20;
-  static const double minBubblePaddingV = 10;
-  static const double maxBubblePaddingV = 12;
-  static const double minBubbleTitleFontSize = 12;
-  static const double maxBubbleTitleFontSize = 14;
-  static const double minBubbleSubtitleFontSize = 10;
-  static const double maxBubbleSubtitleFontSize = 12;
-  static const double minBubblesBottom = 100;
-  static const double maxBubblesBottom = 120;
+  // --- Message Bubbles Section ---
+  static const double minScreen5BubbleSpacing = 8;
+  static const double maxScreen5BubbleSpacing = 12;
+  static const double minScreen5BubblePaddingH = 16;
+  static const double maxScreen5BubblePaddingH = 20;
+  static const double minScreen5BubblePaddingV = 10;
+  static const double maxScreen5BubblePaddingV = 12;
+  static const double minScreen5BubbleTitleFontSize = 12;
+  static const double maxScreen5BubbleTitleFontSize = 14;
+  static const double minScreen5BubbleSubtitleFontSize = 10;
+  static const double maxScreen5BubbleSubtitleFontSize = 12;
+  static const double minScreen5BubblesBottom = 100;
+  static const double maxScreen5BubblesBottom = 120;
+  static const double minScreen5BubbleInnerSpacing = 3;
+  static const double maxScreen5BubbleInnerSpacing = 5;
 
-  // Screen 6 specific - Title
+  // ============================================================
+  // SCREEN 6 - FINAL SCREEN
+  // ============================================================
+
+  // --- Title Section ---
   static const double minScreen6TitleFontSize = 32;
   static const double maxScreen6TitleFontSize = 42;
   static const double minScreen6TitleTop = 20;
@@ -1599,23 +1643,25 @@ class _ResponsiveConfig {
   static const double minScreen6TitleToBoxSpacing = 30;
   static const double maxScreen6TitleToBoxSpacing = 60;
 
-  // Screen 6 specific - Butterfly & Text Box
-  static const double minButterflyBoxHeight = 160;
-  static const double maxButterflyBoxHeight = 200;
-  static const double minButterflyBoxTextSize = 16;
-  static const double maxButterflyBoxTextSize = 20;
-  static const double minButterflyImageSize = 240;
-  static const double maxButterflyImageSize = 300;
+  // --- Butterfly & Text Box Section ---
+  static const double minScreen6ButterflyBoxHeight = 160;
+  static const double maxScreen6ButterflyBoxHeight = 200;
+  static const double minScreen6ButterflyBoxTextSize = 16;
+  static const double maxScreen6ButterflyBoxTextSize = 20;
+  static const double minScreen6ButterflyImageSize = 240;
+  static const double maxScreen6ButterflyImageSize = 300;
+  static const double minScreen6ButterflyBoxPadding = 8;
+  static const double maxScreen6ButterflyBoxPadding = 12;
 
-  // Screen 6 specific - Phone & QR Code
-  static const double minPhoneScale = 1.10;
-  static const double maxPhoneScale = 1.30;
-  static const double minQrCodeScale6 = 1.0;
-  static const double maxQrCodeScale6 = 1.2;
-  static const double minQrCodeSize6 = 160;
-  static const double maxQrCodeSize6 = 200;
+  // --- Phone & QR Code Section ---
+  static const double minScreen6PhoneScale = 1.10;
+  static const double maxScreen6PhoneScale = 1.30;
+  static const double minScreen6QrCodeScale = 1.0;
+  static const double maxScreen6QrCodeScale = 1.2;
+  static const double minScreen6QrCodeSize = 160;
+  static const double maxScreen6QrCodeSize = 200;
 
-  // Screen 6 specific - Spacing
+  // --- Spacing Section ---
   static const double minScreen6BottomSpacing = 10;
   static const double maxScreen6BottomSpacing = 20;
 
@@ -1672,7 +1718,7 @@ class _ResponsiveConfig {
   // Screen 3 specific - Getters
   double get screen3TopPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen3TopPadding, maxScreen3TopPadding);
   double get screen3QrCodeSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen3QrCodeSize, maxScreen3QrCodeSize);
-  double get screen3QrCodeScale => _interpolate(minScreenHeight, maxScreenHeight, minScreen3QrCodeScale, maxScreen3QrCodeScale);
+  double get screen3TitlePaddingV => _interpolate(minScreenHeight, maxScreenHeight, minScreen3TitlePaddingV, maxScreen3TitlePaddingV);
 
   EdgeInsets get cardInsets {
     final horizontal = _interpolate(minScreenHeight, maxScreenHeight, minCardInsetsHorizontal, maxCardInsetsHorizontal);
@@ -1682,26 +1728,28 @@ class _ResponsiveConfig {
 
   // Screen 4 specific - Getters
   double get screen4TitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen4TitleFontSize, maxScreen4TitleFontSize);
-  double get cardSpacing => _interpolate(minScreenHeight, maxScreenHeight, minCardSpacing, maxCardSpacing);
-  double get cardTextFontSize => _interpolate(minScreenHeight, maxScreenHeight, minCardTextFontSize, maxCardTextFontSize);
-  double get cardButterflySize => _interpolate(minScreenHeight, maxScreenHeight, minCardButterflySize, maxCardButterflySize);
-  double get boomTitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBoomTitleFontSize, maxBoomTitleFontSize);
-  double get boomDescFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBoomDescFontSize, maxBoomDescFontSize);
-  double get boomPadding => _interpolate(minScreenHeight, maxScreenHeight, minBoomPadding, maxBoomPadding);
+  double get screen4CardSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen4CardSpacing, maxScreen4CardSpacing);
+  double get screen4CardTextFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen4CardTextFontSize, maxScreen4CardTextFontSize);
+  double get screen4CardButterflySize => _interpolate(minScreenHeight, maxScreenHeight, minScreen4CardButterflySize, maxScreen4CardButterflySize);
+  double get screen4BoomTitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen4BoomTitleFontSize, maxScreen4BoomTitleFontSize);
+  double get screen4BoomDescFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen4BoomDescFontSize, maxScreen4BoomDescFontSize);
+  double get screen4BoomPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen4BoomPadding, maxScreen4BoomPadding);
+  double get screen4BoomTitleSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen4BoomTitleSpacing, maxScreen4BoomTitleSpacing);
 
   // Screen 5 specific - Getters
   double get screen5TitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen5TitleFontSize, maxScreen5TitleFontSize);
   double get screen5TitleTop => _interpolate(minScreenHeight, maxScreenHeight, minScreen5TitleTop, maxScreen5TitleTop);
-  double get phoneHeightRatio => _interpolate(minScreenHeight, maxScreenHeight, minPhoneHeightRatio, maxPhoneHeightRatio);
-  double get phoneBottomPadding => _interpolate(minScreenHeight, maxScreenHeight, minPhoneBottomPadding, maxPhoneBottomPadding);
-  double get bubbleSpacing => _interpolate(minScreenHeight, maxScreenHeight, minBubbleSpacing, maxBubbleSpacing);
-  double get bubbleTitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBubbleTitleFontSize, maxBubbleTitleFontSize);
-  double get bubbleSubtitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minBubbleSubtitleFontSize, maxBubbleSubtitleFontSize);
-  double get bubblesBottom => _interpolate(minScreenHeight, maxScreenHeight, minBubblesBottom, maxBubblesBottom);
+  double get screen5PhoneHeightRatio => _interpolate(minScreenHeight, maxScreenHeight, minScreen5PhoneHeightRatio, maxScreen5PhoneHeightRatio);
+  double get screen5PhoneBottomPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen5PhoneBottomPadding, maxScreen5PhoneBottomPadding);
+  double get screen5BubbleSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen5BubbleSpacing, maxScreen5BubbleSpacing);
+  double get screen5BubbleTitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen5BubbleTitleFontSize, maxScreen5BubbleTitleFontSize);
+  double get screen5BubbleSubtitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen5BubbleSubtitleFontSize, maxScreen5BubbleSubtitleFontSize);
+  double get screen5BubblesBottom => _interpolate(minScreenHeight, maxScreenHeight, minScreen5BubblesBottom, maxScreen5BubblesBottom);
+  double get screen5BubbleInnerSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen5BubbleInnerSpacing, maxScreen5BubbleInnerSpacing);
 
-  EdgeInsets get bubblePadding {
-    final h = _interpolate(minScreenHeight, maxScreenHeight, minBubblePaddingH, maxBubblePaddingH);
-    final v = _interpolate(minScreenHeight, maxScreenHeight, minBubblePaddingV, maxBubblePaddingV);
+  EdgeInsets get screen5BubblePadding {
+    final h = _interpolate(minScreenHeight, maxScreenHeight, minScreen5BubblePaddingH, maxScreen5BubblePaddingH);
+    final v = _interpolate(minScreenHeight, maxScreenHeight, minScreen5BubblePaddingV, maxScreen5BubblePaddingV);
     return EdgeInsets.symmetric(horizontal: h, vertical: v);
   }
 
@@ -1709,12 +1757,13 @@ class _ResponsiveConfig {
   double get screen6TitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen6TitleFontSize, maxScreen6TitleFontSize);
   double get screen6TitleTop => _interpolate(minScreenHeight, maxScreenHeight, minScreen6TitleTop, maxScreen6TitleTop);
   double get screen6TitleToBoxSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen6TitleToBoxSpacing, maxScreen6TitleToBoxSpacing);
-  double get butterflyBoxHeight => _interpolate(minScreenHeight, maxScreenHeight, minButterflyBoxHeight, maxButterflyBoxHeight);
-  double get butterflyBoxTextSize => _interpolate(minScreenHeight, maxScreenHeight, minButterflyBoxTextSize, maxButterflyBoxTextSize);
-  double get butterflyImageSize => _interpolate(minScreenHeight, maxScreenHeight, minButterflyImageSize, maxButterflyImageSize);
-  double get phoneScale => _interpolate(minScreenHeight, maxScreenHeight, minPhoneScale, maxPhoneScale);
-  double get qrCodeScale6 => _interpolate(minScreenHeight, maxScreenHeight, minQrCodeScale6, maxQrCodeScale6);
-  double get qrCodeSize6 => _interpolate(minScreenHeight, maxScreenHeight, minQrCodeSize6, maxQrCodeSize6);
+  double get screen6ButterflyBoxHeight => _interpolate(minScreenHeight, maxScreenHeight, minScreen6ButterflyBoxHeight, maxScreen6ButterflyBoxHeight);
+  double get screen6ButterflyBoxTextSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen6ButterflyBoxTextSize, maxScreen6ButterflyBoxTextSize);
+  double get screen6ButterflyImageSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen6ButterflyImageSize, maxScreen6ButterflyImageSize);
+  double get screen6ButterflyBoxPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen6ButterflyBoxPadding, maxScreen6ButterflyBoxPadding);
+  double get screen6PhoneScale => _interpolate(minScreenHeight, maxScreenHeight, minScreen6PhoneScale, maxScreen6PhoneScale);
+  double get screen6QrCodeScale => _interpolate(minScreenHeight, maxScreenHeight, minScreen6QrCodeScale, maxScreen6QrCodeScale);
+  double get screen6QrCodeSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen6QrCodeSize, maxScreen6QrCodeSize);
   double get screen6BottomSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen6BottomSpacing, maxScreen6BottomSpacing);
 }
 
