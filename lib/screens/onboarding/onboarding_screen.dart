@@ -333,6 +333,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   }
 
   Widget _buildSalonOnboardingStep2() {
+    final config = _ResponsiveConfig(MediaQuery.of(context).size);
+
     return Stack(
       children: [
         // Background
@@ -348,14 +350,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           child: Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 100), 
+              padding: EdgeInsets.only(bottom: config.screen2PhoneBottomPadding),
               child: Image.asset(
                 Localizations.localeOf(context).languageCode == 'en'
                     ? "lib/assets/images/onboarding/salon_phone_mockup_en.png"
                     : "lib/assets/images/onboarding/salon_phone_mockup_fr.png",
                 fit: BoxFit.contain,
-                // Adjust height/width as needed based on the image aspect ratio
-                height: MediaQuery.of(context).size.height * 0.65, 
+                height: MediaQuery.of(context).size.height * config.screen2PhoneHeightRatio,
               ),
             ),
           ).animate().fadeIn(duration: 800.ms).moveY(begin: 50, end: 0, duration: 800.ms, curve: Curves.easeOut),
@@ -368,7 +369,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Title (Top)
         Positioned(
-          top: 110,
+          top: config.screen2TitleTop,
           left: 0,
           right: 0,
           child: Center(
@@ -381,14 +382,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Description Card (Bottom)
         Positioned(
-          bottom: 100, // Moved up to make room for button
+          bottom: config.screen2CardBottom,
           left: 20,
           right: 20,
           child: Container(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(config.screen2CardPadding),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(30), // Rounded all corners
+              borderRadius: BorderRadius.circular(30),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black12,
@@ -401,7 +402,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
               textAlign: TextAlign.center,
               text: TextSpan(
                 style: GoogleFonts.archivoBlack(
-                  fontSize: 18,
+                  fontSize: config.screen2CardTextSize,
                   color: Colors.black87,
                   height: 1.5,
                 ),
@@ -418,7 +419,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Continue Button (Bottom Right)
         Positioned(
-          bottom: 30,
+          bottom: config.screen2ButtonBottom,
           right: 20,
           child: _build3DButton(
             text: Languages.of(context)!.continueText.toUpperCase(),
@@ -1510,6 +1511,22 @@ class _ResponsiveConfig {
   static const double minScreen1ButtonBottom = 25;
   static const double maxScreen1ButtonBottom = 35;
 
+  // Screen 2 specific - What is Pink Gossip
+  static const double minScreen2TitleTop = 90;
+  static const double maxScreen2TitleTop = 130;
+  static const double minScreen2PhoneBottomPadding = 80;
+  static const double maxScreen2PhoneBottomPadding = 120;
+  static const double minScreen2PhoneHeightRatio = 0.60;
+  static const double maxScreen2PhoneHeightRatio = 0.68;
+  static const double minScreen2CardBottom = 90;
+  static const double maxScreen2CardBottom = 120;
+  static const double minScreen2CardPadding = 20;
+  static const double maxScreen2CardPadding = 28;
+  static const double minScreen2CardTextSize = 16;
+  static const double maxScreen2CardTextSize = 20;
+  static const double minScreen2ButtonBottom = 25;
+  static const double maxScreen2ButtonBottom = 35;
+
   // Screen 3 specific - Top padding
   static const double minScreen3TopPadding = 25;  // Constant 18px for all devices
   static const double maxScreen3TopPadding = 25;  // Constant 18px for all devices
@@ -1642,6 +1659,15 @@ class _ResponsiveConfig {
 
   // Helper getter for butterfly offset (proportional to butterfly size)
   double get screen1ButterflyOffset => screen1ButterflySize / 2;
+
+  // Screen 2 specific - Getters
+  double get screen2TitleTop => _interpolate(minScreenHeight, maxScreenHeight, minScreen2TitleTop, maxScreen2TitleTop);
+  double get screen2PhoneBottomPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen2PhoneBottomPadding, maxScreen2PhoneBottomPadding);
+  double get screen2PhoneHeightRatio => _interpolate(minScreenHeight, maxScreenHeight, minScreen2PhoneHeightRatio, maxScreen2PhoneHeightRatio);
+  double get screen2CardBottom => _interpolate(minScreenHeight, maxScreenHeight, minScreen2CardBottom, maxScreen2CardBottom);
+  double get screen2CardPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen2CardPadding, maxScreen2CardPadding);
+  double get screen2CardTextSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen2CardTextSize, maxScreen2CardTextSize);
+  double get screen2ButtonBottom => _interpolate(minScreenHeight, maxScreenHeight, minScreen2ButtonBottom, maxScreen2ButtonBottom);
 
   // Screen 3 specific - Getters
   double get screen3TopPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen3TopPadding, maxScreen3TopPadding);
