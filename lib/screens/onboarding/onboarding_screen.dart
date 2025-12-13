@@ -200,6 +200,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   }
 
   Widget _buildSalonOnboardingStep1() {
+    final config = _ResponsiveConfig(MediaQuery.of(context).size);
+
     return Stack(
       children: [
         // Background
@@ -224,9 +226,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Title (Top-to-bottom animation)
         Positioned(
-          top: 110,
+          top: config.screen1TitleTop,
           right: 20,
-          left: 20, // Constrain width to prevent overflow
+          left: 20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -255,8 +257,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             children: [
                // Card Content
               Container(
-                width: 280,
-                padding: const EdgeInsets.all(24),
+                width: config.screen1CardWidth,
+                padding: EdgeInsets.all(config.screen1CardPadding),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.85),
                   borderRadius: BorderRadius.circular(20),
@@ -275,8 +277,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                      child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: GoogleFonts.archivoBlack( // Changed to Archivo Black for consistency
-                          fontSize: 24, 
+                        style: GoogleFonts.archivoBlack(
+                          fontSize: config.screen1CardTextSize,
                           color: Colors.black87,
                           height: 1.2,
                         ),
@@ -285,7 +287,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                           TextSpan(
                             text: Languages.of(context)!.salonOnboardingDescPart2,
                             style: GoogleFonts.archivoBlack(
-                              color: _kVibrantPink, // Use consistent pink
+                              color: _kVibrantPink,
                               fontWeight: FontWeight.w800,
                             ),
                           ),
@@ -295,22 +297,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                    ),
                 ),
               ),
-              
+
               // Butterfly (Flying animation) - Moved OUTSIDE container to overlap correctly
               Positioned(
-                top: -200, // Overlapping top
-                left: -200, // Overlapping left
+                top: -config.screen1ButterflyOffset,
+                left: -config.screen1ButterflyOffset,
                 child: Image.asset(
                   "lib/assets/images/onboarding/salon_butterfly.png",
-                  width: 400,
-                  height: 400,
+                  width: config.screen1ButterflySize,
+                  height: config.screen1ButterflySize,
                 )
                     .animate(onPlay: (controller) => controller.repeat())
                     .moveY(begin: 0, end: -15, duration: 2000.ms, curve: Curves.easeInOut)
                     .then()
                     .moveY(begin: -15, end: 0, duration: 2000.ms, curve: Curves.easeInOut)
                     .animate()
-                    .moveX(begin: -200, end: 0, duration: 1500.ms, delay: 1200.ms, curve: Curves.easeOut)
+                    .moveX(begin: -config.screen1ButterflyOffset, end: 0, duration: 1500.ms, delay: 1200.ms, curve: Curves.easeOut)
                     .fadeIn(duration: 500.ms, delay: 1200.ms),
               ),
             ],
@@ -319,7 +321,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Let's Start Button (Bottom-to-top animation)
         Positioned(
-          bottom: 30,
+          bottom: config.screen1ButtonBottom,
           right: 20,
           child: _build3DButton(
             text: Languages.of(context)!.letsStartText,
@@ -1494,6 +1496,20 @@ class _ResponsiveConfig {
   static const double minBottomSpacing = 100;
   static const double maxBottomSpacing = 160;
 
+  // Screen 1 specific - Welcome screen
+  static const double minScreen1TitleTop = 90;
+  static const double maxScreen1TitleTop = 130;
+  static const double minScreen1CardWidth = 260;
+  static const double maxScreen1CardWidth = 300;
+  static const double minScreen1CardPadding = 20;
+  static const double maxScreen1CardPadding = 28;
+  static const double minScreen1CardTextSize = 20;
+  static const double maxScreen1CardTextSize = 26;
+  static const double minScreen1ButterflySize = 350;
+  static const double maxScreen1ButterflySize = 450;
+  static const double minScreen1ButtonBottom = 25;
+  static const double maxScreen1ButtonBottom = 35;
+
   // Screen 3 specific - Top padding
   static const double minScreen3TopPadding = 25;  // Constant 18px for all devices
   static const double maxScreen3TopPadding = 25;  // Constant 18px for all devices
@@ -1615,6 +1631,17 @@ class _ResponsiveConfig {
   double get cardPadding => _interpolate(minScreenHeight, maxScreenHeight, minCardPadding, maxCardPadding);
   double get topPadding => _interpolate(minScreenHeight, maxScreenHeight, minTopPadding, maxTopPadding);
   double get bottomSpacing => _interpolate(minScreenHeight, maxScreenHeight, minBottomSpacing, maxBottomSpacing);
+
+  // Screen 1 specific - Getters
+  double get screen1TitleTop => _interpolate(minScreenHeight, maxScreenHeight, minScreen1TitleTop, maxScreen1TitleTop);
+  double get screen1CardWidth => _interpolate(minScreenHeight, maxScreenHeight, minScreen1CardWidth, maxScreen1CardWidth);
+  double get screen1CardPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen1CardPadding, maxScreen1CardPadding);
+  double get screen1CardTextSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen1CardTextSize, maxScreen1CardTextSize);
+  double get screen1ButterflySize => _interpolate(minScreenHeight, maxScreenHeight, minScreen1ButterflySize, maxScreen1ButterflySize);
+  double get screen1ButtonBottom => _interpolate(minScreenHeight, maxScreenHeight, minScreen1ButtonBottom, maxScreen1ButtonBottom);
+
+  // Helper getter for butterfly offset (proportional to butterfly size)
+  double get screen1ButterflyOffset => screen1ButterflySize / 2;
 
   // Screen 3 specific - Getters
   double get screen3TopPadding => _interpolate(minScreenHeight, maxScreenHeight, minScreen3TopPadding, maxScreen3TopPadding);
