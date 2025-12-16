@@ -19,6 +19,7 @@ import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:provider/provider.dart';
 import 'package:pinkGossip/screens/onboarding/onboarding_screen.dart';
+import 'package:pinkGossip/services/tooltip_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
@@ -47,7 +48,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
   late List<Widget> pageList;
   late TutorialCoachMark tutorialCoachMark;
 
-  void _onItemTapped(int index) {
+  // Contextual tooltip management
+  final TooltipService _tooltipService = TooltipService();
+  final Set<int> _tooltipsShownInSession = {};
+  String _userId = "";
+
+  void _onItemTapped(int index) async {
+    // Show contextual tooltip if not seen yet (only when not in intro mode)
+    if (widget.isIntroScreen != true) {
+      await _showContextualTooltip(index);
+    }
+
+    // Then navigate to the page
     getRemoveStoryCron();
     setState(() {
       pageIndex = index;
@@ -65,6 +77,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     _initializeDeepLinks();
     _createTargets();
     checkOnboarding();
+    _loadUserIdSync();
     pageList = <Widget>[
       HomeScreen(
         searchKey: searchKey,
@@ -86,6 +99,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
         showTutorial();
       });
     }
+  }
+
+  void _loadUserIdSync() {
+    // Load userId synchronously to ensure it's available before any user interaction
+    SharedPreferences.getInstance().then((prefs) {
+      String userId = prefs.getString('userid') ?? "";
+      if (mounted) {
+        setState(() {
+          _userId = userId;
+        });
+      }
+    });
   }
 
   void showTutorial() {
@@ -144,7 +169,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       targets.add(
         TargetFocus(
           keyTarget: searchKey,
-          enableOverlayTab: false,
+          enableOverlayTab: true,
           shape: ShapeLightFocus.Circle,
           paddingFocus: 1,
           contents: [
@@ -199,7 +224,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                               ),
                               child: Center(
                                 child: Text(
-                                  Languages.of(context)!.nextText,
+                                  Languages.of(context)!.gotitText,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -221,7 +246,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       targets.add(
         TargetFocus(
           keyTarget: notificationKey,
-          enableOverlayTab: false,
+          enableOverlayTab: true,
           shape: ShapeLightFocus.Circle,
           contents: [
             TargetContent(
@@ -275,7 +300,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                               ),
                               child: Center(
                                 child: Text(
-                                  Languages.of(context)!.nextText,
+                                  Languages.of(context)!.gotitText,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -297,7 +322,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       targets.add(
         TargetFocus(
           keyTarget: addstoryKey,
-          enableOverlayTab: false,
+          enableOverlayTab: true,
           shape: ShapeLightFocus.Circle,
           contents: [
             TargetContent(
@@ -351,7 +376,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                               ),
                               child: Center(
                                 child: Text(
-                                  Languages.of(context)!.nextText,
+                                  Languages.of(context)!.gotitText,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -377,7 +402,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           shape: ShapeLightFocus.Circle,
           radius: 0,
           paddingFocus: 0,
-          enableOverlayTab: false,
+          enableOverlayTab: true,
           contents: [
             TargetContent(
               align: ContentAlign.top,
@@ -437,7 +462,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                               ),
                               child: Center(
                                 child: Text(
-                                  Languages.of(context)!.nextText,
+                                  Languages.of(context)!.gotitText,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -521,7 +546,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                               ),
                               child: Center(
                                 child: Text(
-                                  Languages.of(context)!.nextText,
+                                  Languages.of(context)!.gotitText,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -607,7 +632,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                               ),
                               child: Center(
                                 child: Text(
-                                  Languages.of(context)!.nextText,
+                                  Languages.of(context)!.gotitText,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -693,7 +718,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                               ),
                               child: Center(
                                 child: Text(
-                                  Languages.of(context)!.nextText,
+                                  Languages.of(context)!.gotitText,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -779,7 +804,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                               ),
                               child: Center(
                                 child: Text(
-                                  Languages.of(context)!.finishText,
+                                  Languages.of(context)!.gotitText,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -799,6 +824,217 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
       );
     });
+  }
+
+  /// Map bottom navigation index to TooltipType
+  TooltipType _mapIndexToTooltipType(int index) {
+    switch (index) {
+      case 0:
+        return TooltipType.home;
+      case 1:
+        return TooltipType.storeLocator;
+      case 2:
+        return TooltipType.post;
+      case 3:
+        return TooltipType.message;
+      case 4:
+        return TooltipType.profile;
+      default:
+        return TooltipType.home;
+    }
+  }
+
+  /// Get GlobalKey for a specific bottom nav index
+  GlobalKey _getKeyForIndex(int index) {
+    switch (index) {
+      case 0:
+        return homeKey;
+      case 1:
+        return makeupKey;
+      case 2:
+        return postKey;
+      case 3:
+        return messageKey;
+      case 4:
+        return profileKey;
+      default:
+        return homeKey;
+    }
+  }
+
+  /// Show contextual tooltip for a specific bottom nav item
+  Future<void> _showContextualTooltip(int navIndex) async {
+    // 0. Don't show tooltip if userId is not loaded yet
+    if (_userId.isEmpty) return;
+
+    // 1. Check if already shown in this session
+    if (_tooltipsShownInSession.contains(navIndex)) return;
+
+    // 2. Map index to TooltipType
+    TooltipType type = _mapIndexToTooltipType(navIndex);
+
+    // 3. Check if user has already seen this tooltip
+    bool hasSeenTooltip = await _tooltipService.hasSeenTooltip(_userId, type);
+    if (hasSeenTooltip) return;
+
+    // 4. Mark as shown in this session
+    _tooltipsShownInSession.add(navIndex);
+
+    // 5. Create and show the single tooltip
+    await _createAndShowSingleTooltip(navIndex, type);
+  }
+
+  /// Create and show a single tooltip for a specific nav item
+  Future<void> _createAndShowSingleTooltip(
+      int navIndex, TooltipType type) async {
+    if (!mounted) return;
+
+    GlobalKey targetKey = _getKeyForIndex(navIndex);
+    TargetFocus targetFocus = _createSingleTargetFocus(navIndex, targetKey, type);
+
+    TutorialCoachMark singleTooltip = TutorialCoachMark(
+      targets: [targetFocus],
+      colorShadow: Colors.grey,
+      hideSkip: true,
+      paddingFocus: navIndex == 0 ? 0 : 1,
+      opacityShadow: 0.5,
+      useSafeArea: true,
+      imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+      onFinish: () async {
+        // Mark as seen when tutorial completes normally
+        await _tooltipService.markTooltipAsSeen(_userId, type);
+      },
+      onSkip: () {
+        // Mark as seen when user clicks "Got it" (which calls skip)
+        _tooltipService.markTooltipAsSeen(_userId, type);
+        return true;
+      },
+    );
+
+    // Wait a bit for the widget to be fully rendered
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    if (mounted) {
+      singleTooltip.show(context: context);
+    }
+  }
+
+  /// Create a single TargetFocus for contextual tooltip
+  TargetFocus _createSingleTargetFocus(
+      int navIndex, GlobalKey targetKey, TooltipType type) {
+    String title = "";
+    String message = "";
+
+    // Get the appropriate title and message based on nav index
+    switch (navIndex) {
+      case 0: // Home
+        title = Languages.of(context)!.homeText;
+        message = Languages.of(context)!.hometutorialmsgText;
+        break;
+      case 1: // Store Locator
+        title = Languages.of(context)!.storelocatorText;
+        message = Languages.of(context)!.storelocatortutorialmsgText;
+        break;
+      case 2: // Share Posts
+        title = Languages.of(context)!.sharePostsText;
+        message = Languages.of(context)!.sharePoststutorialmsgText;
+        break;
+      case 3: // Messages
+        title = Languages.of(context)!.messagesText;
+        message = Languages.of(context)!.messagestutorialmsgText;
+        break;
+      case 4: // Profile
+        title = Languages.of(context)!.profileText;
+        message = Languages.of(context)!.profiletutorialmsgText;
+        break;
+    }
+
+    return TargetFocus(
+      identify: "nav_$navIndex",
+      keyTarget: targetKey,
+      shape: ShapeLightFocus.Circle,
+      radius: navIndex == 0 ? 0 : null,
+      paddingFocus: navIndex == 0 ? 0 : null,
+      enableOverlayTab: true,
+      contents: [
+        TargetContent(
+          align: ContentAlign.top,
+          builder: (context, controller) {
+            return Column(
+              crossAxisAlignment: navIndex <= 1
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.end,
+              children: [
+                Container(
+                  width: navIndex == 0
+                      ? MediaQuery.of(context).size.width
+                      : null,
+                  padding: const EdgeInsets.all(15),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: AppColors.kPinkColor,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        message,
+                        maxLines: null,
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        controller.skip();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.kPinkColor,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 6,
+                            horizontal: 20,
+                          ),
+                          child: Center(
+                            child: Text(
+                              Languages.of(context)!.gotitText,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
   }
 
   @override

@@ -547,6 +547,8 @@ class LanguageEn extends Languages {
   @override
   String get finishText => "Finish";
   @override
+  String get gotitText => "Got it";
+  @override
   String get scan_to_view_profile => "Scan to view profile";
   @override
   String get close => "Close";

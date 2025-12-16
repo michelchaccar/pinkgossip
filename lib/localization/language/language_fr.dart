@@ -709,6 +709,8 @@ class LanguageFr extends Languages {
   @override
   String get finishText => "Finir";
   @override
+  String get gotitText => "Compris";
+  @override
   String get scan_to_view_profile => "Numériser pour voir le profil";
   @override
   String get close => "Fermer";

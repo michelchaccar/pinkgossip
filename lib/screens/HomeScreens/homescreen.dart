@@ -24,7 +24,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:pinkGossip/bottomnavi.dart';
+import 'package:pinkGossip/services/tooltip_service.dart';
 import 'package:pinkGossip/models/commentpostmodel.dart';
 import 'package:pinkGossip/models/homepagepostmodel.dart';
 import 'package:pinkGossip/models/postlike.dart';
@@ -67,6 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
   String userid = "";
   int tmppageKey = 1;
   String userTyppe = "";
+
+  // Tooltip management for AppBar icons
+  final TooltipService _tooltipService = TooltipService();
+  final Set<String> _tooltipsShownInSession = {};
   String profileimg = "";
 
   String myFireabseiD = "";
@@ -317,6 +323,168 @@ class _HomeScreenState extends State<HomeScreen> {
 
   OtherUserPost? selectingpost;
 
+  /// Show contextual tooltip for AppBar icons (search, notification, addStory)
+  Future<void> _showAppBarTooltip(String tooltipId, GlobalKey targetKey, TooltipType type) async {
+    // 0. Don't show tooltip if userid is not loaded yet
+    if (userid.isEmpty) return;
+
+    // 1. Check if already shown in this session
+    if (_tooltipsShownInSession.contains(tooltipId)) return;
+
+    // 2. Check if user has already seen this tooltip
+    bool hasSeenTooltip = await _tooltipService.hasSeenTooltip(userid, type);
+    if (hasSeenTooltip) return;
+
+    // 3. Mark as shown in this session
+    _tooltipsShownInSession.add(tooltipId);
+
+    // 4. Create and show the tooltip
+    await _createAndShowAppBarTooltip(tooltipId, targetKey, type);
+  }
+
+  /// Create and show a tooltip for AppBar icons
+  Future<void> _createAndShowAppBarTooltip(String tooltipId, GlobalKey targetKey, TooltipType type) async {
+    if (!mounted) return;
+
+    TargetFocus targetFocus = _createAppBarTargetFocus(tooltipId, targetKey, type);
+
+    TutorialCoachMark appBarTooltip = TutorialCoachMark(
+      targets: [targetFocus],
+      colorShadow: Colors.grey,
+      hideSkip: true,
+      paddingFocus: 0,
+      opacityShadow: 0.5,
+      useSafeArea: true,
+      imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+      onFinish: () async {
+        // Mark as seen when tutorial completes normally
+        await _tooltipService.markTooltipAsSeen(userid, type);
+      },
+      onSkip: () {
+        // Mark as seen when user clicks "Got it" (which calls skip)
+        _tooltipService.markTooltipAsSeen(userid, type);
+        return true;
+      },
+    );
+
+    // Wait a bit for the widget to be fully rendered
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    if (mounted) {
+      appBarTooltip.show(context: context);
+    }
+  }
+
+  /// Create TargetFocus for AppBar tooltips
+  TargetFocus _createAppBarTargetFocus(String tooltipId, GlobalKey targetKey, TooltipType type) {
+    String title = "";
+    String message = "";
+
+    // Get the appropriate title and message based on tooltip type
+    switch (type) {
+      case TooltipType.search:
+        title = Languages.of(context)!.searchPostsText;
+        message = Languages.of(context)!.searchPoststutorialmsgText;
+        break;
+      case TooltipType.notification:
+        title = Languages.of(context)!.notificationsText;
+        message = Languages.of(context)!.notificationtutorialmsgText;
+        break;
+      case TooltipType.addStory:
+        title = Languages.of(context)!.shareStoryText;
+        message = Languages.of(context)!.shareStorytutorialmsgText;
+        break;
+      default:
+        title = "";
+        message = "";
+    }
+
+    return TargetFocus(
+      identify: "appbar_$tooltipId",
+      targetPosition: TargetPosition(
+        // this is to hide the tooltip
+        const Size(1, 1),         
+        const Offset(-100, -100), 
+      ),
+      shape: ShapeLightFocus.Circle,
+      paddingFocus: 0,
+      enableOverlayTab: true,
+      contents: [
+        TargetContent(
+          align: ContentAlign.custom,
+          customPosition: CustomTargetContentPosition(
+            top: MediaQuery.of(context).size.height * 0.15, 
+            left: MediaQuery.of(context).size.width * 0.01,  
+          ),
+          builder: (context, controller) {
+            return Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  padding: const EdgeInsets.all(15),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: AppColors.kPinkColor,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        message,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        controller.skip();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.kPinkColor,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 6,
+                            horizontal: 20,
+                          ),
+                          child: Center(
+                            child: Text(
+                              Languages.of(context)!.gotitText,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
@@ -338,7 +506,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     AppColors.kWhiteColor,
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  onTap: () {
+                  onTap: () async {
+                    // Show tooltip if not seen yet
+                    await _showAppBarTooltip('search', widget.searchKey, TooltipType.search);
+
+                    // Then navigate
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -359,7 +531,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     AppColors.kWhiteColor,
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  onTap: () {
+                  onTap: () async {
+                    // Show tooltip if not seen yet
+                    await _showAppBarTooltip('notification', widget.notificationKey, TooltipType.notification);
+
+                    // Then navigate
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -543,6 +719,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   right: 0,
                                   child: InkWell(
                                     onTap: () async {
+                                      // Show tooltip if not seen yet
+                                      await _showAppBarTooltip('addstory', widget.addstoryKey, TooltipType.addStory);
+
+                                      // Then navigate
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -1550,7 +1730,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               );
                                             },
                                           )
-                                          : ExpandablePageView.builder(
+                                          : item.otherMultiPost!.isEmpty
+                                            ? const SizedBox.shrink()
+                                            : ExpandablePageView.builder(
                                             // controller: _pageController,
                                             itemCount:
                                                 (item.otherMultiPost!.length),
@@ -1677,7 +1859,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                               )
-                              : ExpandablePageView.builder(
+                              : item.otherMultiPost!.isEmpty
+                                ? const SizedBox.shrink()
+                                : ExpandablePageView.builder(
                                 itemCount: item.otherMultiPost!.length,
                                 onPageChanged: (int pageIndex) {
                                   print("Current Page Index: $pageIndex");

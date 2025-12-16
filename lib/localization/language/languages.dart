@@ -251,6 +251,7 @@ abstract class Languages {
   String get profileText;
   String get profiletutorialmsgText;
   String get finishText;
+  String get gotitText;
   String get shareText;
   String get downlaodText;
   String get scan_to_view_profile;
