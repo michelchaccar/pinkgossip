@@ -131,7 +131,7 @@ class LanguageFr extends Languages {
   String get follwersText => "Abonnées";
 
   @override
-  String get followingText => "Suivante";
+  String get followingText => "Abonnement";
 
   @override
   String get followText => "Suivre";
@@ -386,7 +386,7 @@ class LanguageFr extends Languages {
   String get handsText => "Mains";
 
   @override
-  String get likesText => "goûts";
+  String get likesText => "likes";
 
   @override
   String get addtocartText => "Ajouter au panier";
@@ -395,7 +395,7 @@ class LanguageFr extends Languages {
   String get allpostText => "Tous les messages";
 
   @override
-  String get FollowingText => "Suivante";
+  String get FollowingText => "Abonnement";
 
   @override
   String get RemoveText => "Retirer";
@@ -471,10 +471,10 @@ class LanguageFr extends Languages {
   String get nodatafoundText => "Aucune donnée trouvée";
 
   @override
-  String get yourstoryText => "Votre histoire";
+  String get yourstoryText => "Votre story";
 
   @override
-  String get addtostoryText => "Ajouter à l'histoire";
+  String get addtostoryText => "Ajouter à votre story";
 
   @override
   String get addtopostText => "Ajouter à la publication";
@@ -504,21 +504,21 @@ class LanguageFr extends Languages {
   String get sharedapostText => "A partagé une publication";
 
   @override
-  String get shareText => "partagér";
+  String get shareText => "Partager";
 
   @override
-  String get storyreplyText => "Répondre à l'histoire";
+  String get storyreplyText => "Répondre à votre story";
 
   @override
-  String get yourepliedtotheirstoryText => "Vous avez répondu à leur histoire";
+  String get yourepliedtotheirstoryText => "Vous avez répondu à leur story";
 
   @override
-  String get repliedtoyourstoryText => "J'ai répondu à votre histoire";
+  String get repliedtoyourstoryText => "J'ai répondu à votre story";
 
   @override
   String get salonreviewText => "SALONREVIEW";
   @override
-  String get nextText => "Suivante";
+  String get nextText => "Abonnement";
 
   @override
   String get captionText => "Écrire une légende";
@@ -561,7 +561,7 @@ class LanguageFr extends Languages {
   String get uploadimageText => "Télécharger l'image";
 
   @override
-  String get submitstoryText => "Soumettre une histoire";
+  String get submitstoryText => "Soumettre une story";
   @override
   String get submitsalonreviewText => "Soumettre un avis sur le salon";
 
@@ -596,13 +596,13 @@ class LanguageFr extends Languages {
   String get sharepostText => "Partager la publication";
 
   @override
-  String get sharestoryText => "Partager l'histoire";
+  String get sharestoryText => "Partager votre story";
 
   @override
-  String get sharesalonreviewText => "Partager l'avis sur le salon";
+  String get sharesalonreviewText => "Partager votre avis sur le salon";
 
   @override
-  String get gossiperText => "Bavard";
+  String get gossiperText => "Gossiper";
   @override
   String get beautybusinessText => "Entreprise de beauté";
 
@@ -648,9 +648,9 @@ class LanguageFr extends Languages {
   @override
   String get mapText => "Carte";
   @override
-  String get blockText => "Bloc";
+  String get blockText => "Bloquer";
   @override
-  String get reportText => "Rapport";
+  String get reportText => "Rapporter";
   @override
   String get downlaodText => "Télécharger";
   @override
@@ -679,7 +679,7 @@ class LanguageFr extends Languages {
   String get notificationtutorialmsgText =>
       "Restez à jour avec les mentions J'aime, les commentaires et les messages ici.";
   @override
-  String get shareStoryText => "Partager l'histoire";
+  String get shareStoryText => "Partager votre story";
   @override
   String get shareStorytutorialmsgText =>
       "Créez et partagez des moments forts temporaires de votre visite en salon ou de votre transformation beauté qui disparaissent après 24 heures. Parfait pour les looks avant/après ou les conseils beauté rapides !";
@@ -709,6 +709,8 @@ class LanguageFr extends Languages {
   @override
   String get finishText => "Finir";
   @override
+  String get gotitText => "Compris";
+  @override
   String get scan_to_view_profile => "Numériser pour voir le profil";
   @override
   String get close => "Fermer";
@@ -722,4 +724,69 @@ class LanguageFr extends Languages {
   @override
   String get maximumuploadlimit60secondText =>
       "La limite maximale de téléchargement par vidéo est de 60 secondes.";
+
+  @override
+  String get welcomeOnText => "BIENVENUE SUR";
+  @override
+  String get pinkGossipText => "PINK GOSSIP";
+  @override
+  String get salonOnboardingDescPart1 => "Vous êtes sur le point de faire de vos clients vos meilleurs ";
+  @override
+  String get salonOnboardingDescPart2 => "ambassadeurs.";
+  @override
+  String get letsStartText => "C'EST PARTI";
+  @override
+  String get whatIsPinkGossipText => "Qu'est-ce que\nPink Gossip ?";
+  @override
+  String get salonOnboarding2DescPart1 => "Clients -> en créateurs";
+  @override
+  String get salonOnboarding2DescPart2 => "Avis -> en réservations";
+  @override
+  String get salonOnboarding2DescPart3 => "Votre travail -> en preuve sociale";
+  @override
+  String get salonOnboarding2Title => "Pink Gossip est la première application beauté qui transforme :";
+  @override
+  String get salonOnboarding3Title => "Comment ça marche";
+  @override
+  String get salonOnboarding3CardTitle => "Affichez votre code QR Pink Gossip";
+  @override
+  String get salonOnboarding3DescPart1 => "Chaque service commence par un simple scan.";
+  @override
+  String get salonOnboarding3DescPart2 => "\nC'est ainsi que Pink Gossip transforme chaque visite en visibilité, avis et nouvelle clientèle pour vous — instantanément.";
+  @override
+  String get nextStepsText => "PROCHAINES ÉTAPES";
+  @override
+  String get salonOnboarding4Title => "L'EFFET\nSCAN & GOSSIP";
+  @override
+  String get salonOnboarding4Card1 => "Le client scanne avant le début du service et prend une photo avant";
+  @override
+  String get salonOnboarding4Card2 => "Pendant le service, le client partage du contenu sur l'application";
+  @override
+  String get salonOnboarding4Card3 => "Après le service, le client partage une photo APRÈS, note le service et laisse un avis.";
+  @override
+  String get salonOnboarding4BottomTitle => "Boom — nouveau contenu + nouvelle confiance";
+  @override
+  String get salonOnboarding4BottomDesc => "• Leur publication booste votre visibilité instantanément et alimente votre page sociale !";
+  @override
+  String get whyChooseUsText => "NOUS CHOISIR";
+  @override
+  String get salonOnboarding5Title => "REJOIGNEZ\nPINK GOSSIP";
+  @override
+  String get salonOnboarding5Bubble1 => "Preuve authentique, pas de publicités organisées\nVrais clients, vraies photos, vraies expériences.";
+  @override
+  String get salonOnboarding5Bubble2 => "Votre travail reste visible\nVos services apparaissent dans l'annuaire Pink Gossip pour les personnes effectuant une recherche dans votre région.";
+  @override
+  String get salonOnboarding5Bubble3 => "Un système qui travaille pour vous 24h/24 et 7j/7 :\nLes clients laissent des avis, publient des photos avant/après et identifient vos services, même lorsque vous êtes occupé à travailler.";
+  @override
+  String get salonOnboarding5Bubble4 => "Programme de fidélité intégré\nVous n'avez rien à suivre. L'application récompense vos clients pour leur fidélité — et vous continuez à obtenir des clients réguliers.";
+  @override
+  String get areYouReadyText => "ÊTES-VOUS PRÊTS";
+  @override
+  String get salonOnboarding6Title => "PRÊTS POUR LE SUCCÈS";
+  @override
+  String get salonOnboarding6Desc => "Vous faites officiellement partie du\nmouvement Pink Gossip.\nCommençons à collecter\nde vraies preuves sociales et\nà développer votre empire\nde la beauté.";
+  @override
+  String get scanAndGossipText => "SCAN & GOSSIP";
+  @override
+  String get letsBeginText => "C'EST PARTI";
 }

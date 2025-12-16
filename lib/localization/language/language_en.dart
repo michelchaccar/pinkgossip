@@ -547,6 +547,8 @@ class LanguageEn extends Languages {
   @override
   String get finishText => "Finish";
   @override
+  String get gotitText => "Got it";
+  @override
   String get scan_to_view_profile => "Scan to view profile";
   @override
   String get close => "Close";
@@ -559,4 +561,69 @@ class LanguageEn extends Languages {
   @override
   String get maximumuploadlimit60secondText =>
       "Maximum upload limit per video is 60 seconds";
+
+  @override
+  String get welcomeOnText => "WELCOME ON";
+  @override
+  String get pinkGossipText => "PINK GOSSIP";
+  @override
+  String get salonOnboardingDescPart1 => "You’re about to turn your beauty salon clients into your best ";
+  @override
+  String get salonOnboardingDescPart2 => "marketers.";
+  @override
+  String get letsStartText => "LET'S START";
+  @override
+  String get whatIsPinkGossipText => "What Is\nPink Gossip?";
+  @override
+  String get salonOnboarding2DescPart1 => "Clients -> into creators";
+  @override
+  String get salonOnboarding2DescPart2 => "Reviews -> into bookings";
+  @override
+  String get salonOnboarding2DescPart3 => "Your work -> into social proof";
+  @override
+  String get salonOnboarding2Title => "Pink Gossip is the first beauty app that transforms:";
+  @override
+  String get salonOnboarding3Title => "How It Works";
+  @override
+  String get salonOnboarding3CardTitle => "Display your Pink Gossip QR Code";
+  @override
+  String get salonOnboarding3DescPart1 => "Every service starts with a simple scan.";
+  @override
+  String get salonOnboarding3DescPart2 => "\nThis is how Pink Gossip transforms every visit into visibility, reviews, and new clientele for you — instantly.";
+  @override
+  String get nextStepsText => "NEXT STEPS";
+  @override
+  String get salonOnboarding4Title => "SCAN & GOSSIP\nEFFECT";
+  @override
+  String get salonOnboarding4Card1 => "Client scans before the service begins and take a before photo";
+  @override
+  String get salonOnboarding4Card2 => "During the service client share content on the app";
+  @override
+  String get salonOnboarding4Card3 => "After the service client share AFTER picture , rate service and leave review.";
+  @override
+  String get salonOnboarding4BottomTitle => "Boom — new content + new trust";
+  @override
+  String get salonOnboarding4BottomDesc => "• Their post boosts your visibility instantly and feed your social page!";
+  @override
+  String get whyChooseUsText => "WHY CHOOSE US";
+  @override
+  String get salonOnboarding5Title => "SALON LOVES\nPINK GOSSIP";
+  @override
+  String get salonOnboarding5Bubble1 => "Authentic proof, not curated ads\nReal clients, real photos, real experiences.";
+  @override
+  String get salonOnboarding5Bubble2 => "Your work stays discoverable\nYour services appear in the Pink Gossip Directory for people searching in your area.";
+  @override
+  String get salonOnboarding5Bubble3 => "System that works for you 24/7:\nClients leave reviews, post before/after photos, and tag your services — even when you're busy working.";
+  @override
+  String get salonOnboarding5Bubble4 => "In-app Loyalty program\nYou don’t have to track anything. The app rewards your clients for staying loyal — and you keep getting repeat business.";
+  @override
+  String get areYouReadyText => "ARE YOU READY";
+  @override
+  String get salonOnboarding6Title => "ALL SET\nFOR SUCCESS";
+  @override
+  String get salonOnboarding6Desc => "You’re officially part of\nthe Pink Gossip\nmovement.\nLet’s start collecting\nreal social proof and\ngrowing your beauty\nempire.";
+  @override
+  String get scanAndGossipText => "SCAN & GOSSIP";
+  @override
+  String get letsBeginText => "LET'S BEGIN";
 }

@@ -24,6 +24,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pinkGossip/services/tooltip_service.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
 import 'package:pinkGossip/models/updateprofilephoto.dart';
 import 'package:pinkGossip/screens/Profile/editprofile.dart';
@@ -434,14 +435,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                             style: Pallete.Quicksand15blackwe600,
                           ),
                           onTap: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (BuildContext context) =>
-                                        BottomNavBar(isIntroScreen: true),
-                              ),
-                            );
+                            // @TODO remove for release
+                            // Reset all tooltips - they will appear contextually when user taps each element
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            String userId = prefs.getString('userid') ?? "";
+                            if (userId.isNotEmpty) {
+                              await TooltipService().resetAllTooltips(userId);
+                              kToast("Tutorial reset! Tooltips will appear when you tap each element.");
+                            }
                           },
                         ),
                         ListTile(
@@ -479,6 +480,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                           onTap: () async {
                             LogoutAlert(context, kSize);
+                          },
+                        ),
+                        // Debug Button
+                        ListTile(
+                          leading: const Icon(Icons.restart_alt, color: Colors.red),
+                          title: Text(
+                            "Reset Onboarding (Debug)",
+                            style: Pallete.Quicksand15blackwe600.copyWith(color: Colors.red),
+                          ),
+                          onTap: () async {
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            await prefs.remove('onboarding_completed_$userid');
+                            kToast("Onboarding reset! Restart app to see it.");
                           },
                         ),
                       ],
