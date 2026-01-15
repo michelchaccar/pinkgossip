@@ -56,9 +56,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
     );
   }
 
-  // Temporary debug state
-  bool _forceSalon = false;
-
   @override
   void initState() {
     super.initState();
@@ -84,24 +81,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
-    // Logic: Show Salon if userType is "2" OR if we force it for debugging
-    if (widget.userType == "1" || _forceSalon) {
+    // userType "1" = User (Gossiper), userType "2" = Salon
+    if (widget.userType == "2") {
       return _buildSalonOnboarding();
     } else {
-      return Scaffold(
-        // Wrap the User onboarding in a Scaffold to add the debug button
-        body: _buildUserOnboarding(),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            setState(() {
-              _forceSalon = true;
-            });
-          },
-          label: const Text("Debug: Show Salon View"),
-          icon: const Icon(Icons.remove_red_eye),
-          backgroundColor: Colors.red,
-        ),
-      );
+      return _buildUserOnboarding();
     }
   }
 
