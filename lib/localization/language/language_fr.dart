@@ -805,4 +805,16 @@ class LanguageFr extends Languages {
   String get gossiperOnboarding2Bubble1 => "Découvre ce que les autres clients pensent du salon grâce à de vrais avis";
   @override
   String get gossiperOnboarding2Bubble2 => "Vois le salon du point de vue des clients avec leurs photos et vidéos";
+
+  // Gossiper Onboarding Screen 3
+  @override
+  String get gossiperOnboarding3Title => "PARTAGE TON\nEXPÉRIENCE";
+  @override
+  String get gossiperOnboarding3Bubble1 => "Omgg où as-tu fait tes cheveux? 😍";
+  @override
+  String get gossiperOnboarding3Bubble2 => "J'ai besoin du nom de ton coiffeur!!!";
+  @override
+  String get gossiperOnboarding3DescPart1 => "Prends des photos, poste des vidéos et laisse ton avis honnête directement depuis le salon.\n\n";
+  @override
+  String get gossiperOnboarding3DescPart2 => "C'EST PLUS QUE POSTER, C'EST CONSTRUIRE TON INFLUENCE!";
 }

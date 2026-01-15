@@ -300,4 +300,11 @@ abstract class Languages {
   String get gossiperOnboarding2Card;
   String get gossiperOnboarding2Bubble1;
   String get gossiperOnboarding2Bubble2;
+
+  // Gossiper Onboarding Screen 3
+  String get gossiperOnboarding3Title;
+  String get gossiperOnboarding3Bubble1;
+  String get gossiperOnboarding3Bubble2;
+  String get gossiperOnboarding3DescPart1;
+  String get gossiperOnboarding3DescPart2;
 }

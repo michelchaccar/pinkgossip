@@ -642,4 +642,16 @@ class LanguageEn extends Languages {
   String get gossiperOnboarding2Bubble1 => "See what others say about the salon by checking real reviews from real clients";
   @override
   String get gossiperOnboarding2Bubble2 => "Get the client perspective from their photos and videos";
+
+  // Gossiper Onboarding Screen 3
+  @override
+  String get gossiperOnboarding3Title => "SHARE YOUR\nEXPERIENCE";
+  @override
+  String get gossiperOnboarding3Bubble1 => "Omgg where did you get your hair done? 😍";
+  @override
+  String get gossiperOnboarding3Bubble2 => "Okay I neeed the name of your hair colorist!!!";
+  @override
+  String get gossiperOnboarding3DescPart1 => "Snap photos, post videos, and drop your honest review straight from the salon.\n\n";
+  @override
+  String get gossiperOnboarding3DescPart2 => "IT'S MORE THAN POSTING IT'S BUILDING YOUR INFLUENCE!";
 }
