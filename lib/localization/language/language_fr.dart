@@ -795,4 +795,14 @@ class LanguageFr extends Languages {
   String get gossiperOnboardingDescPart1 => "Ton expérience beauté et ton avis comptent.\n";
   @override
   String get gossiperOnboardingDescPart2 => "Ton contenu a de la valeur.";
+
+  // Gossiper Onboarding Screen 2
+  @override
+  String get gossiperOnboarding2Title => "DÉCOUVRE DE\nNOUVEAUX SALONS";
+  @override
+  String get gossiperOnboarding2Card => "ESSAIE UN NOUVEAU\nSALON EN CONFIANCE";
+  @override
+  String get gossiperOnboarding2Bubble1 => "Découvre ce que les autres clients pensent du salon grâce à de vrais avis";
+  @override
+  String get gossiperOnboarding2Bubble2 => "Vois le salon du point de vue des clients avec leurs photos et vidéos";
 }

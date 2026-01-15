@@ -831,137 +831,302 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   }
 
   Widget _buildUserOnboarding() {
+    return Scaffold(
+      body: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          _buildGossiperOnboardingStep1(),
+          _buildGossiperOnboardingStep2(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep1() {
     final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // Background
-          Positioned.fill(
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Model (Bottom-to-top animation)
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.bottomCenter,
             child: Image.asset(
-              "lib/assets/images/onboarding/salon_bg.png",
+              "lib/assets/images/onboarding/gossiper/gossiper_model.png",
               fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height,
             ),
-          ),
+          ).animate().moveY(begin: 600, end: 0, duration: 1200.ms, curve: Curves.easeOut),
+        ),
 
-          // Model (Bottom-to-top animation)
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Image.asset(
-                "lib/assets/images/onboarding/gossiper/gossiper_model.png",
-                fit: BoxFit.cover,
-                height: MediaQuery.of(context).size.height,
+        // Title (Top-to-bottom animation)
+        Positioned(
+          top: config.screen1TitleTop,
+          right: 20,
+          left: 20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: OutlinedText(Languages.of(context)!.welcomeOnText),
               ),
-            ).animate().moveY(begin: 600, end: 0, duration: 1200.ms, curve: Curves.easeOut),
-          ),
+              const SizedBox(height: 0),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: OutlinedText(Languages.of(context)!.pinkGossipText),
+              ),
+            ],
+          ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
+        ),
 
-          // Title (Top-to-bottom animation)
-          Positioned(
-            top: config.screen1TitleTop,
-            right: 20,
-            left: 20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: OutlinedText(Languages.of(context)!.welcomeOnText),
+        // Skip Button
+        SkipButton(onPressed: _cancelOnboarding),
+
+        // Description Card (Right-to-left animation)
+        Positioned(
+          right: 20,
+          top: MediaQuery.of(context).size.height * 0.52,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // Card Content
+              Container(
+                width: config.screen1CardWidth,
+                padding: EdgeInsets.all(config.screen1CardPadding),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.85),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    )
+                  ],
                 ),
-                const SizedBox(height: 0),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: OutlinedText(Languages.of(context)!.pinkGossipText),
-                ),
-              ],
-            ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
-          ),
-
-          // Skip Button
-          SkipButton(onPressed: _cancelOnboarding),
-
-          // Description Card (Right-to-left animation)
-          Positioned(
-            right: 20,
-            top: MediaQuery.of(context).size.height * 0.52,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                // Card Content
-                Container(
-                  width: config.screen1CardWidth,
-                  padding: EdgeInsets.all(config.screen1CardPadding),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      )
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: GoogleFonts.archivoBlack(
-                            fontSize: config.screen1CardTextSize,
-                            color: Colors.black87,
-                            height: 1.2,
-                          ),
-                          children: [
-                            TextSpan(text: Languages.of(context)!.gossiperOnboardingDescPart1),
-                            TextSpan(
-                              text: Languages.of(context)!.gossiperOnboardingDescPart2,
-                              style: GoogleFonts.archivoBlack(
-                                color: _kVibrantPink,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ],
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: GoogleFonts.archivoBlack(
+                          fontSize: config.screen1CardTextSize,
+                          color: Colors.black87,
+                          height: 1.2,
                         ),
+                        children: [
+                          TextSpan(text: Languages.of(context)!.gossiperOnboardingDescPart1),
+                          TextSpan(
+                            text: Languages.of(context)!.gossiperOnboardingDescPart2,
+                            style: GoogleFonts.archivoBlack(
+                              color: _kVibrantPink,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
+              ),
 
-                // Butterfly
-                Positioned(
-                  top: -config.screen1ButterflyOffset,
-                  left: -config.screen1ButterflyOffset,
-                  child: Image.asset(
-                    "lib/assets/images/onboarding/salon_butterfly.png",
-                    width: config.screen1ButterflySize,
-                    height: config.screen1ButterflySize,
-                  )
-                      .animate(onPlay: (controller) => controller.repeat())
-                      .moveY(begin: 0, end: -15, duration: 2000.ms, curve: Curves.easeInOut)
-                      .then()
-                      .moveY(begin: -15, end: 0, duration: 2000.ms, curve: Curves.easeInOut)
-                      .animate()
-                      .moveX(begin: -config.screen1ButterflyOffset, end: 0, duration: 1500.ms, delay: 1200.ms, curve: Curves.easeOut)
-                      .fadeIn(duration: 500.ms, delay: 1200.ms),
-                ),
-              ],
-            ).animate().moveX(begin: 100, end: 0, duration: 800.ms, delay: 1000.ms, curve: Curves.easeOut).fadeIn(),
+              // Butterfly
+              Positioned(
+                top: -config.screen1ButterflyOffset,
+                left: -config.screen1ButterflyOffset,
+                child: Image.asset(
+                  "lib/assets/images/onboarding/salon_butterfly.png",
+                  width: config.screen1ButterflySize,
+                  height: config.screen1ButterflySize,
+                )
+                    .animate(onPlay: (controller) => controller.repeat())
+                    .moveY(begin: 0, end: -15, duration: 2000.ms, curve: Curves.easeInOut)
+                    .then()
+                    .moveY(begin: -15, end: 0, duration: 2000.ms, curve: Curves.easeInOut)
+                    .animate()
+                    .moveX(begin: -config.screen1ButterflyOffset, end: 0, duration: 1500.ms, delay: 1200.ms, curve: Curves.easeOut)
+                    .fadeIn(duration: 500.ms, delay: 1200.ms),
+              ),
+            ],
+          ).animate().moveX(begin: 100, end: 0, duration: 800.ms, delay: 1000.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Let's Start Button (Bottom-to-top animation)
+        Positioned(
+          bottom: config.screen1ButtonBottom,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.letsStartText,
+            onPressed: _nextPage,
           ),
+        ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
+      ],
+    );
+  }
 
-          // Let's Start Button (Bottom-to-top animation)
-          Positioned(
-            bottom: config.screen1ButtonBottom,
-            right: 20,
-            child: OnboardingButton(
-              text: Languages.of(context)!.letsStartText,
-              onPressed: _completeOnboarding,
+  Widget _buildGossiperOnboardingStep2() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Model (positioned on the LEFT side, bottom-to-top animation)
+        Positioned(
+          left: -20,
+          bottom: 0,
+          child: Image.asset(
+            "lib/assets/images/onboarding/gossiper/gossiper_model_2.png",
+            fit: BoxFit.contain,
+            height: MediaQuery.of(context).size.height * 0.60,
+          ).animate().moveY(begin: 300, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Title (Centered)
+        Positioned(
+          top: config.screen1TitleTop,
+          left: 20,
+          right: 20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: OutlinedText(
+                  Languages.of(context)!.gossiperOnboarding2Title,
+                  textAlign: TextAlign.center,
+                  height: 1.0,
+                ),
+              ),
+            ],
+          ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Skip Button
+        SkipButton(onPressed: _cancelOnboarding),
+
+        // Card (Centered, below title)
+        Positioned(
+          left: 20,
+          right: 20,
+          top: MediaQuery.of(context).size.height * 0.26,
+          child: Center(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
+                  )
+                ],
+              ),
+              child: Text(
+                Languages.of(context)!.gossiperOnboarding2Card,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.archivoBlack(
+                  fontSize: config.screen1CardTextSize,
+                  color: Colors.black87,
+                  height: 1.2,
+                ),
+              ),
             ),
-          ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
-        ],
-      ),
+          ).animate().scale(begin: const Offset(0.8, 0.8), end: const Offset(1, 1), duration: 600.ms, delay: 400.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Message bubbles (RIGHT side)
+        Positioned(
+          right: 10,
+          top: MediaQuery.of(context).size.height * 0.60,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // Bubble 1 - White
+              Container(
+                width: MediaQuery.of(context).size.width * 0.60,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    )
+                  ],
+                ),
+                child: Text(
+                  Languages.of(context)!.gossiperOnboarding2Bubble1,
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: Colors.black87,
+                    height: 1.3,
+                  ),
+                ),
+              ).animate().moveX(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut).fadeIn(),
+
+              const SizedBox(height: 12),
+
+              // Bubble 2 - White (same as bubble 1)
+              Container(
+                width: MediaQuery.of(context).size.width * 0.60,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    )
+                  ],
+                ),
+                child: Text(
+                  Languages.of(context)!.gossiperOnboarding2Bubble2,
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: Colors.black87,
+                    height: 1.3,
+                  ),
+                ),
+              ).animate().moveX(begin: 100, end: 0, duration: 600.ms, delay: 800.ms, curve: Curves.easeOut).fadeIn(),
+            ],
+          ),
+        ),
+
+        // Let's Start Button (Bottom RIGHT - same as screen 1)
+        Positioned(
+          bottom: config.screen1ButtonBottom,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.letsStartText,
+            onPressed: _completeOnboarding,
+          ),
+        ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
+      ],
     );
   }
 

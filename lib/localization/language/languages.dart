@@ -294,4 +294,10 @@ abstract class Languages {
   // Gossiper Onboarding
   String get gossiperOnboardingDescPart1;
   String get gossiperOnboardingDescPart2;
+
+  // Gossiper Onboarding Screen 2
+  String get gossiperOnboarding2Title;
+  String get gossiperOnboarding2Card;
+  String get gossiperOnboarding2Bubble1;
+  String get gossiperOnboarding2Bubble2;
 }
