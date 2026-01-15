@@ -626,4 +626,10 @@ class LanguageEn extends Languages {
   String get scanAndGossipText => "SCAN & GOSSIP";
   @override
   String get letsBeginText => "LET'S BEGIN";
+
+  // Gossiper Onboarding
+  @override
+  String get gossiperOnboardingDescPart1 => "Where your salon experience and opinion matters\n";
+  @override
+  String get gossiperOnboardingDescPart2 => "And your content has value.";
 }

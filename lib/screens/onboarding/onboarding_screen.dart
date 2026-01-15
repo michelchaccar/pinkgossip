@@ -831,82 +831,139 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   }
 
   Widget _buildUserOnboarding() {
-    // Keep the previous simple design for User for now, or update if needed.
-    // The user only provided design for Salon.
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Container(
-                height: 200,
-                width: 200,
-                color: Colors.grey[200],
-                child: const Icon(Icons.person, size: 100, color: Colors.grey),
-              ),
-              const SizedBox(height: 40),
-              Text(
-                "Welcome to Pink Gossip!",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.archivoBlack(
-                  fontSize: 24,
-                  color: AppColors.kBlackColor,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                "Discover the best salons, share your experiences, and connect with others.",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  color: AppColors.kTextColor,
-                ),
-              ),
-              const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _completeOnboarding,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.kPinkColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    "Continue",
-                    style: GoogleFonts.rubik(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: _cancelOnboarding,
-                child: Text(
-                  "Cancel",
-                  style: GoogleFonts.rubik(
-                    color: AppColors.kTextColor,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-            ],
+      body: Stack(
+        children: [
+          // Background
+          Positioned.fill(
+            child: Image.asset(
+              "lib/assets/images/onboarding/salon_bg.png",
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
+
+          // Model (Bottom-to-top animation)
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                "lib/assets/images/onboarding/gossiper/gossiper_model.png",
+                fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height,
+              ),
+            ).animate().moveY(begin: 600, end: 0, duration: 1200.ms, curve: Curves.easeOut),
+          ),
+
+          // Title (Top-to-bottom animation)
+          Positioned(
+            top: config.screen1TitleTop,
+            right: 20,
+            left: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: OutlinedText(Languages.of(context)!.welcomeOnText),
+                ),
+                const SizedBox(height: 0),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: OutlinedText(Languages.of(context)!.pinkGossipText),
+                ),
+              ],
+            ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
+          ),
+
+          // Skip Button
+          SkipButton(onPressed: _cancelOnboarding),
+
+          // Description Card (Right-to-left animation)
+          Positioned(
+            right: 20,
+            top: MediaQuery.of(context).size.height * 0.52,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // Card Content
+                Container(
+                  width: config.screen1CardWidth,
+                  padding: EdgeInsets.all(config.screen1CardPadding),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.85),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      )
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: BackdropFilter(
+                      filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: GoogleFonts.archivoBlack(
+                            fontSize: config.screen1CardTextSize,
+                            color: Colors.black87,
+                            height: 1.2,
+                          ),
+                          children: [
+                            TextSpan(text: Languages.of(context)!.gossiperOnboardingDescPart1),
+                            TextSpan(
+                              text: Languages.of(context)!.gossiperOnboardingDescPart2,
+                              style: GoogleFonts.archivoBlack(
+                                color: _kVibrantPink,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Butterfly
+                Positioned(
+                  top: -config.screen1ButterflyOffset,
+                  left: -config.screen1ButterflyOffset,
+                  child: Image.asset(
+                    "lib/assets/images/onboarding/salon_butterfly.png",
+                    width: config.screen1ButterflySize,
+                    height: config.screen1ButterflySize,
+                  )
+                      .animate(onPlay: (controller) => controller.repeat())
+                      .moveY(begin: 0, end: -15, duration: 2000.ms, curve: Curves.easeInOut)
+                      .then()
+                      .moveY(begin: -15, end: 0, duration: 2000.ms, curve: Curves.easeInOut)
+                      .animate()
+                      .moveX(begin: -config.screen1ButterflyOffset, end: 0, duration: 1500.ms, delay: 1200.ms, curve: Curves.easeOut)
+                      .fadeIn(duration: 500.ms, delay: 1200.ms),
+                ),
+              ],
+            ).animate().moveX(begin: 100, end: 0, duration: 800.ms, delay: 1000.ms, curve: Curves.easeOut).fadeIn(),
+          ),
+
+          // Let's Start Button (Bottom-to-top animation)
+          Positioned(
+            bottom: config.screen1ButtonBottom,
+            right: 20,
+            child: OnboardingButton(
+              text: Languages.of(context)!.letsStartText,
+              onPressed: _completeOnboarding,
+            ),
+          ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
+        ],
       ),
     );
-    }
+  }
 
   Widget _buildSalonOnboardingStep6() {
     final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);

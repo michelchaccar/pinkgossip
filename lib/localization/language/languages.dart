@@ -290,4 +290,8 @@ abstract class Languages {
   String get salonOnboarding6Desc;
   String get scanAndGossipText;
   String get letsBeginText;
+
+  // Gossiper Onboarding
+  String get gossiperOnboardingDescPart1;
+  String get gossiperOnboardingDescPart2;
 }

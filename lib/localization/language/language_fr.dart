@@ -789,4 +789,10 @@ class LanguageFr extends Languages {
   String get scanAndGossipText => "SCAN & GOSSIP";
   @override
   String get letsBeginText => "C'EST PARTI";
+
+  // Gossiper Onboarding
+  @override
+  String get gossiperOnboardingDescPart1 => "Ton expérience beauté et ton avis comptent.\n";
+  @override
+  String get gossiperOnboardingDescPart2 => "Ton contenu a de la valeur.";
 }
