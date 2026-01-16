@@ -817,4 +817,20 @@ class LanguageFr extends Languages {
   String get gossiperOnboarding3DescPart1 => "Prends des photos, poste des vidéos et laisse ton avis honnête directement depuis le salon.\n\n";
   @override
   String get gossiperOnboarding3DescPart2 => "C'EST PLUS QUE POSTER, C'EST CONSTRUIRE TON INFLUENCE!";
+
+  // Gossiper Onboarding Screen 4
+  @override
+  String get gossiperOnboarding4Title => "GAGNE DES POINTS\n& ÉCONOMISE";
+  @override
+  String get gossiperOnboarding4Row1 => "Partager ton expérience beauté, ça rapporte vraiment";
+  @override
+  String get gossiperOnboarding4Row2 => "Chaque avis, photo ou vidéo que tu postes te fait gagner des points";
+  @override
+  String get gossiperOnboarding4Row3 => "Tes points sont échangeables dans TOUS les salons partenaires Pink Gossip";
+  @override
+  String get gossiperOnboarding4DescPart1 => "Boom";
+  @override
+  String get gossiperOnboarding4DescPart2 => " — Fini de poster juste pour les likes — tu construis ta richesse beauté, tu économises sur ton prochain soin, et tu es récompensée pour ton authenticité";
+  @override
+  String get gossiperOnboarding4Button => "COMMENT ÇA MARCHE";
 }

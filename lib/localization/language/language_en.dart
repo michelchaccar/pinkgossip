@@ -654,4 +654,20 @@ class LanguageEn extends Languages {
   String get gossiperOnboarding3DescPart1 => "Snap photos, post videos, and drop your honest review straight from the salon.\n\n";
   @override
   String get gossiperOnboarding3DescPart2 => "IT'S MORE THAN POSTING IT'S BUILDING YOUR INFLUENCE!";
+
+  // Gossiper Onboarding Screen 4
+  @override
+  String get gossiperOnboarding4Title => "EARN POINTS\n& SAVE MORE";
+  @override
+  String get gossiperOnboarding4Row1 => "Gossiping about your salon experience really pays off";
+  @override
+  String get gossiperOnboarding4Row2 => "Every time you post a review, photo, or video, you earn points";
+  @override
+  String get gossiperOnboarding4Row3 => "Points can be redeemed at ANY Pink Gossip partner salons";
+  @override
+  String get gossiperOnboarding4DescPart1 => "Boom";
+  @override
+  String get gossiperOnboarding4DescPart2 => " — No more posting just for likes — you're building beauty wealth, saving on your next beauty treat, and getting rewarded for being real";
+  @override
+  String get gossiperOnboarding4Button => "HOW IT WORKS";
 }

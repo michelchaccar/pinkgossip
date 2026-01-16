@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'dart:ui' as ui;
+import 'dart:math' as math;
 
 // Extracted components
 import 'package:pinkGossip/screens/onboarding/components/onboarding_button.dart';
@@ -839,6 +840,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           _buildGossiperOnboardingStep1(),
           _buildGossiperOnboardingStep2(),
           _buildGossiperOnboardingStep3(),
+          _buildGossiperOnboardingStep4(),
         ],
       ),
     );
@@ -1313,10 +1315,163 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           child: Center(
             child: OnboardingButton(
               text: Languages.of(context)!.continueText.toUpperCase(),
-              onPressed: _completeOnboarding,
+              onPressed: _nextPage,
             ),
           ),
         ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
+      ],
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep4() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Scrollable content
+        SafeArea(
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                // Model (top)
+                RotatedBox(
+                  quarterTurns: 1,
+                  child: Image.asset(
+                    "lib/assets/images/onboarding/gossiper/gossiper_model_4.png",
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.width,
+                  ),
+                ).animate().fadeIn(duration: 800.ms).moveY(begin: -50, end: 0, curve: Curves.easeOut),
+
+                // Title
+                Transform.translate(
+                  offset: const Offset(0, -40),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: OutlinedText(
+                      Languages.of(context)!.gossiperOnboarding4Title,
+                      textAlign: TextAlign.center,
+                      height: 1.0,
+                    ),
+                  ),
+                ).animate().moveY(begin: -30, end: 0, duration: 600.ms, delay: 200.ms, curve: Curves.easeOut),
+
+                // Cards content with negative offset to compensate for title transform
+                Transform.translate(
+                  offset: const Offset(0, -45),
+                  child: Column(
+                    children: [
+                      // Feature Row 1 (butterfly left)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: StepCard(
+                          text: Languages.of(context)!.gossiperOnboarding4Row1,
+                          delay: 300,
+                          config: config,
+                          isRightAligned: false,
+                        ),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      // Feature Row 2 (butterfly left)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: StepCard(
+                          text: Languages.of(context)!.gossiperOnboarding4Row2,
+                          delay: 400,
+                          config: config,
+                          isRightAligned: false,
+                        ),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      // Feature Row 3 (butterfly right)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: StepCard(
+                          text: Languages.of(context)!.gossiperOnboarding4Row3,
+                          delay: 500,
+                          config: config,
+                          isRightAligned: true,
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // Bottom description card
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.95),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: RichText(
+                            text: TextSpan(
+                              style: GoogleFonts.archivoBlack(
+                                fontSize: 14,
+                                color: Colors.black87,
+                                height: 1.4,
+                                fontStyle: FontStyle.italic,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: Languages.of(context)!.gossiperOnboarding4DescPart1,
+                                  style: GoogleFonts.archivoBlack(
+                                    color: _kVibrantPink,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: Languages.of(context)!.gossiperOnboarding4DescPart2,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ).animate().moveY(begin: 50, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut).fadeIn(),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 100), // Space for button
+              ],
+            ),
+          ),
+        ),
+
+        // Button (aligned right like screen 1)
+        Positioned(
+          bottom: config.screen1ButtonBottom,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.gossiperOnboarding4Button,
+            onPressed: _completeOnboarding,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+
+        // Skip button
+        SkipButton(onPressed: _cancelOnboarding),
       ],
     );
   }
