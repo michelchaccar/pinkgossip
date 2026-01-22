@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'dart:ui' as ui;
+import 'dart:math' as math;
 
 // Extracted components
 import 'package:pinkGossip/screens/onboarding/components/onboarding_button.dart';
@@ -831,82 +832,1073 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
   }
 
   Widget _buildUserOnboarding() {
-    // Keep the previous simple design for User for now, or update if needed.
-    // The user only provided design for Salon.
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
+      body: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          _buildGossiperOnboardingStep1(),
+          _buildGossiperOnboardingStep2(),
+          _buildGossiperOnboardingStep3(),
+          _buildGossiperOnboardingStep4(),
+          _buildGossiperOnboardingStep5(),
+          _buildGossiperOnboardingStep6(),
+          _buildGossiperOnboardingStep7(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep1() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Model (Bottom-to-top animation)
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Image.asset(
+              "lib/assets/images/onboarding/gossiper/gossiper_model.png",
+              fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height,
+            ),
+          ).animate().moveY(begin: 600, end: 0, duration: 1200.ms, curve: Curves.easeOut),
+        ),
+
+        // Title (Top-to-bottom animation)
+        Positioned(
+          top: config.screen1TitleTop,
+          right: 20,
+          left: 20,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: OutlinedText(Languages.of(context)!.welcomeOnText),
+              ),
+              const SizedBox(height: 0),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: OutlinedText(Languages.of(context)!.pinkGossipText),
+              ),
+            ],
+          ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Skip Button
+        SkipButton(onPressed: _cancelOnboarding),
+
+        // Description Card (Right-to-left animation)
+        Positioned(
+          right: 20,
+          top: MediaQuery.of(context).size.height * config.gossiper1CardTopRatio,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // Card Content
+              Container(
+                width: config.screen1CardWidth,
+                padding: EdgeInsets.all(config.screen1CardPadding),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.85),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    )
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: GoogleFonts.archivoBlack(
+                          fontSize: config.screen1CardTextSize,
+                          color: Colors.black87,
+                          height: 1.2,
+                        ),
+                        children: [
+                          TextSpan(text: Languages.of(context)!.gossiperOnboardingDescPart1),
+                          TextSpan(
+                            text: Languages.of(context)!.gossiperOnboardingDescPart2,
+                            style: GoogleFonts.archivoBlack(
+                              color: _kVibrantPink,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Butterfly
+              Positioned(
+                top: -config.screen1ButterflyOffset,
+                left: -config.screen1ButterflyOffset,
+                child: Image.asset(
+                  "lib/assets/images/onboarding/salon_butterfly.png",
+                  width: config.screen1ButterflySize,
+                  height: config.screen1ButterflySize,
+                )
+                    .animate(onPlay: (controller) => controller.repeat())
+                    .moveY(begin: 0, end: -15, duration: 2000.ms, curve: Curves.easeInOut)
+                    .then()
+                    .moveY(begin: -15, end: 0, duration: 2000.ms, curve: Curves.easeInOut)
+                    .animate()
+                    .moveX(begin: -config.screen1ButterflyOffset, end: 0, duration: 1500.ms, delay: 1200.ms, curve: Curves.easeOut)
+                    .fadeIn(duration: 500.ms, delay: 1200.ms),
+              ),
+            ],
+          ).animate().moveX(begin: 100, end: 0, duration: 800.ms, delay: 1000.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Let's Start Button (Bottom-to-top animation)
+        Positioned(
+          bottom: config.screen1ButtonBottom,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.letsStartText,
+            onPressed: _nextPage,
+          ),
+        ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
+      ],
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep2() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Model (positioned on the LEFT side, bottom-to-top animation)
+        Positioned(
+          left: -20,
+          bottom: 0,
+          child: Image.asset(
+            "lib/assets/images/onboarding/gossiper/gossiper_model_2.png",
+            fit: BoxFit.contain,
+            height: MediaQuery.of(context).size.height * config.gossiper2ModelHeightRatio,
+          ).animate().moveY(begin: 300, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Title (Centered)
+        Positioned(
+          top: config.screen1TitleTop,
+          left: 20,
+          right: 20,
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Spacer(),
-              Container(
-                height: 200,
-                width: 200,
-                color: Colors.grey[200],
-                child: const Icon(Icons.person, size: 100, color: Colors.grey),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: OutlinedText(
+                  Languages.of(context)!.gossiperOnboarding2Title,
+                  textAlign: TextAlign.center,
+                  height: 1.0,
+                ),
               ),
-              const SizedBox(height: 40),
-              Text(
-                "Welcome to Pink Gossip!",
+            ],
+          ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Skip Button
+        SkipButton(onPressed: _cancelOnboarding),
+
+        // Card (Centered, below title)
+        Positioned(
+          left: 20,
+          right: 20,
+          top: MediaQuery.of(context).size.height * config.gossiper2CardTopRatio,
+          child: Center(
+            child: Container(
+              padding: config.gossiper2CardPadding,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
+                  )
+                ],
+              ),
+              child: Text(
+                Languages.of(context)!.gossiperOnboarding2Card,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.archivoBlack(
-                  fontSize: 24,
-                  color: AppColors.kBlackColor,
+                  fontSize: config.screen1CardTextSize,
+                  color: Colors.black87,
+                  height: 1.2,
                 ),
               ),
-              const SizedBox(height: 16),
-              Text(
-                "Discover the best salons, share your experiences, and connect with others.",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  color: AppColors.kTextColor,
+            ),
+          ).animate().scale(begin: const Offset(0.8, 0.8), end: const Offset(1, 1), duration: 600.ms, delay: 400.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Message bubbles (RIGHT side)
+        Positioned(
+          right: 10,
+          top: MediaQuery.of(context).size.height * config.gossiper2BubblesTopRatio,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // Bubble 1 - White
+              Container(
+                width: MediaQuery.of(context).size.width * config.gossiper2BubbleWidthRatio,
+                padding: EdgeInsets.all(config.gossiper2BubblePadding),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    )
+                  ],
                 ),
-              ),
-              const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _completeOnboarding,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.kPinkColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    "Continue",
-                    style: GoogleFonts.rubik(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: _cancelOnboarding,
                 child: Text(
-                  "Cancel",
-                  style: GoogleFonts.rubik(
-                    color: AppColors.kTextColor,
-                    fontSize: 16,
+                  Languages.of(context)!.gossiperOnboarding2Bubble1,
+                  style: GoogleFonts.poppins(
+                    fontSize: config.gossiper2BubbleFontSize,
+                    color: Colors.black87,
+                    height: 1.3,
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
+              ).animate().moveX(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut).fadeIn(),
+
+              SizedBox(height: config.gossiper2BubbleSpacing),
+
+              // Bubble 2 - White (same as bubble 1)
+              Container(
+                width: MediaQuery.of(context).size.width * config.gossiper2BubbleWidthRatio,
+                padding: EdgeInsets.all(config.gossiper2BubblePadding),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    )
+                  ],
+                ),
+                child: Text(
+                  Languages.of(context)!.gossiperOnboarding2Bubble2,
+                  style: GoogleFonts.poppins(
+                    fontSize: config.gossiper2BubbleFontSize,
+                    color: Colors.black87,
+                    height: 1.3,
+                  ),
+                ),
+              ).animate().moveX(begin: 100, end: 0, duration: 600.ms, delay: 800.ms, curve: Curves.easeOut).fadeIn(),
             ],
           ),
         ),
-      ),
+
+        // Let's Start Button (Bottom RIGHT - same as screen 1)
+        Positioned(
+          bottom: config.screen1ButtonBottom,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.letsStartText,
+            onPressed: _nextPage,
+          ),
+        ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
+      ],
     );
-    }
+  }
+
+  Widget _buildGossiperOnboardingStep3() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Phone mockup (left side, nearly vertical)
+        Positioned(
+          left: config.gossiper3PhoneLeft,
+          top: MediaQuery.of(context).size.height * config.gossiper3PhoneTopRatio,
+          child: Transform.rotate(
+            angle: 0,
+            child: Image.asset(
+              "lib/assets/images/onboarding/gossiper/gossiper_phone_mockup.png",
+              fit: BoxFit.contain,
+              height: MediaQuery.of(context).size.height * config.gossiper3PhoneHeightRatio,
+            ),
+          ).animate().moveX(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Butterfly flight animation
+        Positioned.fill(
+          child: ButterflyFlight(butterflyController: _butterflyController, cycleController: _cycleController),
+        ),
+
+        // Title (top center)
+        Positioned(
+          top: config.screen1TitleTop,
+          left: 20,
+          right: 20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: OutlinedText(
+                  Languages.of(context)!.gossiperOnboarding3Title,
+                  textAlign: TextAlign.center,
+                  height: 1.0,
+                ),
+              ),
+            ],
+          ).animate().moveY(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Skip Button
+        SkipButton(onPressed: _cancelOnboarding),
+
+        // Chat bubbles (right side, above model)
+        Positioned(
+          right: 30,
+          top: MediaQuery.of(context).size.height * config.gossiper3BubblesTopRatio,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // Bubble 1 - White
+              Container(
+                width: MediaQuery.of(context).size.width * config.gossiper3BubbleWidthRatio,
+                padding: EdgeInsets.all(config.gossiper3BubblePadding),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    )
+                  ],
+                ),
+                child: Text(
+                  Languages.of(context)!.gossiperOnboarding3Bubble1,
+                  style: GoogleFonts.poppins(
+                    fontSize: config.gossiper3BubbleFontSize,
+                    color: Colors.black87,
+                    height: 1.3,
+                  ),
+                ),
+              ).animate().moveX(begin: 100, end: 0, duration: 600.ms, delay: 400.ms, curve: Curves.easeOut).fadeIn(),
+
+              SizedBox(height: config.gossiper3BubbleSpacing),
+
+              // Bubble 2 - White (offset to the left)
+              Transform.translate(
+                offset: const Offset(-20, 0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * config.gossiper3BubbleWidthRatio,
+                  padding: EdgeInsets.all(config.gossiper3BubblePadding),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      )
+                    ],
+                  ),
+                  child: Text(
+                    Languages.of(context)!.gossiperOnboarding3Bubble2,
+                    style: GoogleFonts.poppins(
+                      fontSize: config.gossiper3BubbleFontSize,
+                      color: Colors.black87,
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+              ).animate().moveX(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut).fadeIn(),
+            ],
+          ),
+        ),
+
+        // Model (bottom right)
+        Positioned(
+          right: config.gossiper3ModelRight,
+          bottom: config.gossiper3ModelBottom,
+          child: Image.asset(
+            "lib/assets/images/onboarding/gossiper/gossiper_model_3.png",
+            fit: BoxFit.contain,
+            height: MediaQuery.of(context).size.height * config.gossiper3ModelHeightRatio,
+          ).animate().moveY(begin: 300, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Description card (bottom left)
+        Positioned(
+          left: 15,
+          bottom: MediaQuery.of(context).size.height * config.gossiper3DescBottomRatio,
+          child: Container(
+            width: MediaQuery.of(context).size.width * config.gossiper3DescWidthRatio,
+            padding: EdgeInsets.all(config.gossiper3DescPadding),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.95),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 15,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: RichText(
+              textAlign: TextAlign.left,
+              text: TextSpan(
+                style: GoogleFonts.archivoBlack(
+                  fontSize: config.gossiper3DescFontSize,
+                  color: Colors.black87,
+                  height: 1.6,
+                ),
+                children: [
+                  TextSpan(
+                    text: Languages.of(context)!.gossiperOnboarding3DescPart1,
+                  ),
+                  TextSpan(
+                    text: Languages.of(context)!.gossiperOnboarding3DescPart2,
+                    style: GoogleFonts.archivoBlack(
+                      color: _kVibrantPink,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 800.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Continue button (right aligned)
+        Positioned(
+          bottom: config.screen1ButtonBottom,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.continueText.toUpperCase(),
+            onPressed: _nextPage,
+          ),
+        ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
+      ],
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep4() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Scrollable content
+        SafeArea(
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                // Model (top)
+                RotatedBox(
+                  quarterTurns: 1,
+                  child: Image.asset(
+                    "lib/assets/images/onboarding/gossiper/gossiper_model_4.png",
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.width,
+                  ),
+                ).animate().fadeIn(duration: 800.ms).moveY(begin: -50, end: 0, curve: Curves.easeOut),
+
+                // Title
+                Transform.translate(
+                  offset: Offset(0, config.gossiper4TitleOffset),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: OutlinedText(
+                      Languages.of(context)!.gossiperOnboarding4Title,
+                      textAlign: TextAlign.center,
+                      fontSize: config.gossiper4TitleFontSize,
+                      height: 1.0,
+                    ),
+                  ),
+                ).animate().moveY(begin: -30, end: 0, duration: 600.ms, delay: 200.ms, curve: Curves.easeOut),
+
+                // Cards content with negative offset to compensate for title transform
+                Transform.translate(
+                  offset: Offset(0, config.gossiper4CardsOffset),
+                  child: Column(
+                    children: [
+                      // Feature Row 1 (butterfly left)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: StepCard(
+                          text: Languages.of(context)!.gossiperOnboarding4Row1,
+                          delay: 300,
+                          config: config,
+                          isRightAligned: false,
+                        ),
+                      ),
+
+                      SizedBox(height: config.gossiper4CardSpacing),
+
+                      // Feature Row 2 (butterfly left)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: StepCard(
+                          text: Languages.of(context)!.gossiperOnboarding4Row2,
+                          delay: 400,
+                          config: config,
+                          isRightAligned: false,
+                        ),
+                      ),
+
+                      SizedBox(height: config.gossiper4CardSpacing),
+
+                      // Feature Row 3 (butterfly right)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: StepCard(
+                          text: Languages.of(context)!.gossiperOnboarding4Row3,
+                          delay: 500,
+                          config: config,
+                          isRightAligned: true,
+                        ),
+                      ),
+
+                      SizedBox(height: config.gossiper4DescSpacingTop),
+
+                      // Bottom description card
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(config.gossiper4DescPadding),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.95),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: RichText(
+                            text: TextSpan(
+                              style: GoogleFonts.archivoBlack(
+                                fontSize: config.gossiper4DescFontSize,
+                                color: Colors.black87,
+                                height: 1.4,
+                                fontStyle: FontStyle.italic,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: Languages.of(context)!.gossiperOnboarding4DescPart1,
+                                  style: GoogleFonts.archivoBlack(
+                                    color: _kVibrantPink,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: Languages.of(context)!.gossiperOnboarding4DescPart2,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ).animate().moveY(begin: 50, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut).fadeIn(),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 100), // Space for button
+              ],
+            ),
+          ),
+        ),
+
+        // Button (aligned right like screen 1)
+        Positioned(
+          bottom: config.screen1ButtonBottom,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.gossiperOnboarding4Button,
+            onPressed: _nextPage,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+
+        // Skip button
+        SkipButton(onPressed: _cancelOnboarding),
+      ],
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep5() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Model (left side, anchored to bottom)
+        Positioned(
+          left: config.gossiper5ModelLeft,
+          bottom: 0,
+          child: Image.asset(
+            "lib/assets/images/onboarding/gossiper/gossiper_model_5.png",
+            fit: BoxFit.contain,
+            height: MediaQuery.of(context).size.height * config.gossiper5ModelHeightRatio,
+          ).animate().moveX(begin: -100, end: 0, duration: 800.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Content
+        SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // Title "How it works"
+              Padding(
+                padding: EdgeInsets.only(top: config.gossiper5TitleTopPadding, right: 20, left: 20),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: OutlinedText(
+                    Languages.of(context)!.gossiperOnboarding5Title,
+                    textAlign: TextAlign.center,
+                    fontSize: config.gossiper5TitleFontSize,
+                    height: 1.0,
+                  ),
+                ),
+              ).animate().moveY(begin: -50, end: 0, duration: 600.ms, curve: Curves.easeOut).fadeIn(),
+
+              const SizedBox(height: 10),
+
+              // Subtitle "SCAN & GOSSIP"
+              Padding(
+                padding: EdgeInsets.only(right: 50, top: config.gossiper5SubtitleTopPadding),
+                child: OutlinedText(
+                  Languages.of(context)!.gossiperOnboarding5Subtitle,
+                  textAlign: TextAlign.right,
+                  fontSize: config.gossiper5SubtitleFontSize,
+                  height: 1.1,
+                ),
+              ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
+
+              // QR Code
+              Padding(
+                padding: EdgeInsets.only(left: config.gossiper5QrCodeLeftPadding),
+                child: Image.asset(
+                  "lib/assets/images/onboarding/gossiper/gossiper_qr_1.png",
+                  width: config.gossiper5QrCodeSize,
+                  height: config.gossiper5QrCodeSize,
+                ),
+              ).animate().scale(duration: 600.ms, delay: 400.ms, curve: Curves.easeOutBack),
+
+              const Spacer(),
+
+              // Description card
+              Padding(
+                padding: EdgeInsets.only(left: 20, right: 20, bottom: config.gossiper5DescBottomPadding),
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(config.gossiper5DescPadding),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.95),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: RichText(
+                    textAlign: TextAlign.left,
+                    text: TextSpan(
+                      style: GoogleFonts.archivoBlack(
+                        fontSize: config.gossiper5DescFontSize,
+                        color: Colors.black87,
+                        height: 1.4,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: Languages.of(context)!.gossiperOnboarding5DescPart1,
+                          style: GoogleFonts.archivoBlack(
+                            color: _kVibrantPink,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        TextSpan(
+                          text: Languages.of(context)!.gossiperOnboarding5DescPart2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut).fadeIn(),
+            ],
+          ),
+        ),
+
+        // Button
+        Positioned(
+          bottom: config.gossiper5ButtonBottom,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.nextStepsText,
+            onPressed: _nextPage,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+
+        // Skip button
+        SkipButton(onPressed: _cancelOnboarding),
+      ],
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep6() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Layer 1: Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Layer 2: Phone Mockup (Center, responsive size)
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: config.screen5PhoneBottomPadding),
+              child: Image.asset(
+                "lib/assets/images/onboarding/gossiper/gossiper_phone.png",
+                fit: BoxFit.contain,
+                height: MediaQuery.of(context).size.height * config.screen5PhoneHeightRatio,
+              ),
+            ),
+          ).animate().fadeIn(duration: 800.ms).moveY(begin: 50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Layer 3: Title (Top, responsive)
+        Positioned(
+          top: config.screen5TitleTop,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: OutlinedText(
+              Languages.of(context)!.gossiperOnboarding6Title,
+              textAlign: TextAlign.center,
+              fontSize: config.screen5TitleFontSize,
+              height: 1.2,
+            ),
+          ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+        ),
+
+        // Layer 4: Message Bubbles (Bottom, responsive)
+        Positioned(
+          bottom: config.screen5BubblesBottom,
+          left: 0,
+          right: 0,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MessageBubble(
+                title: Languages.of(context)!.gossiperOnboarding6Bubble1.split('\n')[0],
+                subtitle: Languages.of(context)!.gossiperOnboarding6Bubble1.split('\n').length > 1
+                    ? Languages.of(context)!.gossiperOnboarding6Bubble1.split('\n')[1]
+                    : "",
+                color: const Color(0xFFFFE5F5),
+                delay: 200,
+                config: config,
+              ),
+              SizedBox(height: config.screen5BubbleSpacing),
+              MessageBubble(
+                title: Languages.of(context)!.gossiperOnboarding6Bubble2.split('\n')[0],
+                subtitle: Languages.of(context)!.gossiperOnboarding6Bubble2.split('\n').length > 1
+                    ? Languages.of(context)!.gossiperOnboarding6Bubble2.split('\n')[1]
+                    : "",
+                color: const Color(0xFFFF69B4),
+                textColor: Colors.white,
+                delay: 400,
+                config: config,
+              ),
+              SizedBox(height: config.screen5BubbleSpacing),
+              MessageBubble(
+                title: Languages.of(context)!.gossiperOnboarding6Bubble3.split('\n')[0],
+                subtitle: Languages.of(context)!.gossiperOnboarding6Bubble3.split('\n').length > 1
+                    ? Languages.of(context)!.gossiperOnboarding6Bubble3.split('\n')[1]
+                    : "",
+                color: const Color(0xFFFFE5F5),
+                delay: 600,
+                config: config,
+              ),
+              SizedBox(height: config.screen5BubbleSpacing),
+              MessageBubble(
+                title: Languages.of(context)!.gossiperOnboarding6Bubble4.split('\n')[0],
+                subtitle: Languages.of(context)!.gossiperOnboarding6Bubble4.split('\n').length > 1
+                    ? Languages.of(context)!.gossiperOnboarding6Bubble4.split('\n')[1]
+                    : "",
+                color: const Color(0xFFFF69B4),
+                textColor: Colors.white,
+                delay: 800,
+                config: config,
+              ),
+            ],
+          ),
+        ),
+
+        // Layer 5: Fixed UI elements
+        Positioned(
+          bottom: 30,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.areYouReadyText,
+            onPressed: _nextPage,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 1200.ms),
+
+        SkipButton(onPressed: _cancelOnboarding),
+      ],
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep7() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Layer 1: Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Layer 2: Scrollable content
+        SafeArea(
+          child: SingleChildScrollView(
+            physics: config.isVerySmall
+                ? const AlwaysScrollableScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: config.screen6TitleTop),
+
+                // Title (responsive)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Center(
+                    child: OutlinedText(
+                      Languages.of(context)!.gossiperOnboarding7Title,
+                      textAlign: TextAlign.center,
+                      fontSize: config.screen6TitleFontSize,
+                      height: 1.05,
+                    ),
+                  ),
+                ).animate().moveY(begin: -50, end: 0, duration: 800.ms, curve: Curves.easeOut),
+
+                // Spacer dynamique
+                SizedBox(height: config.screen6TitleToBoxSpacing),
+
+                // Butterfly & Text Box (responsive height)
+                SizedBox(
+                  height: config.screen6ButterflyBoxHeight,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      // Text Box
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.only(left: 80),
+                          padding: EdgeInsets.all(config.screen6ButterflyBoxPadding),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.0),
+                            border: Border.all(color: _kVibrantPink, width: 2),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 15,
+                                offset: const Offset(0, 8),
+                              ),
+                            ],
+                          ),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              style: GoogleFonts.poppins(
+                                fontSize: config.screen6ButterflyBoxTextSize,
+                                color: Colors.black87,
+                                height: 1.4,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              children: [
+                                TextSpan(text: Languages.of(context)!.gossiperOnboarding7Desc.split("Gossiper")[0]),
+                                TextSpan(
+                                  text: "Gossiper",
+                                  style: GoogleFonts.poppins(
+                                    color: _kVibrantPink,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(text: Languages.of(context)!.gossiperOnboarding7Desc.split("Gossiper")[1]),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // Butterfly (responsive size)
+                      Positioned(
+                        left: -80,
+                        top: -60,
+                        child: Transform.rotate(
+                          angle: -0.15,
+                          child: Image.asset(
+                            "lib/assets/images/onboarding/salon_butterfly.png",
+                            width: config.screen6ButterflyImageSize,
+                            height: config.screen6ButterflyImageSize,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).animate().fadeIn(duration: 800.ms, delay: 200.ms).moveX(begin: 50, end: 0, curve: Curves.easeOut),
+                ),
+
+                // Spacer dynamique
+                SizedBox(height: config.verticalSpacing),
+
+                // Bottom Section: Phone + QR Code (responsive scales)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      // Phone Mockup (responsive scale)
+                      Expanded(
+                        flex: 4,
+                        child: Transform.translate(
+                          offset: const Offset(-40, 50),
+                          child: Transform.scale(
+                            scale: config.screen6PhoneScale,
+                            child: Image.asset(
+                              "lib/assets/images/onboarding/phone_2.png",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ).animate().moveY(begin: 200, end: 0, duration: 800.ms, delay: 400.ms, curve: Curves.easeOut),
+                      ),
+
+                      // QR Code Section (responsive scale and size)
+                      Expanded(
+                        flex: 3,
+                        child: Transform.translate(
+                          offset: const Offset(0, -80),
+                          child: Transform.scale(
+                            scale: config.screen6QrCodeScale,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Image.asset(
+                                      "lib/assets/images/onboarding/code_QR_2.png",
+                                      width: config.screen6QrCodeSize,
+                                      height: config.screen6QrCodeSize,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 40),
+                              ],
+                            ),
+                          ),
+                        ).animate().scale(duration: 600.ms, delay: 600.ms, curve: Curves.easeOutBack),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: config.screen6BottomSpacing),
+                SizedBox(height: config.bottomSpacing),
+              ],
+            ),
+          ),
+        ),
+
+        // Layer 3: Fixed UI elements
+        Positioned(
+          bottom: 30,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.letsBeginText,
+            onPressed: _completeOnboarding,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+
+        SkipButton(onPressed: _cancelOnboarding),
+      ],
+    );
+  }
 
   Widget _buildSalonOnboardingStep6() {
     final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);

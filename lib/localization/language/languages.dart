@@ -290,4 +290,47 @@ abstract class Languages {
   String get salonOnboarding6Desc;
   String get scanAndGossipText;
   String get letsBeginText;
+
+  // Gossiper Onboarding
+  String get gossiperOnboardingDescPart1;
+  String get gossiperOnboardingDescPart2;
+
+  // Gossiper Onboarding Screen 2
+  String get gossiperOnboarding2Title;
+  String get gossiperOnboarding2Card;
+  String get gossiperOnboarding2Bubble1;
+  String get gossiperOnboarding2Bubble2;
+
+  // Gossiper Onboarding Screen 3
+  String get gossiperOnboarding3Title;
+  String get gossiperOnboarding3Bubble1;
+  String get gossiperOnboarding3Bubble2;
+  String get gossiperOnboarding3DescPart1;
+  String get gossiperOnboarding3DescPart2;
+
+  // Gossiper Onboarding Screen 4
+  String get gossiperOnboarding4Title;
+  String get gossiperOnboarding4Row1;
+  String get gossiperOnboarding4Row2;
+  String get gossiperOnboarding4Row3;
+  String get gossiperOnboarding4DescPart1;
+  String get gossiperOnboarding4DescPart2;
+  String get gossiperOnboarding4Button;
+
+  // Gossiper Onboarding Screen 5
+  String get gossiperOnboarding5Title;
+  String get gossiperOnboarding5Subtitle;
+  String get gossiperOnboarding5DescPart1;
+  String get gossiperOnboarding5DescPart2;
+
+  // Gossiper Onboarding Screen 6
+  String get gossiperOnboarding6Title;
+  String get gossiperOnboarding6Bubble1;
+  String get gossiperOnboarding6Bubble2;
+  String get gossiperOnboarding6Bubble3;
+  String get gossiperOnboarding6Bubble4;
+
+  // Gossiper Onboarding Screen 7
+  String get gossiperOnboarding7Title;
+  String get gossiperOnboarding7Desc;
 }

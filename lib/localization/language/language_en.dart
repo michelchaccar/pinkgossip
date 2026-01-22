@@ -626,4 +626,76 @@ class LanguageEn extends Languages {
   String get scanAndGossipText => "SCAN & GOSSIP";
   @override
   String get letsBeginText => "LET'S BEGIN";
+
+  // Gossiper Onboarding
+  @override
+  String get gossiperOnboardingDescPart1 => "Where your salon experience and opinion matters\n";
+  @override
+  String get gossiperOnboardingDescPart2 => "And your content has value.";
+
+  // Gossiper Onboarding Screen 2
+  @override
+  String get gossiperOnboarding2Title => "DISCOVER NEW\nBEAUTY SPOTS";
+  @override
+  String get gossiperOnboarding2Card => "TRY NEW SALON\nWITH CONFIDENCE";
+  @override
+  String get gossiperOnboarding2Bubble1 => "See what others say about the salon by checking real reviews from real clients";
+  @override
+  String get gossiperOnboarding2Bubble2 => "Get the client perspective from their photos and videos";
+
+  // Gossiper Onboarding Screen 3
+  @override
+  String get gossiperOnboarding3Title => "SHARE YOUR\nEXPERIENCE";
+  @override
+  String get gossiperOnboarding3Bubble1 => "Omgg where did you get your hair done? 😍";
+  @override
+  String get gossiperOnboarding3Bubble2 => "Okay I neeed the name of your hair colorist!!!";
+  @override
+  String get gossiperOnboarding3DescPart1 => "Snap photos, post videos, and drop your honest review straight from the salon.\n\n";
+  @override
+  String get gossiperOnboarding3DescPart2 => "IT'S MORE THAN POSTING IT'S BUILDING YOUR INFLUENCE!";
+
+  // Gossiper Onboarding Screen 4
+  @override
+  String get gossiperOnboarding4Title => "EARN POINTS\n& SAVE MORE";
+  @override
+  String get gossiperOnboarding4Row1 => "Gossiping about your salon experience really pays off";
+  @override
+  String get gossiperOnboarding4Row2 => "Every time you post a review, photo, or video, you earn points";
+  @override
+  String get gossiperOnboarding4Row3 => "Points can be redeemed at ANY Pink Gossip partner salons";
+  @override
+  String get gossiperOnboarding4DescPart1 => "Boom";
+  @override
+  String get gossiperOnboarding4DescPart2 => " — No more posting just for likes — you're building beauty wealth, saving on your next beauty treat, and getting rewarded for being real";
+  @override
+  String get gossiperOnboarding4Button => "HOW IT WORKS";
+
+  // Gossiper Onboarding Screen 5
+  @override
+  String get gossiperOnboarding5Title => "How it works";
+  @override
+  String get gossiperOnboarding5Subtitle => "SCAN &\nGOSSIP";
+  @override
+  String get gossiperOnboarding5DescPart1 => "Every service starts with a scan. ";
+  @override
+  String get gossiperOnboarding5DescPart2 => "Share your review, photos, or videos to earn points, build influence, and use your rewards to save on your next beauty service";
+
+  // Gossiper Onboarding Screen 6
+  @override
+  String get gossiperOnboarding6Title => "WHY CLIENTS\nLOVE PINK GOSSIP";
+  @override
+  String get gossiperOnboarding6Bubble1 => "Real client perspective\nContent shared by clients, not salon-curated or staged";
+  @override
+  String get gossiperOnboarding6Bubble2 => "Choose with confidence\nSee real videos, photos, and written reviews, so there's no guesswork before booking a salon";
+  @override
+  String get gossiperOnboarding6Bubble3 => "Create content that pays off\nShare your real experience and enjoy rewards, perks, and savings";
+  @override
+  String get gossiperOnboarding6Bubble4 => "Become a beauty influencer\nBuild influence, grow a trusted community, and create real relationships with salons through your reviews";
+
+  // Gossiper Onboarding Screen 7
+  @override
+  String get gossiperOnboarding7Title => "YOU ARE ALL SET\nFOR SUCCESS";
+  @override
+  String get gossiperOnboarding7Desc => "You're officially a\nGossiper\nScan, share & collect\npoints to turn your\nreviews into influence";
 }

@@ -28,6 +28,7 @@ import 'package:pinkGossip/services/tooltip_service.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
 import 'package:pinkGossip/models/updateprofilephoto.dart';
 import 'package:pinkGossip/screens/Profile/editprofile.dart';
+import 'package:pinkGossip/screens/onboarding/onboarding_screen.dart';
 import 'package:pinkGossip/screens/showpostimage.dart';
 import 'package:pinkGossip/screens/showpostvideo.dart';
 import 'package:pinkGossip/utils/color_utils.dart';
@@ -482,17 +483,42 @@ class _ProfileScreenState extends State<ProfileScreen>
                             LogoutAlert(context, kSize);
                           },
                         ),
-                        // Debug Button
+                        // Debug Button - Gossiper Onboarding
                         ListTile(
-                          leading: const Icon(Icons.restart_alt, color: Colors.red),
+                          leading: const Icon(Icons.play_arrow, color: Colors.green),
                           title: Text(
-                            "Reset Onboarding (Debug)",
-                            style: Pallete.Quicksand15blackwe600.copyWith(color: Colors.red),
+                            "Test Gossiper Onboarding",
+                            style: Pallete.Quicksand15blackwe600.copyWith(color: Colors.green),
                           ),
-                          onTap: () async {
-                            SharedPreferences prefs = await SharedPreferences.getInstance();
-                            await prefs.remove('onboarding_completed_$userid');
-                            kToast("Onboarding reset! Restart app to see it.");
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OnboardingScreen(
+                                  userId: userid,
+                                  userType: "1", // Gossiper
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        // Debug Button - Salon Onboarding
+                        ListTile(
+                          leading: const Icon(Icons.play_arrow, color: Colors.orange),
+                          title: Text(
+                            "Test Salon Onboarding",
+                            style: Pallete.Quicksand15blackwe600.copyWith(color: Colors.orange),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OnboardingScreen(
+                                  userId: userid,
+                                  userType: "2", // Salon
+                                ),
+                              ),
+                            );
                           },
                         ),
                       ],

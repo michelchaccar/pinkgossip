@@ -69,7 +69,7 @@ dependencies:
   firebase_database: ^11.3.7
   image_cropper: ^8.1.0
   image: ^4.5.2
-  tutorial_coach_mark: ^1.3.0
+  tutorial_coach_mark: ^1.3.3
   app_links: ^6.4.0
   url_launcher: ^6.3.1
   share_plus: ^11.0.0
@@ -80,6 +80,8 @@ dependencies:
   image_gallery_saver_plus: ^4.0.1
   video_compress: ^3.1.4
   visibility_detector: ^0.4.0+2
+  google_fonts: ^6.3.2
+  flutter_animate: ^4.5.2
 
 dev_dependencies:
   flutter_test:
@@ -106,6 +108,7 @@ flutter:
   assets:
     - lib/assets/images/
     - lib/assets/images/onboarding/
+    - lib/assets/images/onboarding/gossiper/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
