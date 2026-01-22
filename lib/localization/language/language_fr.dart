@@ -754,7 +754,7 @@ class LanguageFr extends Languages {
   @override
   String get salonOnboarding3DescPart2 => "\nC'est ainsi que Pink Gossip transforme chaque visite en visibilité, avis et nouvelle clientèle pour vous — instantanément.";
   @override
-  String get nextStepsText => "PROCHAINES ÉTAPES";
+  String get nextStepsText => "CONTINUER";
   @override
   String get salonOnboarding4Title => "L'EFFET\nSCAN & GOSSIP";
   @override
@@ -820,7 +820,7 @@ class LanguageFr extends Languages {
 
   // Gossiper Onboarding Screen 4
   @override
-  String get gossiperOnboarding4Title => "GAGNE DES POINTS\n& ÉCONOMISE";
+  String get gossiperOnboarding4Title => "PARTAGE\n& GAGNE";
   @override
   String get gossiperOnboarding4Row1 => "Partager ton expérience beauté, ça rapporte vraiment";
   @override
@@ -832,7 +832,7 @@ class LanguageFr extends Languages {
   @override
   String get gossiperOnboarding4DescPart2 => " — Fini de poster juste pour les likes — tu construis ta richesse beauté, tu économises sur ton prochain soin, et tu es récompensée pour ton authenticité";
   @override
-  String get gossiperOnboarding4Button => "COMMENT ÇA MARCHE";
+  String get gossiperOnboarding4Button => "EN SAVOIR PLUS";
 
   // Gossiper Onboarding Screen 5
   @override
@@ -846,7 +846,7 @@ class LanguageFr extends Languages {
 
   // Gossiper Onboarding Screen 6
   @override
-  String get gossiperOnboarding6Title => "POURQUOI LES CLIENTS\nADORENT PINK GOSSIP";
+  String get gossiperOnboarding6Title => "ILS ADORENT\nPINK GOSSIP";
   @override
   String get gossiperOnboarding6Bubble1 => "Perspective client authentique\nContenu partagé par les clients, pas organisé ou mis en scène par le salon";
   @override

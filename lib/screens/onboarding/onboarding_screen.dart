@@ -1508,12 +1508,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             children: [
               // Title "How it works"
               Padding(
-                padding: EdgeInsets.only(top: config.gossiper5TitleTopPadding, right: 20, left: 60),
+                padding: EdgeInsets.only(top: config.gossiper5TitleTopPadding, right: 20, left: 20),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: OutlinedText(
                     Languages.of(context)!.gossiperOnboarding5Title,
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                     fontSize: config.gossiper5TitleFontSize,
                     height: 1.0,
                   ),

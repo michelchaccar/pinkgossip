@@ -147,7 +147,7 @@ class OnboardingResponsiveConfig {
   static const double minScreen5TitleFontSize = 26;
   static const double maxScreen5TitleFontSize = 36;
   static const double minScreen5TitleTop = 60;
-  static const double maxScreen5TitleTop = 90;
+  static const double maxScreen5TitleTop = 110;
 
   // --- Phone Mockup Section ---
   static const double minScreen5PhoneHeightRatio = 0.50;
@@ -216,8 +216,8 @@ class OnboardingResponsiveConfig {
   // ============================================================
   static const double minGossiper2ModelHeightRatio = 0.55;
   static const double maxGossiper2ModelHeightRatio = 0.62;
-  static const double minGossiper2CardTopRatio = 0.29;
-  static const double maxGossiper2CardTopRatio = 0.28;
+  static const double minGossiper2CardTopRatio = 0.26;
+  static const double maxGossiper2CardTopRatio = 0.23;
   static const double minGossiper2CardPaddingH = 16;
   static const double maxGossiper2CardPaddingH = 22;
   static const double minGossiper2CardPaddingV = 10;
@@ -294,20 +294,20 @@ class OnboardingResponsiveConfig {
   static const double maxGossiper5ModelLeft = -100;
   static const double minGossiper5ModelTopRatio = 0.18;
   static const double maxGossiper5ModelTopRatio = 0.22;
-  static const double minGossiper5ModelHeightRatio = 0.82;
+  static const double minGossiper5ModelHeightRatio = 0.95;
   static const double maxGossiper5ModelHeightRatio = 0.85;
   static const double minGossiper5TitleTopPadding = 40;
   static const double maxGossiper5TitleTopPadding = 70;
-  static const double minGossiper5SubtitleFontSize = 30;
-  static const double maxGossiper5SubtitleFontSize = 52;
-  static const double minGossiper5SubtitleTopPadding = 20;
+  static const double minGossiper5SubtitleFontSize = 24;
+  static const double maxGossiper5SubtitleFontSize = 32;
+  static const double minGossiper5SubtitleTopPadding = 15;
   static const double maxGossiper5SubtitleTopPadding = 40;
-  static const double minGossiper5QrCodeSize = 260;
+  static const double minGossiper5QrCodeSize = 220;
   static const double maxGossiper5QrCodeSize = 320;
   static const double minGossiper5QrCodeLeftPadding = 140;
   static const double maxGossiper5QrCodeLeftPadding = 220;
   static const double minGossiper5DescBottomPadding = 110;
-  static const double maxGossiper5DescBottomPadding = 60;
+  static const double maxGossiper5DescBottomPadding = 70;
   static const double minGossiper5DescFontSize = 12;
   static const double maxGossiper5DescFontSize = 15;
   static const double minGossiper5DescPadding = 14;
