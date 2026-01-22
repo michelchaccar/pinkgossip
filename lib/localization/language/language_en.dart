@@ -670,4 +670,14 @@ class LanguageEn extends Languages {
   String get gossiperOnboarding4DescPart2 => " — No more posting just for likes — you're building beauty wealth, saving on your next beauty treat, and getting rewarded for being real";
   @override
   String get gossiperOnboarding4Button => "HOW IT WORKS";
+
+  // Gossiper Onboarding Screen 5
+  @override
+  String get gossiperOnboarding5Title => "How it works";
+  @override
+  String get gossiperOnboarding5Subtitle => "SCAN &\nGOSSIP";
+  @override
+  String get gossiperOnboarding5DescPart1 => "Every service starts with a scan. ";
+  @override
+  String get gossiperOnboarding5DescPart2 => "Share your review, photos, or videos to earn points, build influence, and use your rewards to save on your next beauty service";
 }

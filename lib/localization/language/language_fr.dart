@@ -833,4 +833,14 @@ class LanguageFr extends Languages {
   String get gossiperOnboarding4DescPart2 => " — Fini de poster juste pour les likes — tu construis ta richesse beauté, tu économises sur ton prochain soin, et tu es récompensée pour ton authenticité";
   @override
   String get gossiperOnboarding4Button => "COMMENT ÇA MARCHE";
+
+  // Gossiper Onboarding Screen 5
+  @override
+  String get gossiperOnboarding5Title => "Comment ça marche";
+  @override
+  String get gossiperOnboarding5Subtitle => "SCANNE &\nPARTAGE";
+  @override
+  String get gossiperOnboarding5DescPart1 => "Chaque service commence par un scan. ";
+  @override
+  String get gossiperOnboarding5DescPart2 => "Partage ton avis, tes photos ou vidéos pour gagner des points, bâtir ton influence et économiser sur ton prochain soin beauté";
 }

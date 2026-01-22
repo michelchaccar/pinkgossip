@@ -841,6 +841,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           _buildGossiperOnboardingStep2(),
           _buildGossiperOnboardingStep3(),
           _buildGossiperOnboardingStep4(),
+          _buildGossiperOnboardingStep5(),
         ],
       ),
     );
@@ -1466,6 +1467,134 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           right: 20,
           child: OnboardingButton(
             text: Languages.of(context)!.gossiperOnboarding4Button,
+            onPressed: _nextPage,
+          ),
+        ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
+
+        // Skip button
+        SkipButton(onPressed: _cancelOnboarding),
+      ],
+    );
+  }
+
+  Widget _buildGossiperOnboardingStep5() {
+    final config = OnboardingResponsiveConfig(MediaQuery.of(context).size);
+
+    return Stack(
+      children: [
+        // Background
+        Positioned.fill(
+          child: Image.asset(
+            "lib/assets/images/onboarding/salon_bg.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        // Model (left side)
+        Positioned(
+          left: -120,
+          top: MediaQuery.of(context).size.height * 0.25,
+          child: Image.asset(
+            "lib/assets/images/onboarding/gossiper/gossiper_model_5.png",
+            fit: BoxFit.contain,
+            height: MediaQuery.of(context).size.height * 0.75,
+          ).animate().moveX(begin: -100, end: 0, duration: 800.ms, curve: Curves.easeOut).fadeIn(),
+        ),
+
+        // Content
+        SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // Title "How it works"
+              Padding(
+                padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: OutlinedText(
+                    Languages.of(context)!.gossiperOnboarding5Title,
+                    textAlign: TextAlign.left,
+                    height: 1.0,
+                  ),
+                ),
+              ).animate().moveY(begin: -50, end: 0, duration: 600.ms, curve: Curves.easeOut).fadeIn(),
+
+              const SizedBox(height: 10),
+
+              // Subtitle "SCAN & GOSSIP"
+              Padding(
+                padding: const EdgeInsets.only(right: 20, top: 20),
+                child: OutlinedText(
+                  Languages.of(context)!.gossiperOnboarding5Subtitle,
+                  textAlign: TextAlign.right,
+                  fontSize: 48,
+                  height: 1.1,
+                ),
+              ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
+
+              // QR Code
+              Padding(
+                padding: const EdgeInsets.only(left: 200),
+                child: Image.asset(
+                  "lib/assets/images/onboarding/gossiper/gossiper_qr_1.png",
+                  width: 320,
+                  height: 320,
+                ),
+              ).animate().scale(duration: 600.ms, delay: 400.ms, curve: Curves.easeOutBack),
+
+              const Spacer(),
+
+              // Description card
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 100),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.95),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: RichText(
+                    textAlign: TextAlign.left,
+                    text: TextSpan(
+                      style: GoogleFonts.archivoBlack(
+                        fontSize: 14,
+                        color: Colors.black87,
+                        height: 1.4,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: Languages.of(context)!.gossiperOnboarding5DescPart1,
+                          style: GoogleFonts.archivoBlack(
+                            color: _kVibrantPink,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        TextSpan(
+                          text: Languages.of(context)!.gossiperOnboarding5DescPart2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut).fadeIn(),
+            ],
+          ),
+        ),
+
+        // Button
+        Positioned(
+          bottom: 30,
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.nextStepsText,
             onPressed: _completeOnboarding,
           ),
         ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
