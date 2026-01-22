@@ -680,4 +680,22 @@ class LanguageEn extends Languages {
   String get gossiperOnboarding5DescPart1 => "Every service starts with a scan. ";
   @override
   String get gossiperOnboarding5DescPart2 => "Share your review, photos, or videos to earn points, build influence, and use your rewards to save on your next beauty service";
+
+  // Gossiper Onboarding Screen 6
+  @override
+  String get gossiperOnboarding6Title => "WHY CLIENTS\nLOVE PINK GOSSIP";
+  @override
+  String get gossiperOnboarding6Bubble1 => "Real client perspective\nContent shared by clients, not salon-curated or staged";
+  @override
+  String get gossiperOnboarding6Bubble2 => "Choose with confidence\nSee real videos, photos, and written reviews, so there's no guesswork before booking a salon";
+  @override
+  String get gossiperOnboarding6Bubble3 => "Create content that pays off\nShare your real experience and enjoy rewards, perks, and savings";
+  @override
+  String get gossiperOnboarding6Bubble4 => "Become a beauty influencer\nBuild influence, grow a trusted community, and create real relationships with salons through your reviews";
+
+  // Gossiper Onboarding Screen 7
+  @override
+  String get gossiperOnboarding7Title => "YOU ARE ALL SET\nFOR SUCCESS";
+  @override
+  String get gossiperOnboarding7Desc => "You're officially a\nGossiper\nScan, share & collect\npoints to turn your\nreviews into influence";
 }

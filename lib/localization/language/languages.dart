@@ -322,4 +322,15 @@ abstract class Languages {
   String get gossiperOnboarding5Subtitle;
   String get gossiperOnboarding5DescPart1;
   String get gossiperOnboarding5DescPart2;
+
+  // Gossiper Onboarding Screen 6
+  String get gossiperOnboarding6Title;
+  String get gossiperOnboarding6Bubble1;
+  String get gossiperOnboarding6Bubble2;
+  String get gossiperOnboarding6Bubble3;
+  String get gossiperOnboarding6Bubble4;
+
+  // Gossiper Onboarding Screen 7
+  String get gossiperOnboarding7Title;
+  String get gossiperOnboarding7Desc;
 }
