@@ -205,6 +205,116 @@ class OnboardingResponsiveConfig {
   static const double minScreen6BottomSpacing = 10;
   static const double maxScreen6BottomSpacing = 20;
 
+  // ============================================================
+  // GOSSIPER SCREEN 1 - WELCOME
+  // ============================================================
+  static const double minGossiper1CardTopRatio = 0.55;
+  static const double maxGossiper1CardTopRatio = 0.62;
+
+  // ============================================================
+  // GOSSIPER SCREEN 2 - INITIAL MESSAGE
+  // ============================================================
+  static const double minGossiper2ModelHeightRatio = 0.55;
+  static const double maxGossiper2ModelHeightRatio = 0.62;
+  static const double minGossiper2CardTopRatio = 0.29;
+  static const double maxGossiper2CardTopRatio = 0.28;
+  static const double minGossiper2CardPaddingH = 16;
+  static const double maxGossiper2CardPaddingH = 22;
+  static const double minGossiper2CardPaddingV = 10;
+  static const double maxGossiper2CardPaddingV = 14;
+  static const double minGossiper2BubblesTopRatio = 0.55;
+  static const double maxGossiper2BubblesTopRatio = 0.62;
+  static const double minGossiper2BubbleWidthRatio = 0.55;
+  static const double maxGossiper2BubbleWidthRatio = 0.62;
+  static const double minGossiper2BubbleFontSize = 14;
+  static const double maxGossiper2BubbleFontSize = 17;
+  static const double minGossiper2BubblePadding = 14;
+  static const double maxGossiper2BubblePadding = 18;
+  static const double minGossiper2BubbleSpacing = 10;
+  static const double maxGossiper2BubbleSpacing = 14;
+
+  // ============================================================
+  // GOSSIPER SCREEN 3 - PHONE MOCKUP
+  // ============================================================
+  static const double minGossiper3PhoneLeft = -50;
+  static const double maxGossiper3PhoneLeft = -80;
+  static const double minGossiper3PhoneTopRatio = 0.18;
+  static const double maxGossiper3PhoneTopRatio = 0.22;
+  static const double minGossiper3PhoneHeightRatio = 0.55;
+  static const double maxGossiper3PhoneHeightRatio = 0.62;
+  static const double minGossiper3BubblesTopRatio = 0.28;
+  static const double maxGossiper3BubblesTopRatio = 0.32;
+  static const double minGossiper3BubbleWidthRatio = 0.50;
+  static const double maxGossiper3BubbleWidthRatio = 0.57;
+  static const double minGossiper3BubbleFontSize = 12;
+  static const double maxGossiper3BubbleFontSize = 15;
+  static const double minGossiper3BubblePadding = 12;
+  static const double maxGossiper3BubblePadding = 16;
+  static const double minGossiper3BubbleSpacing = 8;
+  static const double maxGossiper3BubbleSpacing = 12;
+  static const double minGossiper3ModelRight = -90;
+  static const double maxGossiper3ModelRight = -140;
+  static const double minGossiper3ModelBottom = -100;
+  static const double maxGossiper3ModelBottom = -80;
+  static const double minGossiper3ModelHeightRatio = 0.55;
+  static const double maxGossiper3ModelHeightRatio = 0.62;
+  static const double minGossiper3DescBottomRatio = 0.10;
+  static const double maxGossiper3DescBottomRatio = 0.14;
+  static const double minGossiper3DescWidthRatio = 0.50;
+  static const double maxGossiper3DescWidthRatio = 0.57;
+  static const double minGossiper3DescFontSize = 14;
+  static const double maxGossiper3DescFontSize = 17;
+  static const double minGossiper3DescPadding = 14;
+  static const double maxGossiper3DescPadding = 18;
+
+  // ============================================================
+  // GOSSIPER SCREEN 4 - FEATURES
+  // ============================================================
+  static const double minGossiper4TitleFontSize = 32;
+  static const double maxGossiper4TitleFontSize = 46;
+  static const double minGossiper4TitleOffset = -80;
+  static const double maxGossiper4TitleOffset = -50;
+  static const double minGossiper4CardsOffset = -70;
+  static const double maxGossiper4CardsOffset = -55;
+  static const double minGossiper4CardSpacing = 10;
+  static const double maxGossiper4CardSpacing = 14;
+  static const double minGossiper4DescPadding = 14;
+  static const double maxGossiper4DescPadding = 18;
+  static const double minGossiper4DescFontSize = 12;
+  static const double maxGossiper4DescFontSize = 15;
+  static const double minGossiper4DescSpacingTop = 16;
+  static const double maxGossiper4DescSpacingTop = 24;
+
+  // ============================================================
+  // GOSSIPER SCREEN 5 - HOW IT WORKS
+  // ============================================================
+  static const double minGossiper5TitleFontSize = 36;
+  static const double maxGossiper5TitleFontSize = 46;
+  static const double minGossiper5ModelLeft = -80;
+  static const double maxGossiper5ModelLeft = -100;
+  static const double minGossiper5ModelTopRatio = 0.18;
+  static const double maxGossiper5ModelTopRatio = 0.22;
+  static const double minGossiper5ModelHeightRatio = 0.82;
+  static const double maxGossiper5ModelHeightRatio = 0.85;
+  static const double minGossiper5TitleTopPadding = 40;
+  static const double maxGossiper5TitleTopPadding = 70;
+  static const double minGossiper5SubtitleFontSize = 30;
+  static const double maxGossiper5SubtitleFontSize = 52;
+  static const double minGossiper5SubtitleTopPadding = 20;
+  static const double maxGossiper5SubtitleTopPadding = 40;
+  static const double minGossiper5QrCodeSize = 260;
+  static const double maxGossiper5QrCodeSize = 320;
+  static const double minGossiper5QrCodeLeftPadding = 140;
+  static const double maxGossiper5QrCodeLeftPadding = 220;
+  static const double minGossiper5DescBottomPadding = 110;
+  static const double maxGossiper5DescBottomPadding = 60;
+  static const double minGossiper5DescFontSize = 12;
+  static const double maxGossiper5DescFontSize = 15;
+  static const double minGossiper5DescPadding = 14;
+  static const double maxGossiper5DescPadding = 18;
+  static const double minGossiper5ButtonBottom = 25;
+  static const double maxGossiper5ButtonBottom = 35;
+
   // Linear interpolation between min and max values based on screen height
   double _interpolate(double minHeight, double maxHeight, double minValue, double maxValue) {
     final height = screenSize.height;
@@ -305,4 +415,66 @@ class OnboardingResponsiveConfig {
   double get screen6QrCodeScale => _interpolate(minScreenHeight, maxScreenHeight, minScreen6QrCodeScale, maxScreen6QrCodeScale);
   double get screen6QrCodeSize => _interpolate(minScreenHeight, maxScreenHeight, minScreen6QrCodeSize, maxScreen6QrCodeSize);
   double get screen6BottomSpacing => _interpolate(minScreenHeight, maxScreenHeight, minScreen6BottomSpacing, maxScreen6BottomSpacing);
+
+  // ============================================================
+  // GOSSIPER SCREEN GETTERS
+  // ============================================================
+
+  // Gossiper Screen 1 - Welcome
+  double get gossiper1CardTopRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper1CardTopRatio, maxGossiper1CardTopRatio);
+
+  // Gossiper Screen 2 - Initial Message
+  double get gossiper2ModelHeightRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper2ModelHeightRatio, maxGossiper2ModelHeightRatio);
+  double get gossiper2CardTopRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper2CardTopRatio, maxGossiper2CardTopRatio);
+  double get gossiper2BubblesTopRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper2BubblesTopRatio, maxGossiper2BubblesTopRatio);
+  double get gossiper2BubbleWidthRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper2BubbleWidthRatio, maxGossiper2BubbleWidthRatio);
+  double get gossiper2BubbleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper2BubbleFontSize, maxGossiper2BubbleFontSize);
+  double get gossiper2BubblePadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper2BubblePadding, maxGossiper2BubblePadding);
+  double get gossiper2BubbleSpacing => _interpolate(minScreenHeight, maxScreenHeight, minGossiper2BubbleSpacing, maxGossiper2BubbleSpacing);
+  EdgeInsets get gossiper2CardPadding {
+    final h = _interpolate(minScreenHeight, maxScreenHeight, minGossiper2CardPaddingH, maxGossiper2CardPaddingH);
+    final v = _interpolate(minScreenHeight, maxScreenHeight, minGossiper2CardPaddingV, maxGossiper2CardPaddingV);
+    return EdgeInsets.symmetric(horizontal: h, vertical: v);
+  }
+
+  // Gossiper Screen 3 - Phone Mockup
+  double get gossiper3PhoneLeft => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3PhoneLeft, maxGossiper3PhoneLeft);
+  double get gossiper3PhoneTopRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3PhoneTopRatio, maxGossiper3PhoneTopRatio);
+  double get gossiper3PhoneHeightRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3PhoneHeightRatio, maxGossiper3PhoneHeightRatio);
+  double get gossiper3BubblesTopRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3BubblesTopRatio, maxGossiper3BubblesTopRatio);
+  double get gossiper3BubbleWidthRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3BubbleWidthRatio, maxGossiper3BubbleWidthRatio);
+  double get gossiper3BubbleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3BubbleFontSize, maxGossiper3BubbleFontSize);
+  double get gossiper3BubblePadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3BubblePadding, maxGossiper3BubblePadding);
+  double get gossiper3BubbleSpacing => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3BubbleSpacing, maxGossiper3BubbleSpacing);
+  double get gossiper3ModelRight => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3ModelRight, maxGossiper3ModelRight);
+  double get gossiper3ModelBottom => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3ModelBottom, maxGossiper3ModelBottom);
+  double get gossiper3ModelHeightRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3ModelHeightRatio, maxGossiper3ModelHeightRatio);
+  double get gossiper3DescBottomRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3DescBottomRatio, maxGossiper3DescBottomRatio);
+  double get gossiper3DescWidthRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3DescWidthRatio, maxGossiper3DescWidthRatio);
+  double get gossiper3DescFontSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3DescFontSize, maxGossiper3DescFontSize);
+  double get gossiper3DescPadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper3DescPadding, maxGossiper3DescPadding);
+
+  // Gossiper Screen 4 - Features
+  double get gossiper4TitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper4TitleFontSize, maxGossiper4TitleFontSize);
+  double get gossiper4TitleOffset => _interpolate(minScreenHeight, maxScreenHeight, minGossiper4TitleOffset, maxGossiper4TitleOffset);
+  double get gossiper4CardsOffset => _interpolate(minScreenHeight, maxScreenHeight, minGossiper4CardsOffset, maxGossiper4CardsOffset);
+  double get gossiper4CardSpacing => _interpolate(minScreenHeight, maxScreenHeight, minGossiper4CardSpacing, maxGossiper4CardSpacing);
+  double get gossiper4DescPadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper4DescPadding, maxGossiper4DescPadding);
+  double get gossiper4DescFontSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper4DescFontSize, maxGossiper4DescFontSize);
+  double get gossiper4DescSpacingTop => _interpolate(minScreenHeight, maxScreenHeight, minGossiper4DescSpacingTop, maxGossiper4DescSpacingTop);
+
+  // Gossiper Screen 5 - How it Works
+  double get gossiper5TitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5TitleFontSize, maxGossiper5TitleFontSize);
+  double get gossiper5ModelLeft => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5ModelLeft, maxGossiper5ModelLeft);
+  double get gossiper5ModelTopRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5ModelTopRatio, maxGossiper5ModelTopRatio);
+  double get gossiper5ModelHeightRatio => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5ModelHeightRatio, maxGossiper5ModelHeightRatio);
+  double get gossiper5TitleTopPadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5TitleTopPadding, maxGossiper5TitleTopPadding);
+  double get gossiper5SubtitleFontSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5SubtitleFontSize, maxGossiper5SubtitleFontSize);
+  double get gossiper5SubtitleTopPadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5SubtitleTopPadding, maxGossiper5SubtitleTopPadding);
+  double get gossiper5QrCodeSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5QrCodeSize, maxGossiper5QrCodeSize);
+  double get gossiper5QrCodeLeftPadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5QrCodeLeftPadding, maxGossiper5QrCodeLeftPadding);
+  double get gossiper5DescBottomPadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5DescBottomPadding, maxGossiper5DescBottomPadding);
+  double get gossiper5DescFontSize => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5DescFontSize, maxGossiper5DescFontSize);
+  double get gossiper5DescPadding => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5DescPadding, maxGossiper5DescPadding);
+  double get gossiper5ButtonBottom => _interpolate(minScreenHeight, maxScreenHeight, minGossiper5ButtonBottom, maxGossiper5ButtonBottom);
 }

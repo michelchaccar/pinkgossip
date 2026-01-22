@@ -901,7 +901,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         // Description Card (Right-to-left animation)
         Positioned(
           right: 20,
-          top: MediaQuery.of(context).size.height * 0.52,
+          top: MediaQuery.of(context).size.height * config.gossiper1CardTopRatio,
           child: Stack(
             clipBehavior: Clip.none,
             children: [
@@ -1002,7 +1002,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           child: Image.asset(
             "lib/assets/images/onboarding/gossiper/gossiper_model_2.png",
             fit: BoxFit.contain,
-            height: MediaQuery.of(context).size.height * 0.60,
+            height: MediaQuery.of(context).size.height * config.gossiper2ModelHeightRatio,
           ).animate().moveY(begin: 300, end: 0, duration: 800.ms, curve: Curves.easeOut),
         ),
 
@@ -1033,10 +1033,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         Positioned(
           left: 20,
           right: 20,
-          top: MediaQuery.of(context).size.height * 0.26,
+          top: MediaQuery.of(context).size.height * config.gossiper2CardTopRatio,
           child: Center(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: config.gossiper2CardPadding,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -1064,14 +1064,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         // Message bubbles (RIGHT side)
         Positioned(
           right: 10,
-          top: MediaQuery.of(context).size.height * 0.60,
+          top: MediaQuery.of(context).size.height * config.gossiper2BubblesTopRatio,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // Bubble 1 - White
               Container(
-                width: MediaQuery.of(context).size.width * 0.60,
-                padding: const EdgeInsets.all(16),
+                width: MediaQuery.of(context).size.width * config.gossiper2BubbleWidthRatio,
+                padding: EdgeInsets.all(config.gossiper2BubblePadding),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -1086,19 +1086,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 child: Text(
                   Languages.of(context)!.gossiperOnboarding2Bubble1,
                   style: GoogleFonts.poppins(
-                    fontSize: 16,
+                    fontSize: config.gossiper2BubbleFontSize,
                     color: Colors.black87,
                     height: 1.3,
                   ),
                 ),
               ).animate().moveX(begin: 100, end: 0, duration: 600.ms, delay: 600.ms, curve: Curves.easeOut).fadeIn(),
 
-              const SizedBox(height: 12),
+              SizedBox(height: config.gossiper2BubbleSpacing),
 
               // Bubble 2 - White (same as bubble 1)
               Container(
-                width: MediaQuery.of(context).size.width * 0.60,
-                padding: const EdgeInsets.all(16),
+                width: MediaQuery.of(context).size.width * config.gossiper2BubbleWidthRatio,
+                padding: EdgeInsets.all(config.gossiper2BubblePadding),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -1113,7 +1113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 child: Text(
                   Languages.of(context)!.gossiperOnboarding2Bubble2,
                   style: GoogleFonts.poppins(
-                    fontSize: 16,
+                    fontSize: config.gossiper2BubbleFontSize,
                     color: Colors.black87,
                     height: 1.3,
                   ),
@@ -1151,14 +1151,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Phone mockup (left side, nearly vertical)
         Positioned(
-          left: -90,
-          top: MediaQuery.of(context).size.height * 0.20,
+          left: config.gossiper3PhoneLeft,
+          top: MediaQuery.of(context).size.height * config.gossiper3PhoneTopRatio,
           child: Transform.rotate(
             angle: 0,
             child: Image.asset(
               "lib/assets/images/onboarding/gossiper/gossiper_phone_mockup.png",
               fit: BoxFit.contain,
-              height: MediaQuery.of(context).size.height * 0.60,
+              height: MediaQuery.of(context).size.height * config.gossiper3PhoneHeightRatio,
             ),
           ).animate().moveX(begin: -100, end: 0, duration: 800.ms, delay: 200.ms, curve: Curves.easeOut).fadeIn(),
         ),
@@ -1194,14 +1194,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
         // Chat bubbles (right side, above model)
         Positioned(
           right: 30,
-          top: MediaQuery.of(context).size.height * 0.30,
+          top: MediaQuery.of(context).size.height * config.gossiper3BubblesTopRatio,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // Bubble 1 - White
               Container(
-                width: MediaQuery.of(context).size.width * 0.55,
-                padding: const EdgeInsets.all(14),
+                width: MediaQuery.of(context).size.width * config.gossiper3BubbleWidthRatio,
+                padding: EdgeInsets.all(config.gossiper3BubblePadding),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -1216,21 +1216,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 child: Text(
                   Languages.of(context)!.gossiperOnboarding3Bubble1,
                   style: GoogleFonts.poppins(
-                    fontSize: 14,
+                    fontSize: config.gossiper3BubbleFontSize,
                     color: Colors.black87,
                     height: 1.3,
                   ),
                 ),
               ).animate().moveX(begin: 100, end: 0, duration: 600.ms, delay: 400.ms, curve: Curves.easeOut).fadeIn(),
 
-              const SizedBox(height: 10),
+              SizedBox(height: config.gossiper3BubbleSpacing),
 
               // Bubble 2 - White (offset to the left)
               Transform.translate(
                 offset: const Offset(-20, 0),
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.55,
-                  padding: const EdgeInsets.all(14),
+                  width: MediaQuery.of(context).size.width * config.gossiper3BubbleWidthRatio,
+                  padding: EdgeInsets.all(config.gossiper3BubblePadding),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -1245,7 +1245,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                   child: Text(
                     Languages.of(context)!.gossiperOnboarding3Bubble2,
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: config.gossiper3BubbleFontSize,
                       color: Colors.black87,
                       height: 1.3,
                     ),
@@ -1258,22 +1258,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Model (bottom right)
         Positioned(
-          right: -150,
-          bottom: -90,
+          right: config.gossiper3ModelRight,
+          bottom: config.gossiper3ModelBottom,
           child: Image.asset(
             "lib/assets/images/onboarding/gossiper/gossiper_model_3.png",
             fit: BoxFit.contain,
-            height: MediaQuery.of(context).size.height * 0.60,
+            height: MediaQuery.of(context).size.height * config.gossiper3ModelHeightRatio,
           ).animate().moveY(begin: 300, end: 0, duration: 800.ms, curve: Curves.easeOut),
         ),
 
         // Description card (bottom left)
         Positioned(
           left: 15,
-          bottom: MediaQuery.of(context).size.height * 0.12,
+          bottom: MediaQuery.of(context).size.height * config.gossiper3DescBottomRatio,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.55,
-            padding: const EdgeInsets.all(16),
+            width: MediaQuery.of(context).size.width * config.gossiper3DescWidthRatio,
+            padding: EdgeInsets.all(config.gossiper3DescPadding),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.95),
               borderRadius: BorderRadius.circular(20),
@@ -1289,7 +1289,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
               textAlign: TextAlign.left,
               text: TextSpan(
                 style: GoogleFonts.archivoBlack(
-                  fontSize: 16,
+                  fontSize: config.gossiper3DescFontSize,
                   color: Colors.black87,
                   height: 1.6,
                 ),
@@ -1310,16 +1310,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ).animate().moveY(begin: 100, end: 0, duration: 600.ms, delay: 800.ms, curve: Curves.easeOut).fadeIn(),
         ),
 
-        // Continue button (centered at bottom)
+        // Continue button (right aligned)
         Positioned(
           bottom: config.screen1ButtonBottom,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: OnboardingButton(
-              text: Languages.of(context)!.continueText.toUpperCase(),
-              onPressed: _nextPage,
-            ),
+          right: 20,
+          child: OnboardingButton(
+            text: Languages.of(context)!.continueText.toUpperCase(),
+            onPressed: _nextPage,
           ),
         ).animate().moveY(begin: 100, end: 0, duration: 300.ms, delay: 300.ms, curve: Curves.easeOut).fadeIn(),
       ],
@@ -1357,12 +1354,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
                 // Title
                 Transform.translate(
-                  offset: const Offset(0, -40),
+                  offset: Offset(0, config.gossiper4TitleOffset),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: OutlinedText(
                       Languages.of(context)!.gossiperOnboarding4Title,
                       textAlign: TextAlign.center,
+                      fontSize: config.gossiper4TitleFontSize,
                       height: 1.0,
                     ),
                   ),
@@ -1370,7 +1368,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
                 // Cards content with negative offset to compensate for title transform
                 Transform.translate(
-                  offset: const Offset(0, -45),
+                  offset: Offset(0, config.gossiper4CardsOffset),
                   child: Column(
                     children: [
                       // Feature Row 1 (butterfly left)
@@ -1384,7 +1382,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                         ),
                       ),
 
-                      const SizedBox(height: 12),
+                      SizedBox(height: config.gossiper4CardSpacing),
 
                       // Feature Row 2 (butterfly left)
                       Padding(
@@ -1397,7 +1395,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                         ),
                       ),
 
-                      const SizedBox(height: 12),
+                      SizedBox(height: config.gossiper4CardSpacing),
 
                       // Feature Row 3 (butterfly right)
                       Padding(
@@ -1410,14 +1408,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                         ),
                       ),
 
-                      const SizedBox(height: 20),
+                      SizedBox(height: config.gossiper4DescSpacingTop),
 
                       // Bottom description card
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.all(16),
+                          padding: EdgeInsets.all(config.gossiper4DescPadding),
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.95),
                             borderRadius: BorderRadius.circular(20),
@@ -1432,7 +1430,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                           child: RichText(
                             text: TextSpan(
                               style: GoogleFonts.archivoBlack(
-                                fontSize: 14,
+                                fontSize: config.gossiper4DescFontSize,
                                 color: Colors.black87,
                                 height: 1.4,
                                 fontStyle: FontStyle.italic,
@@ -1492,14 +1490,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           ),
         ),
 
-        // Model (left side)
+        // Model (left side, anchored to bottom)
         Positioned(
-          left: -120,
-          top: MediaQuery.of(context).size.height * 0.25,
+          left: config.gossiper5ModelLeft,
+          bottom: 0,
           child: Image.asset(
             "lib/assets/images/onboarding/gossiper/gossiper_model_5.png",
             fit: BoxFit.contain,
-            height: MediaQuery.of(context).size.height * 0.75,
+            height: MediaQuery.of(context).size.height * config.gossiper5ModelHeightRatio,
           ).animate().moveX(begin: -100, end: 0, duration: 800.ms, curve: Curves.easeOut).fadeIn(),
         ),
 
@@ -1510,12 +1508,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             children: [
               // Title "How it works"
               Padding(
-                padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
+                padding: EdgeInsets.only(top: config.gossiper5TitleTopPadding, right: 20, left: 60),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: OutlinedText(
                     Languages.of(context)!.gossiperOnboarding5Title,
                     textAlign: TextAlign.left,
+                    fontSize: config.gossiper5TitleFontSize,
                     height: 1.0,
                   ),
                 ),
@@ -1525,22 +1524,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
               // Subtitle "SCAN & GOSSIP"
               Padding(
-                padding: const EdgeInsets.only(right: 20, top: 20),
+                padding: EdgeInsets.only(right: 50, top: config.gossiper5SubtitleTopPadding),
                 child: OutlinedText(
                   Languages.of(context)!.gossiperOnboarding5Subtitle,
                   textAlign: TextAlign.right,
-                  fontSize: 48,
+                  fontSize: config.gossiper5SubtitleFontSize,
                   height: 1.1,
                 ),
               ).animate().fadeIn(duration: 600.ms, delay: 200.ms),
 
               // QR Code
               Padding(
-                padding: const EdgeInsets.only(left: 200),
+                padding: EdgeInsets.only(left: config.gossiper5QrCodeLeftPadding),
                 child: Image.asset(
                   "lib/assets/images/onboarding/gossiper/gossiper_qr_1.png",
-                  width: 320,
-                  height: 320,
+                  width: config.gossiper5QrCodeSize,
+                  height: config.gossiper5QrCodeSize,
                 ),
               ).animate().scale(duration: 600.ms, delay: 400.ms, curve: Curves.easeOutBack),
 
@@ -1548,10 +1547,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
               // Description card
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 100),
+                padding: EdgeInsets.only(left: 20, right: 20, bottom: config.gossiper5DescBottomPadding),
                 child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(config.gossiper5DescPadding),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.95),
                     borderRadius: BorderRadius.circular(20),
@@ -1567,7 +1566,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                     textAlign: TextAlign.left,
                     text: TextSpan(
                       style: GoogleFonts.archivoBlack(
-                        fontSize: 14,
+                        fontSize: config.gossiper5DescFontSize,
                         color: Colors.black87,
                         height: 1.4,
                       ),
@@ -1593,7 +1592,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
         // Button
         Positioned(
-          bottom: 30,
+          bottom: config.gossiper5ButtonBottom,
           right: 20,
           child: OnboardingButton(
             text: Languages.of(context)!.nextStepsText,
