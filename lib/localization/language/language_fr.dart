@@ -220,7 +220,13 @@ class LanguageFr extends Languages {
   String get UploadpictureorvideoText => "Télécharger une photo ou une vidéo";
 
   @override
+  String get pointValueforRewardText => "Valeur des points pour les échanges";
+
+  @override
   String get EditProfileText => "Modifier le profil";
+
+  @override
+  String get redeemNowText => "Échangez maintenant";
 
   @override
   String get pleaseselectvalidsalonText =>
@@ -273,6 +279,10 @@ class LanguageFr extends Languages {
 
   @override
   String get WritereviewaboutthesalonText => "Écrire un avis sur le salon";
+
+  @override
+  String get descOfRewardAndOfferText =>
+      "Description de la récompense et de l'offre";
 
   @override
   String get BookingprocessText => "Processus de réservation";
@@ -596,6 +606,9 @@ class LanguageFr extends Languages {
   String get sharepostText => "Partager la publication";
 
   @override
+  String get postARewardText => "Proposer une récompense";
+
+  @override
   String get sharestoryText => "Partager l'histoire";
 
   @override
@@ -713,6 +726,174 @@ class LanguageFr extends Languages {
   @override
   String get close => "Fermer";
   @override
+  String get gotitText => "Compris";
+  @override
+  String get welcomeOnText => "BIENVENUE SUR";
+  @override
+  String get pinkGossipText => "PINK GOSSIP";
+  @override
+  String get salonOnboardingDescPart1 =>
+      "Vous êtes sur le point de faire de vos clients vos meilleurs ";
+  @override
+  String get salonOnboardingDescPart2 => "ambassadeurs.";
+
+  @override
+  String get letsStartText => "C'EST PARTI";
+  @override
+  String get whatIsPinkGossipText => "Qu'est-ce que\nPink Gossip ?";
+  @override
+  String get salonOnboarding2DescPart1 => "Clients -> en créateurs";
+  @override
+  String get salonOnboarding2DescPart2 => "Avis -> en réservations";
+  @override
+  String get salonOnboarding2DescPart3 => "Votre travail -> en preuve sociale";
+  @override
+  String get salonOnboarding2Title =>
+      "Pink Gossip est la première application beauté qui transforme :";
+  @override
+  String get salonOnboarding3Title => "Comment ça marche";
+  @override
+  String get salonOnboarding3CardTitle => "Affichez votre code QR Pink Gossip";
+  @override
+  String get salonOnboarding3DescPart1 =>
+      "Chaque service commence par un simple scan.";
+  @override
+  String get salonOnboarding3DescPart2 =>
+      "\nC'est ainsi que Pink Gossip transforme chaque visite en visibilité, avis et nouvelle clientèle pour vous — instantanément.";
+  @override
+  String get nextStepsText => "CONTINUER";
+  @override
+  String get salonOnboarding4Title => "L'EFFET\nSCAN & GOSSIP";
+  @override
+  String get salonOnboarding4Card1 =>
+      "Le client scanne avant le début du service et prend une photo avant";
+  @override
+  String get salonOnboarding4Card2 =>
+      "Pendant le service, le client partage du contenu sur l'application";
+  @override
+  String get salonOnboarding4Card3 =>
+      "Après le service, le client partage une photo APRÈS, note le service et laisse un avis.";
+  @override
+  String get salonOnboarding4BottomTitle =>
+      "Boom — nouveau contenu + nouvelle confiance";
+  @override
+  String get salonOnboarding4BottomDesc =>
+      "• Leur publication booste votre visibilité instantanément et alimente votre page sociale !";
+  @override
+  String get whyChooseUsText => "NOUS CHOISIR";
+  @override
+  String get salonOnboarding5Title => "REJOIGNEZ\nPINK GOSSIP";
+  @override
+  String get salonOnboarding5Bubble1 =>
+      "Preuve authentique, pas de publicités organisées\nVrais clients, vraies photos, vraies expériences.";
+  @override
+  String get salonOnboarding5Bubble2 =>
+      "Votre travail reste visible\nVos services apparaissent dans l'annuaire Pink Gossip pour les personnes effectuant une recherche dans votre région.";
+  @override
+  String get salonOnboarding5Bubble3 =>
+      "Un système qui travaille pour vous 24h/24 et 7j/7 :\nLes clients laissent des avis, publient des photos avant/après et identifient vos services, même lorsque vous êtes occupé à travailler.";
+  @override
+  String get salonOnboarding5Bubble4 =>
+      "Programme de fidélité intégré\nVous n'avez rien à suivre. L'application récompense vos clients pour leur fidélité — et vous continuez à obtenir des clients réguliers.";
+  @override
+  String get areYouReadyText => "ÊTES-VOUS PRÊTS";
+  @override
+  String get salonOnboarding6Title => "PRÊTS POUR LE SUCCÈS";
+  @override
+  String get salonOnboarding6Desc =>
+      "Vous faites officiellement partie du\nmouvement Pink Gossip.\nCommençons à collecter\nde vraies preuves sociales et\nà développer votre empire\nde la beauté.";
+  @override
+  String get scanAndGossipText => "SCAN & GOSSIP";
+  @override
+  String get letsBeginText => "C'EST PARTI";
+  @override
+  String get gossiperOnboardingDescPart1 =>
+      "Ton expérience beauté et ton avis comptent.\n";
+  @override
+  String get gossiperOnboardingDescPart2 => "Ton contenu a de la valeur.";
+
+  // Gossiper Onboarding Screen 2
+  @override
+  String get gossiperOnboarding2Title => "DÉCOUVRE DE\nNOUVEAUX SALONS";
+  @override
+  String get gossiperOnboarding2Card => "ESSAIE UN NOUVEAU\nSALON EN CONFIANCE";
+  @override
+  String get gossiperOnboarding2Bubble1 =>
+      "Découvre ce que les autres clients pensent du salon grâce à de vrais avis";
+  @override
+  String get gossiperOnboarding2Bubble2 =>
+      "Vois le salon du point de vue des clients avec leurs photos et vidéos";
+
+  // Gossiper Onboarding Screen 3
+  @override
+  String get gossiperOnboarding3Title => "PARTAGE TON\nEXPÉRIENCE";
+  @override
+  String get gossiperOnboarding3Bubble1 => "Omgg où as-tu fait tes cheveux? 😍";
+  @override
+  String get gossiperOnboarding3Bubble2 =>
+      "J'ai besoin du nom de ton coiffeur!!!";
+  @override
+  String get gossiperOnboarding3DescPart1 =>
+      "Prends des photos, poste des vidéos et laisse ton avis honnête directement depuis le salon.\n\n";
+  @override
+  String get gossiperOnboarding3DescPart2 =>
+      "C'EST PLUS QUE POSTER, C'EST CONSTRUIRE TON INFLUENCE!";
+
+  // Gossiper Onboarding Screen 4
+  @override
+  String get gossiperOnboarding4Title => "PARTAGE\n& GAGNE";
+  @override
+  String get gossiperOnboarding4Row1 =>
+      "Partager ton expérience beauté, ça rapporte vraiment";
+  @override
+  String get gossiperOnboarding4Row2 =>
+      "Chaque avis, photo ou vidéo que tu postes te fait gagner des points";
+  @override
+  String get gossiperOnboarding4Row3 =>
+      "Tes points sont échangeables dans TOUS les salons partenaires Pink Gossip";
+  @override
+  String get gossiperOnboarding4DescPart1 => "Boom";
+  @override
+  String get gossiperOnboarding4DescPart2 =>
+      " — Fini de poster juste pour les likes — tu construis ta richesse beauté, tu économises sur ton prochain soin, et tu es récompensée pour ton authenticité";
+  @override
+  String get gossiperOnboarding4Button => "EN SAVOIR PLUS";
+
+  // Gossiper Onboarding Screen 5
+  @override
+  String get gossiperOnboarding5Title => "Comment ça marche";
+  @override
+  String get gossiperOnboarding5Subtitle => "SCANNE &\nPARTAGE";
+  @override
+  String get gossiperOnboarding5DescPart1 =>
+      "Chaque service commence par un scan. ";
+  @override
+  String get gossiperOnboarding5DescPart2 =>
+      "Partage ton avis, tes photos ou vidéos pour gagner des points, bâtir ton influence et économiser sur ton prochain soin beauté";
+
+  // Gossiper Onboarding Screen 6
+  @override
+  String get gossiperOnboarding6Title => "ILS ADORENT\nPINK GOSSIP";
+  @override
+  String get gossiperOnboarding6Bubble1 =>
+      "Perspective client authentique\nContenu partagé par les clients, pas organisé ou mis en scène par le salon";
+  @override
+  String get gossiperOnboarding6Bubble2 =>
+      "Choisis en toute confiance\nVois de vraies vidéos, photos et avis écrits, plus besoin de deviner avant de réserver";
+  @override
+  String get gossiperOnboarding6Bubble3 =>
+      "Crée du contenu qui rapporte\nPartage ton expérience et profite de récompenses, avantages et économies";
+  @override
+  String get gossiperOnboarding6Bubble4 =>
+      "Deviens influenceur beauté\nBâtis ton influence, développe une communauté et crée de vraies relations avec les salons";
+
+  // Gossiper Onboarding Screen 7
+  @override
+  String get gossiperOnboarding7Title => "PRÊTS POUR\nLE SUCCÈS";
+  @override
+  String get gossiperOnboarding7Desc =>
+      "Tu es officiellement\nune Gossiper\nScanne, partage et\naccumule des points\npour bâtir ton influence";
+  @override
   String get hideStoreHours => "Masquer les heures d'ouverture du magasin";
   @override
   String get viewStorehours => "Voir les heures d'ouverture du magasin";
@@ -722,4 +903,12 @@ class LanguageFr extends Languages {
   @override
   String get maximumuploadlimit60secondText =>
       "La limite maximale de téléchargement par vidéo est de 60 secondes.";
+  @override
+  String get maximumuploadSize10mbText =>
+      "La taille maximale des fichiers à télécharger est de 20 Mo.";
+  @override
+  String get pleaseenterpointvalueText => "Veuillez saisir la valeur en points";
+  @override
+  String get pleaseenterdescriptionText =>
+      "Veuillez saisir la description de la récompense";
 }

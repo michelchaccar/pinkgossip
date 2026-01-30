@@ -126,6 +126,17 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
               },
             )
             : SizedBox(),
+        userType == "2"
+            ? CommonWidget().getSmallButton(
+              Languages.of(context)!.postARewardText,
+              () {
+                setState(() {
+                  showButtons = false;
+                  openedViewIndex = 4;
+                });
+              },
+            )
+            : SizedBox(),
       ],
     );
   }
@@ -133,13 +144,15 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
   getOtherViews() {
     switch (openedViewIndex) {
       case 1:
-        return const SharepostviewPage();
+        return SharepostviewPage(type: "NormalPost");
 
       case 2:
         return AddStory(type: "Post");
 
       case 3:
         return const SharesaloonreviewPage();
+      case 4:
+        return SharepostviewPage(type: "RewardPost");
       default:
     }
   }

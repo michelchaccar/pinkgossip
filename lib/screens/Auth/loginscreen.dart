@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/checkuserexistmodel.dart';
 import 'package:pinkGossip/models/updatefirebasemodel.dart';
+import 'package:pinkGossip/services/tooltip_service.dart';
 import 'package:pinkGossip/viewModels/checkaccountexistviewmodel.dart';
 import 'package:pinkGossip/viewModels/updatefirebaseviewmodel.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -524,7 +525,48 @@ class _LoginScreenState extends State<LoginScreen> {
                 await updateFirebaseId(model.response!.firebaseId!, fcmToken);
               }
               prefs.setBool("isLogin", true);
-
+              prefs.setBool(
+                "onboarding_completed_${model.response!.id.toString()}",
+                true,
+              );
+              prefs.setBool(
+                "tooltip_seen_search_${model.response!.id.toString()}",
+                true,
+              );
+              prefs.setBool(
+                "tooltip_seen_notification_${model.response!.id.toString()}",
+                true,
+              );
+              prefs.setBool(
+                "tooltip_seen_addStory_${model.response!.id.toString()}",
+                true,
+              );
+              prefs.setBool(
+                "tooltip_seen_home_${model.response!.id.toString()}",
+                true,
+              );
+              prefs.setBool(
+                "tooltip_seen_storeLocator_${model.response!.id.toString()}",
+                true,
+              );
+              prefs.setBool(
+                "tooltip_seen_post_${model.response!.id.toString()}",
+                true,
+              );
+              prefs.setBool(
+                "tooltip_seen_message_${model.response!.id.toString()}",
+                true,
+              );
+              prefs.setBool(
+                "tooltip_seen_profile_${model.response!.id.toString()}",
+                true,
+              );
+              for (final type in TooltipType.values) {
+                prefs.setBool(
+                  _getTooltipKey(model.response!.id.toString(), type),
+                  true,
+                );
+              }
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
@@ -563,6 +605,11 @@ class _LoginScreenState extends State<LoginScreen> {
         kToast(Languages.of(context)!.noInternetText);
       }
     });
+  }
+
+  String _getTooltipKey(String userId, TooltipType type) {
+    String typeStr = type.toString().split('.').last.toLowerCase();
+    return 'tooltip_seen_${typeStr}_$userId';
   }
 
   updateFirebaseId(String firebase_id, String fcm_token) async {

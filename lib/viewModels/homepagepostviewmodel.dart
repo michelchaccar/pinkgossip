@@ -46,4 +46,48 @@ class HomePagePostViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  otherUserRewardPost(String id, int offset) async {
+    setLoading(true);
+    var response = await APIService.otherUserRewardPost(id, offset);
+    if (response is Success) {
+      Success result = response;
+      if (result.success == true) {
+        setHomePagePostModel(response);
+        setSuccess(true);
+        setLoading(false);
+      } else {
+        setSuccess(false);
+        setHomePagePostModel(response);
+        setLoading(false);
+      }
+      notifyListeners();
+    }
+  }
+
+  redeemStorePost(
+     String user_id,
+    String reward_id,
+    String redeem_point,
+  ) async {
+    setLoading(true);
+    var response = await APIService.redeemStorePost(
+      user_id,
+      reward_id,
+      redeem_point,
+    );
+    if (response is Success) {
+      Success result = response;
+      if (result.success == true) {
+        setHomePagePostModel(response);
+        setSuccess(true);
+        setLoading(false);
+      } else {
+        setSuccess(false);
+        setHomePagePostModel(response);
+        setLoading(false);
+      }
+      notifyListeners();
+    }
+  }
 }

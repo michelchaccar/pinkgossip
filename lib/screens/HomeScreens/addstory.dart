@@ -1035,12 +1035,23 @@ class _AddStoryState extends State<AddStory> {
         await controllerVideoDurationChk!.initialize();
         final Duration duration = controllerVideoDurationChk!.value.duration;
         print("duration is ==${duration.inSeconds}");
+        final file = File(image.path!);
+        final int fileSize = await file.length();
+        // Convert to MB
+        final double fileSizeInMB = fileSize / (1024 * 1024);
+        print("Video size: ==  ${fileSizeInMB.toStringAsFixed(2)} MB");
         if (duration.inSeconds > 60) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
                 Languages.of(context)!.maximumuploadlimit60secondText,
               ),
+            ),
+          );
+        } else if (fileSizeInMB > 20) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(Languages.of(context)!.maximumuploadSize10mbText),
             ),
           );
         } else {

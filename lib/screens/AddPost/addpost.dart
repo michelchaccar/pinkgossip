@@ -533,33 +533,6 @@ class _AddPostState extends State<AddPost> {
     return result;
   }
 
-  // void _openImageEditor(File file) async {
-  //   await Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //         builder: (context) => ProImageEditor.file(
-  //               file,
-  //               callbacks: ProImageEditorCallbacks(
-  //                 onImageEditingComplete: (Uint8List bytes) async {
-  //                   // Set the edited image to display
-  //                   // setState(() {
-  //                   //   // editedImageBytes = bytes;
-  //                   // });
-  //                   final editedfile = await CommonFunctions()
-  //                       .convertUint8ListToFile(bytes, 'edited_image.jpg');
-
-  //                   Navigator.pop(context); // Pop the editor screen
-  //                 },
-  //               ),
-  //             )
-
-  //         // ),
-  //         ),
-  //   );
-  // }
-  ///////
-  //// TYPE 1 CAMERA PICKER
-
   Future<bool> _wasFrontCameraUsed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('isFrontCamera') ?? false; // Default to back camera
@@ -1157,6 +1130,8 @@ class _AddPostState extends State<AddPost> {
                                       allOtherdata,
                                       "",
                                       0,
+                                      "",
+                                      "",
                                       addcommentcontroller.text,
                                       taggedUserIds,
                                       "NormalPost",
@@ -2780,6 +2755,8 @@ class _AddPostState extends State<AddPost> {
                                       allOtherdatatype1,
                                       "mp4",
                                       averageRatingString,
+                                      "",
+                                      "",
                                       reviewcontroller.text,
                                       taggedUserIds,
                                       "SalonReview",
@@ -4291,10 +4268,13 @@ class _AddPostState extends State<AddPost> {
     List<File> other,
     String fileExtension,
     double rating,
+    String reward_type,
+    String reward_image,
     String review,
     List<String> tag_users,
-    String post_type,
-  ) async {
+    String post_type, {
+    String rewardpoint = "0",
+  }) async {
     print("get CreatePost function call === $other");
     setState(() {
       isLoading = true;
@@ -4314,9 +4294,12 @@ class _AddPostState extends State<AddPost> {
           other,
           fileExtension,
           rating,
+          reward_type,
+          reward_image,
           review,
           tag_users,
           post_type,
+          rewardpoint,
         );
         if (Provider.of<CreatePostViewModel>(
               context,

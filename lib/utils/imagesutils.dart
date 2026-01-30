@@ -4,9 +4,9 @@ class ImageUtils {
   static const String basePath = "lib/assets/images";
 
   static const String bgImage = "$basePath/bgImg.png",
-  
-      // appLogoImg = "$basePath/logo@3x.png",
-      homeLogo = "$basePath/home@3x.png",
+          // appLogoImg = "$basePath/logo@3x.png",
+          homeLogo =
+          "$basePath/home@3x.png",
       makeupselectLogo = "$basePath/makeup-icon-filled@3x.png",
       makeupLogo = "$basePath/makeup-icon@3x.png",
       postLogo = "$basePath/post-icon@3x.png",
@@ -38,6 +38,7 @@ class ImageUtils {
       timeImage = "$basePath/time-icon.png",
       phoneImage = "$basePath/phone-icon.png",
       websiteImage = "$basePath/website-icon.png",
+      rewardImage = "$basePath/rewardicon.png",
       mapsmallImage = "$basePath/map-icon.png",
       homeselectLogo = "$basePath/home-filled@3x.png",
       shareIcon = "$basePath/share.png",

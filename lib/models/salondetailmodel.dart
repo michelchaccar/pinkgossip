@@ -33,36 +33,51 @@ class SalonDetailModel {
     this.postCountReview,
   });
 
-  factory SalonDetailModel.fromJson(Map<String, dynamic> json) =>
-      SalonDetailModel(
-        success: json["success"],
-        userProfile: UserProfile.fromJson(json["user_profile"]),
-        posts:
-            json["posts"] != []
-                ? List<Post>.from(json["posts"].map((x) => Post.fromJson(x)))
-                : [],
-        postCount: json["post_count"] ?? 0,
-        salonOpenDays:
-            json["salon_open_days"] != []
-                ? List<SalonOpenDay>.from(
-                  json["salon_open_days"].map((x) => SalonOpenDay.fromJson(x)),
-                )
-                : [],
-        story:
-            json["story"] != []
-                ? List<StoryUserDetails>.from(
-                  json["story"].map((x) => StoryUserDetails.fromJson(x)),
-                )
-                : [],
-        tagPosts:
-            json["tag_posts"] != []
-                ? List<TagPost>.from(
-                  json["tag_posts"].map((x) => TagPost.fromJson(x)),
-                )
-                : [],
-        points: json["points"] ?? 0,
-        postCountReview: json["post_count_review"] ?? 0,
-      );
+  factory SalonDetailModel.fromJson(Map<String, dynamic> json) {
+    return SalonDetailModel(
+      success: json["success"] ?? false,
+
+      userProfile:
+          json["user_profile"] != null &&
+                  json["user_profile"] is Map<String, dynamic>
+              ? UserProfile.fromJson(
+                json["user_profile"] as Map<String, dynamic>,
+              )
+              : null,
+
+      posts:
+          json["posts"] != null && json["posts"] is List
+              ? List<Post>.from(json["posts"].map((x) => Post.fromJson(x)))
+              : [],
+
+      postCount: json["post_count"] ?? 0,
+
+      salonOpenDays:
+          json["salon_open_days"] != null && json["salon_open_days"] is List
+              ? List<SalonOpenDay>.from(
+                json["salon_open_days"].map((x) => SalonOpenDay.fromJson(x)),
+              )
+              : [],
+
+      story:
+          json["story"] != null && json["story"] is List
+              ? List<StoryUserDetails>.from(
+                json["story"].map((x) => StoryUserDetails.fromJson(x)),
+              )
+              : [],
+
+      tagPosts:
+          json["tag_posts"] != null && json["tag_posts"] is List
+              ? List<TagPost>.from(
+                json["tag_posts"].map((x) => TagPost.fromJson(x)),
+              )
+              : [],
+
+      points: json["points"] ?? 0,
+
+      postCountReview: json["post_count_review"] ?? 0,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "success": success,
@@ -85,6 +100,7 @@ class Post {
   int? userSalonId;
   String? beforeImage;
   String? afterImage;
+
   String? other;
   String? rating;
   String? review;
@@ -349,6 +365,7 @@ class UserProfile {
   String? bio;
   String? firebaseId;
   String? fcmToken;
+  bool? emailVisibility;
 
   UserProfile({
     this.id,
@@ -380,6 +397,7 @@ class UserProfile {
     this.bio,
     this.firebaseId,
     this.fcmToken,
+    this.emailVisibility,
   });
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
@@ -412,6 +430,7 @@ class UserProfile {
     bio: json["bio"] ?? "",
     firebaseId: json["firebase_id"] ?? "",
     fcmToken: json["fcm_token"] ?? "",
+    emailVisibility: json["is_email_visibility"] == 1 ? true : false,
   );
 
   Map<String, dynamic> toJson() => {
@@ -444,6 +463,7 @@ class UserProfile {
     "bio": bio,
     "firebase_id": firebaseId,
     "fcm_token": fcmToken,
+    "is_email_visibility": emailVisibility,
   };
 }
 

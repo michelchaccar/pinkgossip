@@ -29,6 +29,24 @@ class SalonDetailsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  myredeemRewardPost(String id) async {
+    setLoading(true);
+    var response = await APIService.myredeemRewardPost(id);
+    if (response is Success) {
+      Success result = response;
+      if (result.success == true) {
+        setSalonDetailsModel(response);
+        setSuccess(true);
+        setLoading(false);
+      } else {
+        setSuccess(false);
+        setSalonDetailsModel(response);
+        setLoading(false);
+      }
+      notifyListeners();
+    }
+  }
+
   getSalonDetails(
     String id,
     String user_id,
@@ -41,6 +59,27 @@ class SalonDetailsViewModel extends ChangeNotifier {
       user_id,
       offset,
       user_type,
+    );
+    if (response is Success) {
+      Success result = response;
+      if (result.success == true) {
+        setSalonDetailsModel(response);
+        setSuccess(true);
+        setLoading(false);
+      } else {
+        setSuccess(false);
+        setSalonDetailsModel(response);
+        setLoading(false);
+      }
+      notifyListeners();
+    }
+  }
+
+  updateemailvisibility(String id, String is_email_visibility) async {
+    setLoading(true);
+    var response = await APIService.updateemailvisibility(
+      id,
+      is_email_visibility,
     );
     if (response is Success) {
       Success result = response;

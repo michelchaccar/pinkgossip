@@ -29,7 +29,8 @@ import 'package:path/path.dart' as path;
 import 'package:video_player/video_player.dart';
 
 class SharesaloonreviewPage extends StatefulWidget {
-  const SharesaloonreviewPage({super.key});
+  final String id;
+  const SharesaloonreviewPage({super.key, this.id = ''});
 
   @override
   State<SharesaloonreviewPage> createState() => _SharesaloonreviewPageState();
@@ -414,6 +415,18 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                       as SalonSearchListModel;
 
               salonUserlist = model.userList!;
+              if (widget.id.isNotEmpty) {
+                for (final salon in salonUserlist) {
+                  if (salon.id.toString() == widget.id) {
+                    selectedUser = salon;
+                    salonid = salon.id.toString();
+                    searchsaloncontroller.text = salon.salonName ?? '';
+                    searchsalonlist.clear();
+                    currentStep = 2;
+                    break;
+                  }
+                }
+              }
             });
           }
         }
@@ -514,6 +527,10 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                 child: Column(
                   children:
                       searchsalonlist.map((user) {
+                        final String imageUrl =
+                            "${API.baseUrl}/api/${user.profileImage}";
+
+                        debugPrint("Profile Image URL: $imageUrl");
                         return ListTile(
                           title: Row(
                             children: [
@@ -523,14 +540,27 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(17.5),
                                   child: Image.network(
-                                    "${API.baseUrl}/api/${user.profileImage}",
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) =>
-                                            CircularProgressIndicator(
-                                              color: AppColors.kPinkColor,
-                                            ),
+                                    Uri.encodeFull(
+                                      "${API.baseUrl}/api/${user.profileImage}",
+                                    ),
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (
+                                      context,
+                                      child,
+                                      loadingProgress,
+                                    ) {
+                                      if (loadingProgress == null) return child;
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: AppColors.kPinkColor,
+                                        ),
+                                      );
+                                    },
                                     errorBuilder: (context, error, stackTrace) {
-                                      return Icon(Icons.error_outline);
+                                      return Image.asset(
+                                        ImageUtils.profileLogo,
+                                      );
                                     },
                                   ),
                                 ),
@@ -859,6 +889,11 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
           );
           await controllerVideoDurationChk!.initialize();
           final Duration duration = controllerVideoDurationChk!.value.duration;
+          final file = File(result.path!);
+          final int fileSize = await file.length();
+          // Convert to MB
+          final double fileSizeInMB = fileSize / (1024 * 1024);
+          print("Video size: ==  ${fileSizeInMB.toStringAsFixed(2)} MB");
 
           if (duration.inSeconds > 60) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -866,6 +901,12 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                 content: Text(
                   Languages.of(context)!.maximumuploadlimit60secondText,
                 ),
+              ),
+            );
+          } else if (fileSizeInMB > 20) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(Languages.of(context)!.maximumuploadSize10mbText),
               ),
             );
           } else {
@@ -1473,6 +1514,8 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                       postsFiles,
                       "mp4",
                       averageRatingString,
+                      "",
+                      "",
                       reviewcontroller.text,
                       taggedUserIds,
                       "SalonReview",
@@ -1546,10 +1589,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
     List<File> other,
     String fileExtension,
     double rating,
+    String reward_type,
+    String reward_image,
     String review,
     List<String> tag_users,
-    String post_type,
-  ) async {
+    String post_type, {
+    String rewardpoint = "0",
+  }) async {
     print("get CreatePost function call === $other");
     setState(() {
       isLoadingPostReview = true;
@@ -1569,9 +1615,12 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
           other,
           fileExtension,
           rating,
+          reward_type,
+          reward_image,
           review,
           tag_users,
           post_type,
+          rewardpoint,
         );
         if (Provider.of<CreatePostViewModel>(
               context,

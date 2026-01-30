@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/getstorylistmodel.dart';
+import 'package:pinkGossip/screens/AddPost/ShareSaloonReview.dart';
 import 'package:pinkGossip/screens/HomeScreens/addstory.dart';
 import 'package:pinkGossip/screens/HomeScreens/mystoryview.dart';
 import 'package:pinkGossip/screens/Mackeups/tagvideothumbnail.dart';
@@ -37,11 +38,12 @@ import '../../utils/pallete.dart';
 import 'package:intl/intl.dart';
 
 class SalonDetailScreen extends StatefulWidget {
-  final String id, userType;
+  final String id, userType, pageType;
   const SalonDetailScreen({
     super.key,
     required this.id,
     required this.userType,
+    this.pageType = '',
   });
 
   @override
@@ -99,6 +101,13 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
     _tabController = TabController(length: 3, vsync: this);
     _tabController.animation!.addListener(_handleTabChange);
     getSalonDetails(widget.id, widget.userType);
+    // 🔥 SHOW ALERT ONLY FOR DEEP LINK
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.pageType == 'deepLink') {
+        // if (1 == 1) {
+        _showDeepLinkWelcomeDialog();
+      }
+    });
     for (int i = 0; i < videoList.length; i++) {
       _videoPlayercontroller[i] = VideoPlayerController.networkUrl(
         Uri.parse(videoList[i]),
@@ -172,6 +181,70 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  void _showDeepLinkWelcomeDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: const Text(
+            "Hey 💕 welcome on Pink Gossip",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const Text(
+            "Where your in-salon content is actually rewarding.\n\n"
+            "Start your beauty journey by winning 50 points by taking a before picture 📸✨",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Later
+              },
+              child: Text(
+                "Later",
+                style: Pallete.Quicksand14drktxtGreywe500.copyWith(
+                  color: AppColors.kBlackColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.kPinkColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SharesaloonreviewPage(id: widget.id),
+                  ),
+                );
+
+                // Navigator.pop(context);
+
+                // 👉 Navigate to Start action (example)
+                // Navigator.push(context,
+                //   MaterialPageRoute(builder: (_) => AddStory(type: "Home")));
+              },
+              child: Text(
+                "Start",
+                style: Pallete.Quicksand14drktxtGreywe500.copyWith(
+                  color: AppColors.btnColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -855,21 +928,21 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                             ),
                           ),
 
-                          // salonDetails!.userType == 1
-                          //     ? Container(
-                          //       padding: const EdgeInsets.only(
-                          //         left: 20,
-                          //         right: 20,
-                          //       ),
-                          //       alignment: Alignment.topLeft,
-                          //       child: Text(
-                          //         salonDetails!.email!.isNotEmpty
-                          //             ? salonDetails!.email!
-                          //             : "",
-                          //         style: Pallete.Quicksand14drktxtBluewe500,
-                          //       ),
-                          //     )
-                          //     : Container(),
+                          salonDetails!.emailVisibility == true
+                              ? Container(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                ),
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  salonDetails!.email!.isNotEmpty
+                                      ? salonDetails!.email!
+                                      : "",
+                                  style: Pallete.Quicksand14drktxtBluewe500,
+                                ),
+                              )
+                              : Container(),
                         ],
                       ),
                       Column(
@@ -1362,498 +1435,406 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-                            salonPostArray.isNotEmpty
-                                ? salonDetails!.userType == 1
-                                    ? GridView.builder(
-                                      controller: _scrollController,
-                                      itemCount: salonPostArray.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3,
-                                            childAspectRatio: 0.85,
-                                          ),
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (context) => ShowPostImage(
-                                                      postData: salonPostArray,
-                                                      selectedLessonIndex:
-                                                          index,
-                                                      usertype:
-                                                          salonDetails!.userType
-                                                              .toString(),
-                                                      isProfile:
-                                                          widget.id == userid
-                                                              ? true
-                                                              : false,
-                                                      type: "Details",
-                                                      otherstories:
-                                                          getDetailsStories,
-                                                    ),
+                            //   salonPostArray.isNotEmpty
+                            // ? salonDetails!.userType == 1
+                            //     ?
+                            GridView.builder(
+                              controller: _scrollController,
+                              itemCount: salonPostArray.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    childAspectRatio: 1,
+                                  ),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => ShowPostImage(
+                                              postData: salonPostArray,
+                                              selectedLessonIndex: index,
+                                              usertype:
+                                                  salonDetails!.userType
+                                                      .toString(),
+                                              isProfile: widget.id == userid,
+                                              type: "Details",
+                                              otherstories: getDetailsStories,
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child:
+                                      salonPostArray[index].afterImage != ""
+                                          ? Stack(
+                                            alignment: Alignment.topRight,
+                                            children: [
+                                              Container(
+                                                margin: const EdgeInsets.all(3),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  border: Border.all(
+                                                    color:
+                                                        AppColors
+                                                            .kTextFieldBorderColor,
+                                                  ),
+                                                  color: Colors.white,
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  child: Image.network(
+                                                    "${API.baseUrl}/api/${salonPostArray[index].afterImage}",
+                                                    fit: BoxFit.cover,
+                                                    loadingBuilder: (
+                                                      context,
+                                                      child,
+                                                      ImageChunkEvent?
+                                                      loadingProgress,
+                                                    ) {
+                                                      if (loadingProgress ==
+                                                          null)
+                                                        return child;
+                                                      return Center(
+                                                        child: CircularProgressIndicator(
+                                                          color:
+                                                              AppColors
+                                                                  .kBlackColor,
+                                                          value:
+                                                              loadingProgress
+                                                                          .expectedTotalBytes !=
+                                                                      null
+                                                                  ? loadingProgress
+                                                                          .cumulativeBytesLoaded /
+                                                                      loadingProgress
+                                                                          .expectedTotalBytes!
+                                                                  : null,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
                                               ),
-                                            );
-                                          },
-                                          child:
                                               salonPostArray[index]
-                                                          .afterImage !=
-                                                      ""
-                                                  ? Stack(
-                                                    alignment:
-                                                        Alignment.topRight,
-                                                    children: [
-                                                      Container(
-                                                        height: kSize.height,
-                                                        width: kSize.width,
-                                                        margin:
-                                                            const EdgeInsets.all(
-                                                              3,
-                                                            ),
-                                                        decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                5,
-                                                              ),
-                                                          border: Border.all(
-                                                            color:
-                                                                AppColors
-                                                                    .kTextFieldBorderColor,
-                                                          ),
-                                                          color: Colors.white,
+                                                      .otherMultiPost!
+                                                      .isNotEmpty
+                                                  ? Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                          top: 8,
+                                                          right: 8,
                                                         ),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                5,
-                                                              ),
-                                                          child: Image.network(
-                                                            fit: BoxFit.cover,
-                                                            "${API.baseUrl}/api/${salonPostArray[index].afterImage}",
-                                                            loadingBuilder: (
-                                                              BuildContext
-                                                              context,
-                                                              Widget child,
-                                                              ImageChunkEvent?
-                                                              loadingProgress,
-                                                            ) {
-                                                              if (loadingProgress ==
-                                                                  null)
-                                                                return child;
-                                                              return SizedBox(
-                                                                height: 100,
-                                                                width: 100,
-                                                                child: Center(
-                                                                  child: CircularProgressIndicator(
-                                                                    color:
-                                                                        AppColors
-                                                                            .kBlackColor,
-                                                                    value:
-                                                                        loadingProgress.expectedTotalBytes !=
-                                                                                null
-                                                                            ? loadingProgress.cumulativeBytesLoaded /
-                                                                                loadingProgress.expectedTotalBytes!
-                                                                            : null,
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      salonPostArray[index]
-                                                              .otherMultiPost!
-                                                              .isNotEmpty
-                                                          ? Padding(
-                                                            padding:
-                                                                const EdgeInsets.only(
-                                                                  top: 8,
-                                                                  right: 8,
-                                                                ),
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    color: Colors
-                                                                        .black12
-                                                                        .withOpacity(
-                                                                          0.2,
-                                                                        ),
-                                                                    blurRadius:
-                                                                        4,
-                                                                    offset:
-                                                                        const Offset(
-                                                                          0,
-                                                                          0.3,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              child: Image.asset(
-                                                                "lib/assets/images/multipost.png",
-                                                                height: 22,
-                                                                color:
-                                                                    Colors
-                                                                        .white,
-                                                              ),
-                                                            ),
-                                                          )
-                                                          : Container(),
-                                                    ],
-                                                  )
-                                                  : Container(
-                                                    height: kSize.height,
-                                                    width: kSize.width,
-                                                    margin:
-                                                        const EdgeInsets.all(3),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            5,
-                                                          ),
+                                                    child: Image.asset(
+                                                      "lib/assets/images/multipost.png",
+                                                      height: 22,
                                                       color: Colors.white,
-                                                      border: Border.all(
-                                                        color:
-                                                            AppColors
-                                                                .kTextFieldBorderColor,
-                                                      ),
                                                     ),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            5,
-                                                          ),
-                                                      child:
+                                                  )
+                                                  : Container(),
+                                            ],
+                                          )
+                                          : Container(
+                                            margin: const EdgeInsets.all(3),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              border: Border.all(
+                                                color:
+                                                    AppColors
+                                                        .kTextFieldBorderColor,
+                                              ),
+                                              color: Colors.white,
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              child:
+                                                  showotherimg[index]['f_img']
+                                                              .endsWith(
+                                                                ".mp4",
+                                                              ) ||
                                                           showotherimg[index]['f_img']
-                                                                      .endsWith(
-                                                                        ".mp4",
-                                                                      ) ||
-                                                                  showotherimg[index]['f_img']
-                                                                      .endsWith(
-                                                                        ".mov",
-                                                                      ) ||
-                                                                  showotherimg[index]['f_img']
-                                                                      .endsWith(
-                                                                        ".MP4",
-                                                                      )
-                                                              ? Stack(
-                                                                children: [
-                                                                  SizedBox(
-                                                                    height:
-                                                                        kSize
-                                                                            .height,
-                                                                    width:
-                                                                        kSize
-                                                                            .width,
-                                                                    child: ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                            5,
-                                                                          ),
-                                                                      child: Tagvideothumbnail(
-                                                                        videoUrl:
-                                                                            showotherimg[index]['f_img'],
-                                                                      ),
-                                                                    ),
+                                                              .endsWith(
+                                                                ".mov",
+                                                              ) ||
+                                                          showotherimg[index]['f_img']
+                                                              .endsWith(".MP4")
+                                                      ? Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          /// 🎥 VIDEO THUMBNAIL (FULL SIZE, NO STRETCH)
+                                                          Positioned.fill(
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                    5,
                                                                   ),
-                                                                  const Center(
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .play_arrow_rounded,
-                                                                      size: 50,
-                                                                      color:
-                                                                          Colors
-                                                                              .white,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                              : Image.network(
-                                                                showotherimg[index]['f_img'],
+                                                              child: FittedBox(
                                                                 fit:
                                                                     BoxFit
-                                                                        .cover,
-                                                                loadingBuilder: (
-                                                                  BuildContext
-                                                                  context,
-                                                                  Widget child,
-                                                                  ImageChunkEvent?
-                                                                  loadingProgress,
-                                                                ) {
-                                                                  if (loadingProgress ==
-                                                                      null)
-                                                                    return child;
-                                                                  return SizedBox(
-                                                                    height: 100,
-                                                                    width: 100,
-                                                                    child: Center(
-                                                                      child: CircularProgressIndicator(
-                                                                        color:
-                                                                            AppColors.kBlackColor,
-                                                                        value:
-                                                                            loadingProgress.expectedTotalBytes !=
-                                                                                    null
-                                                                                ? loadingProgress.cumulativeBytesLoaded /
-                                                                                    loadingProgress.expectedTotalBytes!
-                                                                                : null,
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              ),
-                                                    ),
-                                                  ),
-                                        );
-                                      },
-                                    )
-                                    : GridView.builder(
-                                      controller: _scrollController,
-                                      itemCount: showotherimg.length,
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3,
-                                            childAspectRatio: 0.85,
-                                          ),
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (context) => ShowPostImage(
-                                                      postData: salonPostArray,
-                                                      selectedLessonIndex:
-                                                          index,
-                                                      usertype:
-                                                          salonDetails!.userType
-                                                              .toString(),
-                                                      isProfile:
-                                                          widget.id == userid
-                                                              ? true
-                                                              : false,
-                                                      type: "Details",
-                                                      otherstories:
-                                                          getDetailsStories,
-                                                    ),
-                                              ),
-                                            );
-                                          },
-                                          child:
-                                              showotherimg[index] != ""
-                                                  ? Stack(
-                                                    alignment:
-                                                        Alignment.topRight,
-                                                    children: [
-                                                      Container(
-                                                        height: kSize.height,
-                                                        width: kSize.width,
-                                                        margin:
-                                                            const EdgeInsets.all(
-                                                              3,
-                                                            ),
-                                                        decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                5,
-                                                              ),
-                                                          border: Border.all(
-                                                            color:
-                                                                AppColors
-                                                                    .kTextFieldBorderColor,
-                                                          ),
-                                                          color: Colors.white,
-                                                        ),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                5,
-                                                              ),
-                                                          child:
-                                                              showotherimg[index]['f_img']
-                                                                          .endsWith(
-                                                                            ".mp4",
-                                                                          ) ||
-                                                                      showotherimg[index]['f_img']
-                                                                          .endsWith(
-                                                                            ".mov",
-                                                                          ) ||
-                                                                      showotherimg[index]['f_img']
-                                                                          .endsWith(
-                                                                            ".MP4",
-                                                                          )
-                                                                  ? Stack(
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        height:
-                                                                            kSize.height,
-                                                                        width:
-                                                                            kSize.width,
-                                                                        child: ClipRRect(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(
-                                                                                5,
-                                                                              ),
-                                                                          child: Tagvideothumbnail(
-                                                                            videoUrl:
-                                                                                showotherimg[index]['f_img'],
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      const Center(
-                                                                        child: Icon(
-                                                                          Icons
-                                                                              .play_arrow_rounded,
-                                                                          size:
-                                                                              50,
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  )
-                                                                  : Image.network(
-                                                                    showotherimg[index]['f_img'],
-                                                                    fit:
-                                                                        BoxFit
-                                                                            .cover,
-                                                                    loadingBuilder: (
-                                                                      BuildContext
-                                                                      context,
-                                                                      Widget
-                                                                      child,
-                                                                      ImageChunkEvent?
-                                                                      loadingProgress,
-                                                                    ) {
-                                                                      if (loadingProgress ==
-                                                                          null)
-                                                                        return child;
-                                                                      return SizedBox(
-                                                                        height:
-                                                                            100,
-                                                                        width:
-                                                                            100,
-                                                                        child: Center(
-                                                                          child: CircularProgressIndicator(
-                                                                            color:
-                                                                                AppColors.kBlackColor,
-                                                                            value:
-                                                                                loadingProgress.expectedTotalBytes !=
-                                                                                        null
-                                                                                    ? loadingProgress.cumulativeBytesLoaded /
-                                                                                        loadingProgress.expectedTotalBytes!
-                                                                                    : null,
-                                                                          ),
-                                                                        ),
-                                                                      );
-                                                                    },
+                                                                        .cover, // ✅ full cover, no stretch
+                                                                child: SizedBox(
+                                                                  width:
+                                                                      kSize
+                                                                          .width,
+                                                                  height:
+                                                                      kSize
+                                                                          .height,
+                                                                  child: Tagvideothumbnail(
+                                                                    videoUrl:
+                                                                        showotherimg[index]['f_img'],
                                                                   ),
-
-                                                          //     Image.network(
-                                                          //   showotherimg[
-                                                          //           index]
-                                                          //       ['f_img'],
-                                                          //   fit: BoxFit
-                                                          //       .cover,
-                                                          //   loadingBuilder: (BuildContext
-                                                          //           context,
-                                                          //       Widget
-                                                          //           child,
-                                                          //       ImageChunkEvent?
-                                                          //           loadingProgress) {
-                                                          //     if (loadingProgress ==
-                                                          //         null)
-                                                          //       return child;
-                                                          //     return SizedBox(
-                                                          //       height: 100,
-                                                          //       width: 100,
-                                                          //       child:
-                                                          //           Center(
-                                                          //         child:
-                                                          //             CircularProgressIndicator(
-                                                          //           color: AppColors
-                                                          //               .kBlackColor,
-                                                          //           value: loadingProgress.expectedTotalBytes !=
-                                                          //                   null
-                                                          //               ? loadingProgress.cumulativeBytesLoaded /
-                                                          //                   loadingProgress.expectedTotalBytes!
-                                                          //               : null,
-                                                          //         ),
-                                                          //       ),
-                                                          //     );
-                                                          //   },
-                                                          // ),
-                                                        ),
-                                                      ),
-                                                      showotherimg[index]['otherpostlen']! >
-                                                              1
-                                                          ? Padding(
-                                                            padding:
-                                                                const EdgeInsets.only(
-                                                                  top: 8,
-                                                                  right: 8,
                                                                 ),
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                boxShadow: [
-                                                                  BoxShadow(
-                                                                    color: Colors
-                                                                        .black12
-                                                                        .withOpacity(
-                                                                          0.2,
-                                                                        ),
-                                                                    blurRadius:
-                                                                        4,
-                                                                    offset:
-                                                                        const Offset(
-                                                                          0,
-                                                                          0.3,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              child: Image.asset(
-                                                                "lib/assets/images/multipost.png",
-                                                                height: 22,
-                                                                color:
-                                                                    Colors
-                                                                        .white,
                                                               ),
                                                             ),
-                                                          )
-                                                          : Container(),
-                                                    ],
-                                                  )
-                                                  : Container(
-                                                    margin:
-                                                        const EdgeInsets.all(3),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            5,
                                                           ),
-                                                      border: Border.all(
-                                                        color: Colors.grey,
+
+                                                          /// ▶ PLAY ICON
+                                                          const Icon(
+                                                            Icons
+                                                                .play_arrow_rounded,
+                                                            size: 50,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ],
+                                                      )
+                                                      : Image.network(
+                                                        showotherimg[index]['f_img'],
+                                                        fit: BoxFit.cover,
+                                                        loadingBuilder: (
+                                                          BuildContext context,
+                                                          Widget child,
+                                                          ImageChunkEvent?
+                                                          loadingProgress,
+                                                        ) {
+                                                          if (loadingProgress ==
+                                                              null)
+                                                            return child;
+                                                          return SizedBox(
+                                                            height: 100,
+                                                            width: 100,
+                                                            child: Center(
+                                                              child: CircularProgressIndicator(
+                                                                color:
+                                                                    AppColors
+                                                                        .kBlackColor,
+                                                                value:
+                                                                    loadingProgress.expectedTotalBytes !=
+                                                                            null
+                                                                        ? loadingProgress.cumulativeBytesLoaded /
+                                                                            loadingProgress.expectedTotalBytes!
+                                                                        : null,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
                                                       ),
-                                                      color: Colors.white,
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons.person,
-                                                    ),
-                                                  ),
-                                        );
-                                      },
-                                    )
-                                : Center(
-                                  child: Text(
-                                    Languages.of(context)!.NopostavailableText,
-                                    style: Pallete.Quicksand16drkBlackBold,
-                                  ),
-                                ),
+                                            ),
+                                          ),
+                                );
+                              },
+                            ),
+
+                            //     : GridView.builder(
+                            //       controller: _scrollController,
+                            //       itemCount: showotherimg.length,
+                            //       gridDelegate:
+                            //           const SliverGridDelegateWithFixedCrossAxisCount(
+                            //             crossAxisCount: 3,
+                            //             childAspectRatio: 1,
+                            //           ),
+                            //       shrinkWrap: true,
+                            //       itemBuilder: (context, index) {
+                            //         return GestureDetector(
+                            //           onTap: () {
+                            //             Navigator.push(
+                            //               context,
+                            //               MaterialPageRoute(
+                            //                 builder:
+                            //                     (context) => ShowPostImage(
+                            //                       postData: salonPostArray,
+                            //                       selectedLessonIndex:
+                            //                           index,
+                            //                       usertype:
+                            //                           salonDetails!.userType
+                            //                               .toString(),
+                            //                       isProfile:
+                            //                           widget.id == userid,
+                            //                       type: "Details",
+                            //                       otherstories:
+                            //                           getDetailsStories,
+                            //                     ),
+                            //               ),
+                            //             );
+                            //           },
+                            //           child:
+                            //               showotherimg[index] != ""
+                            //                   ? Stack(
+                            //                     alignment:
+                            //                         Alignment.topRight,
+                            //                     children: [
+                            //                       Container(
+                            //                         margin:
+                            //                             const EdgeInsets.all(
+                            //                               3,
+                            //                             ),
+                            //                         decoration: BoxDecoration(
+                            //                           borderRadius:
+                            //                               BorderRadius.circular(
+                            //                                 5,
+                            //                               ),
+                            //                           border: Border.all(
+                            //                             color:
+                            //                                 AppColors
+                            //                                     .kTextFieldBorderColor,
+                            //                           ),
+                            //                           color: Colors.white,
+                            //                         ),
+                            //                         child: ClipRRect(
+                            //                           borderRadius:
+                            //                               BorderRadius.circular(
+                            //                                 5,
+                            //                               ),
+                            //                           child:
+                            //                               showotherimg[index]['f_img']
+                            //                                           .endsWith(
+                            //                                             ".mp4",
+                            //                                           ) ||
+                            //                                       showotherimg[index]['f_img']
+                            //                                           .endsWith(
+                            //                                             ".mov",
+                            //                                           ) ||
+                            //                                       showotherimg[index]['f_img']
+                            //                                           .endsWith(
+                            //                                             ".MP4",
+                            //                                           )
+                            //                                   ? Stack(
+                            //                                     alignment:
+                            //                                         Alignment
+                            //                                             .center,
+                            //                                     children: [
+                            //                                       /// 🎥 VIDEO THUMBNAIL (FULL SIZE, NO STRETCH)
+                            //                                       Positioned.fill(
+                            //                                         child: ClipRRect(
+                            //                                           borderRadius:
+                            //                                               BorderRadius.circular(
+                            //                                                 5,
+                            //                                               ),
+                            //                                           child: FittedBox(
+                            //                                             fit:
+                            //                                                 BoxFit.cover, // ✅ full cover, no stretch
+                            //                                             child: SizedBox(
+                            //                                               width:
+                            //                                                   kSize.width,
+                            //                                               height:
+                            //                                                   kSize.height,
+                            //                                               child: Tagvideothumbnail(
+                            //                                                 videoUrl:
+                            //                                                     showotherimg[index]['f_img'],
+                            //                                               ),
+                            //                                             ),
+                            //                                           ),
+                            //                                         ),
+                            //                                       ),
+
+                            //                                       /// ▶ PLAY ICON
+                            //                                       const Icon(
+                            //                                         Icons
+                            //                                             .play_arrow_rounded,
+                            //                                         size:
+                            //                                             50,
+                            //                                         color:
+                            //                                             Colors.white,
+                            //                                       ),
+                            //                                     ],
+                            //                                   )
+                            //                                   : Image.network(
+                            //                                     showotherimg[index]['f_img'],
+                            //                                     fit:
+                            //                                         BoxFit
+                            //                                             .cover,
+                            //                                     loadingBuilder: (
+                            //                                       BuildContext
+                            //                                       context,
+                            //                                       Widget
+                            //                                       child,
+                            //                                       ImageChunkEvent?
+                            //                                       loadingProgress,
+                            //                                     ) {
+                            //                                       if (loadingProgress ==
+                            //                                           null)
+                            //                                         return child;
+                            //                                       return SizedBox(
+                            //                                         height:
+                            //                                             100,
+                            //                                         width:
+                            //                                             100,
+                            //                                         child: Center(
+                            //                                           child: CircularProgressIndicator(
+                            //                                             color:
+                            //                                                 AppColors.kBlackColor,
+                            //                                             value:
+                            //                                                 loadingProgress.expectedTotalBytes !=
+                            //                                                         null
+                            //                                                     ? loadingProgress.cumulativeBytesLoaded /
+                            //                                                         loadingProgress.expectedTotalBytes!
+                            //                                                     : null,
+                            //                                           ),
+                            //                                         ),
+                            //                                       );
+                            //                                     },
+                            //                                   ),
+                            //                         ),
+                            //                       ),
+                            //                       showotherimg[index]['otherpostlen']! >
+                            //                               1
+                            //                           ? Padding(
+                            //                             padding:
+                            //                                 const EdgeInsets.only(
+                            //                                   top: 8,
+                            //                                   right: 8,
+                            //                                 ),
+                            //                             child: Image.asset(
+                            //                               "lib/assets/images/multipost.png",
+                            //                               height: 22,
+                            //                               color:
+                            //                                   Colors.white,
+                            //                             ),
+                            //                           )
+                            //                           : Container(),
+                            //                     ],
+                            //                   )
+                            //                   : Container(
+                            //                     margin:
+                            //                         const EdgeInsets.all(3),
+                            //                     decoration: BoxDecoration(
+                            //                       borderRadius:
+                            //                           BorderRadius.circular(
+                            //                             5,
+                            //                           ),
+                            //                       border: Border.all(
+                            //                         color: Colors.grey,
+                            //                       ),
+                            //                       color: Colors.white,
+                            //                     ),
+                            //                     child: const Icon(
+                            //                       Icons.person,
+                            //                     ),
+                            //                   ),
+                            //         );
+                            //       },
+                            //     )
+                            // : Center(
+                            //   child: Text(
+                            //     Languages.of(context)!.NopostavailableText,
+                            //     style: Pallete.Quicksand16drkBlackBold,
+                            //   ),
+                            // ),
                             videoList.isNotEmpty
                                 ? GridView.builder(
                                   controller: _videogridviewController,
@@ -1861,16 +1842,14 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3,
-                                        childAspectRatio: 0.75,
+                                        childAspectRatio: 1, // square grid
                                       ),
-                                  shrinkWrap: true,
                                   itemBuilder: (context, index) {
-                                    _videoPlayercontroller[index] =
-                                        VideoPlayerController.networkUrl(
-                                          Uri.parse(videoList[index]),
-                                        );
+                                    final controller =
+                                        _videoPlayercontroller[index];
+
                                     return InkWell(
-                                      borderRadius: BorderRadius.circular(3),
+                                      borderRadius: BorderRadius.circular(5),
                                       overlayColor: MaterialStatePropertyAll(
                                         Colors.black.withAlpha(10),
                                       ),
@@ -1885,7 +1864,6 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                 ),
                                           ),
                                         );
-                                        setState(() {});
                                       },
                                       child: Container(
                                         margin: const EdgeInsets.all(3),
@@ -1896,84 +1874,53 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                           border: Border.all(
                                             color: Colors.grey,
                                           ),
-                                          color: Colors.white,
                                         ),
-                                        child:
-                                            _videoPlayercontroller.isNotEmpty
-                                                ? FutureBuilder(
-                                                  future:
-                                                      _videoPlayercontroller[index]
-                                                          .initialize(),
-                                                  builder: (context, snapshot) {
-                                                    if (snapshot
-                                                            .connectionState ==
-                                                        ConnectionState.done) {
-                                                      return Stack(
-                                                        children: [
-                                                          SizedBox(
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            /// 🎥 FULL SIZE VIDEO THUMBNAIL (NO STRETCH)
+                                            Positioned.fill(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child:
+                                                    controller
+                                                            .value
+                                                            .isInitialized
+                                                        ? FittedBox(
+                                                          fit:
+                                                              BoxFit
+                                                                  .cover, // ✅ full cover, no stretch
+                                                          child: SizedBox(
+                                                            width:
+                                                                controller
+                                                                    .value
+                                                                    .size
+                                                                    .width,
                                                             height:
-                                                                kSize.height,
-                                                            width: kSize.width,
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(
-                                                                    5,
-                                                                  ),
-                                                              child: AspectRatio(
-                                                                aspectRatio:
-                                                                    _videoPlayercontroller[index]
-                                                                        .value
-                                                                        .aspectRatio,
-                                                                child: VideoPlayer(
-                                                                  _videoPlayercontroller[index],
-                                                                ),
-                                                              ),
+                                                                controller
+                                                                    .value
+                                                                    .size
+                                                                    .height,
+                                                            child: VideoPlayer(
+                                                              controller,
                                                             ),
                                                           ),
-                                                          const Center(
-                                                            child: Icon(
-                                                              Icons
-                                                                  .play_arrow_rounded,
-                                                              size: 50,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    } else {
-                                                      return Shimmer.fromColors(
-                                                        baseColor:
-                                                            Colors
-                                                                .grey
-                                                                .shade300,
-                                                        highlightColor:
-                                                            Colors
-                                                                .grey
-                                                                .shade100,
-                                                        enabled: true,
-                                                        child: Container(
-                                                          decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  5,
-                                                                ),
-                                                            border: Border.all(
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                            color: Colors.white,
-                                                          ),
-                                                          height: kSize.height,
-                                                          width: kSize.width,
+                                                        )
+                                                        : Container(
+                                                          color: Colors.black,
                                                         ),
-                                                      );
-                                                    }
-                                                  },
-                                                )
-                                                : Container(
-                                                  color: Colors.white,
-                                                ),
+                                              ),
+                                            ),
+
+                                            /// ▶ PLAY ICON
+                                            const Icon(
+                                              Icons.play_arrow_rounded,
+                                              size: 45,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     );
                                   },
@@ -1984,7 +1931,6 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                     style: Pallete.Quicksand16drkBlackBold,
                                   ),
                                 ),
-
                             tagPostList!.isEmpty
                                 ? widget.id == userid
                                     ? Column(

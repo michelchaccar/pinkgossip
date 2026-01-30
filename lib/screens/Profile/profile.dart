@@ -13,8 +13,10 @@ import 'package:pinkGossip/screens/Mackeups/tagvideothumbnail.dart';
 import 'package:pinkGossip/screens/Profile/beautybusinessmap.dart';
 import 'package:pinkGossip/screens/Profile/blockedusers.dart';
 import 'package:pinkGossip/screens/Profile/language.dart';
+import 'package:pinkGossip/screens/Profile/myreward.dart';
 import 'package:pinkGossip/screens/Profile/qrcode.dart';
 import 'package:pinkGossip/screens/allfollowingorfollowers.dart';
+import 'package:pinkGossip/screens/onboarding/onboarding_screen.dart';
 import 'package:pinkGossip/screens/tagpostview.dart';
 import 'package:pinkGossip/viewModels/blockuserviewmodel.dart';
 import 'package:pinkGossip/viewModels/getstoryviewmodel.dart';
@@ -40,6 +42,7 @@ import 'package:video_player/video_player.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:pinkGossip/services/tooltip_service.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -57,6 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   late ScrollController _videogridviewController;
 
   List<Post> salonProfilePostArray = [];
+  List<Post> salonRewardRedeemPostArray = [];
   List<Post> tempprofilePostAray = [];
   List<TagPost>? tagPostList;
 
@@ -99,13 +103,21 @@ class _ProfileScreenState extends State<ProfileScreen>
   String userid = "";
   String userTyppe = "";
   String userName = "";
+  bool isOn = true;
   getuserid() async {
     prefs = await SharedPreferences.getInstance();
     userid = prefs!.getString('userid') ?? "";
     userTyppe = prefs!.getString('userType') ?? "apple";
 
     print("userid   ${userid}");
-    print("userid   ${userTyppe}");
+    print("userTyppe   ${userTyppe}");
+    if (userTyppe == "2") {
+      _tabController = TabController(length: 4, vsync: this);
+    } else {
+      _tabController = TabController(length: 3, vsync: this);
+    }
+
+    _tabController.animation!.addListener(_handleTabChange);
   }
 
   int offsett = 0;
@@ -127,9 +139,6 @@ class _ProfileScreenState extends State<ProfileScreen>
       );
       _videoPlayercontroller[i].initialize();
     }
-
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.animation!.addListener(_handleTabChange);
     _videogridviewController = ScrollController();
   }
 
@@ -379,14 +388,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     ),
                                   )
                                   : Container(),
-                              // InkWell(
-                              //   onTap: () {
-                              //     Navigator.push(context,MaterialPageRoute(builder: (context) => ,));
-                              //   },
-                              //   child: Container(
-                              //     color: Colors.amber,
-                              //   ),
-                              // )
                             ],
                           ),
                         ),
@@ -410,6 +411,23 @@ class _ProfileScreenState extends State<ProfileScreen>
                             );
                           },
                         ),
+                        userTyppe == "1"
+                            ? ListTile(
+                              leading: const Icon(Icons.reviews_sharp),
+                              title: Text(
+                                "My Rewards",
+                                style: Pallete.Quicksand15blackwe600,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyRewardPage(),
+                                  ),
+                                );
+                              },
+                            )
+                            : Container(),
                         ListTile(
                           leading: const Icon(Icons.language),
                           title: Text(
@@ -434,14 +452,25 @@ class _ProfileScreenState extends State<ProfileScreen>
                             style: Pallete.Quicksand15blackwe600,
                           ),
                           onTap: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (BuildContext context) =>
-                                        BottomNavBar(isIntroScreen: true),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder:
+                            //         (BuildContext context) =>
+                            //             BottomNavBar(isIntroScreen: true),
+                            //   ),
+                            // );
+                            // @TODO remove for release
+                            // Reset all tooltips - they will appear contextually when user taps each element
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            String userId = prefs.getString('userid') ?? "";
+                            if (userId.isNotEmpty) {
+                              await TooltipService().resetAllTooltips(userId);
+                              kToast(
+                                "Tutorial reset! Tooltips will appear when you tap each element.",
+                              );
+                            }
                           },
                         ),
                         ListTile(
@@ -460,6 +489,39 @@ class _ProfileScreenState extends State<ProfileScreen>
                               ),
                             );
                           },
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.email),
+                          title: Text(
+                            "Email Visibility",
+                            style: Pallete.Quicksand15blackwe600,
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Switch(
+                                value: isOn,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isOn = value;
+                                  });
+
+                                  // 🔥 API call
+                                  updateemailvisibility(
+                                    userid,
+                                    value ? "1" : "0",
+                                  );
+                                },
+                              ),
+                              // Text(
+                              //   isOn ? "ON" : "OFF",
+                              //   style: TextStyle(
+                              //     fontWeight: FontWeight.bold,
+                              //     color: isOn ? Colors.green : Colors.red,
+                              //   ),
+                              // ),
+                            ],
+                          ),
                         ),
                         ListTile(
                           leading: const Icon(Icons.delete_outline_outlined),
@@ -481,6 +543,62 @@ class _ProfileScreenState extends State<ProfileScreen>
                             LogoutAlert(context, kSize);
                           },
                         ),
+                        // ListTile(
+                        //   leading: const Icon(
+                        //     Icons.play_arrow,
+                        //     color: Colors.green,
+                        //   ),
+                        //   title: Text(
+                        //     "Test Gossiper Onboarding",
+                        //     style: Pallete.Quicksand15blackwe600.copyWith(
+                        //       color: Colors.green,
+                        //     ),
+                        //   ),
+                        //   onTap: () async {
+                        //     SharedPreferences prefs =
+                        //         await SharedPreferences.getInstance();
+                        //     await prefs.remove('onboarding_completed_$userid');
+                        //     kToast("Onboarding reset! Restart app to see it.");
+                        //     onTap:
+                        //     () {
+                        //       Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //           builder:
+                        //               (context) => OnboardingScreen(
+                        //                 userId: userid,
+                        //                 userType: "1", // Gossiper
+                        //               ),
+                        //         ),
+                        //       );
+                        //     };
+                        //   },
+                        // ),
+                        // Debug Button - Salon Onboarding
+                        // ListTile(
+                        //   leading: const Icon(
+                        //     Icons.play_arrow,
+                        //     color: Colors.orange,
+                        //   ),
+                        //   title: Text(
+                        //     "Test Salon Onboarding",
+                        //     style: Pallete.Quicksand15blackwe600.copyWith(
+                        //       color: Colors.orange,
+                        //     ),
+                        //   ),
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder:
+                        //             (context) => OnboardingScreen(
+                        //               userId: userid,
+                        //               userType: "2", // Salon
+                        //             ),
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   ),
@@ -783,31 +901,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                   ],
                                                 ),
                                               ),
-                                              // Expanded(
-                                              //   child: Column(
-                                              //     children: [
-                                              //       const SizedBox(height: 5),
-                                              //       Text(
-                                              //         // salonProfilePostArray.length
-                                              //         //     .toString(),
-                                              //         totalPoints.toString(),
-                                              //         style:
-                                              //             Pallete
-                                              //                 .Quicksand16drkBlackBold,
-                                              //       ),
-                                              //       Text(
-                                              //         Languages.of(
-                                              //           context,
-                                              //         )!.pointsText,
-                                              //         // Languages.of(context)!
-                                              //         //     .postsText,
-                                              //         style:
-                                              //             Pallete
-                                              //                 .Quicksand16drktxtGreywe500,
-                                              //       ),
-                                              //     ],
-                                              //   ),
-                                              // ),
+
                                               Expanded(
                                                 child: InkWell(
                                                   onTap: () {
@@ -1097,58 +1191,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         right: 20,
                                       ),
                                       child: _showHoursUI(),
-                                      // child: ListView.builder(
-                                      //   itemCount: salonOpenDays.length,
-                                      //   shrinkWrap: true,
-                                      //   padding: EdgeInsets.zero,
-                                      //   physics:
-                                      //       const NeverScrollableScrollPhysics(),
-                                      //   itemBuilder: (context, index) {
-                                      //     return Row(
-                                      //       crossAxisAlignment:
-                                      //           CrossAxisAlignment.start,
-                                      //       children: [
-                                      //         Text(
-                                      //           salonOpenDays[index].open!,
-                                      //           style: Pallete
-                                      //               .Quicksand12blackwe400.copyWith(
-                                      //             color: Colors.black,
-                                      //           ),
-                                      //         ),
-                                      //         const SizedBox(width: 5),
-                                      //         Text(
-                                      //           formatTime(
-                                      //             salonOpenDays[index]
-                                      //                 .startTime!,
-                                      //           ),
-                                      //           style: Pallete
-                                      //               .Quicksand12blackwe400.copyWith(
-                                      //             color: Colors.black,
-                                      //           ),
-                                      //         ),
-                                      //         const SizedBox(width: 5),
-                                      //         Text(
-                                      //           Languages.of(context)!.toText,
-                                      //           style: Pallete
-                                      //               .Quicksand12blackwe400.copyWith(
-                                      //             color: Colors.black,
-                                      //           ),
-                                      //         ),
-                                      //         const SizedBox(width: 5),
-                                      //         Text(
-                                      //           formatTime(
-                                      //             salonOpenDays[index].endTime!,
-                                      //           ),
-                                      //           style: Pallete
-                                      //               .Quicksand12blackwe400.copyWith(
-                                      //             color: Colors.black,
-                                      //           ),
-                                      //         ),
-                                      //         const SizedBox(width: 10),
-                                      //       ],
-                                      //     );
-                                      //   },
-                                      // ),
                                     )
                                     : Container()
                                 : Container(),
@@ -1368,47 +1410,103 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 }
                               }
                             },
-                            tabs: [
-                              Tab(
-                                child: SizedBox(
-                                  height: 25,
-                                  width: 25,
-                                  child: Image.asset(
-                                    ImageUtils.gridicon,
-                                    color:
-                                        currentindex == 0
-                                            ? AppColors.kPinkColor
-                                            : AppColors.kBlackColor,
-                                  ),
-                                ),
-                              ),
-                              Tab(
-                                child: SizedBox(
-                                  height: 25,
-                                  width: 25,
-                                  child: Image.asset(
-                                    ImageUtils.videoicon,
-                                    color:
-                                        currentindex == 1
-                                            ? AppColors.kPinkColor
-                                            : AppColors.kBlackColor,
-                                  ),
-                                ),
-                              ),
-                              Tab(
-                                child: SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: Image.asset(
-                                    "lib/assets/images/tag Background Removed.png",
-                                    color:
-                                        currentindex == 2
-                                            ? AppColors.kPinkColor
-                                            : AppColors.kBlackColor,
-                                  ),
-                                ),
-                              ),
-                            ],
+                            tabs:
+                                userTyppe == "1"
+                                    ? [
+                                      Tab(
+                                        child: SizedBox(
+                                          height: 25,
+                                          width: 25,
+                                          child: Image.asset(
+                                            ImageUtils.gridicon,
+                                            color:
+                                                currentindex == 0
+                                                    ? AppColors.kPinkColor
+                                                    : AppColors.kBlackColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: SizedBox(
+                                          height: 25,
+                                          width: 25,
+                                          child: Image.asset(
+                                            ImageUtils.videoicon,
+                                            color:
+                                                currentindex == 1
+                                                    ? AppColors.kPinkColor
+                                                    : AppColors.kBlackColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: SizedBox(
+                                          height: 30,
+                                          width: 30,
+                                          child: Image.asset(
+                                            "lib/assets/images/tag Background Removed.png",
+                                            color:
+                                                currentindex == 2
+                                                    ? AppColors.kPinkColor
+                                                    : AppColors.kBlackColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ]
+                                    : [
+                                      Tab(
+                                        child: SizedBox(
+                                          height: 25,
+                                          width: 25,
+                                          child: Image.asset(
+                                            ImageUtils.gridicon,
+                                            color:
+                                                currentindex == 0
+                                                    ? AppColors.kPinkColor
+                                                    : AppColors.kBlackColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: SizedBox(
+                                          height: 25,
+                                          width: 25,
+                                          child: Image.asset(
+                                            ImageUtils.videoicon,
+                                            color:
+                                                currentindex == 1
+                                                    ? AppColors.kPinkColor
+                                                    : AppColors.kBlackColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: SizedBox(
+                                          height: 30,
+                                          width: 30,
+                                          child: Image.asset(
+                                            "lib/assets/images/tag Background Removed.png",
+                                            color:
+                                                currentindex == 2
+                                                    ? AppColors.kPinkColor
+                                                    : AppColors.kBlackColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: SizedBox(
+                                          height: 30,
+                                          width: 30,
+                                          child: Image.asset(
+                                            "lib/assets/images/ic_reward_redeem.png",
+                                            color:
+                                                currentindex == 3
+                                                    ? AppColors.kPinkColor
+                                                    : Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -1418,6 +1516,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           child: TabBarView(
                             controller: _tabController,
                             children: [
+                              //First tab UI
                               salonProfilePostArray.isNotEmpty
                                   ? salonProfileDetails!.userType == 1
                                       ? GridView.builder(
@@ -1426,7 +1525,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         gridDelegate:
                                             const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 3,
-                                              childAspectRatio: 0.85,
+                                              childAspectRatio: 1,
                                             ),
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
@@ -1903,6 +2002,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       style: Pallete.Quicksand16drkBlackBold,
                                     ),
                                   ),
+                              //Second tab UI
                               videoList.isNotEmpty
                                   ? GridView.builder(
                                     controller: _videogridviewController,
@@ -1910,7 +2010,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 3,
-                                          childAspectRatio: 0.75,
+                                          childAspectRatio: 1,
                                         ),
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
@@ -2043,6 +2143,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       style: Pallete.Quicksand16drkBlackBold,
                                     ),
                                   ),
+                              //Third tab UI
                               tagPostList!.isNotEmpty
                                   ? GridView.builder(
                                     itemCount: tagPostList!.length,
@@ -2267,6 +2368,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                     ],
                                   ),
+                              //fourth tab UI only shown in salon user
+                              userTyppe == "2"
+                                  ? getRewardRedempPostListUI(kSize)
+                                  : Container(),
                             ],
                           ),
                         ),
@@ -2488,7 +2593,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       as SalonDetailModel;
 
               salonProfileDetails = model.userProfile!;
-
+              isOn = model.userProfile!.emailVisibility ?? false;
               totalPoints = model.points!;
               postCountsReeview = model.postCountReview!;
               print("model.points ${model.points}");
@@ -2501,6 +2606,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                       : "${model.userProfile!.firstName!} ${model.userProfile!.lastName!}";
               totlepostcount = model.postCount!;
               getDetailsStories = model.story!;
+
+              isOn = model.userProfile!.emailVisibility!;
+              print("isOn==${isOn}");
               tagPostList = model.tagPosts!.reversed.toList();
               setState(() {});
               salonProfilePostArray.addAll(tempprofilePostAray);
@@ -2525,59 +2633,64 @@ class _ProfileScreenState extends State<ProfileScreen>
               }
 
               salonProfilePostArray.forEach((element) async {
-                if (element.otherMultiPost!.isNotEmpty) {
-                  String fileExtension = getFileExtension(
-                    element.otherMultiPost!.first.otherData!,
-                  );
-
-                  if (fileExtension == ".jpg" ||
-                      fileExtension == ".mp4" ||
-                      fileExtension == ".mov" ||
-                      fileExtension == ".MP4") {
-                    if (element.afterImage == "" && element.beforeImage == "") {
-                      showotherimg.add({
-                        "f_img":
-                            "${API.baseUrl}/api/${element.otherMultiPost!.first.otherData}",
-                        "otherpostlen": element.otherMultiPost!.length,
-                      });
-                      print(
-                        "showotherimg ${showotherimg} ${showotherimg.length}",
-                      );
-                    }
-                  } else {
-                    print("elsee");
-                  }
-                }
-
-                if (model.userProfile!.userType == 1 &&
-                    element.afterImage != "" &&
-                    element.beforeImage != "") {
-                  showotherimg.add({
-                    "f_img": "${API.baseUrl}/api/${element.afterImage}",
-                    "otherpostlen": 0,
-                  });
-                }
-                if (model.userProfile!.userType == 2 &&
-                    element.afterImage != "" &&
-                    element.beforeImage != "") {
-                  showotherimg.add({
-                    "f_img": "${API.baseUrl}/api/${element.afterImage}",
-                    "otherpostlen": 0,
-                  });
-                }
-
-                element.otherMultiPost!.forEach((element) {
-                  String fileExtension = getFileExtension(
-                    element.otherData.toString(),
-                  );
-                  print("fileExtension ==${fileExtension}");
-                  if (fileExtension == ".mp4") {
-                    videoList.add(
-                      "${API.baseUrl}/api/${element.otherData.toString()}",
+                if (element.postType == "RewardPost") {
+                  salonRewardRedeemPostArray.add(element);
+                } else {
+                  if (element.otherMultiPost!.isNotEmpty) {
+                    String fileExtension = getFileExtension(
+                      element.otherMultiPost!.first.otherData!,
                     );
-                    setState(() {});
+
+                    if (fileExtension == ".jpg" ||
+                        fileExtension == ".mp4" ||
+                        fileExtension == ".mov" ||
+                        fileExtension == ".MP4") {
+                      if (element.afterImage == "" &&
+                          element.beforeImage == "") {
+                        showotherimg.add({
+                          "f_img":
+                              "${API.baseUrl}/api/${element.otherMultiPost!.first.otherData}",
+                          "otherpostlen": element.otherMultiPost!.length,
+                        });
+                        print(
+                          "showotherimg ${showotherimg} ${showotherimg.length}",
+                        );
+                      }
+                    } else {
+                      print("elsee");
+                    }
                   }
-                });
+
+                  if (model.userProfile!.userType == 1 &&
+                      element.afterImage != "" &&
+                      element.beforeImage != "") {
+                    showotherimg.add({
+                      "f_img": "${API.baseUrl}/api/${element.afterImage}",
+                      "otherpostlen": 0,
+                    });
+                  }
+                  if (model.userProfile!.userType == 2 &&
+                      element.afterImage != "" &&
+                      element.beforeImage != "") {
+                    showotherimg.add({
+                      "f_img": "${API.baseUrl}/api/${element.afterImage}",
+                      "otherpostlen": 0,
+                    });
+                  }
+
+                  element.otherMultiPost!.forEach((element) {
+                    String fileExtension = getFileExtension(
+                      element.otherData.toString(),
+                    );
+                    print("fileExtension ==${fileExtension}");
+                    if (fileExtension == ".mp4") {
+                      videoList.add(
+                        "${API.baseUrl}/api/${element.otherData.toString()}",
+                      );
+                      setState(() {});
+                    }
+                  });
+                }
               });
 
               print("video list ===${videoList}");
@@ -2867,5 +2980,129 @@ class _ProfileScreenState extends State<ProfileScreen>
         ],
       ),
     );
+  }
+
+  getRewardRedempPostListUI(Size kSize) {
+    return ListView.builder(
+      shrinkWrap: true,
+      // physics: const NeverScrollableScrollPhysics(),
+      itemCount: salonRewardRedeemPostArray.length,
+      itemBuilder: (context, index) {
+        return RewardRedemptionPostWidget(
+          kSize,
+          postData: salonRewardRedeemPostArray[index],
+          profileUserId: userid,
+        );
+      },
+    );
+  }
+
+  RewardRedemptionPostWidget(
+    Size kSize, {
+    required Post postData,
+    required String profileUserId,
+  }) {
+    return Container(
+      margin: const EdgeInsets.all(5),
+      child: Column(
+        children: [
+          Image.network(
+            // "https://i.ibb.co/RTpcDZxk/dummyredeem.png",
+            "${API.baseUrl}/api/${postData.otherMultiPost![0].otherData!}",
+            fit: BoxFit.fill,
+            width: kSize.width,
+            height: kSize.height * 0.40,
+            loadingBuilder:
+                (context, child, loadingProgress) =>
+                    loadingProgress == null
+                        ? child
+                        : SizedBox(
+                          height: kSize.width,
+                          width: kSize.width,
+                          child: Center(
+                            child: Container(
+                              height: kSize.width,
+                              width: kSize.width,
+                              child: Center(child: CircularProgressIndicator()),
+                            ),
+                          ),
+                        ),
+          ),
+
+          Container(
+            width: kSize.width,
+            // color: Colors.red,
+            color: AppColors.kPinkColor,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Row(
+              children: [
+                Text(
+                  Languages.of(context)!.redeemNowText,
+                  style: Pallete.Quicksand16drkBlackbold.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+
+                Spacer(),
+                Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  updateemailvisibility(String id, String is_email_visibility) async {
+    print("get updateemailvisibility function call");
+
+    setState(() {
+      isLoading = true;
+    });
+    getuserid();
+    isInternetAvailable().then((isConnected) async {
+      if (isConnected) {
+        await Provider.of<SalonDetailsViewModel>(
+          context,
+          listen: false,
+        ).updateemailvisibility(userid, is_email_visibility);
+        if (Provider.of<SalonDetailsViewModel>(
+              context,
+              listen: false,
+            ).isLoading ==
+            false) {
+          if (Provider.of<SalonDetailsViewModel>(
+                context,
+                listen: false,
+              ).isSuccess ==
+              true) {
+            setState(() {
+              isLoading = false;
+              print("Success");
+              SalonDetailModel model =
+                  Provider.of<SalonDetailsViewModel>(
+                        context,
+                        listen: false,
+                      ).salondetailsresponse.response
+                      as SalonDetailModel;
+
+              if (model.success == true) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BottomNavBar(index: 4),
+                  ),
+                );
+              }
+            });
+          }
+        }
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        kToast(Languages.of(context)!.noInternetText);
+      }
+    });
   }
 }

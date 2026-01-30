@@ -209,41 +209,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     return isImageSelected
         ? Scaffold(
           backgroundColor: AppColors.kWhiteColor,
-          // bottomNavigationBar: SizedBox(
-          //   height: 55,
-          //   width: kSize.width,
-          //   child: Column(
-          //     children: [
-          //       InkWell(
-          //         child: Container(
-          //           height: 50,
-          //           width: kSize.width / 2,
-          //           decoration: Pallete.getButtonDecoration(),
-          //           child: InkWell(
-          //             onTap: () async {
-          //               Pallete.closeKeyboard(context);
-          //               // CreatePost(
-          //               //   userid,
-          //               //   userid,
-          //               //   File(""),
-          //               //   File(""),
-          //               //   allOtherdata,
-          //               //   "",
-          //               //   0,
-          //               //   captionController.text,
-          //               // );
-          //             },
-          //             child: Center(
-          //                 child: Text(
-          //               Languages.of(context)!.postCapitalText,
-          //               style: Pallete.buttonTextStyle,
-          //             )),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Row(
@@ -290,6 +256,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       selectedMedia,
                       "",
                       0,
+                      "",
+                      "",
                       captionController.text,
                       taggedUserIds,
                       "NormalPost",
@@ -661,10 +629,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
     List<File> other,
     String fileExtension,
     double rating,
+    String reward_type,
+    String reward_image,
     String review,
     List<String> tag_users,
-    String post_type,
-  ) async {
+    String post_type, {
+    String rewardpoint = "0",
+  }) async {
     print("get CreatePost function call === $other");
     setState(() {
       isLoading = true;
@@ -684,9 +655,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
           other,
           fileExtension,
           rating,
+          reward_type,
+          reward_image,
           review,
           tag_users,
           post_type,
+          rewardpoint,
         );
         if (Provider.of<CreatePostViewModel>(
               context,

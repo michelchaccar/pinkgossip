@@ -87,8 +87,8 @@ class _CameraAppState extends State<CameraApp> {
                   width: MediaQuery.of(context).size.width,
                   height:
                       MediaQuery.of(context).size.width *
-                      cameraController!.value.aspectRatio,
-                  child: CameraPreview(cameraController!),
+                      cameraController.value.aspectRatio,
+                  child: CameraPreview(cameraController),
                 ),
               ),
             ),
@@ -257,19 +257,7 @@ class _CameraAppState extends State<CameraApp> {
                         _takePicture();
                       }
                     },
-                    // onLongPressStart: (details) {
-                    //   if (widget.needVideo == false) {
-                    //     return;
-                    //   }
-                    //   _startVideoRecording();
-                    // },
-                    // onLongPressEnd: (details) {
-                    //   if (widget.needVideo == false) {
-                    //     return;
-                    //   }
-                    //   print(" recorded  onLongPressEnd");
-                    //   _stopVideoRecording();
-                    // },
+
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -336,68 +324,66 @@ class _CameraAppState extends State<CameraApp> {
   }
 
   Future<void> _takePicture() async {
-    print("📸 Capture button tapped!"); // ✅ This should appear in the log
+    if (!cameraController.value.isInitialized) return;
 
-    if (cameraController == null || !cameraController!.value.isInitialized) {
-      print("❌ Camera is not initialized.");
+    final XFile picture = await cameraController.takePicture();
+    Navigator.pop(context, File(picture.path)); // ✅ FULL IMAGE
+  }
+
+  Future<void> _takePicture1() async {
+    if (cameraController == null || !cameraController!.value.isInitialized)
       return;
-    }
 
     try {
       final XFile picture = await cameraController!.takePicture();
-      print("✅ Image captured: ${picture.path}");
+      final bytes = await picture.readAsBytes();
+      img.Image original = img.decodeImage(bytes)!;
 
-      double aspectRatio = cameraController!.value.aspectRatio;
-      final imageBytes = await picture.readAsBytes();
+      // 📐 Camera preview size
+      final previewSize = cameraController!.value.previewSize!;
+      final double previewW = previewSize.height;
+      final double previewH = previewSize.width;
 
-      img.Image capturedImage = img.decodeImage(imageBytes)!;
+      // 🟦 Crop box size on UI
+      const double boxSize = 500;
 
-      int previewWidth = capturedImage.width;
-      int previewHeight = capturedImage.height;
-      print("previewHeight ${previewHeight}");
-      print("previewWidth ${previewWidth}");
+      // 🧮 Scale calculate
+      double scaleX = original.width / previewW;
+      double scaleY = original.height / previewH;
 
-      // Calculate the crop area: center 500x500
-      int cropWidth = 500;
-      int cropHeight = 500;
-      int cropX = (previewWidth - cropWidth) ~/ 2;
-      int cropY = (previewHeight - cropHeight) ~/ 2;
+      // 🎯 Center square position
+      double cropX = (previewW - boxSize) / 2;
+      double cropY = (previewH - boxSize) / 2;
 
-      if (previewWidth < cropWidth) {
-        cropX = 0; // Center crop for width
-        cropWidth = previewWidth;
-      }
-      if (previewHeight < cropHeight) {
-        cropY = 0; // Center crop for height
-        cropHeight = previewHeight;
-      }
+      int realX = (cropX * scaleX).toInt();
+      int realY = (cropY * scaleY).toInt();
+      int realSize = (boxSize * scaleX).toInt();
 
-      img.Image croppedImage = img.copyCrop(
-        capturedImage,
-        x: cropX,
-        y: cropY,
-        width: cropWidth,
-        height: cropHeight,
+      // 🛑 Safety clamp
+      realX = realX.clamp(0, original.width - realSize);
+      realY = realY.clamp(0, original.height - realSize);
+
+      // ✂️ Crop
+      img.Image cropped = img.copyCrop(
+        original,
+        x: realX,
+        y: realY,
+        width: realSize,
+        height: realSize,
       );
 
-      final croppedFile = File(picture.path)
-        ..writeAsBytesSync(img.encodeJpg(croppedImage));
-      print("✅ Cropped Image saved: ${croppedFile.path}");
-
+      // 🔄 Mirror for front camera
       if (selectedCameraIndex == 1) {
-        img.Image flippedImage = img.flipHorizontal(croppedImage);
-        await croppedFile.writeAsBytes(img.encodeJpg(flippedImage));
-        print("🔄 Image mirrored successfully!");
+        cropped = img.flipHorizontal(cropped);
       }
 
-      setState(() {});
-      print(" croppedFile value $croppedFile");
-      Future.delayed(const Duration(milliseconds: 500), () {
-        Navigator.pop(context, croppedFile);
-      });
-      //
+      // 💾 Save
+      final File croppedFile = File(picture.path)
+        ..writeAsBytesSync(img.encodeJpg(cropped));
+
+      Navigator.pop(context, croppedFile);
     } catch (e) {
-      print("🚨 Error capturing image: $e");
+      debugPrint("❌ Crop error: $e");
     }
   }
 

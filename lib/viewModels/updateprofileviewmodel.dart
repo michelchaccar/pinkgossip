@@ -80,4 +80,6 @@ class UpdateProfileViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  
 }

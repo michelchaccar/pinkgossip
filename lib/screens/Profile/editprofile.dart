@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:image_cropper/image_cropper.dart';
 import 'package:pinkGossip/bottomnavi.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/checkusernameexistmodel.dart';
@@ -68,7 +69,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   var selectedStartday = "";
   var selectedEndday = "";
-
+  File? postData;
   final String iosApiKey = 'AIzaSyCRNjykxoRKwqenOpoqBdoYz1CTvPYI5So';
   final String androidApiKey = 'AIzaSyCRNjykxoRKwqenOpoqBdoYz1CTvPYI5So';
   List<String> _predictions = [];
@@ -532,17 +533,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: Stack(
                     children: [
                       CircleAvatar(
-                        radius: 45.0,
+                        radius: 45,
                         backgroundColor: Colors.grey[300],
                         backgroundImage:
-                            widget.userData["profileImage"].isNotEmpty
+                            (image != null && image!.path.isNotEmpty)
+                                ? FileImage(image!)
+                                : (widget.userData["profileImage"] != null &&
+                                    widget.userData["profileImage"]
+                                        .toString()
+                                        .isNotEmpty)
                                 ? NetworkImage(
                                   "${API.baseUrl}/api/${widget.userData["profileImage"]}",
                                 )
                                 : const AssetImage(
                                       "lib/assets/images/person.png",
                                     )
-                                    as ImageProvider<Object>,
+                                    as ImageProvider,
                       ),
 
                       Positioned(
@@ -574,15 +580,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                       ),
-                      // const SizedBox(height: 10),
-                      // GestureDetector(
-                      //   onTap: () async {
-                      //     await pickImage();
-                      //   },
-                      //   child: Text(Languages.of(context)!.editpictureText,
-                      //       style: Pallete.Quicksand15blackBold.copyWith(
-                      //           color: Colors.blue)),
-                      // )
                     ],
                   ),
                 ),
@@ -740,80 +737,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        // if (isTagUserShow)
-                        //   ListView.builder(
-                        //     itemCount: filteredUserList.length,
-                        //     shrinkWrap: true,
-                        //     physics: const NeverScrollableScrollPhysics(),
-                        //     itemBuilder: (context, index) {
-                        //       final user = filteredUserList[index];
-                        //       return ListTile(
-                        //         onTap: () => insertTag(user),
-                        //         leading: user.profileImage != null &&
-                        //                 user.profileImage!.isNotEmpty
-                        //             ? Container(
-                        //                 height: 40,
-                        //                 width: 40,
-                        //                 decoration: BoxDecoration(
-                        //                   image: DecorationImage(
-                        //                     fit: BoxFit.cover,
-                        //                     image: NetworkImage(
-                        //                         "${API.baseUrl}/api/${user.profileImage!}"),
-                        //                   ),
-                        //                   borderRadius: BorderRadius.circular(20),
-                        //                 ),
-                        //               )
-                        //             : Container(
-                        //                 height: 40,
-                        //                 width: 40,
-                        //                 decoration: BoxDecoration(
-                        //                   color: Colors.black12,
-                        //                   borderRadius: BorderRadius.circular(20),
-                        //                 ),
-                        //                 child: const Center(
-                        //                   child: Icon(Icons.person),
-                        //                 ),
-                        //               ),
-                        //         title: Column(
-                        //           crossAxisAlignment: CrossAxisAlignment.start,
-                        //           children: [
-                        //             Text(
-                        //               user.userName ?? '',
-                        //               style:
-                        //                   Pallete.Quicksand14Whiitewe600.copyWith(
-                        //                 color: AppColors.kBlackColor,
-                        //               ),
-                        //             ),
-                        //             Text(
-                        //               "${user.firstName ?? ''}${user.lastName ?? ''}",
-                        //               style:
-                        //                   Pallete.Quicksand14Whiitewe500.copyWith(
-                        //                 color: AppColors.kBlackColor,
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
 
-                        // Container(
-                        //   margin: const EdgeInsets.only(left: 20, right: 20),
-                        //   child: TextFormField(
-                        //       maxLines: 1,
-                        //       autocorrect: true,
-                        //       style: Pallete.textFieldTextStyle,
-                        //       scrollPadding: EdgeInsets.only(
-                        //           bottom:
-                        //               MediaQuery.of(context).viewInsets.bottom),
-                        //       controller: addressController,
-                        //       keyboardType: TextInputType.emailAddress,
-                        //       textInputAction: TextInputAction.done,
-                        //       cursorColor: AppColors.kTextColor,
-                        //       decoration: Pallete.getTextfieldDecoration(
-                        //         "Address",
-                        //       )),
-                        // ),
                         const SizedBox(height: 15),
                       ],
                     )
@@ -1400,71 +1324,67 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         maxHeight: 1080,
         maxWidth: 1080,
       );
+
       if (image == null) return;
-      final imageTemp = File(image.path);
 
-      setState(() => this.image = imageTemp);
+      print("ORIGINAL IMAGE PATH = ${image.path}");
 
-      print("IMAGE PATH = ${image.path}");
-
-      ProfilePhotoUpdate(image.path);
+      // 👇 crop screen open thase
+      await cropImage(image.path);
     } on PlatformException catch (error) {
       print('Failed to pick image: $error');
     }
   }
 
-  ProfilePhotoUpdate(String profile_image) async {
+  Future<void> ProfilePhotoUpdate(String profile_image) async {
     print("get ProfilePhotoUpdate function call");
+
+    if (!mounted) return;
     setState(() {
       isLoading = true;
     });
-    getuserid();
-    isInternetAvailable().then((isConnected) async {
-      if (isConnected) {
-        await Provider.of<UpdatePofilePhotoViewModel>(
-          context,
-          listen: false,
-        ).ProfilePhotoUpdate(profile_image, userid);
-        if (Provider.of<UpdatePofilePhotoViewModel>(
-              context,
-              listen: false,
-            ).isLoading ==
-            false) {
-          if (Provider.of<UpdatePofilePhotoViewModel>(
-                context,
-                listen: false,
-              ).isSuccess ==
-              true) {
-            setState(() {
-              isLoading = false;
 
-              print("Success");
-              UpdateProfileModel model =
-                  Provider.of<UpdatePofilePhotoViewModel>(
-                        context,
-                        listen: false,
-                      ).updateprofilephotoresponse.response
-                      as UpdateProfileModel;
+    await getuserid();
 
-              kToast(model.message!);
-              if (model.success == true) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BottomNavBar(index: 4),
-                  ),
-                );
-              }
-            });
-          }
-        }
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        kToast(Languages.of(context)!.noInternetText);
-      }
+    final isConnected = await isInternetAvailable();
+    if (!isConnected) {
+      if (!mounted) return;
+      setState(() => isLoading = false);
+      kToast(Languages.of(context)!.noInternetText);
+      return;
+    }
+
+    final viewModel = Provider.of<UpdatePofilePhotoViewModel>(
+      context,
+      listen: false,
+    );
+
+    await viewModel.ProfilePhotoUpdate(profile_image, userid);
+
+    // 🔥 VERY IMPORTANT
+    if (!mounted) return;
+
+    setState(() {
+      isLoading = false;
     });
+
+    if (viewModel.isSuccess == true) {
+      final model =
+          viewModel.updateprofilephotoresponse.response as UpdateProfileModel;
+
+      kToast(model.message ?? "Profile updated");
+
+      if (model.success == true) {
+        // 👇 Delay helps Android activity settle
+        await Future.delayed(const Duration(milliseconds: 300));
+
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => BottomNavBar(index: 4)),
+        );
+      }
+    }
   }
 
   List<UserList> tagUserList = [];
@@ -1562,39 +1482,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
     });
   }
-  // Future<void> getLatLong(String placeName) async {
-  //   try {
-  //     var locations = await locationFromAddress(placeName);
-  //     for (var location in locations) {
-  //       print(
-  //           "Latitude: ${location.latitude}, Longitude: ${location.longitude}");
-  //       Pallete.getlatitude = location.latitude;
-  //       Pallete.getlongitude = location.longitude;
-  //     }
-  //   } catch (e) {
-  //     print("Error: $e");
-  //   }
-  // }
-
-  // void showPlacePicker() async {
-  //   LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
-  //       builder: (context) => MapLocationPicker(
-  //             iosApiKey,
-  //             tapToSelectLocation: 'Tap to select this location',
-  //             nearBy: "",
-  //             findingPlace: 'Finding place...',
-  //             noResultsFound: 'No results found',
-  //             pinColor: Colors.red,
-  //             autoTheme: true,
-  //           )));
-
-  //   print(result.latLng!.latitude);
-  //   print(result.latLng!.longitude);
-  //   print(result.formattedAddress);
-  //   addressController.text = result.formattedAddress!;
-  //   Pallete.getlatitude = result.latLng!.latitude;
-  //   Pallete.getlongitude = result.latLng!.longitude;
-  // }
 
   Future addressPicker(BuildContext context) {
     return showModalBottomSheet(
@@ -1606,60 +1493,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           height: MediaQuery.of(context).size.height / 1.20,
           child: const Padding(
             padding: EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                SizedBox(height: 15),
-                // PlacesAutocomplete(
-                //   barBackgroundColor:
-                //       const MaterialStatePropertyAll(Colors.white),
-                //   barElevation: const MaterialStatePropertyAll(0),
-                //   dividerColor: Colors.white,
-                //   viewBackgroundColor: Colors.white,
-                //   apiKey: Platform.isIOS
-                //       ? iosApiKey
-                //       : Platform.isAndroid
-                //           ? androidApiKey
-                //           : "",
-                //   language: "en",
-                //   components: [Component(Component.country, "us")],
-                //   barOverlayColor:
-                //       const MaterialStatePropertyAll(Colors.white),
-                //   onSuggestionSelected: (p0) {
-                //     Navigator.pop(context);
-                //     Navigator.pop(context);
-                //   },
-                //   onPlacesDetailsResponse: (value) {
-                //     setState(() {
-                //       addressController.text =
-                //           value?.result.formattedAddress ?? "";
-
-                //       getLatLong(addressController.text);
-                //     });
-                //   },
-                // ),
-                // MapAutoCompleteField(
-                //   googleMapApiKey: Platform.isIOS
-                //       ? iosApiKey
-                //       : Platform.isAndroid
-                //           ? androidApiKey
-                //           : "",
-                //   controller: addressController,
-                //   itemBuilder: (BuildContext context, suggestion) {
-                //     return ListTile(
-                //       title: Text(suggestion.description),
-                //     );
-                //   },
-                //   onSuggestionSelected: (suggestion) {
-                //     addressController.text = suggestion.description;
-                //     print(
-                //         "suggestion.description == ${suggestion.description}");
-                //     Navigator.pop(context);
-
-                //     getLatLong(suggestion.description);
-                //   },
-                // ),
-              ],
-            ),
+            child: Column(children: [SizedBox(height: 15)]),
           ),
         );
       },
@@ -1758,278 +1592,52 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
     });
   }
+
+  cropImage(String path) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: path,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: '',
+          toolbarColor: Colors.green,
+          toolbarWidgetColor: Colors.white,
+          hideBottomControls: true,
+          initAspectRatio: CropAspectRatioPreset.square,
+          lockAspectRatio: true,
+          aspectRatioPresets: [CropAspectRatioPreset.square],
+          cropFrameColor: Colors.white,
+          cropGridColor: Colors.transparent,
+          showCropGrid: false,
+          cropFrameStrokeWidth: 1,
+        ),
+        IOSUiSettings(
+          title: '',
+          resetButtonHidden: true,
+          rotateButtonsHidden: true,
+          rotateClockwiseButtonHidden: true,
+          aspectRatioPickerButtonHidden: true,
+          rectWidth: 500,
+          rectHeight: 500,
+          minimumAspectRatio: 1,
+          aspectRatioLockEnabled: true,
+          aspectRatioPresets: [CropAspectRatioPreset.square],
+        ),
+      ],
+    );
+
+    if (croppedFile != null) {
+      final file = File(croppedFile.path);
+
+      setState(() {
+        image = file;
+        postData = file;
+      });
+
+      // 🔥 UCrop → Flutter transition fix
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      if (!mounted) return;
+      ProfilePhotoUpdate(croppedFile.path);
+    }
+  }
 }
-
-// class GetDayTimeWidet extends StatefulWidget {
-//   final Function(List<Map<String, String>>) onTimeUpdate;
-
-//   const GetDayTimeWidet({super.key, required this.onTimeUpdate});
-
-//   @override
-//   State<GetDayTimeWidet> createState() => _GetDayTimeWidetState();
-// }
-
-// class _GetDayTimeWidetState extends State<GetDayTimeWidet> {
-//   late List<TextEditingController> opentimeControllers;
-//   late List<TextEditingController> closetimeControllers;
-//   late List<TimeOfDay> opentimes;
-//   late List<TimeOfDay> closetimes;
-//   late List<bool> switches;
-//   late List<String> weekday;
-
-//   @override
-//   void dispose() {
-//     // Dispose of controllers
-//     for (var controller in opentimeControllers) {
-//       controller.dispose();
-//     }
-//     for (var controller in closetimeControllers) {
-//       controller.dispose();
-//     }
-//     super.dispose();
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Initialize lists
-//     opentimeControllers = List.generate(7, (_) => TextEditingController());
-//     closetimeControllers = List.generate(7, (_) => TextEditingController());
-//     opentimes = List.generate(7, (_) => TimeOfDay.now());
-//     closetimes = List.generate(7, (_) => TimeOfDay.now());
-//     switches = List.generate(7, (_) => false);
-//   }
-
-//   void updateTimes() {
-//     List<Map<String, String>> openCloseTimes = [];
-//     for (int i = 0; i < switches.length; i++) {
-//       if (switches[i]) {
-//         String openTime = opentimeControllers[i].text.isNotEmpty
-//             ? opentimeControllers[i].text
-//             : "09:00 AM";
-//         String closeTime = closetimeControllers[i].text.isNotEmpty
-//             ? closetimeControllers[i].text
-//             : "05:00 PM";
-
-//         // Add only if the day is open
-//         openCloseTimes.add({
-//           "day": weekday[i].substring(0, 3), // Short form of day
-//           "openTime": openTime,
-//           "closeTime": closeTime,
-//         });
-//       }
-//       // Skip the days that are closed
-//     }
-
-//     // Use join to concatenate the lines with newlines (\n)
-//     String formattedTimes =
-//         openCloseTimes.map((time) => "  ${time.toString()},").join("\n");
-
-//     print("Updated times:\n$formattedTimes");
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     weekday = [
-//       Languages.of(context)!.MonText,
-//       Languages.of(context)!.TueText,
-//       Languages.of(context)!.WedText,
-//       Languages.of(context)!.ThuText,
-//       Languages.of(context)!.FriText,
-//       Languages.of(context)!.SatText,
-//       Languages.of(context)!.SunText,
-//     ];
-//     return Row(
-//       children: [
-//         Expanded(
-//           child: ListView.builder(
-//             shrinkWrap: true,
-//             itemCount: weekday.length,
-//             physics: const NeverScrollableScrollPhysics(),
-//             itemBuilder: (context, index) {
-//               return Container(
-//                 margin: const EdgeInsets.only(left: 20, right: 20, top: 5),
-//                 child: Row(
-//                   crossAxisAlignment: CrossAxisAlignment.center,
-//                   children: [
-//                     Expanded(
-//                       child: Text(
-//                         weekday[index],
-//                         style: Pallete.Quicksand15blackwe600,
-//                       ),
-//                     ),
-//                     Switch(
-//                       value: switches[index],
-//                       onChanged: (value) {
-//                         setState(() {
-//                           switches[index] = value;
-
-//                           if (!switches[index]) {
-//                             opentimeControllers[index].text = "09:00 AM";
-//                             closetimeControllers[index].text = "05:00 PM";
-//                           }
-
-//                           updateTimes();
-//                         });
-//                       },
-//                       activeColor: AppColors.kWhiteColor,
-//                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-//                       inactiveThumbColor: AppColors.kBlackColor,
-//                       inactiveTrackColor: AppColors.kAppBArBGColor,
-//                       activeTrackColor: AppColors.kPinkColor,
-//                     ),
-//                     const SizedBox(width: 10),
-//                     Expanded(
-//                       flex: 2,
-//                       child: SizedBox(
-//                         height: 40,
-//                         child: Center(
-//                           child: TextField(
-//                             textAlign: TextAlign.center,
-//                             style: Pallete.Quicksand12Blackkwe400,
-//                             controller: opentimeControllers[index],
-//                             readOnly: true,
-//                             onTap: () async {
-//                               TimeOfDay? pickedTime = await showTimePicker(
-//                                 initialTime: opentimes[index],
-//                                 context: context,
-//                               );
-//                               if (pickedTime != null) {
-//                                 String formattedTime =
-//                                     DateFormat('hh:mm a').format(
-//                                   DateTime(
-//                                     DateTime.now().year,
-//                                     DateTime.now().month,
-//                                     DateTime.now().day,
-//                                     pickedTime.hour,
-//                                     pickedTime.minute,
-//                                   ),
-//                                 );
-//                                 setState(() {
-//                                   opentimeControllers[index].text =
-//                                       formattedTime;
-
-//                                   updateTimes();
-//                                 });
-//                               }
-//                             },
-//                             decoration: InputDecoration(
-//                               // suffixIcon: const Icon(
-//                               //   Icons.watch_later_outlined,
-//                               //   size: 20,
-//                               // ),
-//                               fillColor: AppColors.kWhiteColor,
-//                               filled: true,
-//                               contentPadding: const EdgeInsets.symmetric(
-//                                   horizontal: 10, vertical: 10),
-//                               hintText: "09:00 AM",
-//                               hintStyle: Pallete.Quicksand12Blackkwe400,
-//                               enabledBorder: const OutlineInputBorder(
-//                                 borderRadius:
-//                                     BorderRadius.all(Radius.circular(12)),
-//                                 borderSide: BorderSide(
-//                                   width: 2,
-//                                   color: AppColors.kBorderColor,
-//                                 ),
-//                               ),
-//                               focusedBorder: const OutlineInputBorder(
-//                                 borderRadius:
-//                                     BorderRadius.all(Radius.circular(12)),
-//                                 borderSide: BorderSide(
-//                                   width: 1,
-//                                   color: AppColors.kBorderColor,
-//                                 ),
-//                               ),
-//                               border: OutlineInputBorder(
-//                                 borderRadius: BorderRadius.circular(12),
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                     const SizedBox(width: 10),
-//                     Text(
-//                       Languages.of(context)!.toText,
-//                       style: Pallete.Quicksand12Blackkwe400,
-//                     ),
-//                     const SizedBox(width: 10),
-//                     Expanded(
-//                       flex: 2,
-//                       child: SizedBox(
-//                         height: 40,
-//                         child: Center(
-//                           child: TextField(
-//                             textAlign: TextAlign.center,
-//                             controller: closetimeControllers[index],
-//                             style: Pallete.Quicksand12Blackkwe400,
-//                             readOnly: true,
-//                             onTap: () async {
-//                               TimeOfDay? pickedTime = await showTimePicker(
-//                                 initialTime: closetimes[index],
-//                                 context: context,
-//                               );
-//                               if (pickedTime != null) {
-//                                 String formattedTime =
-//                                     DateFormat('hh:mm a').format(
-//                                   DateTime(
-//                                     DateTime.now().year,
-//                                     DateTime.now().month,
-//                                     DateTime.now().day,
-//                                     pickedTime.hour,
-//                                     pickedTime.minute,
-//                                   ),
-//                                 );
-//                                 setState(() {
-//                                   closetimeControllers[index].text =
-//                                       formattedTime;
-
-//                                   updateTimes();
-//                                 });
-//                               }
-//                             },
-//                             decoration: InputDecoration(
-//                               // suffixIcon: const Icon(
-//                               //   Icons.watch_later_outlined,
-//                               //   size: 20,
-//                               // ),
-//                               fillColor: AppColors.kWhiteColor,
-//                               filled: true,
-//                               contentPadding: const EdgeInsets.symmetric(
-//                                   horizontal: 10, vertical: 10),
-//                               hintText: "05:00 PM",
-//                               hintStyle: Pallete.Quicksand12Blackkwe400,
-//                               enabledBorder: const OutlineInputBorder(
-//                                 borderRadius:
-//                                     BorderRadius.all(Radius.circular(12)),
-//                                 borderSide: BorderSide(
-//                                   width: 2,
-//                                   color: AppColors.kBorderColor,
-//                                 ),
-//                               ),
-//                               focusedBorder: const OutlineInputBorder(
-//                                 borderRadius:
-//                                     BorderRadius.all(Radius.circular(12)),
-//                                 borderSide: BorderSide(
-//                                   width: 1,
-//                                   color: AppColors.kBorderColor,
-//                                 ),
-//                               ),
-//                               border: OutlineInputBorder(
-//                                 borderRadius: BorderRadius.circular(12),
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               );
-//             },
-//           ),
-//         )
-//       ],
-//     );
-//   }
-// }

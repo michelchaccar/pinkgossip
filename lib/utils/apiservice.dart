@@ -411,7 +411,7 @@ class APIService {
     }
   }
 
-  static Future<Object> CreatePost(
+  static Future<Success> CreatePost(
     String salon_id,
     String user_id,
     File before_image,
@@ -419,219 +419,185 @@ class APIService {
     List<File> other,
     String fileExtension,
     double rating,
+    String reward_type,
+    String reward_image,
     String review,
     List<String> tag_users,
     String post_type,
+    String rewardpoint,
   ) async {
     print("CreatePost called in api service");
-    // print("rating == ${rating}");
+
+    Map<String, dynamic> jsonBody = {
+      "salon_id": salon_id,
+      "user_id": user_id,
+      "fileExtension": fileExtension,
+      "rating": rating.toString(),
+      "reward_type": reward_type,
+      "reward_image": reward_image,
+      "review": review,
+      "tag_users": jsonEncode(tag_users),
+      "post_type": post_type,
+      "reward_point": rewardpoint,
+    };
+
     try {
-      var url = Uri.parse(API.postCreate);
-      // File beforecheckFile = File(before_image.path);
-      // File aftercheckFile = File(after_image.path);
+      /// ================= RewardPost WITHOUT MEDIA =================
+      if (post_type == "RewardPost" && other.isEmpty) {
+        final url = Uri.parse(API.rewardCreate);
+        final response = await http.post(url, body: jsonBody);
 
-      // List<File> othercheckFileList = [];
+        final resJson = response.body;
 
-      // other.forEach((element) {
-      //   othercheckFileList.add(File(element.path));
-      // });
-      // var beforestream;
-      // var afterstream;
-      // var otherstream;
+        if (response.statusCode == 200) {
+          final valueMap = jsonDecode(resJson);
+          return Success(
+            code: 200,
+            response: createPostModelFromJson(resJson),
+            msg: valueMap['message'],
+            success: true,
+          );
+        }
 
-      // var beforelength;
-      // var afterlength;
-      // var otherlength;
+        return Success(
+          code: response.statusCode,
+          response: false,
+          msg: "Something went wrong",
+          success: false,
+        );
+      }
 
-      // List<dynamic> otherstreamlist = [];
+      /// ================= POST WITH MEDIA =================
+      final url = Uri.parse(API.postCreate);
+      final request = http.MultipartRequest('POST', url);
 
-      // if (beforecheckFile.path != "") {
-      //   beforestream = http.ByteStream(beforecheckFile.openRead());
+      request.fields.addAll({
+        'salon_id': salon_id,
+        'user_id': user_id,
+        'rating': rating.toString(),
+        'review': review,
+        'post_type': post_type,
+        'tag_users': jsonEncode(tag_users),
+      });
 
-      //   beforestream.cast();
-      //   beforelength = await beforecheckFile.length();
-      // }
-      // if (aftercheckFile.path != "") {
-      //   afterstream = http.ByteStream(aftercheckFile.openRead());
+      if (post_type == "RewardPost") {
+        request.fields['reward_point'] = rewardpoint;
+        request.fields['reward_type'] = reward_type;
+        request.fields['reward_image'] = reward_image;
+      }
 
-      //   afterstream.cast();
-      //   afterlength = await aftercheckFile.length();
-      // }
-
-      // var request = http.MultipartRequest("POST", url);
-      // request.fields['salon_id'] = salon_id;
-      // request.fields['user_id'] = user_id;
-      // request.fields['rating'] = double.parse(rating.toString()).toString();
-      // request.fields['review'] = review;
-      // request.fields['tag_users'] = tag_users.toString();
-      // request.fields['post_type'] = post_type.toString();
-
-      // if (beforecheckFile.path != "") {
-      //   var beforemultiport = http.MultipartFile(
-      //     'before_image',
-      //     beforestream,
-      //     beforelength,
-      //     filename: beforecheckFile.path,
-      //   );
-      //   request.files.add(beforemultiport);
-      // }
-      // if (aftercheckFile.path != "") {
-      //   var aftermultiport = http.MultipartFile(
-      //     'after_image',
-      //     afterstream,
-      //     afterlength,
-      //     filename: aftercheckFile.path,
-      //   );
-      //   request.files.add(aftermultiport);
-      // }
-
-      // List<MultipartFile> uploadotherFiles = [];
-      // for (int a = 0; a < other.length; a++) {
-      //   // print("other[a].path = ${other[a].path}");
-      //   String fileextension = other[a].path.split('.').last.toLowerCase();
-      //   print("fileextension = ${fileextension}");
-
-      //   if (fileextension == "mp4" || fileextension == "mov") {
-      //     uploadotherFiles.add(
-      //       await http.MultipartFile.fromPath(
-      //         'other',
-      //         other[a].path,
-      //         contentType: MediaType('video', "mp4"),
-      //       ),
-      //     );
-      //   } else {
-      //     uploadotherFiles.add(
-      //       await http.MultipartFile.fromPath('other', other[a].path),
-      //     );
-      //   }
-      // }
-      // request.files.addAll(uploadotherFiles);
-
-      // print("request ==== ${request}");
-      // print("request ==== ${request.fields}");
-      // print("request ==== ${request.files}");
-
-      // // print(
-      // //     "request============= ${request.fields['user_id']} == ${request.files[0].filename}");
-
-      // Create multipart request
-      var request = http.MultipartRequest('POST', url);
-
-      // Add fields
-      request.fields['salon_id'] = salon_id.toString();
-      request.fields['user_id'] = user_id.toString();
-      request.fields['rating'] = rating.toString();
-      request.fields['review'] = review;
-      request.fields['post_type'] = post_type;
-
-      // Encode tag_users array as JSON
-      request.fields['tag_users'] = jsonEncode(tag_users);
-
-      // Add files
-      // Conditionally add images if provided
-      if (before_image != null && await before_image.exists()) {
+      /// ================= BEFORE IMAGE =================
+      if (await before_image.exists()) {
         request.files.add(
           await http.MultipartFile.fromPath('before_image', before_image.path),
         );
       }
 
-      if (after_image != null && await after_image.exists()) {
+      /// ================= AFTER IMAGE =================
+      if (await after_image.exists()) {
         request.files.add(
           await http.MultipartFile.fromPath('after_image', after_image.path),
         );
       }
 
-      String fileextension = other[0].path.split('.').last.toLowerCase();
-      print("fileextension = ${fileextension}");
+      /// ================= OTHER MEDIA =================
+      if (other.isNotEmpty) {
+        final mediaFile = other.first;
+        final extension = mediaFile.path.split('.').last.toLowerCase();
 
-      if (fileextension == "mp4" || fileextension == "mov") {
-        final info = await VideoCompress.getMediaInfo(other[0].path);
-        print("API CALLING::::::::::::::::${info}");
-        print("API CALLING:::::::::::::::${info.filesize}");
-        print("API CALLING::::::::::::::${info.toJson()}");
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            'other',
-            other[0].path,
-            contentType: MediaType('video', "mp4"),
-          ),
-        );
-      } else {
-        request.files.add(
-          await http.MultipartFile.fromPath('other', other[0].path),
-        );
-      }
-
-      var response = await request.send();
-      print("url $url");
-      print("response ${response}");
-      print("response ${response.statusCode}");
-      String resjsonData = await response.stream.transform(utf8.decoder).join();
-      print("resjsonData ${resjsonData}");
-      if (response.statusCode == 200) {
-        Map<String, dynamic> valueMap = json.decode(resjsonData);
-        print("resjsonData ${resjsonData}");
-        var message = valueMap['message'];
-        return Success(
-          code: 200,
-          response: createPostModelFromJson(resjsonData),
-          msg: message,
-          success: true,
-        );
+        if (extension == "mp4" || extension == "mov") {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'other',
+              mediaFile.path,
+              contentType: MediaType('video', 'mp4'),
+            ),
+          );
+        } else {
+          request.files.add(
+            await http.MultipartFile.fromPath('other', mediaFile.path),
+          );
+        }
       }
 
-      if (response.statusCode == 400) {
-        String resjsonData =
-            await response.stream.transform(utf8.decoder).join();
-        print("resjsonData ${resjsonData}");
-        var jsonData = jsonDecode(resjsonData);
-        var detail = jsonData['msg'];
-        print("JSON DATA STRING +++ $detail");
-        return Success(
-          code: 400,
-          response: false,
-          msg: detail.toString(),
-          success: false,
-        );
+      /// ================= SEND REQUEST =================
+      final streamedResponse = await request.send();
+      final resJson =
+          await streamedResponse.stream.transform(utf8.decoder).join();
+
+      print("StatusCode: ${streamedResponse.statusCode}");
+      print("Response: $resJson");
+
+      /// ================= RESPONSE HANDLING =================
+      switch (streamedResponse.statusCode) {
+        case 200:
+          final valueMap = jsonDecode(resJson);
+          return Success(
+            code: 200,
+            response: createPostModelFromJson(resJson),
+            msg: valueMap['message'],
+            success: true,
+          );
+
+        case 400:
+          final jsonData = jsonDecode(resJson);
+          return Success(
+            code: 400,
+            response: false,
+            msg: jsonData['msg'].toString(),
+            success: false,
+          );
+
+        case 401:
+          final jsonData = jsonDecode(resJson);
+          return Success(
+            code: 401,
+            response: false,
+            msg: jsonData['detail'],
+            success: false,
+          );
+
+        case 413:
+          return Success(
+            code: 413,
+            response: false,
+            msg: "Your provided attachment is too big...",
+            success: false,
+          );
+
+        case 422:
+          final jsonData = jsonDecode(resJson);
+          return Success(
+            code: 422,
+            response: false,
+            msg: jsonData['message'],
+            success: false,
+          );
+
+        default:
+          return Success(
+            code: streamedResponse.statusCode,
+            response: false,
+            msg: "Something went wrong",
+            success: false,
+          );
       }
-      if (response.statusCode == 422) {
-        print("resjsonData ${resjsonData}");
-        var jsonData = jsonDecode(resjsonData);
-        var detail = jsonData['message'];
-        print("JSON DATA STRING +++ $detail");
-        return Success(
-          code: 422,
-          response: false,
-          msg: detail.toString(),
-          success: false,
-        );
-      }
-      if (response.statusCode == 500) {
-        return Success(
-          code: 500,
-          response: false,
-          msg: "Somthing went wrong",
-          success: false,
-        );
-      }
-      if (response.statusCode == 413) {
-        return Success(
-          code: 413,
-          response: false,
-          msg: "Your provided attachment is too big...",
-          success: false,
-        );
-      }
-      if (response.statusCode == 401) {
-        print("resjsonData ${resjsonData}");
-        var jsonData = jsonDecode(resjsonData);
-        var detail = jsonData['detail'];
-        return Success(code: 100, response: false, msg: detail, success: false);
-      } else {
-        return Success(code: 100, response: false, msg: "", success: false);
-      }
-    } on HttpException {
-      return Success(code: 101, response: false, msg: "", success: false);
+    } on HttpException catch (e) {
+      print("HttpException: $e");
+      return Success(
+        code: 101,
+        response: false,
+        msg: "Http Exception",
+        success: false,
+      );
+    } catch (e) {
+      print("Exception: $e");
+      return Success(
+        code: 102,
+        response: false,
+        msg: e.toString(),
+        success: false,
+      );
     }
   }
 
@@ -650,7 +616,133 @@ class APIService {
       if (response.statusCode == 200) {
         return Success(
           code: 200,
-          response: homePostRsponseModelFromJson(response.body),
+          response: homePostResponseModelFromJson(response.body),
+          msg: "",
+          success: true,
+        );
+      }
+
+      if (response.statusCode == 400) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['msg'];
+        print("JSON DATA STRING +++ $detail");
+        return Success(
+          code: 400,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 422) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['message'];
+        print("JSON DATA STRING +++ $detail");
+        return Success(
+          code: 422,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 500) {
+        return Success(
+          code: 500,
+          response: false,
+          msg: "Somthing went wrong",
+          success: false,
+        );
+      }
+      if (response.statusCode == 401) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['detail'];
+        return Success(code: 100, response: false, msg: detail, success: false);
+      } else {
+        return Success(code: 100, response: false, msg: "", success: false);
+      }
+    } on HttpException {
+      return Success(code: 101, response: false, msg: "", success: false);
+    }
+  }
+
+  static Future<Object> otherUserRewardPost(String id, int offset) async {
+    print("otherUserRewardPost called in api service");
+
+    try {
+      var url = Uri.parse("${API.otherUserRewardPost}/$id?offset=$offset");
+      var response = await http.get(
+        url,
+        // headers: headers,
+      );
+      print("url $url");
+      print("response ${response.body}");
+      print("response ${response.statusCode}");
+      if (response.statusCode == 200) {
+        return Success(
+          code: 200,
+          response: homePostResponseModelFromJson(response.body),
+          msg: "",
+          success: true,
+        );
+      }
+
+      if (response.statusCode == 400) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['msg'];
+        print("JSON DATA STRING +++ $detail");
+        return Success(
+          code: 400,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 422) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['message'];
+        print("JSON DATA STRING +++ $detail");
+        return Success(
+          code: 422,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 500) {
+        return Success(
+          code: 500,
+          response: false,
+          msg: "Somthing went wrong",
+          success: false,
+        );
+      }
+      if (response.statusCode == 401) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['detail'];
+        return Success(code: 100, response: false, msg: detail, success: false);
+      } else {
+        return Success(code: 100, response: false, msg: "", success: false);
+      }
+    } on HttpException {
+      return Success(code: 101, response: false, msg: "", success: false);
+    }
+  }
+
+  static Future<Object> myredeemRewardPost(String id) async {
+    print("myredeemRewardPost called in api service");
+
+    try {
+      var url = Uri.parse("${API.myRedeemRewardPost}/$id");
+      var response = await http.get(
+        url,
+        // headers: headers,
+      );
+      print("url $url");
+      print("response ${response.body}");
+      print("response ${response.statusCode}");
+      if (response.statusCode == 200) {
+        return Success(
+          code: 200,
+          response: salonDetailModelFromJson(response.body),
           msg: "",
           success: true,
         );
@@ -874,6 +966,148 @@ class APIService {
         return Success(
           code: 200,
           response: commentPostModelFromJson(response.body),
+          msg: "",
+          success: true,
+        );
+      }
+
+      if (response.statusCode == 400) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['msg'];
+        print("JSON DATA STRING +++ $detail");
+        return Success(
+          code: 400,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 422) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['message'];
+        print("JSON DATA STRING +++ $detail");
+        return Success(
+          code: 422,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 500) {
+        return Success(
+          code: 500,
+          response: false,
+          msg: "Somthing went wrong",
+          success: false,
+        );
+      }
+      if (response.statusCode == 401) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['detail'];
+        return Success(code: 100, response: false, msg: detail, success: false);
+      } else {
+        return Success(code: 100, response: false, msg: "", success: false);
+      }
+    } on HttpException {
+      return Success(code: 101, response: false, msg: "", success: false);
+    }
+  }
+
+  // static Future<Object> redeemStorePost(
+  //   String user_id,
+  //   String reward_id,
+  //   String redeem_point,
+  // ) async {
+  //   print("redeemStorePost called in api service");
+
+  //   try {
+  //     final url = Uri.parse("${API.redeemStorePost}/$user_id").replace(
+  //       queryParameters: {"reward_id": reward_id, "redeem_point": redeem_point},
+  //     );
+
+  //     final response = await http.post(url);
+
+  //     print("url $url");
+  //     print("response ${response.body}");
+  //     print("status ${response.statusCode}");
+
+  //     if (response.statusCode == 200) {
+  //       return Success(
+  //         code: 200,
+  //         response: homePostResponseModelFromJson(response.body),
+  //         msg: "",
+  //         success: true,
+  //       );
+  //     }
+
+  //     if (response.statusCode == 400) {
+  //       final jsonData = jsonDecode(response.body);
+  //       return Success(
+  //         code: 400,
+  //         response: false,
+  //         msg: jsonData['msg'].toString(),
+  //         success: false,
+  //       );
+  //     }
+
+  //     if (response.statusCode == 422) {
+  //       final jsonData = jsonDecode(response.body);
+  //       return Success(
+  //         code: 422,
+  //         response: false,
+  //         msg: jsonData['message'].toString(),
+  //         success: false,
+  //       );
+  //     }
+
+  //     if (response.statusCode == 401) {
+  //       final jsonData = jsonDecode(response.body);
+  //       return Success(
+  //         code: 401,
+  //         response: false,
+  //         msg: jsonData['detail'].toString(),
+  //         success: false,
+  //       );
+  //     }
+
+  //     return Success(
+  //       code: response.statusCode,
+  //       response: false,
+  //       msg: "",
+  //       success: false,
+  //     );
+  //   } catch (e) {
+  //     print("ERROR $e");
+  //     return Success(code: 101, response: false, msg: "", success: false);
+  //   }
+  // }
+
+  static Future<Object> redeemStorePost(
+    String user_id,
+    String reward_id,
+    String redeem_point,
+  ) async {
+    print("redeemStorePost called in api service");
+
+    Map<String, String> Jsonbody = {
+      "user_id": user_id,
+      "reward_id": reward_id,
+      "redeem_point": redeem_point,
+    };
+    try {
+      var url = Uri.parse(API.redeemStorePost);
+      var response = await http.post(
+        url,
+        body: Jsonbody,
+        // headers: headers,
+      );
+      print("url $url");
+      print("response ${response.body}");
+      print("response ${response.statusCode}");
+      if (response.statusCode == 200) {
+        return Success(
+          code: 200,
+          response: homePostResponseModelFromJson(response.body),
           msg: "",
           success: true,
         );
@@ -1317,6 +1551,77 @@ class APIService {
         return Success(
           code: 200,
           response: profileUpdateModelFromJson(response.body),
+          msg: "",
+          success: true,
+        );
+      }
+
+      if (response.statusCode == 400) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['msg'];
+        print("JSON DATA STRING +++ $detail");
+        return Success(
+          code: 400,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 422) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['message'];
+        print("JSON DATA STRING +++ $detail");
+        return Success(
+          code: 422,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 500) {
+        return Success(
+          code: 500,
+          response: false,
+          msg: "Somthing went wrong",
+          success: false,
+        );
+      }
+      if (response.statusCode == 401) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['detail'];
+        return Success(code: 100, response: false, msg: detail, success: false);
+      } else {
+        return Success(code: 100, response: false, msg: "", success: false);
+      }
+    } on HttpException {
+      return Success(code: 101, response: false, msg: "", success: false);
+    }
+  }
+
+  static Future<Object> updateemailvisibility(
+    String id,
+    String is_email_visibility,
+  ) async {
+    print("do updateemailvisibility called in api service");
+    Map<String, dynamic> jsonBody = {};
+    jsonBody = {"is_email_visibility": is_email_visibility};
+
+    try {
+      var url = Uri.parse("${API.updateemailvisibility}/$id");
+      print("Json body: $jsonBody");
+      print("URL: $url");
+
+      var response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(jsonBody),
+      );
+      print("response.statusCode: ${response.statusCode}");
+      print("response.body: ${response.body}");
+      if (response.statusCode == 200) {
+        return Success(
+          code: 200,
+          response: salonDetailModelFromJson(response.body),
           msg: "",
           success: true,
         );

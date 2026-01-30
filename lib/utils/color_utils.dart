@@ -20,4 +20,9 @@ class AppColors {
   static const Color darkgreybgcolor = Color(0xff2e2f31);
   static const Color chatSenderColor = Color(0xFFDBEFF0);
   static const Color chatReceiverColor = Color.fromARGB(255, 235, 228, 228);
+  //
+  static const Color onboardingBubblegumPink = Color(0xFFFF94C2);
+  static const Color onboardingDeepPink = Color(0xFFC51162);
+  static const Color onboardingVibrantPink = Color(0xFFF50057);
+  static const Color onboardingShadowPink = Color(0xFFFF4081);
 }

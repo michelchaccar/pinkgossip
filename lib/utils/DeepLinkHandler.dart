@@ -62,7 +62,11 @@ class DeepLinkHandler {
             navigatorKey.currentState?.push(
               MaterialPageRoute(
                 builder:
-                    (_) => SalonDetailScreen(id: passedId, userType: userType),
+                    (_) => SalonDetailScreen(
+                      id: passedId,
+                      userType: userType,
+                      pageType: 'deepLink',
+                    ),
               ),
             );
           } else {

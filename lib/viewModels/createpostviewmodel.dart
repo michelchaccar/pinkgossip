@@ -40,21 +40,15 @@ class CreatePostViewModel extends ChangeNotifier {
     List<File> other,
     String fileExtension,
     double rating,
+    String reward_type,
+    String reward_image,
     String review,
     List<String> tag_users,
     String post_type,
+    String rewardpoint,
   ) async {
+    print("Reward Post Submit Clicked 2");
     setLoading(true);
-    // print(" cviewmodel rating == ${rating}");
-    // List<File> otherFileUploadData = [];
-
-    // final compressedVideo = await VideoCompress.compressVideo(
-    //   other[0].path,
-    //   quality: VideoQuality.MediumQuality,
-    //   deleteOrigin: false,
-    // );
-    // final fileToUpload = File(compressedVideo!.path!);
-    // otherFileUploadData.add(fileToUpload);
     var response = await APIService.CreatePost(
       salon_id,
       user_id,
@@ -63,9 +57,12 @@ class CreatePostViewModel extends ChangeNotifier {
       other,
       fileExtension,
       rating,
+      reward_type,
+      reward_image,
       review,
       tag_users,
       post_type,
+      rewardpoint,
     );
     if (response is Success) {
       print(" response == ${response.code}");

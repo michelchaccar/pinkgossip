@@ -17,6 +17,7 @@ abstract class Languages {
   String get reviewText;
   String get submitpostText;
   String get sharepostText;
+  String get postARewardText;
   String get cancelText;
   String get fpText;
   String get signupText;
@@ -85,6 +86,8 @@ abstract class Languages {
   String get PostReviewText;
   String get pleaseselectatleastonepictureText;
   String get UploadpictureorvideoText;
+  String get pointValueforRewardText;
+  String get redeemNowText;
   String get EditProfileText;
   String get pleaseselectvalidsalonText;
   String get pleaseenterfirstnameText;
@@ -104,6 +107,7 @@ abstract class Languages {
   String get QRCodenotrecognizedText;
   String get CancelText;
   String get WritereviewaboutthesalonText;
+  String get descOfRewardAndOfferText;
   String get BookingprocessText;
   String get CommunicationText;
   String get StafffriendlinessText;
@@ -226,16 +230,91 @@ abstract class Languages {
   String get othersText;
   String get editpictureText;
   String get maximumuploadlimit60secondText;
+  String get maximumuploadSize10mbText;
   String get mapText;
   String get blockText;
   String get reportText;
   String get reportalertmsgText;
+  String get welcomeOnText;
+  String get pinkGossipText;
+  String get salonOnboardingDescPart1;
+  String get salonOnboardingDescPart2;
+  String get letsStartText;
+  String get whatIsPinkGossipText;
+  String get salonOnboarding2DescPart1;
+  String get salonOnboarding2DescPart2;
+  String get salonOnboarding2DescPart3;
+  String get salonOnboarding2Title;
+  String get salonOnboarding3Title;
+  String get salonOnboarding3CardTitle;
+  String get salonOnboarding3DescPart1;
+  String get salonOnboarding3DescPart2;
+  String get nextStepsText;
+  String get salonOnboarding4Title;
+  String get salonOnboarding4Card1;
+  String get salonOnboarding4Card2;
+  String get salonOnboarding4Card3;
+  String get salonOnboarding4BottomTitle;
+  String get salonOnboarding4BottomDesc;
+  String get whyChooseUsText;
+  String get salonOnboarding5Title;
+  String get salonOnboarding5Bubble1;
+  String get salonOnboarding5Bubble2;
+  String get salonOnboarding5Bubble3;
+  String get salonOnboarding5Bubble4;
+  String get areYouReadyText;
+  String get salonOnboarding6Title;
+  String get salonOnboarding6Desc;
+  String get scanAndGossipText;
+  String get letsBeginText;
+  String get gossiperOnboardingDescPart1;
+  String get gossiperOnboardingDescPart2;
+
+  // Gossiper Onboarding Screen 2
+  String get gossiperOnboarding2Title;
+  String get gossiperOnboarding2Card;
+  String get gossiperOnboarding2Bubble1;
+  String get gossiperOnboarding2Bubble2;
+
+  // Gossiper Onboarding Screen 3
+  String get gossiperOnboarding3Title;
+  String get gossiperOnboarding3Bubble1;
+  String get gossiperOnboarding3Bubble2;
+  String get gossiperOnboarding3DescPart1;
+  String get gossiperOnboarding3DescPart2;
+
+  // Gossiper Onboarding Screen 4
+  String get gossiperOnboarding4Title;
+  String get gossiperOnboarding4Row1;
+  String get gossiperOnboarding4Row2;
+  String get gossiperOnboarding4Row3;
+  String get gossiperOnboarding4DescPart1;
+  String get gossiperOnboarding4DescPart2;
+  String get gossiperOnboarding4Button;
+
+  // Gossiper Onboarding Screen 5
+  String get gossiperOnboarding5Title;
+  String get gossiperOnboarding5Subtitle;
+  String get gossiperOnboarding5DescPart1;
+  String get gossiperOnboarding5DescPart2;
+
+  // Gossiper Onboarding Screen 6
+  String get gossiperOnboarding6Title;
+  String get gossiperOnboarding6Bubble1;
+  String get gossiperOnboarding6Bubble2;
+  String get gossiperOnboarding6Bubble3;
+  String get gossiperOnboarding6Bubble4;
+
+  // Gossiper Onboarding Screen 7
+  String get gossiperOnboarding7Title;
+  String get gossiperOnboarding7Desc;
   String get blockalertmsgText;
   String get blockedusersText;
   String get deleteaccountText;
   String get unblockText;
   String get unblockalertmsgText;
   String get skipText;
+  String get gotitText;
   String get searchPostsText;
   String get searchPoststutorialmsgText;
   String get notificationtutorialmsgText;
@@ -257,4 +336,6 @@ abstract class Languages {
   String get close;
   String get hideStoreHours;
   String get viewStorehours;
+  String get pleaseenterpointvalueText;
+  String get pleaseenterdescriptionText;
 }

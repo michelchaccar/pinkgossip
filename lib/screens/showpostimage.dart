@@ -10,6 +10,7 @@ import 'package:pinkGossip/models/getstorylistmodel.dart';
 import 'package:pinkGossip/screens/HomeScreens/mystoryview.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
 import 'package:pinkGossip/screens/Profile/singleuserstoryshow.dart';
+import 'package:pinkGossip/utils/common_functions.dart';
 import 'package:pinkGossip/utils/videoplayer.dart';
 import 'package:pinkGossip/viewModels/postdeleteviewmodel.dart';
 import 'package:chewie/chewie.dart';
@@ -182,6 +183,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
         physics: const AlwaysScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
+          final Post item = widget.postData[index];
           return Container(
             // decoration: const BoxDecoration(
             //     border: Border(
@@ -571,14 +573,13 @@ class _ShowPostImageState extends State<ShowPostImage> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (widget.isProfile == true) {
-                            print("idddd = ${widget.postData[index].id!}");
-                            moreOptionBottomsheet(
-                              context,
-                              kSize,
-                              widget.postData[index].id,
-                            );
-                          }
+                          moreOptionBottomsheet(
+                            context, // ✅ ONLY ONE context
+                            kSize,
+                            item.id ?? 0,
+                            item,
+                            page,
+                          );
                         },
                         child: Container(
                           height: 30,
@@ -1467,56 +1468,176 @@ class _ShowPostImageState extends State<ShowPostImage> {
     );
   }
 
-  moreOptionBottomsheet(BuildContext context, Size kSize, postID) {
-    return showModalBottomSheet<void>(
-      isScrollControlled: true,
+  // moreOptionBottomsheet(BuildContext context, Size kSize, postID) {
+  //   return showModalBottomSheet<void>(
+  //     isScrollControlled: true,
+  //     backgroundColor: Colors.white,
+  //     elevation: 0,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+  //     ),
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return SafeArea(
+  //         child: StatefulBuilder(
+  //           builder: (context, BottomsetState) {
+  //             return Container(
+  //               height: 60,
+  //               child: Padding(
+  //                 padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
+  //                 child: Column(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     TextButton(
+  //                       child: Row(
+  //                         children: [
+  //                           Container(
+  //                             height: 30,
+  //                             width: 30,
+  //                             child: Image.asset(
+  //                               "lib/assets/images/delete.png",
+  //                             ),
+  //                           ),
+  //                           const SizedBox(width: 20),
+  //                           Text(
+  //                             Languages.of(context)!.deleteText,
+  //                             style: Pallete.Quicksand18drkBlackbold,
+  //                           ),
+  //                         ],
+  //                       ),
+  //                       onPressed: () {
+  //                         DeleteAlert(context, kSize, postID);
+  //                       },
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+  void moreOptionBottomsheet(
+    BuildContext screenContext, // 🔥 MAIN SCREEN context
+    Size kSize,
+    int postID,
+    Post item,
+    int page,
+  ) {
+    showModalBottomSheet(
+      context: screenContext, // ✅ USE SCREEN CONTEXT
       backgroundColor: Colors.white,
-      elevation: 0,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
       ),
-      context: context,
-      builder: (BuildContext context) {
+      builder: (bottomSheetContext) {
         return SafeArea(
-          child: StatefulBuilder(
-            builder: (context, BottomsetState) {
-              return Container(
-                height: 60,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                /// 🔽 DOWNLOAD
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(bottomSheetContext);
+
+                    handleDownload(
+                      screenContext, // ✅ VERY IMPORTANT
+                      item,
+                      page,
+                    );
+                  },
+                  child: Row(
                     children: [
-                      TextButton(
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 30,
-                              width: 30,
-                              child: Image.asset(
-                                "lib/assets/images/delete.png",
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Text(
-                              Languages.of(context)!.deleteText,
-                              style: Pallete.Quicksand18drkBlackbold,
-                            ),
-                          ],
-                        ),
-                        onPressed: () {
-                          DeleteAlert(context, kSize, postID);
-                        },
+                      Icon(
+                        size: 30,
+                        Icons.download,
+                        color: AppColors.onboardingVibrantPink,
                       ),
+                      SizedBox(width: 20),
+                      Text("Download", style: Pallete.Quicksand18drkBlackbold),
                     ],
                   ),
                 ),
-              );
-            },
+
+                /// 🔽 DELETE
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(bottomSheetContext);
+                    DeleteAlert(screenContext, kSize, postID);
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 30,
+                        child: Image.asset("lib/assets/images/delete.png"),
+                      ),
+                      SizedBox(width: 20),
+                      Text("Delete", style: Pallete.Quicksand18drkBlackbold),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
     );
+  }
+
+  void handleDownload(BuildContext parentContext, Post item, int page) {
+    if (item.postType == "SalonReview" && page == 1) {
+      showDialog(
+        context: parentContext, // ✅ SAFE
+        builder:
+            (ctx) => AlertDialog(
+              title: const Text("Download"),
+              content: Row(
+                children: [
+                  Expanded(
+                    child: CommonWidget().getSmallButton("Before Image", () {
+                      Navigator.pop(ctx);
+                      if (item.beforeImage?.isNotEmpty ?? false) {
+                        CommonFunctions().downloadPhoto(
+                          parentContext,
+                          "${API.baseUrl}/api/${item.beforeImage}",
+                          item.beforeImage!,
+                        );
+                      }
+                    }),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: CommonWidget().getSmallButton("After Image", () {
+                      Navigator.pop(ctx);
+                      if (item.afterImage?.isNotEmpty ?? false) {
+                        CommonFunctions().downloadPhoto(
+                          parentContext,
+                          "${API.baseUrl}/api/${item.afterImage}",
+                          item.afterImage!,
+                        );
+                      }
+                    }),
+                  ),
+                ],
+              ),
+            ),
+      );
+      return;
+    }
+
+    /// NORMAL POST
+    if (item.otherMultiPost?.isNotEmpty ?? false) {
+      CommonFunctions().downloadPhoto(
+        parentContext,
+        "${API.baseUrl}/api/${item.otherMultiPost![0].otherData}",
+        item.otherMultiPost![0].otherData!,
+      );
+    }
   }
 
   Future<void> SharepostwithFriends(

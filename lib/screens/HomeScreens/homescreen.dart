@@ -39,6 +39,8 @@ import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/homepagepostviewmodel.dart';
 import 'package:pinkGossip/viewModels/postlikeviewmodel.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:pinkGossip/services/tooltip_service.dart';
 
 class HomeScreen extends StatefulWidget {
   final GlobalKey searchKey;
@@ -70,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String profileimg = "";
 
   String myFireabseiD = "";
+  final TooltipService _tooltipService = TooltipService();
+  final Set<String> _tooltipsShownInSession = {};
 
   getuserid() async {
     prefs = await SharedPreferences.getInstance();
@@ -224,12 +228,12 @@ class _HomeScreenState extends State<HomeScreen> {
               listen: false,
             ).isSuccess) {
           allcount.clear();
-          HomePostRsponseModel model =
+          HomePostResponseModel model =
               Provider.of<HomePagePostViewModel>(
                     context,
                     listen: false,
                   ).homepagepostresponse.response
-                  as HomePostRsponseModel;
+                  as HomePostResponseModel;
 
           final otherUserPosts = model.otherUserPost ?? [];
           for (var i = 0; i < model.postCount!; i++) {
@@ -316,6 +320,182 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   OtherUserPost? selectingpost;
+  Future<void> _showAppBarTooltip(
+    String tooltipId,
+    GlobalKey targetKey,
+    TooltipType type,
+  ) async {
+    // 0. Don't show tooltip if userid is not loaded yet
+    if (userid.isEmpty) return;
+
+    // 1. Check if already shown in this session
+    if (_tooltipsShownInSession.contains(tooltipId)) return;
+
+    // 2. Check if user has already seen this tooltip
+    bool hasSeenTooltip = await _tooltipService.hasSeenTooltip(userid, type);
+    if (hasSeenTooltip) return;
+
+    // 3. Mark as shown in this session
+    _tooltipsShownInSession.add(tooltipId);
+
+    // 4. Create and show the tooltip
+    await _createAndShowAppBarTooltip(tooltipId, targetKey, type);
+  }
+
+  /// Create and show a tooltip for AppBar icons
+  Future<void> _createAndShowAppBarTooltip(
+    String tooltipId,
+    GlobalKey targetKey,
+    TooltipType type,
+  ) async {
+    if (!mounted) return;
+
+    TargetFocus targetFocus = _createAppBarTargetFocus(
+      tooltipId,
+      targetKey,
+      type,
+    );
+
+    TutorialCoachMark appBarTooltip = TutorialCoachMark(
+      targets: [targetFocus],
+      colorShadow: Colors.grey,
+      hideSkip: true,
+      paddingFocus: 0,
+      opacityShadow: 0.5,
+      useSafeArea: true,
+      imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+      onFinish: () async {
+        // Mark as seen when tutorial completes normally
+        await _tooltipService.markTooltipAsSeen(userid, type);
+      },
+      onSkip: () {
+        // Mark as seen when user clicks "Got it" (which calls skip)
+        _tooltipService.markTooltipAsSeen(userid, type);
+        return true;
+      },
+    );
+
+    // Wait a bit for the widget to be fully rendered
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    if (mounted) {
+      appBarTooltip.show(context: context);
+    }
+  }
+
+  /// Create TargetFocus for AppBar tooltips
+  TargetFocus _createAppBarTargetFocus(
+    String tooltipId,
+    GlobalKey targetKey,
+    TooltipType type,
+  ) {
+    String title = "";
+    String message = "";
+
+    // Get the appropriate title and message based on tooltip type
+    switch (type) {
+      case TooltipType.search:
+        title = Languages.of(context)!.searchPostsText;
+        message = Languages.of(context)!.searchPoststutorialmsgText;
+        break;
+      case TooltipType.notification:
+        title = Languages.of(context)!.notificationsText;
+        message = Languages.of(context)!.notificationtutorialmsgText;
+        break;
+      case TooltipType.addStory:
+        title = Languages.of(context)!.shareStoryText;
+        message = Languages.of(context)!.shareStorytutorialmsgText;
+        break;
+      default:
+        title = "";
+        message = "";
+    }
+
+    return TargetFocus(
+      identify: "appbar_$tooltipId",
+      targetPosition: TargetPosition(
+        // this is to hide the tooltip
+        const Size(1, 1),
+        const Offset(-100, -100),
+      ),
+      shape: ShapeLightFocus.Circle,
+      paddingFocus: 0,
+      enableOverlayTab: true,
+      contents: [
+        TargetContent(
+          align: ContentAlign.custom,
+          customPosition: CustomTargetContentPosition(
+            top: MediaQuery.of(context).size.height * 0.15,
+            left: MediaQuery.of(context).size.width * 0.01,
+          ),
+          builder: (context, controller) {
+            return Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  padding: const EdgeInsets.all(15),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: AppColors.kPinkColor,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        message,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        controller.skip();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.kPinkColor,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 6,
+                            horizontal: 20,
+                          ),
+                          child: Center(
+                            child: Text(
+                              Languages.of(context)!.gotitText,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -338,7 +518,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     AppColors.kWhiteColor,
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  onTap: () {
+                  onTap: () async {
+                    await _showAppBarTooltip(
+                      'search',
+                      widget.searchKey,
+                      TooltipType.search,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -359,7 +544,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     AppColors.kWhiteColor,
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  onTap: () {
+                  onTap: () async {
+                    await _showAppBarTooltip(
+                      'notification',
+                      widget.notificationKey,
+                      TooltipType.notification,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -543,6 +733,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   right: 0,
                                   child: InkWell(
                                     onTap: () async {
+                                      _showAppBarTooltip(
+                                        'addstory',
+                                        widget.addstoryKey,
+                                        TooltipType.addStory,
+                                      );
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -691,6 +886,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
+
+              ///home post list
               PagedListView<int, OtherUserPost>(
                 shrinkWrap: true,
                 pagingController: _pagingController,
@@ -1227,14 +1424,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   itemBuilder: (BuildContext context) {
                                     return [
-                                      PopupMenuItem<String>(
-                                        // padding: EdgeInsets.zero,
-                                        value: 'download',
-                                        child: Text(
-                                          Languages.of(context)!.downlaodText,
-                                          style: Pallete.Quicksand14Blackw500,
-                                        ),
-                                      ),
+                                      // PopupMenuItem<String>(
+                                      //   // padding: EdgeInsets.zero,
+                                      //   value: 'download',
+                                      //   child: Text(
+                                      //     Languages.of(context)!.downlaodText,
+                                      //     style: Pallete.Quicksand14Blackw500,
+                                      //   ),
+                                      // ),
                                       PopupMenuItem<String>(
                                         // padding: EdgeInsets.zero,
                                         value: 'share',
@@ -1262,36 +1459,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ];
                                   },
                                 ),
-                                // InkWell(
-                                //     onTap: () {
-                                //       showMenu<String>(
-                                //         context: context,
-
-                                //         items: [
-                                //           const PopupMenuItem<String>(
-                                //             value: 'report',
-                                //             child: Text('Report'),
-                                //           ),
-                                //           const PopupMenuItem<String>(
-                                //             value: 'block-user',
-                                //             child: Text('Block User'),
-                                //           ),
-                                //         ],
-                                //         elevation: 8.0,
-                                //       ).then((value) {
-                                //         if (value != null) {
-                                //           _showReportUserAlertDialog(
-                                //               item.id.toString(),
-                                //               value,
-                                //               index);
-                                //         }
-                                //       });
-                                //     },
-                                //     child: SizedBox(
-                                //         height: 30,
-                                //         width: 15,
-                                //         child: Image.asset(
-                                //             ImageUtils.moreoptionimg))),
                               ],
                             ),
                           ),
@@ -1550,6 +1717,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               );
                                             },
                                           )
+                                          : item.otherMultiPost!.isEmpty
+                                          ? const SizedBox.shrink()
                                           : ExpandablePageView.builder(
                                             // controller: _pageController,
                                             itemCount:
@@ -1677,6 +1846,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                               )
+                              : item.otherMultiPost!.isEmpty
+                              ? const SizedBox.shrink()
                               : ExpandablePageView.builder(
                                 itemCount: item.otherMultiPost!.length,
                                 onPageChanged: (int pageIndex) {
@@ -1776,9 +1947,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                               ),
-
                           const SizedBox(height: 3),
-
                           Padding(
                             padding: const EdgeInsets.only(left: 15, right: 15),
                             child: Row(
@@ -2066,238 +2235,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Future addPostoption(BuildContext context) {
-  //   return showModalBottomSheet(
-  //       isScrollControlled: true,
-  //       context: context,
-  //       builder: (BuildContext builder) {
-  //         return SizedBox(
-  //           width: MediaQuery.of(context).size.width,
-  //           child: userTyppe == "1"
-  //               ? Column(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: <Widget>[
-  //                     TextButton(
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.only(left: 10, right: 10),
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                           children: [
-  //                             Text(
-  //                               Languages.of(context)!.submitpostText,
-  //                               style: Pallete.Quicksand15blackwe300,
-  //                             ),
-  //                             const Icon(
-  //                               Icons.photo_library_outlined,
-  //                               color: Colors.black,
-  //                             )
-  //                           ],
-  //                         ),
-  //                       ),
-  //                       onPressed: () {
-  //                         Navigator.push(
-  //                             context,
-  //                             MaterialPageRoute(
-  //                                 builder: (context) => const AddPostScreen()));
-  //                       },
-  //                     ),
-  //                     TextButton(
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.only(left: 10, right: 10),
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                           children: [
-  //                             Text(
-  //                               Languages.of(context)!.submitstoryText,
-  //                               style: Pallete.Quicksand15blackwe300,
-  //                             ),
-  //                             const Icon(
-  //                               Icons.photo_library_outlined,
-  //                               color: Colors.black,
-  //                             )
-  //                           ],
-  //                         ),
-  //                       ),
-  //                       onPressed: () {
-  //                         Navigator.push(
-  //                           context,
-  //                           PageRouteBuilder(
-  //                             pageBuilder:
-  //                                 (context, animation, secondaryAnimation) =>
-  //                                     AddStory(
-  //                               type: "Home",
-  //                             ),
-  //                             transitionsBuilder: (context, animation,
-  //                                 secondaryAnimation, child) {
-  //                               const begin = Offset(-1.0, 0.0);
-  //                               const end = Offset(0.0, 0.0);
-  //                               const curve = Curves.easeInOut;
-
-  //                               var tween = Tween(begin: begin, end: end)
-  //                                   .chain(CurveTween(curve: curve));
-  //                               var offsetAnimation = animation.drive(tween);
-
-  //                               return SlideTransition(
-  //                                 position: offsetAnimation,
-  //                                 child: child,
-  //                               );
-  //                             },
-  //                           ),
-  //                         );
-  //                       },
-  //                     ),
-  //                     TextButton(
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.only(left: 10, right: 10),
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                           children: [
-  //                             Text(
-  //                               Languages.of(context)!.submitsalonreviewText,
-  //                               style: Pallete.Quicksand15blackwe300,
-  //                             ),
-  //                             const Icon(
-  //                               Icons.photo_library_outlined,
-  //                               color: Colors.black,
-  //                             )
-  //                           ],
-  //                         ),
-  //                       ),
-  //                       onPressed: () {
-  //                         Navigator.push(
-  //                             context,
-  //                             MaterialPageRoute(
-  //                                 builder: (context) => AddPost(
-  //                                       type: "Home",
-  //                                     )));
-  //                       },
-  //                     ),
-  //                     TextButton(
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.only(left: 10, right: 10),
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                           children: [
-  //                             Text(
-  //                               Languages.of(context)!.cancelText,
-  //                               style: Pallete.Quicksand15blackwe300,
-  //                             ),
-  //                             const Icon(
-  //                               Icons.cancel_outlined,
-  //                               color: Colors.black,
-  //                             )
-  //                           ],
-  //                         ),
-  //                       ),
-  //                       onPressed: () {
-  //                         Navigator.pop(context);
-  //                       },
-  //                     ),
-  //                     const SizedBox(height: 30),
-  //                   ],
-  //                 )
-  //               : Column(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: [
-  //                     TextButton(
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.only(left: 10, right: 10),
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                           children: [
-  //                             Text(
-  //                               Languages.of(context)!.submitReviewText,
-  //                               style: Pallete.Quicksand15blackwe300,
-  //                             ),
-  //                             const Icon(
-  //                               Icons.photo_library_outlined,
-  //                               color: Colors.black,
-  //                             )
-  //                           ],
-  //                         ),
-  //                       ),
-  //                       onPressed: () {
-  //                         Navigator.push(
-  //                             context,
-  //                             MaterialPageRoute(
-  //                                 builder: (context) => AddPost(
-  //                                       type: "Home",
-  //                                     )));
-  //                       },
-  //                     ),
-  //                     TextButton(
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.only(left: 10, right: 10),
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                           children: [
-  //                             Text(
-  //                               Languages.of(context)!.submitstoryText,
-  //                               style: Pallete.Quicksand15blackwe300,
-  //                             ),
-  //                             const Icon(
-  //                               Icons.photo_library_outlined,
-  //                               color: Colors.black,
-  //                             )
-  //                           ],
-  //                         ),
-  //                       ),
-  //                       onPressed: () {
-  //                         Navigator.push(
-  //                           context,
-  //                           PageRouteBuilder(
-  //                             pageBuilder:
-  //                                 (context, animation, secondaryAnimation) =>
-  //                                     AddStory(
-  //                               type: "Home",
-  //                             ),
-  //                             transitionsBuilder: (context, animation,
-  //                                 secondaryAnimation, child) {
-  //                               const begin = Offset(-1.0, 0.0);
-  //                               const end = Offset(0.0, 0.0);
-  //                               const curve = Curves.easeInOut;
-
-  //                               var tween = Tween(begin: begin, end: end)
-  //                                   .chain(CurveTween(curve: curve));
-  //                               var offsetAnimation = animation.drive(tween);
-
-  //                               return SlideTransition(
-  //                                 position: offsetAnimation,
-  //                                 child: child,
-  //                               );
-  //                             },
-  //                           ),
-  //                         );
-  //                       },
-  //                     ),
-  //                     TextButton(
-  //                       child: Padding(
-  //                         padding: const EdgeInsets.only(left: 10, right: 10),
-  //                         child: Row(
-  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                           children: [
-  //                             Text(
-  //                               Languages.of(context)!.cancelText,
-  //                               style: Pallete.Quicksand15blackwe300,
-  //                             ),
-  //                             const Icon(
-  //                               Icons.cancel_outlined,
-  //                               color: Colors.black,
-  //                             )
-  //                           ],
-  //                         ),
-  //                       ),
-  //                       onPressed: () {
-  //                         Navigator.pop(context);
-  //                       },
-  //                     ),
-  //                     const SizedBox(height: 30),
-  //                   ],
-  //                 ),
-  //         );
-  //       });
-  // }
-
   // Function to open salon details screen with a specific tag's ID
   void _openSalonDetails(BuildContext context, String tag) {
     // Check if the tag exists in the tagToIdMap
@@ -2534,33 +2471,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           print('selectedUserIds: $selectedUserIds');
                           print("shareData == ${shareData!.toJson()}");
 
-                          // if (channelId != "") {
-                          //   Map<String, dynamic> shareDataMap =
-                          //       shareData!.toJson();
-
-                          //   String jsonString = jsonEncode(shareDataMap);
-
-                          //   print("jsonString == ${jsonString}");
-                          //   DatabaseReference chatRef = FirebaseDatabase
-                          //       .instance
-                          //       .reference()
-                          //       .child('message')
-                          //       .child(channelId);
-
-                          //   int timestamp =
-                          //       DateTime.now().millisecondsSinceEpoch;
-
-                          //   Map<String, dynamic> message = {
-                          //     'content': jsonString,
-                          //     'idFrom': firebaseId,
-                          //     'idTo': selectedUserIds,
-                          //     'timestamp': timestamp,
-                          //     'type': 0,
-                          //     'isSeen': false,
-                          //   };
-
-                          //   chatRef.child(timestamp.toString()).set(message);
-                          // }
                           Navigator.pop(context);
                         },
                         child: Center(
@@ -3380,92 +3290,4 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-
-  //   userReportAPI(String frdId, String reason) async {
-  //     print("userReportAPI function call");
-  //     setState(() {
-  //       isReqLoading = true;
-  //     });
-  //     getuserid();
-  //     isInternetAvailable().then((isConnected) async {
-  //       if (isConnected) {
-  //         await Provider.of<UserReportViewModel>(context, listen: false)
-  //             .userReportAPI(userid, frdId, reason);
-  //         if (Provider.of<UserReportViewModel>(context, listen: false)
-  //                 .isLoading ==
-  //             false) {
-  //           if (Provider.of<UserReportViewModel>(context, listen: false)
-  //                   .isSuccess ==
-  //               true) {
-  //             setState(() {
-  //               isReqLoading = false;
-  //               print("Success");
-  //               ForgotPasswordResponseModel model =
-  //                   Provider.of<UserReportViewModel>(context, listen: false)
-  //                       .userreportresponse
-  //                       .response as ForgotPasswordResponseModel;
-  //               showToast(model.message!);
-  //             });
-  //           } else {
-  //             setState(() {
-  //               isReqLoading = false;
-  //             });
-  //             showToast(Provider.of<UserReportViewModel>(context, listen: false)
-  //                 .userreportresponse
-  //                 .msg
-  //                 .toString());
-  //           }
-  //         }
-  //       } else {
-  //         setState(() {
-  //           isReqLoading = false;
-  //         });
-  //         showToast(Languages.of(context)!.nointernettxt);
-  //       }
-  //     });
-  //   }
-
-  //   userBlockAPI(String frdId, String isBlock, int index) async {
-  //     print("userBlockAPI function call");
-  //     setState(() {
-  //       isReqLoading = true;
-  //     });
-  //     getuserid();
-  //     isInternetAvailable().then((isConnected) async {
-  //       if (isConnected) {
-  //         await Provider.of<UserReportViewModel>(context, listen: false)
-  //             .userBlockAPI(userid, frdId, isBlock);
-  //         if (Provider.of<UserReportViewModel>(context, listen: false)
-  //                 .isLoading ==
-  //             false) {
-  //           if (Provider.of<UserReportViewModel>(context, listen: false)
-  //                   .isSuccess ==
-  //               true) {
-  //             setState(() {
-  //               isReqLoading = false;
-  //               print("Success");
-  //               ForgotPasswordResponseModel model =
-  //                   Provider.of<UserReportViewModel>(context, listen: false)
-  //                       .userblockresponse
-  //                       .response as ForgotPasswordResponseModel;
-  //               showToast(model.message!);
-  //               likedFeedData.removeAt(index);
-  //             });
-  //           } else {
-  //             setState(() {
-  //               isReqLoading = false;
-  //             });
-  //             kToast(Provider.of<UserReportViewModel>(context, listen: false)
-  //                 .userblockresponse
-  //                 .msg
-  //                 .toString());
-  //           }
-  //         }
-  //       } else {
-  //         setState(() {
-  //           isLoading = false;
-  //         });
-  // kToast(Languages.of(context)!.noInternetText);      }
-  //     });
-  //   }
 }
