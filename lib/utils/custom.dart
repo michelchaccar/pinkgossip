@@ -61,6 +61,11 @@ class API {
   static String getUserId_Type = "${baseUrl}/api/salon-id/";
 
   // remove-story-cron
+
+  // Referral
+  static String referralCode = "${baseUrl}/api/referral-code";
+  static String referralClaim = "${baseUrl}/api/referral-claim";
+  static String referralStats = "${baseUrl}/api/referral-stats";
 }
 
 kToast(String msg) {
