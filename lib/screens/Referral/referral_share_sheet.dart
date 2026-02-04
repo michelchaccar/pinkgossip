@@ -36,10 +36,15 @@ class _ReferralShareSheetState extends State<ReferralShareSheet> {
     });
   }
 
-  void _shareVia(Languages lang) {
+  void _shareVia(BuildContext context, Languages lang) async {
     final message = _buildShareMessage(lang);
-    SharePlus.instance.share(ShareParams(text: message));
-    Navigator.pop(context);
+    final box = context.findRenderObject() as RenderBox?;
+    await Share.share(
+      message,
+      sharePositionOrigin:
+          box != null ? box.localToGlobal(Offset.zero) & box.size : Rect.zero,
+    );
+    if (mounted) Navigator.pop(this.context);
   }
 
   @override
@@ -166,8 +171,9 @@ class _ReferralShareSheetState extends State<ReferralShareSheet> {
             SizedBox(
               width: double.infinity,
               height: 52,
-              child: ElevatedButton(
-                onPressed: () => _shareVia(lang),
+              child: Builder(builder: (buttonContext) {
+                return ElevatedButton(
+                onPressed: () => _shareVia(buttonContext, lang),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.kPinkColor,
                   shape: RoundedRectangleBorder(
@@ -190,7 +196,8 @@ class _ReferralShareSheetState extends State<ReferralShareSheet> {
                     ),
                   ],
                 ),
-              ),
+              );
+              }),
             ),
           ],
         ),
