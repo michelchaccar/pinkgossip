@@ -7,6 +7,7 @@ import 'package:pinkGossip/localization/localizations_delegate.dart';
 import 'package:pinkGossip/viewModels/addstoryviewmodel.dart';
 import 'package:pinkGossip/viewModels/allfollowersorfollowviewmodel.dart';
 import 'package:pinkGossip/viewModels/blockuserviewmodel.dart';
+import 'package:pinkGossip/viewModels/referralviewmodel.dart';
 import 'package:pinkGossip/viewModels/checkaccountexistviewmodel.dart';
 import 'package:pinkGossip/viewModels/checkusernameexistviewmodel.dart';
 import 'package:pinkGossip/viewModels/getqrcodeviewmodel.dart';
@@ -153,6 +154,7 @@ class _MyAppState extends State<MyApp> {
           create: (context) => CheckUserNameExistViewModel(),
         ),
         ChangeNotifierProvider(create: (context) => BlockUserViewModel()),
+        ChangeNotifierProvider(create: (context) => ReferralViewModel()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey, // important for deep linking
