@@ -7,6 +7,7 @@ import 'package:pinkGossip/models/checkusernameexistmodel.dart';
 import 'package:pinkGossip/models/loginmodel.dart';
 import 'package:pinkGossip/screens/Auth/loginscreen.dart';
 import 'package:pinkGossip/viewModels/checkaccountexistviewmodel.dart';
+import 'package:pinkGossip/viewModels/referralviewmodel.dart';
 import 'package:pinkGossip/viewModels/checkusernameexistviewmodel.dart';
 import 'package:pinkGossip/viewModels/loginviewmodel.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -1307,6 +1308,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 databaseReference.key.toString(),
                 fcmToken,
               );
+
+              // Claim referral code if one was stored via deep link
+              String pendingReferralCode = prefs.getString('pendingReferralCode') ?? "";
+              if (pendingReferralCode.isNotEmpty) {
+                await Provider.of<ReferralViewModel>(context, listen: false)
+                    .claimReferral(model.response!.id.toString(), pendingReferralCode);
+                await prefs.remove('pendingReferralCode');
+              }
 
               prefs.setBool("isLogin", true);
               // isLoading = false;

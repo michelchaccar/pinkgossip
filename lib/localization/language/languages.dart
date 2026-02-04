@@ -333,4 +333,36 @@ abstract class Languages {
   // Gossiper Onboarding Screen 7
   String get gossiperOnboarding7Title;
   String get gossiperOnboarding7Desc;
+
+  // Referral System
+  String get referralTitle;
+  String get referralSubtitle;
+  String get referralIntro;
+  String get referralCodeLabel;
+  String get referralCopyText;
+  String get referralCopiedText;
+  String get referralYouGetTitle;
+  String get referralYouGetValue;
+  String get referralYouGetDesc;
+  String get referralFriendGetsTitle;
+  String get referralFriendGetsValue;
+  String get referralFriendGetsDesc;
+  String get referralStep1;
+  String get referralStep2;
+  String get referralStep3;
+  String get referralHowItWorks;
+  String get referralFAQ;
+  String get referralCTA;
+  String get referralShareTitle;
+  String get referralShareMessage;
+  String get referralSuccessTitle;
+  String get referralSuccessSubtitle;
+  String get referralSuccessPoints;
+  String get referralSuccessEncouragement;
+  String get referralInviteMore;
+  String get referralSeePoints;
+  String get referralNotifFriendJoined;
+  String get referralNotifPointsEarned;
+  String get referralNotifNudge;
+  String get referralMenuTitle;
 }

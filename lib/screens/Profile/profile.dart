@@ -14,6 +14,7 @@ import 'package:pinkGossip/screens/Profile/beautybusinessmap.dart';
 import 'package:pinkGossip/screens/Profile/blockedusers.dart';
 import 'package:pinkGossip/screens/Profile/language.dart';
 import 'package:pinkGossip/screens/Profile/qrcode.dart';
+import 'package:pinkGossip/screens/Referral/referral_screen.dart';
 import 'package:pinkGossip/screens/allfollowingorfollowers.dart';
 import 'package:pinkGossip/screens/tagpostview.dart';
 import 'package:pinkGossip/viewModels/blockuserviewmodel.dart';
@@ -408,6 +409,21 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       usertype: userTyppe,
                                       userName: userName,
                                     ),
+                              ),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.card_giftcard),
+                          title: Text(
+                            Languages.of(context)!.referralMenuTitle,
+                            style: Pallete.Quicksand15blackwe600,
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ReferralScreen(),
                               ),
                             );
                           },

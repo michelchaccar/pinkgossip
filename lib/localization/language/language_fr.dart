@@ -861,4 +861,66 @@ class LanguageFr extends Languages {
   String get gossiperOnboarding7Title => "PRÊTS POUR\nLE SUCCÈS";
   @override
   String get gossiperOnboarding7Desc => "Tu es officiellement\nune Gossiper\nScanne, partage et\naccumule des points\npour bâtir ton influence";
+
+  // Referral System
+  @override
+  String get referralTitle => "INVITE TES AMIES";
+  @override
+  String get referralSubtitle => "Partage le gossip, gagne des points";
+  @override
+  String get referralIntro => "Invite tes amies sur Pink Gossip et vous gagnez toutes les deux des points beauté. Plus tu partages, plus tu gagnes!";
+  @override
+  String get referralCodeLabel => "Ton code perso";
+  @override
+  String get referralCopyText => "Copier";
+  @override
+  String get referralCopiedText => "Copié!";
+  @override
+  String get referralYouGetTitle => "CE QUE TU GAGNES";
+  @override
+  String get referralYouGetValue => "50 points";
+  @override
+  String get referralYouGetDesc => "Pour chaque amie qui rejoint Pink Gossip et poste son premier avis";
+  @override
+  String get referralFriendGetsTitle => "CE QUE TON AMIE GAGNE";
+  @override
+  String get referralFriendGetsValue => "50 points de bienvenue";
+  @override
+  String get referralFriendGetsDesc => "Dès son inscription et premier avis, ton amie gagne aussi 50 points pour son premier soin";
+  @override
+  String get referralStep1 => "Partage ton lien ou code perso avec tes amies";
+  @override
+  String get referralStep2 => "Ton amie s'inscrit et utilise ton code";
+  @override
+  String get referralStep3 => "Elle poste son premier avis et vous gagnez 50 points chacune!";
+  @override
+  String get referralHowItWorks => "Comment ça marche";
+  @override
+  String get referralFAQ => "Questions fréquentes";
+  @override
+  String get referralCTA => "INVITE TES AMIES";
+  @override
+  String get referralShareTitle => "Partage le gossip";
+  @override
+  String get referralShareMessage => "Rejoins-moi sur Pink Gossip! L'app où ton avis beauté vaut de l'or. Utilise mon code [CODE] pour recevoir 50 points bonus. Télécharge ici: [LINK]";
+  @override
+  String get referralSuccessTitle => "BOOM!";
+  @override
+  String get referralSuccessSubtitle => "[NAME] vient de rejoindre Pink Gossip grâce à toi!";
+  @override
+  String get referralSuccessPoints => "+50 points ajoutés à ton compte";
+  @override
+  String get referralSuccessEncouragement => "Continue à partager le gossip, tu construis ta richesse beauté!";
+  @override
+  String get referralInviteMore => "INVITE ENCORE";
+  @override
+  String get referralSeePoints => "VOIR MES POINTS";
+  @override
+  String get referralNotifFriendJoined => "Ta copine [NAME] vient de s'inscrire! Encore un pas avant vos 50 points chacune";
+  @override
+  String get referralNotifPointsEarned => "Boom! [NAME] a posté son premier avis. +50 points pour toi!";
+  @override
+  String get referralNotifNudge => "[NAME] s'est inscrite mais n'a pas encore posté. Envoie-lui un petit encouragement!";
+  @override
+  String get referralMenuTitle => "Invite tes amies";
 }

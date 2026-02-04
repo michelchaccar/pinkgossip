@@ -6,6 +6,7 @@ import 'package:pinkGossip/utils/apiservice.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DeepLinkHandler {
   final AppLinks _appLinks = AppLinks();
@@ -35,7 +36,11 @@ class DeepLinkHandler {
       String username = segments[1];
       _navigateToProfile(username);
     }
-    // Handle other deep links if needed
+    // Handle referral deep links
+    if (segments.length >= 2 && segments[0] == 'referral') {
+      String referralCode = segments[1];
+      _handleReferralCode(referralCode);
+    }
   }
 
   void _navigateToProfile(String username) {
@@ -45,6 +50,12 @@ class DeepLinkHandler {
     //   arguments: {'username': username},
     // );
     getUserIdFromUserName(username);
+  }
+
+  void _handleReferralCode(String referralCode) async {
+    print("_handleReferralCode - code: $referralCode");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('pendingReferralCode', referralCode);
   }
 
   getUserIdFromUserName(String username) async {

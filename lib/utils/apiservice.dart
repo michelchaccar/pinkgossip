@@ -29,6 +29,7 @@ import 'package:pinkGossip/models/unfollwmodel.dart';
 import 'package:pinkGossip/models/updatefirebasemodel.dart';
 import 'package:pinkGossip/models/updateprofilemodel.dart';
 import 'package:pinkGossip/models/updateprofilephoto.dart';
+import 'package:pinkGossip/models/referralmodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -2438,6 +2439,132 @@ class APIService {
         var jsonData = jsonDecode(response.body);
         var detail = jsonData['detail'];
         return Success(code: 100, response: false, msg: detail, success: false);
+      } else {
+        return Success(code: 100, response: false, msg: "", success: false);
+      }
+    } on HttpException {
+      return Success(code: 101, response: false, msg: "", success: false);
+    }
+  }
+
+  // Referral System
+
+  static Future<Object> getReferralCode(String userId) async {
+    try {
+      var url = Uri.parse("${API.referralCode}/$userId");
+      var response = await http.get(url);
+      print("getReferralCode url $url");
+      print("getReferralCode response ${response.body}");
+      if (response.statusCode == 200) {
+        return Success(
+          code: 200,
+          response: referralCodeModelFromJson(response.body),
+          msg: "",
+          success: true,
+        );
+      }
+      if (response.statusCode == 400) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['msg'];
+        return Success(
+          code: 400,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 500) {
+        return Success(
+          code: 500,
+          response: false,
+          msg: "Something went wrong",
+          success: false,
+        );
+      } else {
+        return Success(code: 100, response: false, msg: "", success: false);
+      }
+    } on HttpException {
+      return Success(code: 101, response: false, msg: "", success: false);
+    }
+  }
+
+  static Future<Object> claimReferral(
+      String userId, String referralCode) async {
+    try {
+      var url = Uri.parse(API.referralClaim);
+      var response = await http.post(
+        url,
+        body: {
+          "user_id": userId,
+          "referral_code": referralCode,
+        },
+      );
+      print("claimReferral url $url");
+      print("claimReferral response ${response.body}");
+      if (response.statusCode == 200) {
+        return Success(
+          code: 200,
+          response: referralClaimModelFromJson(response.body),
+          msg: "",
+          success: true,
+        );
+      }
+      if (response.statusCode == 400) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['msg'];
+        return Success(
+          code: 400,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 500) {
+        return Success(
+          code: 500,
+          response: false,
+          msg: "Something went wrong",
+          success: false,
+        );
+      } else {
+        return Success(code: 100, response: false, msg: "", success: false);
+      }
+    } on HttpException {
+      return Success(code: 101, response: false, msg: "", success: false);
+    }
+  }
+
+  static Future<Object> getReferralStats(String userId) async {
+    try {
+      var url = Uri.parse("${API.referralStats}/$userId");
+      var response = await http.get(url);
+      print("getReferralStats url $url");
+      print("getReferralStats response ${response.body}");
+      if (response.statusCode == 200) {
+        return Success(
+          code: 200,
+          response: referralStatsModelFromJson(response.body),
+          msg: "",
+          success: true,
+        );
+      }
+      if (response.statusCode == 400) {
+        var jsonData = jsonDecode(response.body);
+        var detail = jsonData['msg'];
+        return Success(
+          code: 400,
+          response: false,
+          msg: detail.toString(),
+          success: false,
+        );
+      }
+      if (response.statusCode == 500) {
+        return Success(
+          code: 500,
+          response: false,
+          msg: "Something went wrong",
+          success: false,
+        );
       } else {
         return Success(code: 100, response: false, msg: "", success: false);
       }

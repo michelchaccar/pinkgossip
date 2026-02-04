@@ -698,4 +698,66 @@ class LanguageEn extends Languages {
   String get gossiperOnboarding7Title => "YOU ARE ALL SET\nFOR SUCCESS";
   @override
   String get gossiperOnboarding7Desc => "You're officially a\nGossiper\nScan, share & collect\npoints to turn your\nreviews into influence";
+
+  // Referral System
+  @override
+  String get referralTitle => "INVITE YOUR FRIENDS";
+  @override
+  String get referralSubtitle => "Share the gossip, earn points";
+  @override
+  String get referralIntro => "Invite your friends to Pink Gossip and you both earn beauty points. The more you share, the more you earn!";
+  @override
+  String get referralCodeLabel => "Your personal code";
+  @override
+  String get referralCopyText => "Copy";
+  @override
+  String get referralCopiedText => "Copied!";
+  @override
+  String get referralYouGetTitle => "WHAT YOU GET";
+  @override
+  String get referralYouGetValue => "50 points";
+  @override
+  String get referralYouGetDesc => "For each friend who joins Pink Gossip and posts their first review";
+  @override
+  String get referralFriendGetsTitle => "WHAT YOUR FRIEND GETS";
+  @override
+  String get referralFriendGetsValue => "50 welcome points";
+  @override
+  String get referralFriendGetsDesc => "Your friend earns 50 points too after signing up and posting their first review";
+  @override
+  String get referralStep1 => "Share your link or personal code with your friends";
+  @override
+  String get referralStep2 => "Your friend signs up and uses your code";
+  @override
+  String get referralStep3 => "She posts her first review and you both earn 50 points!";
+  @override
+  String get referralHowItWorks => "How it works";
+  @override
+  String get referralFAQ => "Frequently asked questions";
+  @override
+  String get referralCTA => "INVITE YOUR FRIENDS";
+  @override
+  String get referralShareTitle => "Share the gossip";
+  @override
+  String get referralShareMessage => "Join me on Pink Gossip! The app where your beauty opinion is worth gold. Use my code [CODE] to get 50 bonus points. Download here: [LINK]";
+  @override
+  String get referralSuccessTitle => "BOOM!";
+  @override
+  String get referralSuccessSubtitle => "[NAME] just joined Pink Gossip thanks to you!";
+  @override
+  String get referralSuccessPoints => "+50 points added to your account";
+  @override
+  String get referralSuccessEncouragement => "Keep sharing the gossip, you're building your beauty wealth!";
+  @override
+  String get referralInviteMore => "INVITE MORE";
+  @override
+  String get referralSeePoints => "SEE MY POINTS";
+  @override
+  String get referralNotifFriendJoined => "Your friend [NAME] just signed up! One more step before you both earn 50 points";
+  @override
+  String get referralNotifPointsEarned => "Boom! [NAME] posted their first review. +50 points for you!";
+  @override
+  String get referralNotifNudge => "[NAME] signed up but hasn't posted yet. Send a little encouragement!";
+  @override
+  String get referralMenuTitle => "Invite friends";
 }
