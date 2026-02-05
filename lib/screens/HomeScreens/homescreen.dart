@@ -1470,178 +1470,60 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 itemBuilder: (context, pageviewindex) {
                                   page = pageviewindex + 1;
-                                  return Stack(
-                                    children: [
-                                      item.beforeImage != ""
-                                          ? ExpandablePageView.builder(
-                                            // controller: _pageController,
-                                            itemCount:
-                                                (item.otherMultiPost!.length) +
-                                                1,
-                                            onPageChanged: (int pageIndex) {
-                                              print(
-                                                "Current Page Index: $pageIndex",
-                                              );
-                                            },
-                                            itemBuilder: (
-                                              context,
-                                              pageviewindex,
-                                            ) {
-                                              page = pageviewindex + 1;
-                                              return Stack(
-                                                children: [
-                                                  pageviewindex == 0
-                                                      ? Row(
-                                                        children: [
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Container(
-                                                              color:
-                                                                  Colors
-                                                                      .black12,
-                                                              height:
-                                                                  kSize.height /
-                                                                  3,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets.all(
-                                                                      2.0,
-                                                                    ),
-                                                                child: Image.network(
-                                                                  loadingBuilder: (
-                                                                    BuildContext
-                                                                    context,
-                                                                    Widget
-                                                                    child,
-                                                                    ImageChunkEvent?
-                                                                    loadingProgress,
-                                                                  ) {
-                                                                    if (loadingProgress ==
-                                                                        null) {
-                                                                      return child;
-                                                                    }
-                                                                    return SizedBox(
-                                                                      height:
-                                                                          100,
-                                                                      width:
-                                                                          100,
-                                                                      child: Center(
-                                                                        child: CircularProgressIndicator(
-                                                                          color:
-                                                                              AppColors.kBlackColor,
-                                                                          value:
-                                                                              loadingProgress.expectedTotalBytes !=
-                                                                                      null
-                                                                                  ? loadingProgress.cumulativeBytesLoaded /
-                                                                                      loadingProgress.expectedTotalBytes!
-                                                                                  : null,
-                                                                        ),
+                                  return GestureDetector(
+                                    onDoubleTap: () async {
+                                      if (item.like == 0) {
+                                        item.like = 1;
+                                        item.likeCount = item.likeCount! + 1;
+                                        await doPostLike(
+                                          userid,
+                                          item.id!.toString(),
+                                          "1",
+                                          index,
+                                        );
+                                      }
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        item.beforeImage != ""
+                                            ? ExpandablePageView.builder(
+                                              // controller: _pageController,
+                                              itemCount:
+                                                  (item
+                                                      .otherMultiPost!
+                                                      .length) +
+                                                  1,
+                                              onPageChanged: (int pageIndex) {
+                                                print(
+                                                  "Current Page Index: $pageIndex",
+                                                );
+                                              },
+                                              itemBuilder: (
+                                                context,
+                                                pageviewindex,
+                                              ) {
+                                                page = pageviewindex + 1;
+                                                return Stack(
+                                                  children: [
+                                                    pageviewindex == 0
+                                                        ? Row(
+                                                          children: [
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Container(
+                                                                color:
+                                                                    Colors
+                                                                        .black12,
+                                                                height:
+                                                                    kSize
+                                                                        .height /
+                                                                    3,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets.all(
+                                                                        2.0,
                                                                       ),
-                                                                    );
-                                                                  },
-                                                                  "${API.baseUrl}/api/${item.beforeImage!}",
-                                                                  fit:
-                                                                      BoxFit
-                                                                          .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 2,
-                                                          ),
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Container(
-                                                              height:
-                                                                  kSize.height /
-                                                                  3,
-                                                              color:
-                                                                  Colors
-                                                                      .black12,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets.all(
-                                                                      2.0,
-                                                                    ),
-                                                                child: Image.network(
-                                                                  loadingBuilder: (
-                                                                    BuildContext
-                                                                    context,
-                                                                    Widget
-                                                                    child,
-                                                                    ImageChunkEvent?
-                                                                    loadingProgress,
-                                                                  ) {
-                                                                    if (loadingProgress ==
-                                                                        null) {
-                                                                      return child;
-                                                                    }
-                                                                    return SizedBox(
-                                                                      height:
-                                                                          100,
-                                                                      width:
-                                                                          100,
-                                                                      child: Center(
-                                                                        child: CircularProgressIndicator(
-                                                                          color:
-                                                                              AppColors.kBlackColor,
-                                                                          value:
-                                                                              loadingProgress.expectedTotalBytes !=
-                                                                                      null
-                                                                                  ? loadingProgress.cumulativeBytesLoaded /
-                                                                                      loadingProgress.expectedTotalBytes!
-                                                                                  : null,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                  "${API.baseUrl}/api/${item.afterImage!}",
-                                                                  fit:
-                                                                      BoxFit
-                                                                          .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                      : Container(
-                                                        child:
-                                                            item
-                                                                        .otherMultiPost![pageviewindex -
-                                                                            1]
-                                                                        .otherData!
-                                                                        .endsWith(
-                                                                          '.mp4',
-                                                                        ) ||
-                                                                    item
-                                                                        .otherMultiPost![pageviewindex -
-                                                                            1]
-                                                                        .otherData!
-                                                                        .endsWith(
-                                                                          '.mov',
-                                                                        )
-                                                                ? MyVideoPlayer(
-                                                                  videoUrl:
-                                                                      "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex - 1].otherData}",
-                                                                )
-                                                                : SizedBox(
-                                                                  height:
-                                                                      item.postType ==
-                                                                              "NormalPost"
-                                                                          ? kSize.height /
-                                                                              2
-                                                                          : kSize.height /
-                                                                              3,
-                                                                  width:
-                                                                      kSize
-                                                                          .width,
                                                                   child: Image.network(
-                                                                    fit:
-                                                                        BoxFit
-                                                                            .cover,
-                                                                    "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex - 1].otherData}",
                                                                     loadingBuilder: (
                                                                       BuildContext
                                                                       context,
@@ -1654,195 +1536,338 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           null) {
                                                                         return child;
                                                                       }
-                                                                      return Center(
-                                                                        child: SizedBox(
-                                                                          height:
-                                                                              100,
-                                                                          width:
-                                                                              100,
-                                                                          child: Center(
-                                                                            child: CircularProgressIndicator(
-                                                                              color:
-                                                                                  AppColors.kBlackColor,
-                                                                              value:
-                                                                                  loadingProgress.expectedTotalBytes !=
-                                                                                          null
-                                                                                      ? loadingProgress.cumulativeBytesLoaded /
-                                                                                          loadingProgress.expectedTotalBytes!
-                                                                                      : null,
-                                                                            ),
+                                                                      return SizedBox(
+                                                                        height:
+                                                                            100,
+                                                                        width:
+                                                                            100,
+                                                                        child: Center(
+                                                                          child: CircularProgressIndicator(
+                                                                            color:
+                                                                                AppColors.kBlackColor,
+                                                                            value:
+                                                                                loadingProgress.expectedTotalBytes !=
+                                                                                        null
+                                                                                    ? loadingProgress.cumulativeBytesLoaded /
+                                                                                        loadingProgress.expectedTotalBytes!
+                                                                                    : null,
                                                                           ),
                                                                         ),
                                                                       );
                                                                     },
+                                                                    "${API.baseUrl}/api/${item.beforeImage!}",
+                                                                    fit:
+                                                                        BoxFit
+                                                                            .cover,
                                                                   ),
                                                                 ),
-                                                      ),
-                                                  item.otherMultiPost!.isEmpty
-                                                      ? Container()
-                                                      : Positioned(
-                                                        top: 10.0,
-                                                        right: 10,
-                                                        child: Container(
-                                                          height: 20,
-                                                          width: 35,
-                                                          decoration: BoxDecoration(
-                                                            color:
-                                                                Colors.black54,
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  12.5,
-                                                                ),
-                                                          ),
-                                                          alignment:
-                                                              Alignment
-                                                                  .topRight,
-                                                          child: Center(
-                                                            child: Text(
-                                                              "${pageviewindex + 1}/${item.otherMultiPost!.length + 1}",
-                                                              style: const TextStyle(
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 2,
+                                                            ),
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Container(
+                                                                height:
+                                                                    kSize
+                                                                        .height /
+                                                                    3,
                                                                 color:
                                                                     Colors
-                                                                        .white,
-                                                                fontSize: 12.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
+                                                                        .black12,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets.all(
+                                                                        2.0,
+                                                                      ),
+                                                                  child: Image.network(
+                                                                    loadingBuilder: (
+                                                                      BuildContext
+                                                                      context,
+                                                                      Widget
+                                                                      child,
+                                                                      ImageChunkEvent?
+                                                                      loadingProgress,
+                                                                    ) {
+                                                                      if (loadingProgress ==
+                                                                          null) {
+                                                                        return child;
+                                                                      }
+                                                                      return SizedBox(
+                                                                        height:
+                                                                            100,
+                                                                        width:
+                                                                            100,
+                                                                        child: Center(
+                                                                          child: CircularProgressIndicator(
+                                                                            color:
+                                                                                AppColors.kBlackColor,
+                                                                            value:
+                                                                                loadingProgress.expectedTotalBytes !=
+                                                                                        null
+                                                                                    ? loadingProgress.cumulativeBytesLoaded /
+                                                                                        loadingProgress.expectedTotalBytes!
+                                                                                    : null,
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                    "${API.baseUrl}/api/${item.afterImage!}",
+                                                                    fit:
+                                                                        BoxFit
+                                                                            .cover,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                        : Container(
+                                                          child:
+                                                              item
+                                                                          .otherMultiPost![pageviewindex -
+                                                                              1]
+                                                                          .otherData!
+                                                                          .endsWith(
+                                                                            '.mp4',
+                                                                          ) ||
+                                                                      item
+                                                                          .otherMultiPost![pageviewindex -
+                                                                              1]
+                                                                          .otherData!
+                                                                          .endsWith(
+                                                                            '.mov',
+                                                                          )
+                                                                  ? MyVideoPlayer(
+                                                                    videoUrl:
+                                                                        "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex - 1].otherData}",
+                                                                  )
+                                                                  : SizedBox(
+                                                                    height:
+                                                                        item.postType ==
+                                                                                "NormalPost"
+                                                                            ? kSize.height /
+                                                                                2
+                                                                            : kSize.height /
+                                                                                3,
+                                                                    width:
+                                                                        kSize
+                                                                            .width,
+                                                                    child: Image.network(
+                                                                      fit:
+                                                                          BoxFit
+                                                                              .cover,
+                                                                      "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex - 1].otherData}",
+                                                                      loadingBuilder: (
+                                                                        BuildContext
+                                                                        context,
+                                                                        Widget
+                                                                        child,
+                                                                        ImageChunkEvent?
+                                                                        loadingProgress,
+                                                                      ) {
+                                                                        if (loadingProgress ==
+                                                                            null) {
+                                                                          return child;
+                                                                        }
+                                                                        return Center(
+                                                                          child: SizedBox(
+                                                                            height:
+                                                                                100,
+                                                                            width:
+                                                                                100,
+                                                                            child: Center(
+                                                                              child: CircularProgressIndicator(
+                                                                                color:
+                                                                                    AppColors.kBlackColor,
+                                                                                value:
+                                                                                    loadingProgress.expectedTotalBytes !=
+                                                                                            null
+                                                                                        ? loadingProgress.cumulativeBytesLoaded /
+                                                                                            loadingProgress.expectedTotalBytes!
+                                                                                        : null,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    ),
+                                                                  ),
+                                                        ),
+                                                    item.otherMultiPost!.isEmpty
+                                                        ? Container()
+                                                        : Positioned(
+                                                          top: 10.0,
+                                                          right: 10,
+                                                          child: Container(
+                                                            height: 20,
+                                                            width: 35,
+                                                            decoration: BoxDecoration(
+                                                              color:
+                                                                  Colors
+                                                                      .black54,
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                    12.5,
+                                                                  ),
+                                                            ),
+                                                            alignment:
+                                                                Alignment
+                                                                    .topRight,
+                                                            child: Center(
+                                                              child: Text(
+                                                                "${pageviewindex + 1}/${item.otherMultiPost!.length + 1}",
+                                                                style: const TextStyle(
+                                                                  color:
+                                                                      Colors
+                                                                          .white,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                ],
-                                              );
-                                            },
-                                          )
-                                          : item.otherMultiPost!.isEmpty
-                                          ? const SizedBox.shrink()
-                                          : ExpandablePageView.builder(
-                                            // controller: _pageController,
-                                            itemCount:
-                                                (item.otherMultiPost!.length),
-                                            onPageChanged: (int pageIndex) {
-                                              print(
-                                                "Current Page Index: $pageIndex",
-                                              );
-                                            },
-                                            itemBuilder: (
-                                              context,
-                                              pageviewindex,
-                                            ) {
-                                              return Stack(
-                                                children: [
-                                                  Container(
-                                                    child:
-                                                        item
-                                                                    .otherMultiPost![pageviewindex]
-                                                                    .otherData!
-                                                                    .endsWith(
-                                                                      '.mp4',
-                                                                    ) ||
-                                                                item
-                                                                    .otherMultiPost![pageviewindex]
-                                                                    .otherData!
-                                                                    .endsWith(
-                                                                      '.mov',
-                                                                    )
-                                                            ? MyVideoPlayer(
-                                                              videoUrl:
+                                                  ],
+                                                );
+                                              },
+                                            )
+                                            : item.otherMultiPost!.isEmpty
+                                            ? const SizedBox.shrink()
+                                            : ExpandablePageView.builder(
+                                              // controller: _pageController,
+                                              itemCount:
+                                                  (item.otherMultiPost!.length),
+                                              onPageChanged: (int pageIndex) {
+                                                print(
+                                                  "Current Page Index: $pageIndex",
+                                                );
+                                              },
+                                              itemBuilder: (
+                                                context,
+                                                pageviewindex,
+                                              ) {
+                                                return Stack(
+                                                  children: [
+                                                    Container(
+                                                      child:
+                                                          item
+                                                                      .otherMultiPost![pageviewindex]
+                                                                      .otherData!
+                                                                      .endsWith(
+                                                                        '.mp4',
+                                                                      ) ||
+                                                                  item
+                                                                      .otherMultiPost![pageviewindex]
+                                                                      .otherData!
+                                                                      .endsWith(
+                                                                        '.mov',
+                                                                      )
+                                                              ? MyVideoPlayer(
+                                                                videoUrl:
+                                                                    "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex].otherData}",
+                                                              )
+                                                              : SizedBox(
+                                                                height:
+                                                                    item.postType ==
+                                                                            "NormalPost"
+                                                                        ? kSize.height /
+                                                                            2
+                                                                        : kSize.height /
+                                                                            3,
+                                                                width:
+                                                                    kSize.width,
+                                                                child: Image.network(
+                                                                  fit:
+                                                                      BoxFit
+                                                                          .cover,
                                                                   "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex].otherData}",
-                                                            )
-                                                            : SizedBox(
-                                                              height:
-                                                                  item.postType ==
-                                                                          "NormalPost"
-                                                                      ? kSize.height /
-                                                                          2
-                                                                      : kSize.height /
-                                                                          3,
-                                                              width:
-                                                                  kSize.width,
-                                                              child: Image.network(
-                                                                fit:
-                                                                    BoxFit
-                                                                        .cover,
-                                                                "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex].otherData}",
-                                                                loadingBuilder: (
-                                                                  BuildContext
-                                                                  context,
-                                                                  Widget child,
-                                                                  ImageChunkEvent?
-                                                                  loadingProgress,
-                                                                ) {
-                                                                  if (loadingProgress ==
-                                                                      null) {
-                                                                    return child;
-                                                                  }
-                                                                  return Center(
-                                                                    child: SizedBox(
-                                                                      height:
-                                                                          100,
-                                                                      width:
-                                                                          100,
-                                                                      child: Center(
-                                                                        child: CircularProgressIndicator(
-                                                                          color:
-                                                                              AppColors.kBlackColor,
-                                                                          value:
-                                                                              loadingProgress.expectedTotalBytes !=
-                                                                                      null
-                                                                                  ? loadingProgress.cumulativeBytesLoaded /
-                                                                                      loadingProgress.expectedTotalBytes!
-                                                                                  : null,
+                                                                  loadingBuilder: (
+                                                                    BuildContext
+                                                                    context,
+                                                                    Widget
+                                                                    child,
+                                                                    ImageChunkEvent?
+                                                                    loadingProgress,
+                                                                  ) {
+                                                                    if (loadingProgress ==
+                                                                        null) {
+                                                                      return child;
+                                                                    }
+                                                                    return Center(
+                                                                      child: SizedBox(
+                                                                        height:
+                                                                            100,
+                                                                        width:
+                                                                            100,
+                                                                        child: Center(
+                                                                          child: CircularProgressIndicator(
+                                                                            color:
+                                                                                AppColors.kBlackColor,
+                                                                            value:
+                                                                                loadingProgress.expectedTotalBytes !=
+                                                                                        null
+                                                                                    ? loadingProgress.cumulativeBytesLoaded /
+                                                                                        loadingProgress.expectedTotalBytes!
+                                                                                    : null,
+                                                                          ),
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              ),
-                                                            ),
-                                                  ),
-                                                  item.otherMultiPost!.length >
-                                                          1
-                                                      ? Positioned(
-                                                        top: 10.0,
-                                                        right: 10,
-                                                        child: Container(
-                                                          height: 20,
-                                                          width: 35,
-                                                          decoration: BoxDecoration(
-                                                            color:
-                                                                Colors.black54,
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  12.5,
+                                                                    );
+                                                                  },
                                                                 ),
-                                                          ),
-                                                          alignment:
-                                                              Alignment
-                                                                  .topRight,
-                                                          child: Center(
-                                                            child: Text(
-                                                              "${pageviewindex + 1}/${item.otherMultiPost!.length}",
-                                                              style: const TextStyle(
-                                                                color:
-                                                                    Colors
-                                                                        .white,
-                                                                fontSize: 12.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
+                                                              ),
+                                                    ),
+                                                    item
+                                                                .otherMultiPost!
+                                                                .length >
+                                                            1
+                                                        ? Positioned(
+                                                          top: 10.0,
+                                                          right: 10,
+                                                          child: Container(
+                                                            height: 20,
+                                                            width: 35,
+                                                            decoration: BoxDecoration(
+                                                              color:
+                                                                  Colors
+                                                                      .black54,
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                    12.5,
+                                                                  ),
+                                                            ),
+                                                            alignment:
+                                                                Alignment
+                                                                    .topRight,
+                                                            child: Center(
+                                                              child: Text(
+                                                                "${pageviewindex + 1}/${item.otherMultiPost!.length}",
+                                                                style: const TextStyle(
+                                                                  color:
+                                                                      Colors
+                                                                          .white,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      )
-                                                      : Container(),
-                                                ],
-                                              );
-                                            },
-                                          ),
-                                    ],
+                                                        )
+                                                        : Container(),
+                                                  ],
+                                                );
+                                              },
+                                            ),
+                                      ],
+                                    ),
                                   );
                                 },
                               )
@@ -1855,95 +1880,109 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 itemBuilder: (context, pageviewindex) {
                                   page = pageviewindex + 1;
-                                  return Stack(
-                                    children: [
-                                      Container(
-                                        child:
-                                            item
-                                                        .otherMultiPost![pageviewindex]
-                                                        .otherData!
-                                                        .endsWith('.mp4') ||
-                                                    item
-                                                        .otherMultiPost![pageviewindex]
-                                                        .otherData!
-                                                        .endsWith('.mov')
-                                                ? MyVideoPlayer(
-                                                  videoUrl:
+                                  return GestureDetector(
+                                    onDoubleTap: () async {
+                                      if (item.like == 0) {
+                                        item.like = 1;
+                                        item.likeCount = item.likeCount! + 1;
+                                        await doPostLike(
+                                          userid,
+                                          item.id!.toString(),
+                                          "1",
+                                          index,
+                                        );
+                                      }
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          child:
+                                              item
+                                                          .otherMultiPost![pageviewindex]
+                                                          .otherData!
+                                                          .endsWith('.mp4') ||
+                                                      item
+                                                          .otherMultiPost![pageviewindex]
+                                                          .otherData!
+                                                          .endsWith('.mov')
+                                                  ? MyVideoPlayer(
+                                                    videoUrl:
+                                                        "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex].otherData}",
+                                                  )
+                                                  : SizedBox(
+                                                    height:
+                                                        item.postType ==
+                                                                "NormalPost"
+                                                            ? kSize.height / 2
+                                                            : kSize.height / 3,
+                                                    width: kSize.width,
+                                                    child: Image.network(
+                                                      fit: BoxFit.cover,
                                                       "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex].otherData}",
-                                                )
-                                                : SizedBox(
-                                                  height:
-                                                      item.postType ==
-                                                              "NormalPost"
-                                                          ? kSize.height / 2
-                                                          : kSize.height / 3,
-                                                  width: kSize.width,
-                                                  child: Image.network(
-                                                    fit: BoxFit.cover,
-                                                    "${API.baseUrl}/api/${item.otherMultiPost![pageviewindex].otherData}",
-                                                    loadingBuilder: (
-                                                      BuildContext context,
-                                                      Widget child,
-                                                      ImageChunkEvent?
-                                                      loadingProgress,
-                                                    ) {
-                                                      if (loadingProgress ==
-                                                          null) {
-                                                        return child;
-                                                      }
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          height: 100,
-                                                          width: 100,
-                                                          child: Center(
-                                                            child: CircularProgressIndicator(
-                                                              color:
-                                                                  AppColors
-                                                                      .kBlackColor,
-                                                              value:
-                                                                  loadingProgress
-                                                                              .expectedTotalBytes !=
-                                                                          null
-                                                                      ? loadingProgress
-                                                                              .cumulativeBytesLoaded /
-                                                                          loadingProgress
-                                                                              .expectedTotalBytes!
-                                                                      : null,
+                                                      loadingBuilder: (
+                                                        BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                        loadingProgress,
+                                                      ) {
+                                                        if (loadingProgress ==
+                                                            null) {
+                                                          return child;
+                                                        }
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            height: 100,
+                                                            width: 100,
+                                                            child: Center(
+                                                              child: CircularProgressIndicator(
+                                                                color:
+                                                                    AppColors
+                                                                        .kBlackColor,
+                                                                value:
+                                                                    loadingProgress.expectedTotalBytes !=
+                                                                            null
+                                                                        ? loadingProgress.cumulativeBytesLoaded /
+                                                                            loadingProgress.expectedTotalBytes!
+                                                                        : null,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      );
-                                                    },
+                                                        );
+                                                      },
+                                                    ),
                                                   ),
+                                        ),
+                                        item.otherMultiPost!.length == 1
+                                            ? Container()
+                                            : Positioned(
+                                              top: 10.0,
+                                              right: 10,
+                                              child: Container(
+                                                height: 20,
+                                                width: 35,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black54,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        12.5,
+                                                      ),
                                                 ),
-                                      ),
-                                      item.otherMultiPost!.length == 1
-                                          ? Container()
-                                          : Positioned(
-                                            top: 10.0,
-                                            right: 10,
-                                            child: Container(
-                                              height: 20,
-                                              width: 35,
-                                              decoration: BoxDecoration(
-                                                color: Colors.black54,
-                                                borderRadius:
-                                                    BorderRadius.circular(12.5),
-                                              ),
-                                              alignment: Alignment.topRight,
-                                              child: Center(
-                                                child: Text(
-                                                  "${pageviewindex + 1}/${item.otherMultiPost!.length}",
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12.0,
-                                                    fontWeight: FontWeight.w600,
+                                                alignment: Alignment.topRight,
+                                                child: Center(
+                                                  child: Text(
+                                                    "${pageviewindex + 1}/${item.otherMultiPost!.length}",
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                    ],
+                                      ],
+                                    ),
                                   );
                                 },
                               ),

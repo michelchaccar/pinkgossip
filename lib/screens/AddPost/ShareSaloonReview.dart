@@ -7,12 +7,14 @@ import 'package:five_pointed_star/five_pointed_star.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pinkGossip/bottomnavi.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/createpostmodel.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/models/successmodel.dart';
 import 'package:pinkGossip/screens/AddPost/mentionTextifield.dart';
+import 'package:pinkGossip/services/localnotification.dart';
 import 'package:pinkGossip/utils/apiservice.dart';
 import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
@@ -36,7 +38,8 @@ class SharesaloonreviewPage extends StatefulWidget {
   State<SharesaloonreviewPage> createState() => _SharesaloonreviewPageState();
 }
 
-class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
+class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
+    with AutomaticKeepAliveClientMixin {
   bool isLoading = false;
   bool isLoadingPostReview = false;
   String userid = "";
@@ -83,24 +86,71 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
     _cameras = await availableCameras();
   }
 
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     camerainitialisation();
+    if (widget.id.isNotEmpty) {
+      salonid = widget.id;
+    }
     getPrefValues();
   }
 
   getPrefValues() async {
     pref = await SharedPreferences.getInstance();
     userid = pref!.getString('userid')!;
+    int? step = pref!.getInt("step");
+
+    if (step != null) {
+      // print("step${step}");
+      salonid = pref!.getString('curruntsalonid')!;
+      // print("salonid${salonid}");
+      // print("beforimagepref${pref!.getString("beforeImage")}");
+      String? path = pref!.getString("beforeImage");
+      // print(File(path!).existsSync());
+
+      if (path != null && File(path).existsSync()) {
+        // print("beforeImage${path}");
+        beforeImage = File(path);
+      }
+      String? path1 = pref!.getString("afterImage");
+      if (path1 != null && File(path1).existsSync()) {
+        // print("afterImage${path1}");
+        afterImage = File(path1);
+      }
+      String? path2 = pref!.getString("otherData");
+      if (path2 != null && File(path2).existsSync()) {
+        // print("otherData${path2}");
+        otherData = File(path2);
+      }
+      currentStep = pref!.getInt("step") ?? 0;
+    }
+
     // getPickedMedia();
     await getSalonUserList();
     getTagUserList("1");
   }
 
+  Future<File> saveImagePermanently(File image) async {
+    final dir = await getApplicationDocumentsDirectory();
+
+    final fileName = 'img_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+    final newPath = '${dir.path}/$fileName';
+
+    final bytes = await image.readAsBytes(); // 👈 IMPORTANT
+
+    final newFile = File(newPath);
+    await newFile.writeAsBytes(bytes, flush: true);
+
+    return newFile;
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.kWhiteColor,
@@ -119,6 +169,12 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
             ),
             InkWell(
               onTap: () async {
+                LocalNotificationService.cancelAfterImageNotifications();
+                pref!.remove("step");
+                pref!.remove("curruntsalonid");
+                pref!.remove("beforeImage");
+                pref!.remove("afterImage");
+                pref!.remove("otherData");
                 if (beforeImage.path.isNotEmpty ||
                     afterImage.path.isNotEmpty ||
                     otherData.path.isNotEmpty) {
@@ -148,12 +204,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                Container(
-                  width: kSize.width,
-                  margin: const EdgeInsets.only(left: 10, right: 10),
-                  child: getStepsHeaderIndicator(),
-                ),
-                const SizedBox(height: 10),
+                getStepsHeaderIndicator(),
                 getStep1UI(kSize),
                 getStep2UI(kSize),
                 getStep3UI(kSize),
@@ -162,18 +213,14 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
               ],
             ),
           ),
-          isLoadingPostReview
-              ? Container(
-                height: kSize.height,
-                width: kSize.width,
-                color: AppColors.kWhiteColor,
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.kBlackColor,
-                  ),
-                ),
-              )
-              : Container(),
+
+          if (isLoadingPostReview)
+            Container(
+              height: kSize.height,
+              width: kSize.width,
+              color: Colors.white,
+              child: const Center(child: CircularProgressIndicator()),
+            ),
         ],
       ),
     );
@@ -263,6 +310,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
           width: 20,
           color: Colors.black,
         ),
+
         getStepIndicator(
           currentStep,
           totalStep,
@@ -415,14 +463,14 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                       as SalonSearchListModel;
 
               salonUserlist = model.userList!;
-              if (widget.id.isNotEmpty) {
+              if (salonid.isNotEmpty) {
                 for (final salon in salonUserlist) {
-                  if (salon.id.toString() == widget.id) {
+                  if (salon.id.toString() == salonid) {
                     selectedUser = salon;
                     salonid = salon.id.toString();
                     searchsaloncontroller.text = salon.salonName ?? '';
                     searchsalonlist.clear();
-                    currentStep = 2;
+                    // currentStep = 2;
                     break;
                   }
                 }
@@ -576,6 +624,9 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                               searchsaloncontroller.text = user.salonName!;
                               searchsalonlist.clear();
                               currentStep++;
+                              pref!.setInt("step", currentStep);
+
+                              pref!.setString("curruntsalonid", salonid);
                             });
 
                             FocusScopeNode currentFocus = FocusScope.of(
@@ -634,6 +685,8 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
 
                 if (searchsaloncontroller.text.isNotEmpty) {
                   currentStep++;
+                  pref!.setInt("step", currentStep);
+                  pref!.setString("curruntsalonid", salonid);
                   setState(() {});
                 } else {
                   kToast(Languages.of(context)!.pleaseentersalonText);
@@ -713,8 +766,30 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                 if (beforeImage.path == "") {
                   kToast(Languages.of(context)!.pleaseaddbeforeimageText);
                 } else {
+                  print("SOURCE EXISTS: ${beforeImage.existsSync()}");
+
+                  beforeImage = await saveImagePermanently(beforeImage);
+                  //notification call
+                  // 30 minutes pachi
+                  print("local notification send 1 minuits ====${1001}");
+                  LocalNotificationService.scheduleNotification(
+                    id: 1001,
+                    delay: const Duration(minutes: 30),
+                  );
+
+                  // 1 hour pachi
+                  LocalNotificationService.scheduleNotification(
+                    id: 1002,
+                    delay: const Duration(hours: 1),
+                  );
+                  print("local notification send 2 minuits ====${1002}");
+
+                  print("TARGET EXISTS: ${beforeImage.existsSync()}");
                   setState(() {
                     currentStep++;
+                    pref!.setInt("step", currentStep);
+
+                    pref!.setString("beforeImage", beforeImage.path);
                   });
                 }
               },
@@ -749,6 +824,73 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
           const SizedBox(height: 10),
         ],
       ),
+    );
+  }
+
+  void _showDeepLinkWelcomeDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          // title: const Text(
+          //   "Hey 💕 welcome on Pink Gossip",
+          //   style: TextStyle(fontWeight: FontWeight.bold),
+          // ),
+          content: const Text(
+            "You’re doing amazing btw 💕\n\nWant to win 150 points more?\n\nLeave a quick written review to help other Dolls choose with confidence ✨",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Later
+              },
+              child: Text(
+                "Ok",
+                style: Pallete.Quicksand14drktxtGreywe500.copyWith(
+                  color: AppColors.kBlackColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDeepLinkWelcomeDialog2() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+
+          content: const Text(
+            "WOW 😍 look great!And you did amazing with your content 💕In one appointment, you collected 300 points.",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Ok",
+                style: Pallete.Quicksand14drktxtGreywe500.copyWith(
+                  color: AppColors.kBlackColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -1046,8 +1188,18 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                 if (afterImage.path == "") {
                   kToast(Languages.of(context)!.pleaseaddafterimageText);
                 } else {
+                  print("SOURCE EXISTS: ${afterImage.existsSync()}");
+                  LocalNotificationService.cancelAfterImageNotifications();
+
+                  afterImage = await saveImagePermanently(afterImage);
+
+                  print("TARGET EXISTS: ${afterImage.existsSync()}");
+
                   setState(() {
                     currentStep++;
+                    pref!.setInt("step", currentStep);
+
+                    pref!.setString("afterImage", afterImage.path);
                   });
                 }
               },
@@ -1164,6 +1316,11 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                 } else {
                   setState(() {
                     currentStep++;
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _showDeepLinkWelcomeDialog();
+                    });
+                    pref!.setInt("step", currentStep);
+                    pref!.setString("otherData", otherData.path);
                   });
                 }
               },
@@ -1642,9 +1799,15 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                         listen: false,
                       ).createpostresponse.response
                       as CreatePostModel;
-
-              kToast(model.message!);
-
+              // _showDeepLinkWelcomeDialog2();
+              kToast(
+                "WOW 😍 look great!And you did amazing with your content 💕In one appointment, you collected 300 points.",
+              );
+              pref!.remove("step");
+              pref!.remove("curruntsalonid");
+              pref!.remove("beforeImage");
+              pref!.remove("afterImage");
+              pref!.remove("otherData");
               print("model message = ${model.message}");
 
               if (model.success == true) {
@@ -1714,6 +1877,11 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(10),
                           onTap: () async {
+                            pref!.remove("step");
+                            pref!.remove("curruntsalonid");
+                            pref!.remove("beforeImage");
+                            pref!.remove("afterImage");
+                            pref!.remove("otherData");
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(

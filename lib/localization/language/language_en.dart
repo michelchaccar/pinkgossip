@@ -201,9 +201,11 @@ class LanguageEn extends Languages {
   @override
   String get CancelText => "Cancel";
   @override
-  String get WritereviewaboutthesalonText => "Write your post desctpion here";
+  String get WritereviewaboutthesalonText =>
+      "Write your post desctpion here (500 character max)";
   @override
-  String get descOfRewardAndOfferText => "Description of the Reward and Offer";
+  String get descOfRewardAndOfferText =>
+      "Description of the Reward and Offer  (500 character max)";
   @override
   String get BookingprocessText => "Booking process";
   @override

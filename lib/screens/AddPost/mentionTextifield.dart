@@ -145,6 +145,8 @@ class _MentionTextFieldState extends State<MentionTextField> {
             child: TextField(
               controller: captionController,
               maxLines: null,
+              maxLength: 500,
+
               style: Pallete.Quicksand15darkgreye500.copyWith(
                 color: AppColors.kBlackColor,
               ),
@@ -152,6 +154,7 @@ class _MentionTextFieldState extends State<MentionTextField> {
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
               decoration: InputDecoration(
+                counterText: "",
                 enabledBorder:
                     widget.type == "PostReview" ||
                             widget.type == "PostReviewTyp2"

@@ -82,12 +82,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
         notificationKey: notificationKey,
         addstoryKey: addstoryKey,
       ),
-      const MackeupsScreen(),
-      const PostUploadOptPage(),
-      // const AddPostOptionScreen(),
-      const MessageScreen(),
-      const ProfileScreen(),
+      MackeupsScreen(),
+      PostUploadOptPage(),
+      MessageScreen(),
+      ProfileScreen(),
     ];
+
     if (widget.index != null) {
       pageIndex = widget.index!;
     }
@@ -1047,7 +1047,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(child: pageList[pageIndex]),
+      body: pageList[pageIndex],
       bottomNavigationBar: SizedBox(
         // height: 80,
         child: BottomNavigationBar(

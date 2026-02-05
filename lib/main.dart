@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:pinkGossip/localization/locale_constants.dart';
 import 'package:pinkGossip/localization/localizations_delegate.dart';
+import 'package:pinkGossip/services/localnotification.dart';
 
 import 'package:pinkGossip/viewModels/addstoryviewmodel.dart';
 import 'package:pinkGossip/viewModels/allfollowersorfollowviewmodel.dart';
@@ -44,6 +45,9 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LocalNotificationService.init();
+  await LocalNotificationService.requestAndroidPermission();
+
   await Firebase.initializeApp();
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual,

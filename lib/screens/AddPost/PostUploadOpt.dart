@@ -29,9 +29,19 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
     prefs = await SharedPreferences.getInstance();
     userid = prefs!.getString('userid') ?? "";
     userType = prefs!.getString('userType') ?? "apple";
+    int? step = prefs!.getInt("step");
+   // print("ALL PREF KEYS => ${prefs!.getKeys()}");
+    if (step != null) {
+      //print("step   ${step}");
+      // 🔥 OPEN SALON REVIEW INSIDE SAME PAGE
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          showButtons = false;
+          openedViewIndex = 3; // SharesaloonreviewPage
+        });
+      });
+    }
 
-    print("userid   ${userid}");
-    print("userType   ${userType}");
     setState(() {});
   }
 
@@ -39,6 +49,7 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("hii");
     getuserPrefs();
   }
 

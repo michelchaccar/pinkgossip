@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pinkGossip/viewModels/postdeleteviewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
@@ -2449,7 +2450,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                           onTap: () async {
                             final SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
+                            prefs.remove("step");
+                            prefs.remove("curruntsalonid");
+                            prefs.remove("beforeImage");
+                            prefs.remove("afterImage");
+                            prefs.remove("otherData");
                             prefs.setBool("isLogin", false);
+
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
@@ -3006,27 +3013,41 @@ class _ProfileScreenState extends State<ProfileScreen>
       margin: const EdgeInsets.all(5),
       child: Column(
         children: [
-          Image.network(
-            // "https://i.ibb.co/RTpcDZxk/dummyredeem.png",
-            "${API.baseUrl}/api/${postData.otherMultiPost![0].otherData!}",
-            fit: BoxFit.fill,
-            width: kSize.width,
-            height: kSize.height * 0.40,
-            loadingBuilder:
-                (context, child, loadingProgress) =>
-                    loadingProgress == null
-                        ? child
-                        : SizedBox(
-                          height: kSize.width,
-                          width: kSize.width,
-                          child: Center(
-                            child: Container(
-                              height: kSize.width,
-                              width: kSize.width,
-                              child: Center(child: CircularProgressIndicator()),
-                            ),
-                          ),
-                        ),
+          Stack(
+            children: [
+              Image.network(
+                "${API.baseUrl}/api/${postData.otherMultiPost![0].otherData!}",
+                fit: BoxFit.fill,
+                width: kSize.width,
+                height: kSize.height * 0.40,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return SizedBox(
+                    height: kSize.height * 0.40,
+                    width: kSize.width,
+                    child: const Center(child: CircularProgressIndicator()),
+                  );
+                },
+              ),
+
+              /// ✅ RIGHT SIDE – CENTER
+              Positioned(
+                top: 10,
+                right: 10,
+
+                child: InkWell(
+                  onTap: () {
+                    moreOptionBottomsheet(context, kSize, postData.id ?? 0);
+                  },
+                  child: Image.asset(
+                    ImageUtils.moreoptionimg,
+                    color: AppColors.kWhiteColor,
+                    height: 30,
+                    width: 15,
+                  ),
+                ),
+              ),
+            ],
           ),
 
           Container(
@@ -3086,6 +3107,181 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ).salondetailsresponse.response
                       as SalonDetailModel;
 
+              if (model.success == true) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BottomNavBar(index: 4),
+                  ),
+                );
+              }
+            });
+          }
+        }
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        kToast(Languages.of(context)!.noInternetText);
+      }
+    });
+  }
+
+  void moreOptionBottomsheet(
+    BuildContext screenContext, // 🔥 MAIN SCREEN context
+    Size kSize,
+    int postID,
+  ) {
+    showModalBottomSheet(
+      context: screenContext, // ✅ USE SCREEN CONTEXT
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+      ),
+      builder: (bottomSheetContext) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                /// 🔽 DELETE
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(bottomSheetContext);
+                    DeleteAlert(screenContext, kSize, postID);
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 30,
+                        child: Image.asset("lib/assets/images/delete.png"),
+                      ),
+                      SizedBox(width: 20),
+                      Text("Delete", style: Pallete.Quicksand18drkBlackbold),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<dynamic> DeleteAlert(BuildContext context, Size kSize, postID) {
+    return showDialog(
+      context: context,
+      builder:
+          (ctx) => BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+            child: AlertDialog(
+              backgroundColor: AppColors.kWhiteColor,
+              elevation: 0,
+              title: Text(Languages.of(context)!.deleteText),
+              titleTextStyle: Pallete.Quicksand22drkBlackbold,
+              insetPadding: const EdgeInsets.only(left: 20, right: 20),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              content: Text(
+                Languages.of(context)!.deleteposttitleText,
+                style: Pallete.Quicksand18drktxtGreyrwe500,
+              ),
+              actions: <Widget>[
+                SizedBox(
+                  width: kSize.width,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(10),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: AppColors.chatSenderColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                Languages.of(context)!.noText,
+                                style: Pallete.Quicksand15blackwe300,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(10),
+                          onTap: () async {
+                            print("postID == ${postID}");
+                            getPostDelete(postID.toString());
+                          },
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: AppColors.chatSenderColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                Languages.of(context)!.yesText,
+                                style: Pallete.Quicksand15blackwe300,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+    );
+  }
+
+  getPostDelete(String post_id) async {
+    print("get getSalonList function call");
+    setState(() {
+      isLoading = true;
+    });
+    isInternetAvailable().then((isConnected) async {
+      if (isConnected) {
+        await Provider.of<PostDeleteViewModel>(
+          context,
+          listen: false,
+        ).getPostDelete(post_id);
+        if (Provider.of<PostDeleteViewModel>(
+              context,
+              listen: false,
+            ).isLoading ==
+            false) {
+          if (Provider.of<PostDeleteViewModel>(
+                context,
+                listen: false,
+              ).isSuccess ==
+              true) {
+            setState(() {
+              isLoading = false;
+              setState(() {});
+
+              print("Success");
+              PostDeleteModel model =
+                  Provider.of<PostDeleteViewModel>(
+                        context,
+                        listen: false,
+                      ).postdeleteresponse.response
+                      as PostDeleteModel;
+
+              kToast(model.message!);
               if (model.success == true) {
                 Navigator.push(
                   context,

@@ -114,22 +114,34 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
       width: kSize.width,
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.kBorderColor, width: 2),
+        border: Border.all(
+          color: AppColors.kPinkColor, // ✅ PINK BORDER
+          width: 2, // ✅ THICKER BORDER
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<RewardTemplateModel>(
           hint: Text(
             "Select Reward Template (Optional)",
-            style: Pallete.Quicksand15darkgreye500,
+            style: Pallete.Quicksand15darkgreye500.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           value: selectedRewardTemplate,
           isExpanded: true,
+          icon: Icon(
+            Icons.keyboard_arrow_down,
+            color: AppColors.kPinkColor, // ✅ Pink dropdown icon
+          ),
           items:
               rewardTemplateList.map((template) {
-                return DropdownMenuItem(
+                return DropdownMenuItem<RewardTemplateModel>(
                   value: template,
-                  child: Text(template.rewardType),
+                  child: Text(
+                    template.rewardType,
+                    style: Pallete.Quicksand15darkgreye500,
+                  ),
                 );
               }).toList(),
           onChanged: (value) {
@@ -366,6 +378,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                                     : TextField(
                                       controller: addcommentcontroller,
                                       maxLines: null,
+                                      maxLength: 500,
                                       style: Pallete
                                           .Quicksand15darkgreye500.copyWith(
                                         color: AppColors.kBlackColor,
@@ -373,6 +386,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                                       keyboardType: TextInputType.multiline,
                                       textInputAction: TextInputAction.newline,
                                       decoration: InputDecoration(
+                                        counterText: "",
                                         enabledBorder: InputBorder.none,
                                         disabledBorder: InputBorder.none,
                                         border: InputBorder.none,

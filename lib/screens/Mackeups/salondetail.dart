@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
+import 'package:pinkGossip/bottomnavi.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/getstorylistmodel.dart';
 import 'package:pinkGossip/screens/AddPost/ShareSaloonReview.dart';
@@ -68,6 +69,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
   SharedPreferences? prefs;
   String userid = "";
   String userTyppe = "";
+  String userType = "";
   String firebaseID = "";
 
   int totalPoints = 0;
@@ -77,6 +79,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
     prefs = await SharedPreferences.getInstance();
     userid = prefs!.getString('userid')!;
     firebaseID = prefs!.getString('FirebaseId')!;
+    userType = prefs!.getString('userType') ?? "apple";
     print("userid   ${userid}");
     print("widget.userType   ${widget.userType}");
   }
@@ -103,8 +106,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
     getSalonDetails(widget.id, widget.userType);
     // 🔥 SHOW ALERT ONLY FOR DEEP LINK
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.pageType == 'deepLink') {
-        // if (1 == 1) {
+      if (widget.pageType == 'deepLink' && userType == "1") {
+        // if (1 == 1 && userType == "1") {
         _showDeepLinkWelcomeDialog();
       }
     });
@@ -219,10 +222,18 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                 ),
               ),
               onPressed: () {
+                prefs!.remove("beforeImage");
+                prefs!.remove("afterImage");
+                prefs!.remove("otherData");
+                prefs!.setInt("step", 2);
+                prefs!.setString("curruntsalonid", widget.id);
+
+                //3 image remove
+                // step,salonid id
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SharesaloonreviewPage(id: widget.id),
+                    builder: (context) => BottomNavBar(index: 2),
                   ),
                 );
 
@@ -233,7 +244,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                 //   MaterialPageRoute(builder: (_) => AddStory(type: "Home")));
               },
               child: Text(
-                "Start",
+                "Start Now",
                 style: Pallete.Quicksand14drktxtGreywe500.copyWith(
                   color: AppColors.btnColor,
                   fontWeight: FontWeight.bold,
