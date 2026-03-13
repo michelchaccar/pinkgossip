@@ -17,11 +17,10 @@ import 'package:pinkGossip/models/loginmodel.dart';
 import 'package:pinkGossip/screens/Auth/forgotpassword.dart';
 import 'package:pinkGossip/screens/Auth/signupscreen.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/loginviewmodel.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../bottomnavi.dart';
-import '../../utils/color_utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -70,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -81,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     height: 160,
                     padding: const EdgeInsets.only(left: 50, right: 50),
-                    color: AppColors.kWhiteColor,
+                    color: AppColors.bgPrimary,
                     alignment: Alignment.topCenter,
                     child: Image.asset("lib/assets/images/logo@3x.png"),
                   ),
@@ -90,16 +89,30 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextFormField(
                       maxLines: 1,
                       autocorrect: true,
-                      style: Pallete.textFieldTextStyle,
+                      style: AppTypography.input,
                       scrollPadding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
                       controller: emailTextController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
-                      cursorColor: AppColors.kTextColor,
-                      decoration: Pallete.getTextfieldDecoration(
-                        Languages.of(context)!.emailText,
+                      cursorColor: AppColors.textTertiary,
+                      decoration: InputDecoration(
+                        fillColor: AppColors.bgPrimary,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                        hintText: Languages.of(context)!.emailText,
+                        hintStyle: AppTypography.input,
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 2, color: AppColors.border),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                        ),
+                        focusColor: AppColors.actionPrimary,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
                   ),
@@ -109,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextFormField(
                       autocorrect: true,
                       maxLines: 1,
-                      style: Pallete.textFieldTextStyle,
+                      style: AppTypography.input,
                       scrollPadding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
@@ -117,31 +130,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
                       obscureText: _obscureText,
-                      cursorColor: AppColors.kTextColor,
+                      cursorColor: AppColors.textTertiary,
                       decoration: InputDecoration(
-                        fillColor: AppColors.kWhiteColor,
+                        fillColor: AppColors.bgPrimary,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15,
                           vertical: 14,
                         ),
                         hintText: Languages.of(context)!.passwordText,
-                        hintStyle: Pallete.textFieldTextStyle,
+                        hintStyle: AppTypography.input,
                         enabledBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                           borderSide: BorderSide(
                             width: 2,
-                            color: AppColors.kBorderColor,
+                            color: AppColors.border,
                           ),
                         ),
                         focusedBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: AppColors.kPinkColor,
+                            color: AppColors.actionPrimary,
                           ),
                         ),
-                        focusColor: AppColors.kPinkColor,
+                        focusColor: AppColors.actionPrimary,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -150,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _obscureText
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: AppColors.kTextColor,
+                            color: AppColors.textTertiary,
                           ),
                           onPressed: () {
                             setState(() {
@@ -165,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     height: 55,
                     margin: const EdgeInsets.only(left: 30, right: 30),
-                    decoration: Pallete.getButtonDecoration(),
+                    decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                     child: ElevatedButton(
                       onPressed: () {
                         if (emailTextController.text.isEmpty) {
@@ -199,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       style: ButtonStyle(
                         backgroundColor: const MaterialStatePropertyAll(
-                          AppColors.kPinkColor,
+                          AppColors.actionPrimary,
                         ),
                         elevation: const MaterialStatePropertyAll(0),
                         shape: MaterialStatePropertyAll(
@@ -211,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Center(
                         child: Text(
                           Languages.of(context)!.loginText,
-                          style: Pallete.buttonTextStyle,
+                          style: AppTypography.buttonText,
                         ),
                       ),
                     ),
@@ -232,7 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         textAlign: TextAlign.start,
                         Languages.of(context)!.fpText,
-                        style: Pallete.textFieldTextStyle,
+                        style: AppTypography.input,
                       ),
                     ),
                   ),
@@ -243,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     margin: const EdgeInsets.only(left: 30, right: 30),
                     child: Text(
                       Languages.of(context)!.orText,
-                      style: Pallete.Quicksand16drktxtGreywe500,
+                      style: AppTypography.heading3.copyWith(color: AppColors.textSecondary, fontWeight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -251,24 +264,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 60,
                     width: kSize.width,
                     margin: const EdgeInsets.only(left: 30, right: 30),
-                    decoration: Pallete.getBorderButtonDecoration(),
+                    decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.border, width: 2), borderRadius: BorderRadius.circular(12)),
                     child: ElevatedButton(
                       onPressed: () {
                         _handleGoogleSignIn();
                       },
                       style: ButtonStyle(
                         backgroundColor: const MaterialStatePropertyAll(
-                          AppColors.kWhiteColor,
+                          AppColors.bgPrimary,
                         ),
                         elevation: const MaterialStatePropertyAll(0),
                         overlayColor: const MaterialStatePropertyAll(
-                          AppColors.kAppBArBGColor,
+                          AppColors.bgPink,
                         ),
                         shape: MaterialStatePropertyAll(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                             side: const BorderSide(
-                              color: AppColors.kBorderColor,
+                              color: AppColors.borderLight,
                               width: 1,
                             ),
                           ),
@@ -284,7 +297,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Text(
                             Languages.of(context)!.loginwithgoogleText,
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                           ),
                         ],
                       ),
@@ -296,24 +309,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 55,
                         width: kSize.width,
                         margin: const EdgeInsets.only(left: 30, right: 30),
-                        decoration: Pallete.getBorderButtonDecoration(),
+                        decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.border, width: 2), borderRadius: BorderRadius.circular(12)),
                         child: ElevatedButton(
                           onPressed: () {
                             signInWithApple();
                           },
                           style: ButtonStyle(
                             backgroundColor: const WidgetStatePropertyAll(
-                              AppColors.kWhiteColor,
+                              AppColors.bgPrimary,
                             ),
                             elevation: const WidgetStatePropertyAll(0),
                             overlayColor: const WidgetStatePropertyAll(
-                              AppColors.kAppBArBGColor,
+                              AppColors.bgPink,
                             ),
                             shape: WidgetStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 side: const BorderSide(
-                                  color: AppColors.kBorderColor,
+                                  color: AppColors.borderLight,
                                   width: 1,
                                 ),
                               ),
@@ -326,12 +339,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               const Icon(
                                 Icons.apple,
                                 size: 28,
-                                color: AppColors.kBlackColor,
+                                color: AppColors.textPrimary,
                               ),
                               const SizedBox(width: 5),
                               Text(
                                 Languages.of(context)!.loginwithappleText,
-                                style: Pallete.Quicksand15blackwe600,
+                                style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                               ),
                             ],
                           ),
@@ -343,21 +356,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 60,
                     width: kSize.width,
                     margin: const EdgeInsets.only(left: 30, right: 30),
-                    decoration: Pallete.getBorderButtonDecoration(),
+                    decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.border, width: 2), borderRadius: BorderRadius.circular(12)),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: const MaterialStatePropertyAll(
-                          AppColors.kWhiteColor,
+                          AppColors.bgPrimary,
                         ),
                         elevation: const MaterialStatePropertyAll(0),
                         overlayColor: const MaterialStatePropertyAll(
-                          AppColors.kAppBArBGColor,
+                          AppColors.bgPink,
                         ),
                         shape: MaterialStatePropertyAll(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                             side: const BorderSide(
-                              color: AppColors.kBorderColor,
+                              color: AppColors.borderLight,
                               width: 1,
                             ),
                           ),
@@ -381,7 +394,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Center(
                         child: Text(
                           Languages.of(context)!.createAccountText,
-                          style: Pallete.Quicksand15blackwe600,
+                          style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                         ),
                       ),
                     ),

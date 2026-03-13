@@ -1,8 +1,7 @@
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/AddPost/addpost.dart';
 import 'package:pinkGossip/screens/HomeScreens/addstory.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,7 +46,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
   Widget build(BuildContext context) {
     return userTyppe == "2"
         ? Scaffold(
-          backgroundColor: AppColors.kWhiteColor,
+          backgroundColor: AppColors.bgPrimary,
           appBar:
               ispostSelected == false && isstorySelected == false
                   ? AppBar(
@@ -59,7 +58,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                       children: [
                         Text(
                           Languages.of(context)!.submitnewpostText,
-                          style: Pallete.Quicksand16drkBlackBold,
+                          style: AppTypography.heading3,
                         ),
                       ],
                     ),
@@ -70,7 +69,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                         ispostSelected
                             ? AppColors.kAppBArBGColor
                             : isstorySelected
-                            ? AppColors.kBlackColor
+                            ? AppColors.textPrimary
                             : AppColors.kAppBArBGColor,
                   ),
           body:
@@ -119,7 +118,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                         Container(
                           height: 30,
                           width: 180,
-                          decoration: Pallete.getButtonDecoration(),
+                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                           child: InkWell(
                             onTap: () {
                               setState(() {
@@ -131,7 +130,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.sharepostText,
-                                style: Pallete.buttonTextStyle,
+                                style: AppTypography.buttonText,
                               ),
                             ),
                           ),
@@ -145,7 +144,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                         Container(
                           height: 30,
                           width: 180,
-                          decoration: Pallete.getButtonDecoration(),
+                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                           child: InkWell(
                             onTap: () {
                               setState(() {
@@ -157,7 +156,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.sharestoryText,
-                                style: Pallete.buttonTextStyle,
+                                style: AppTypography.buttonText,
                               ),
                             ),
                           ),
@@ -180,7 +179,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                       children: [
                         Text(
                           Languages.of(context)!.submitnewpostText,
-                          style: Pallete.Quicksand16drkBlackBold,
+                          style: AppTypography.heading3,
                         ),
                       ],
                     ),
@@ -191,12 +190,12 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                         isposttype1Selected
                             ? AppColors.kAppBArBGColor
                             : isstorytype1Selected
-                            ? AppColors.kBlackColor
+                            ? AppColors.textPrimary
                             : issalonreviewSelected
                             ? AppColors.kAppBArBGColor
-                            : AppColors.kWhiteColor,
+                            : AppColors.bgPrimary,
                   ),
-          backgroundColor: AppColors.kWhiteColor,
+          backgroundColor: AppColors.bgPrimary,
           body:
               isposttype1Selected
                   ? AddPost(type: "1", usertype: "1")
@@ -258,7 +257,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                         Container(
                           height: 30,
                           width: 180,
-                          decoration: Pallete.getButtonDecoration(),
+                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                           child: InkWell(
                             onTap: () {
                               setState(() {
@@ -271,7 +270,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.sharepostText,
-                                style: Pallete.buttonTextStyle,
+                                style: AppTypography.buttonText,
                               ),
                             ),
                           ),
@@ -286,7 +285,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                         Container(
                           height: 30,
                           width: 180,
-                          decoration: Pallete.getButtonDecoration(),
+                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                           child: InkWell(
                             onTap: () {
                               setState(() {
@@ -299,7 +298,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.sharestoryText,
-                                style: Pallete.buttonTextStyle,
+                                style: AppTypography.buttonText,
                               ),
                             ),
                           ),
@@ -314,7 +313,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                         Container(
                           height: 30,
                           width: 180,
-                          decoration: Pallete.getButtonDecoration(),
+                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                           child: InkWell(
                             onTap: () {
                               setState(() {
@@ -327,7 +326,7 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.sharesalonreviewText,
-                                style: Pallete.buttonTextStyle,
+                                style: AppTypography.buttonText,
                               ),
                             ),
                           ),

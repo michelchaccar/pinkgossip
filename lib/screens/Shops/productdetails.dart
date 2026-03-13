@@ -1,7 +1,6 @@
 import 'package:pinkGossip/localization/language/languages.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -37,7 +36,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -47,7 +46,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           children: [
             InkWell(
               overlayColor: const MaterialStatePropertyAll(
-                AppColors.kWhiteColor,
+                AppColors.bgPrimary,
               ),
               borderRadius: BorderRadius.circular(20),
               onTap: () {
@@ -66,7 +65,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             Expanded(
               child: Text(
                 "ST London - Dual Wet & Dry Compact Powder",
-                style: Pallete.Quicksand16drkBlackBold,
+                style: AppTypography.heading3,
               ),
             ),
           ],
@@ -97,7 +96,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 const SizedBox(height: 15),
                 Text(
                   "ST London - Dual Wet & Dry Compact Powder",
-                  style: Pallete.Quicksand16drkBlackBold,
+                  style: AppTypography.heading3,
                 ),
                 const SizedBox(height: 10),
                 RichText(
@@ -105,11 +104,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: <TextSpan>[
                       TextSpan(
                         text: "${Languages.of(context)!.BrandText}: ",
-                        style: Pallete.Quicksand12blackwe600,
+                        style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                       ),
                       TextSpan(
                         text: "ST Lundon",
-                        style: Pallete.Quicksand12darkGreykwe400,
+                        style: AppTypography.caption.copyWith(color: AppColors.textTertiary),
                       ),
                     ],
                   ),
@@ -120,11 +119,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: <TextSpan>[
                       TextSpan(
                         text: "${Languages.of(context)!.ProductTypeText}: ",
-                        style: Pallete.Quicksand12blackwe600,
+                        style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                       ),
                       TextSpan(
                         text: "Powder",
-                        style: Pallete.Quicksand12darkGreykwe400,
+                        style: AppTypography.caption.copyWith(color: AppColors.textTertiary),
                       ),
                     ],
                   ),
@@ -135,17 +134,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: <TextSpan>[
                       TextSpan(
                         text: "${Languages.of(context)!.CategoryText}: ",
-                        style: Pallete.Quicksand12blackwe600,
+                        style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                       ),
                       TextSpan(
                         text: "Face",
-                        style: Pallete.Quicksand12darkGreykwe400,
+                        style: AppTypography.caption.copyWith(color: AppColors.textTertiary),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 15),
-                Text("\$39.99", style: Pallete.Quicksand15blackwe600),
+                Text("\$39.99", style: AppTypography.bodySemiBold.copyWith(fontSize: 15)),
                 const SizedBox(height: 25),
                 Row(
                   children: [
@@ -247,7 +246,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       child: Center(
                         child: Text(
                           '$_counter',
-                          style: Pallete.Quicksand18drkBlackbold,
+                          style: AppTypography.heading2,
                         ),
                       ),
                     ),
@@ -272,7 +271,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                          color: AppColors.kPinkColor,
+                          color: AppColors.actionPrimary,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: ElevatedButton(
@@ -281,7 +280,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           },
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all(
-                              AppColors.kPinkColor,
+                              AppColors.actionPrimary,
                             ),
                             shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
@@ -293,12 +292,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Center(
                             child: Text(
                               Languages.of(context)!.addtocartText,
-                              style: const TextStyle(
-                                color: AppColors.kWhiteColor,
-                                fontFamily: "Geist",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
+                              style: AppTypography.buttonText,
                             ),
                           ),
                         ),
@@ -309,7 +303,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       children: [
                         InkWell(
                           overlayColor: const WidgetStatePropertyAll(
-                            AppColors.kWhiteColor,
+                            AppColors.bgPrimary,
                           ),
                           borderRadius: BorderRadius.circular(20),
                           onTap: () {},
@@ -322,7 +316,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         const SizedBox(width: 10),
                         InkWell(
                           overlayColor: const WidgetStatePropertyAll(
-                            AppColors.kWhiteColor,
+                            AppColors.bgPrimary,
                           ),
                           borderRadius: BorderRadius.circular(20),
                           onTap: () {},

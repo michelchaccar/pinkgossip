@@ -6,9 +6,8 @@ import 'package:pinkGossip/utils/videoplayer.dart';
 import 'package:chewie/chewie.dart';
 // import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:video_player/video_player.dart';
 
 class ShowPostVideo extends StatefulWidget {
@@ -76,7 +75,7 @@ class _ShowPostVideoState extends State<ShowPostVideo> {
           children: [
             InkWell(
               overlayColor: const MaterialStatePropertyAll(
-                AppColors.kWhiteColor,
+                AppColors.bgPrimary,
               ),
               borderRadius: BorderRadius.circular(20),
               onTap: () {
@@ -94,13 +93,13 @@ class _ShowPostVideoState extends State<ShowPostVideo> {
             const SizedBox(width: 20),
             Text(
               Languages.of(context)!.videoText,
-              style: Pallete.Quicksand16drkBlackBold,
+              style: AppTypography.heading3,
             ),
           ],
         ),
       ),
       body: Scaffold(
-        backgroundColor: AppColors.kWhiteColor,
+        backgroundColor: AppColors.bgPrimary,
         body: SafeArea(
           child: PageView.builder(
             controller: _controller,
@@ -111,7 +110,7 @@ class _ShowPostVideoState extends State<ShowPostVideo> {
               return Container(
                 height: kSize.height / 1.2,
                 width: kSize.width,
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 child: MyVideoPlayer(videoUrl: widget.getvideoList[index]),
               );
             },

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/salondetailsviewmodel.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
 import 'package:provider/provider.dart';
@@ -75,7 +74,7 @@ class _MyRewardPageState extends State<MyRewardPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: AppColors.kAppBArBGColor,
-        title: Text("My Rewards", style: Pallete.Quicksand16drkBlackBold),
+        title: Text("My Rewards", style: AppTypography.heading3),
       ),
       body:
           isLoading
@@ -146,7 +145,7 @@ class _MyRewardPageState extends State<MyRewardPage> {
                                           post.averageRating!.toStringAsFixed(
                                             1,
                                           ),
-                                          style: Pallete.Quicksand12Greywe400,
+                                          style: AppTypography.caption,
                                         ),
                                         const SizedBox(width: 4),
                                         RatingBarIndicator(
@@ -162,13 +161,13 @@ class _MyRewardPageState extends State<MyRewardPage> {
                                           itemBuilder:
                                               (context, _) => const Icon(
                                                 Icons.star,
-                                                color: AppColors.kPinkColor,
+                                                color: AppColors.actionPrimary,
                                               ),
                                         ),
                                         const SizedBox(width: 4),
                                         Text(
                                           "(${post.ratingCount.toString()})",
-                                          style: Pallete.Quicksand12Greywe400,
+                                          style: AppTypography.caption,
                                         ),
                                       ],
                                     ),

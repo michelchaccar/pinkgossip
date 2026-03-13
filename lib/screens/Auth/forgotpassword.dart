@@ -3,10 +3,9 @@
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/forgotpasswordviewmodel.dart';
 import '../../models/forgotpasswordmodel.dart';
 
@@ -50,7 +49,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             const SizedBox(width: 20),
             Text(
               Languages.of(context)!.forgotpassText,
-              style: Pallete.Quicksand16drkBlackBold,
+              style: AppTypography.heading3,
             ),
           ],
         ),
@@ -73,7 +72,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: TextFormField(
                     autocorrect: true,
                     maxLines: 1,
-                    style: Pallete.textFieldTextStyle,
+                    style: AppTypography.input,
                     scrollPadding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom,
                     ),
@@ -81,8 +80,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     cursorColor: AppColors.kTextColor,
-                    decoration: Pallete.getTextfieldDecoration(
-                      Languages.of(context)!.emailText,
+                    decoration: InputDecoration(
+                      fillColor: AppColors.bgPrimary,
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                      hintText: Languages.of(context)!.emailText,
+                      hintStyle: AppTypography.input,
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                      ),
+                      focusColor: AppColors.actionPrimary,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                 ),
@@ -91,7 +104,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   height: 60,
                   width: kSize.width,
                   margin: const EdgeInsets.only(left: 30, right: 30),
-                  decoration: Pallete.getBorderButtonDecoration(),
+                  decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.borderLight, width: 2), borderRadius: BorderRadius.circular(12)),
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: const WidgetStatePropertyAll(
@@ -123,7 +136,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     child: Center(
                       child: Text(
                         Languages.of(context)!.sendlinktText,
-                        style: Pallete.buttonTextStyle,
+                        style: AppTypography.buttonText,
                       ),
                     ),
                   ),

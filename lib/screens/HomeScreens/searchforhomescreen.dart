@@ -13,10 +13,9 @@ import 'package:pinkGossip/viewModels/getstoryviewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../viewModels/searchuserlistviewmodel.dart';
 
@@ -124,7 +123,7 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: AppColors.kWhiteColor,
+        backgroundColor: AppColors.bgPrimary,
         appBar: AppBar(
           toolbarHeight: 60,
           surfaceTintColor: Colors.transparent,
@@ -135,7 +134,7 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
             children: [
               InkWell(
                 overlayColor: const WidgetStatePropertyAll(
-                  AppColors.kWhiteColor,
+                  AppColors.bgPrimary,
                 ),
                 borderRadius: BorderRadius.circular(20),
                 onTap: () {
@@ -173,14 +172,14 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                       setState(() {});
                     },
                     decoration: InputDecoration(
-                      fillColor: AppColors.kWhiteColor,
+                      fillColor: AppColors.bgPrimary,
                       filled: true,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 15,
                         vertical: 14,
                       ),
                       hintText: Languages.of(context)!.searchText,
-                      hintStyle: Pallete.textFieldTextStyle,
+                      hintStyle: AppTypography.input,
                       suffixIcon: const Icon(Icons.search, size: 30),
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(35)),
@@ -193,10 +192,10 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                         borderRadius: BorderRadius.all(Radius.circular(35)),
                         borderSide: BorderSide(
                           width: 1,
-                          color: AppColors.kPinkColor,
+                          color: AppColors.actionPrimary,
                         ),
                       ),
-                      focusColor: AppColors.kPinkColor,
+                      focusColor: AppColors.actionPrimary,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(35),
                       ),
@@ -216,10 +215,10 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                   child: TabBar(
                     isScrollable: false,
                     controller: _tabController,
-                    indicatorColor: AppColors.kPinkColor,
-                    labelColor: AppColors.kBlackColor,
-                    unselectedLabelStyle: Pallete.Quicksand16drkBlackBold,
-                    labelStyle: Pallete.Quicksand16drkBlackBold,
+                    indicatorColor: AppColors.actionPrimary,
+                    labelColor: AppColors.textPrimary,
+                    unselectedLabelStyle: AppTypography.heading3,
+                    labelStyle: AppTypography.heading3,
                     indicatorSize: TabBarIndicatorSize.tab,
                     onTap: (value) {
                       //   if (value == 0) {
@@ -564,15 +563,13 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                               Text(
                                                 "${enthusiastssearchingList[index].firstName} ${enthusiastssearchingList[index].lastName}",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand14blackwe600,
+                                                    AppTypography.bodySemiBold,
                                               ),
                                               const SizedBox(height: 2),
                                               Text(
                                                 "${enthusiastssearchingList[index].followerCount.toString()} ${Languages.of(context)!.FollowersText}",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand14blackwe400,
+                                                    AppTypography.body,
                                               ),
                                             ],
                                           ),
@@ -895,15 +892,13 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                 // "${salonsearchingList[index].firstName} ${salonsearchingList[index].lastName}",
                                                 "${salonsearchingList[index].salonName}",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand14blackwe600,
+                                                    AppTypography.bodySemiBold,
                                               ),
                                               const SizedBox(height: 2),
                                               Text(
                                                 "${salonsearchingList[index].followerCount.toString()} followers",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand14blackwe400,
+                                                    AppTypography.body,
                                               ),
                                             ],
                                           ),

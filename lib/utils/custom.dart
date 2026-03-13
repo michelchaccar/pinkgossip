@@ -3,7 +3,7 @@
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/utils/ProfileShareWidget.dart';
 import 'package:pinkGossip/utils/common_functions.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -103,7 +103,7 @@ Future showShareOptions(BuildContext context, String username, String userId) {
           children: [
             ListTile(
               leading: const Icon(Icons.qr_code),
-              title: Text('Show QR Code', style: Pallete.Quicksand15blackwe600),
+              title: Text('Show QR Code', style: AppTypography.bodySemiBold.copyWith(fontSize: 15)),
               onTap: () {
                 Navigator.pop(context);
                 _showQrCode(context, userId, username);
@@ -113,7 +113,7 @@ Future showShareOptions(BuildContext context, String username, String userId) {
               leading: const Icon(Icons.share),
               title: Text(
                 'Share Profile Link',
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
               onTap: () {
                 Share.share(

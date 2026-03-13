@@ -26,7 +26,6 @@ import 'package:pinkGossip/models/followingmodel.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
 import 'package:pinkGossip/models/unfollwmodel.dart';
 import 'package:pinkGossip/screens/showpostimage.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/viewModels/followingviewmodel.dart';
@@ -35,7 +34,7 @@ import 'package:pinkGossip/viewModels/unfollwviewmodel.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
-import '../../utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:intl/intl.dart';
 
 class SalonDetailScreen extends StatefulWidget {
@@ -208,15 +207,15 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
               },
               child: Text(
                 "Later",
-                style: Pallete.Quicksand14drktxtGreywe500.copyWith(
-                  color: AppColors.kBlackColor,
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey).copyWith(
+                  color: AppColors.textPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.kPinkColor,
+                backgroundColor: AppColors.actionPrimary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -245,7 +244,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
               },
               child: Text(
                 "Start Now",
-                style: Pallete.Quicksand14drktxtGreywe500.copyWith(
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey).copyWith(
                   color: AppColors.btnColor,
                   fontWeight: FontWeight.bold,
                 ),
@@ -264,7 +263,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
       length: 3,
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: AppColors.kWhiteColor,
+        backgroundColor: AppColors.bgPrimary,
         appBar:
             salonDetails != null
                 ? AppBar(
@@ -279,7 +278,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                         children: [
                           InkWell(
                             overlayColor: const MaterialStatePropertyAll(
-                              AppColors.kWhiteColor,
+                              AppColors.bgPrimary,
                             ),
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
@@ -301,7 +300,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                     ? salonDetails!.userName!
                                     : "${salonDetails!.firstName!} ${salonDetails!.lastName!}"
                                 : salonDetails!.salonName!,
-                            style: Pallete.Quicksand16drkBlackbold,
+                            style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -332,7 +331,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                   },
                                   child: Image.asset(
                                     ImageUtils.mapImage,
-                                    color: AppColors.kBlackColor,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               )
@@ -444,8 +443,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                       shape: BoxShape.circle,
                                                       gradient: LinearGradient(
                                                         colors: [
-                                                          AppColors.kPinkColor,
-                                                          AppColors.kPinkColor,
+                                                          AppColors.actionPrimary,
+                                                          AppColors.actionPrimary,
                                                         ],
                                                         begin:
                                                             Alignment.topLeft,
@@ -549,7 +548,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                       Icons.add,
                                                       size: 16.0,
                                                       color:
-                                                          AppColors.kWhiteColor,
+                                                          AppColors.bgPrimary,
                                                     ),
                                                   ),
                                                 ),
@@ -628,8 +627,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                   shape: BoxShape.circle,
                                                   gradient: LinearGradient(
                                                     colors: [
-                                                      AppColors.kPinkColor,
-                                                      AppColors.kPinkColor,
+                                                      AppColors.actionPrimary,
+                                                      AppColors.actionPrimary,
                                                     ],
                                                     begin: Alignment.topLeft,
                                                     end: Alignment.bottomRight,
@@ -665,8 +664,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                           .toString(),
                                                   // totalPoints.toString(),
                                                   style:
-                                                      Pallete
-                                                          .Quicksand16drkBlackBold,
+                                                      AppTypography.heading3,
                                                 ),
                                                 Text(
                                                   salonDetails!.userType == 1
@@ -677,8 +675,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                         context,
                                                       )!.reviewText,
                                                   style:
-                                                      Pallete
-                                                          .Quicksand16drktxtGreywe500,
+                                                      AppTypography.heading3.copyWith(fontWeight: FontWeight.w500, color: AppColors.textSecondary),
                                                 ),
                                               ],
                                             ),
@@ -744,16 +741,14 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                             .toString()
                                                         : "0",
                                                     style:
-                                                        Pallete
-                                                            .Quicksand16drkBlackBold,
+                                                        AppTypography.heading3,
                                                   ),
                                                   Text(
                                                     Languages.of(
                                                       context,
                                                     )!.follwersText,
                                                     style:
-                                                        Pallete
-                                                            .Quicksand16drktxtGreywe500,
+                                                        AppTypography.heading3.copyWith(fontWeight: FontWeight.w500, color: AppColors.textSecondary),
                                                   ),
                                                 ],
                                               ),
@@ -823,16 +818,14 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                             .toString()
                                                         : "0",
                                                     style:
-                                                        Pallete
-                                                            .Quicksand16drkBlackBold,
+                                                        AppTypography.heading3,
                                                   ),
                                                   Text(
                                                     Languages.of(
                                                       context,
                                                     )!.followingText,
                                                     style:
-                                                        Pallete
-                                                            .Quicksand16drktxtGreywe500,
+                                                        AppTypography.heading3.copyWith(fontWeight: FontWeight.w500, color: AppColors.textSecondary),
                                                   ),
                                                 ],
                                               ),
@@ -852,8 +845,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                   salonDetails!.averageRating!,
                                                 ).toStringAsFixed(1),
                                                 style:
-                                                    Pallete
-                                                        .Quicksand12blackwe400,
+                                                    AppTypography.caption.copyWith(color: AppColors.textPrimary),
                                               ),
                                               const SizedBox(width: 4),
                                               RatingBarIndicator(
@@ -871,15 +863,14 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                                     (context, _) => const Icon(
                                                       Icons.star,
                                                       color:
-                                                          AppColors.kPinkColor,
+                                                          AppColors.actionPrimary,
                                                     ),
                                               ),
                                               const SizedBox(width: 4),
                                               Text(
                                                 "(${salonDetails!.ratingCount.toString()})",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand12blackwe400,
+                                                    AppTypography.caption.copyWith(color: AppColors.textPrimary),
                                               ),
                                             ],
                                           )
@@ -906,7 +897,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                     alignment: Alignment.topLeft,
                                     child: Text(
                                       salonDetails!.salonName!,
-                                      style: Pallete.Quicksand16drkBlackbold,
+                                      style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
                                     ),
                                   )
                                   : Container()
@@ -922,7 +913,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                   salonDetails!.userType == 1
                                       ? "${salonDetails!.firstName!} ${salonDetails!.lastName!}"
                                       : salonDetails!.salonName!,
-                                  style: Pallete.Quicksand16drkBlackbold,
+                                  style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
                                 ),
                               )
                               : Container(),
@@ -934,7 +925,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                 salonDetails!.userType == 1
                                     ? Languages.of(context)!.gossiperText
                                     : Languages.of(context)!.beautybusinessText,
-                                style: Pallete.Quicksand14Blackw500,
+                                style: AppTypography.bodyMedium,
                               ),
                             ),
                           ),
@@ -950,7 +941,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                   salonDetails!.email!.isNotEmpty
                                       ? salonDetails!.email!
                                       : "",
-                                  style: Pallete.Quicksand14drktxtBluewe500,
+                                  style: AppTypography.bodyMedium.copyWith(color: AppColors.kBlueColor),
                                 ),
                               )
                               : Container(),
@@ -971,8 +962,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                   salonDetails!.bio != ""
                                       ? salonDetails!.bio!
                                       : "",
-                                  style: Pallete
-                                      .Quicksand14drktxtGreywe500.copyWith(
+                                  style: AppTypography.bodyMedium.copyWith(
                                     color: Colors.black,
                                   ),
                                 ),
@@ -1065,8 +1055,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                       alignment: Alignment.topLeft,
                                       child: Text(
                                         salonDetails!.contactNo!,
-                                        style: Pallete
-                                            .Quicksand14drktxtGreywe500.copyWith(
+                                        style: AppTypography.bodyMedium.copyWith(
                                           color: Colors.black,
                                           // decoration: TextDecoration.underline,
                                         ),
@@ -1107,8 +1096,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                       alignment: Alignment.topLeft,
                                       child: Text(
                                         salonDetails!.siteName!,
-                                        style: Pallete
-                                            .Quicksand14drktxtGreywe500.copyWith(
+                                        style: AppTypography.bodyMedium.copyWith(
                                           color: Colors.blue,
                                           decoration: TextDecoration.underline,
                                           decorationColor: Colors.blue,
@@ -1129,8 +1117,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                     alignment: Alignment.topLeft,
                                     child: Text(
                                       salonDetails!.address!,
-                                      style: Pallete
-                                          .Quicksand14drktxtGreywe500.copyWith(
+                                      style: AppTypography.bodyMedium.copyWith(
                                         color: Colors.black,
                                       ),
                                     ),
@@ -1366,12 +1353,12 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                       SizedBox(
                         height: 50,
                         child: TabBar(
-                          labelColor: AppColors.kBlackColor,
+                          labelColor: AppColors.textPrimary,
                           overlayColor: const MaterialStatePropertyAll(
                             AppColors.kAppBArBGColor,
                           ),
                           unselectedLabelColor: AppColors.kBlueColor,
-                          indicatorColor: AppColors.kPinkColor,
+                          indicatorColor: AppColors.actionPrimary,
                           indicatorSize: TabBarIndicatorSize.tab,
                           controller: _tabController,
                           onTap: (value) async {
@@ -1405,8 +1392,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                   ImageUtils.gridicon,
                                   color:
                                       currentindex == 0
-                                          ? AppColors.kPinkColor
-                                          : AppColors.kBlackColor,
+                                          ? AppColors.actionPrimary
+                                          : AppColors.textPrimary,
                                 ),
                               ),
                             ),
@@ -1418,8 +1405,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                   ImageUtils.videoicon,
                                   color:
                                       currentindex == 1
-                                          ? AppColors.kPinkColor
-                                          : AppColors.kBlackColor,
+                                          ? AppColors.actionPrimary
+                                          : AppColors.textPrimary,
                                 ),
                               ),
                             ),
@@ -1431,8 +1418,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                   "lib/assets/images/tag Background Removed.png",
                                   color:
                                       currentindex == 2
-                                          ? AppColors.kPinkColor
-                                          : AppColors.kBlackColor,
+                                          ? AppColors.actionPrimary
+                                          : AppColors.textPrimary,
                                 ),
                               ),
                             ),
@@ -1788,7 +1775,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                             //                                         child: Center(
                             //                                           child: CircularProgressIndicator(
                             //                                             color:
-                            //                                                 AppColors.kBlackColor,
+                            //                                                 AppColors.textPrimary,
                             //                                             value:
                             //                                                 loadingProgress.expectedTotalBytes !=
                             //                                                         null
@@ -1843,7 +1830,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                             // : Center(
                             //   child: Text(
                             //     Languages.of(context)!.NopostavailableText,
-                            //     style: Pallete.Quicksand16drkBlackBold,
+                            //     style: AppTypography.heading3,
                             //   ),
                             // ),
                             videoList.isNotEmpty
@@ -1939,7 +1926,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                 : Center(
                                   child: Text(
                                     Languages.of(context)!.NovideoavailableText,
-                                    style: Pallete.Quicksand16drkBlackBold,
+                                    style: AppTypography.heading3,
                                   ),
                                 ),
                             tagPostList!.isEmpty
@@ -1951,7 +1938,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                         Text(
                                           Languages.of(context)!.postofyouText,
                                           style:
-                                              Pallete.Quicksand20drkBlackBold,
+                                              AppTypography.heading2.copyWith(fontSize: 20),
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
@@ -1959,14 +1946,14 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                                             context,
                                           )!.emptytaglisttitleText,
                                           textAlign: TextAlign.center,
-                                          style: Pallete.Quicksand15blackwe300,
+                                          style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                                         ),
                                       ],
                                     )
                                     : Center(
                                       child: Text(
                                         Languages.of(context)!.nopostsyetText,
-                                        style: Pallete.Quicksand20drkBlackBold,
+                                        style: AppTypography.heading2.copyWith(fontSize: 20),
                                       ),
                                     )
                                 : GridView.builder(
@@ -2609,7 +2596,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                   _showHours
                       ? Languages.of(context)!.hideStoreHours
                       : Languages.of(context)!.viewStorehours,
-                  style: Pallete.Quicksand16drkBlackBold.copyWith(
+                  style: AppTypography.heading3.copyWith(
                     // color: Colors.blue, // clickable look
                     fontWeight: FontWeight.w600,
                   ),
@@ -2636,28 +2623,28 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                   children: [
                     Text(
                       salonOpenDays[index].open!,
-                      style: Pallete.Quicksand12blackwe400.copyWith(
+                      style: AppTypography.caption.copyWith(color: AppColors.klightGreyColor).copyWith(
                         color: Colors.black,
                       ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       formatTime(salonOpenDays[index].startTime!),
-                      style: Pallete.Quicksand12blackwe400.copyWith(
+                      style: AppTypography.caption.copyWith(color: AppColors.klightGreyColor).copyWith(
                         color: Colors.black,
                       ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       Languages.of(context)!.toText,
-                      style: Pallete.Quicksand12blackwe400.copyWith(
+                      style: AppTypography.caption.copyWith(color: AppColors.klightGreyColor).copyWith(
                         color: Colors.black,
                       ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       formatTime(salonOpenDays[index].endTime!),
-                      style: Pallete.Quicksand12blackwe400.copyWith(
+                      style: AppTypography.caption.copyWith(color: AppColors.klightGreyColor).copyWith(
                         color: Colors.black,
                       ),
                     ),

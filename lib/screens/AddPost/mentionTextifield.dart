@@ -1,7 +1,6 @@
 import 'package:pinkGossip/localization/language/languages.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 
@@ -147,8 +146,8 @@ class _MentionTextFieldState extends State<MentionTextField> {
               maxLines: null,
               maxLength: 500,
 
-              style: Pallete.Quicksand15darkgreye500.copyWith(
-                color: AppColors.kBlackColor,
+              style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w500).copyWith(
+                color: AppColors.textPrimary,
               ),
               onChanged: _onTextChanged,
               keyboardType: TextInputType.multiline,
@@ -184,7 +183,7 @@ class _MentionTextFieldState extends State<MentionTextField> {
                             widget.type == "PostReviewTyp2"
                         ? InputBorder.none
                         : const OutlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.kPinkColor),
+                          borderSide: BorderSide(color: AppColors.actionPrimary),
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                 contentPadding: const EdgeInsets.symmetric(
@@ -197,8 +196,8 @@ class _MentionTextFieldState extends State<MentionTextField> {
                         : widget.type == "PostReviewTyp2"
                         ? Languages.of(context)!.captionText
                         : Languages.of(context)!.captionText,
-                hintStyle: Pallete.Quicksand15darkgreye500.copyWith(
-                  color: AppColors.kBlackColor,
+                hintStyle: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w500).copyWith(
+                  color: AppColors.textPrimary,
                 ),
               ),
             ),
@@ -242,14 +241,14 @@ class _MentionTextFieldState extends State<MentionTextField> {
                     children: [
                       Text(
                         user.userName ?? '',
-                        style: Pallete.Quicksand14Whiitewe600.copyWith(
-                          color: AppColors.kBlackColor,
+                        style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary).copyWith(
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       Text(
                         "${user.firstName ?? ''}${user.lastName ?? ''}",
-                        style: Pallete.Quicksand14Whiitewe500.copyWith(
-                          color: AppColors.kBlackColor,
+                        style: AppTypography.bodyMedium.copyWith(color: AppColors.bgPrimary).copyWith(
+                          color: AppColors.textPrimary,
                         ),
                       ),
                     ],

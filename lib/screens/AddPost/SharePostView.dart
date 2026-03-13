@@ -13,11 +13,10 @@ import 'package:pinkGossip/models/createpostmodel.dart';
 import 'package:pinkGossip/models/rewardtemplatemodel.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/screens/AddPost/mentionTextifield.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/customeCamara.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:pinkGossip/viewModels/createpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/searchuserlistviewmodel.dart';
 
@@ -115,7 +114,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppColors.kPinkColor, // ✅ PINK BORDER
+          color: AppColors.actionPrimary, // ✅ PINK BORDER
           width: 2, // ✅ THICKER BORDER
         ),
         borderRadius: BorderRadius.circular(10),
@@ -124,7 +123,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
         child: DropdownButton<RewardTemplateModel>(
           hint: Text(
             "Select Reward Template (Optional)",
-            style: Pallete.Quicksand15darkgreye500.copyWith(
+            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w500).copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -132,7 +131,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
           isExpanded: true,
           icon: Icon(
             Icons.keyboard_arrow_down,
-            color: AppColors.kPinkColor, // ✅ Pink dropdown icon
+            color: AppColors.actionPrimary, // ✅ Pink dropdown icon
           ),
           items:
               rewardTemplateList.map((template) {
@@ -140,7 +139,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                   value: template,
                   child: Text(
                     template.rewardType,
-                    style: Pallete.Quicksand15darkgreye500,
+                    style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
                   ),
                 );
               }).toList(),
@@ -163,7 +162,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: AppColors.kWhiteColor,
+        backgroundColor: AppColors.bgPrimary,
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
           backgroundColor: AppColors.kAppBArBGColor,
@@ -177,7 +176,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                 widget.type == "NormalPost"
                     ? Languages.of(context)!.sharepostText
                     : Languages.of(context)!.postARewardText,
-                style: Pallete.Quicksand16drkBlackBold,
+                style: AppTypography.heading3,
               ),
               InkWell(
                 onTap: () async {
@@ -197,7 +196,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                 child: Image.asset(
                   "lib/assets/images/wrong.png",
                   width: 22,
-                  color: AppColors.kBlackColor,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -275,13 +274,13 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                                   context,
                                 )!.UploadpictureorvideoText
                                 : Languages.of(context)!.uploadimageText,
-                            style: Pallete.Quicksand16drktxtGreywe500,
+                            style: AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textSecondary),
                           ),
                           const SizedBox(height: 10),
                           Container(
                             height: 30,
                             width: 150,
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () {
                                 showPostOptionsBottomSheet(context);
@@ -289,7 +288,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.uploadText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -298,7 +297,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                           Container(
                             height: 55,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () async {
                                 // Image / video MUST for NormalPost & RewardPost
@@ -318,7 +317,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.continueText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -343,7 +342,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                             height: 200,
                             width: kSize.width,
                             decoration: BoxDecoration(
-                              color: AppColors.kWhiteColor,
+                              color: AppColors.bgPrimary,
                               border: Border.all(
                                 color: AppColors.kBorderColor,
                                 width: 2,
@@ -379,9 +378,8 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                                       controller: addcommentcontroller,
                                       maxLines: null,
                                       maxLength: 500,
-                                      style: Pallete
-                                          .Quicksand15darkgreye500.copyWith(
-                                        color: AppColors.kBlackColor,
+                                      style: AppTypography.input.copyWith(
+                                        color: AppColors.textPrimary,
                                       ),
                                       keyboardType: TextInputType.multiline,
                                       textInputAction: TextInputAction.newline,
@@ -400,9 +398,8 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                                             Languages.of(
                                               context,
                                             )!.descOfRewardAndOfferText,
-                                        hintStyle: Pallete
-                                            .Quicksand15darkgreye500.copyWith(
-                                          color: AppColors.kBlackColor,
+                                        hintStyle: AppTypography.input.copyWith(
+                                          color: AppColors.textPrimary,
                                         ),
                                       ),
                                     ),
@@ -411,7 +408,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                           InkWell(
                             child: Container(
                               height: 55,
-                              decoration: Pallete.getButtonDecoration(),
+                              decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                               child: InkWell(
                                 onTap: () async {
                                   if (widget.type == "NormalPost" &&
@@ -499,7 +496,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                                 child: Center(
                                   child: Text(
                                     Languages.of(context)!.submitpostText,
-                                    style: Pallete.buttonTextStyle,
+                                    style: AppTypography.buttonText,
                                   ),
                                 ),
                               ),
@@ -509,7 +506,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                           Container(
                             height: 60,
                             width: kSize.width,
-                            decoration: Pallete.getBorderButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
                             child: InkWell(
                               onTap: () async {
                                 //
@@ -519,7 +516,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.previousText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                               ),
                             ),
@@ -536,10 +533,10 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                 ? Container(
                   height: kSize.height,
                   width: kSize.width,
-                  color: AppColors.kWhiteColor,
+                  color: AppColors.bgPrimary,
                   child: const Center(
                     child: CircularProgressIndicator(
-                      color: AppColors.kBlackColor,
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 )
@@ -595,7 +592,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
               borderRadius: BorderRadius.circular(20),
               color:
                   currentStep == index
-                      ? AppColors.kPinkColor
+                      ? AppColors.actionPrimary
                       : AppColors.drktxtGrey,
             ),
             child: Center(
@@ -616,8 +613,8 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
           title,
           style:
               currentStep == index
-                  ? Pallete.Quicksand10Blackkwe600.copyWith(fontSize: 8)
-                  : Pallete.Quicksand10darkGreykwe500.copyWith(fontSize: 8),
+                  ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary).copyWith(fontSize: 8)
+                  : AppTypography.captionMedium.copyWith(fontSize: 10).copyWith(fontSize: 8),
         ),
       ],
     );
@@ -915,7 +912,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: Pallete.Quicksand15blackwe300),
+            Text(title, style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300)),
             Icon(iconData, color: Colors.black),
           ],
         ),
@@ -949,7 +946,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
               height: 40,
               width: 40,
               decoration: BoxDecoration(
-                color: AppColors.kPinkColor,
+                color: AppColors.actionPrimary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
@@ -957,7 +954,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                   _videoController!.value.isPlaying
                       ? Icons.pause
                       : Icons.play_arrow,
-                  color: AppColors.kWhiteColor,
+                  color: AppColors.bgPrimary,
                 ),
               ),
             ),
@@ -1017,14 +1014,14 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
           (ctx) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: AlertDialog(
-              backgroundColor: AppColors.kWhiteColor,
+              backgroundColor: AppColors.bgPrimary,
               insetPadding: const EdgeInsets.only(left: 20, right: 20),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               content: Text(
                 Languages.of(context)!.postSharecanceltitleText,
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
               actions: <Widget>[
                 SizedBox(
@@ -1046,7 +1043,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -1076,7 +1073,7 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -1096,14 +1093,14 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
       children: [
         // Text(
         //   Languages.of(context)!.pointValueforRewardText,
-        //   style: Pallete.Quicksand16drkBlackBold,
+        //   style: AppTypography.heading3,
         // ),
         // const SizedBox(height: 10),
         Container(
           height: 50,
           width: kSize.width,
           decoration: BoxDecoration(
-            color: AppColors.kWhiteColor,
+            color: AppColors.bgPrimary,
             border: Border.all(color: AppColors.kBorderColor, width: 2),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -1115,8 +1112,8 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly, // <-- integers only
               ],
-              style: Pallete.Quicksand15darkgreye500.copyWith(
-                color: AppColors.kBlackColor,
+              style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w500).copyWith(
+                color: AppColors.textPrimary,
               ),
               decoration: InputDecoration(
                 enabledBorder: InputBorder.none,
@@ -1124,8 +1121,8 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
                 hintText: Languages.of(context)!.pointValueforRewardText,
-                hintStyle: Pallete.Quicksand15darkgreye500.copyWith(
-                  color: AppColors.kBlackColor,
+                hintStyle: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w500).copyWith(
+                  color: AppColors.textPrimary,
                 ),
               ),
             ),

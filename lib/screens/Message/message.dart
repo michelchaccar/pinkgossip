@@ -8,9 +8,8 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/Message/messagedetail.dart';
 import 'package:pinkGossip/screens/HomeScreens/notifications.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -146,7 +145,7 @@ class _MessageScreenState extends State<MessageScreen> {
     Size kSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         backgroundColor: AppColors.kAppBArBGColor,
         automaticallyImplyLeading: false,

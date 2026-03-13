@@ -6,10 +6,9 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/commentpostmodel.dart';
 import 'package:pinkGossip/models/postlike.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/videoplayer.dart';
 import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/postlikeviewmodel.dart';
@@ -77,7 +76,7 @@ class _SharePostViewState extends State<SharePostView> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -86,7 +85,7 @@ class _SharePostViewState extends State<SharePostView> {
         title: Row(
           children: [
             InkWell(
-              overlayColor: const WidgetStatePropertyAll(AppColors.kWhiteColor),
+              overlayColor: const WidgetStatePropertyAll(AppColors.bgPrimary),
               borderRadius: BorderRadius.circular(20),
               onTap: () {
                 Navigator.pop(context);
@@ -162,7 +161,7 @@ class _SharePostViewState extends State<SharePostView> {
                                                   child: Center(
                                                     child: CircularProgressIndicator(
                                                       color:
-                                                          AppColors.kBlackColor,
+                                                          AppColors.textPrimary,
                                                       value:
                                                           loadingProgress
                                                                       .expectedTotalBytes !=
@@ -208,14 +207,14 @@ class _SharePostViewState extends State<SharePostView> {
                                     onTap: () {},
                                     child: Text(
                                       "${widget.sharepostData!.firstName!} ${widget.sharepostData!.lastName!}",
-                                      style: Pallete.Quicksand12blackwe600,
+                                      style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                   InkWell(
                                     onTap: () {},
                                     child: Text(
                                       widget.sharepostData!.salonName!,
-                                      style: Pallete.Quicksand12blackwe400,
+                                      style: AppTypography.caption,
                                     ),
                                   ),
                                   widget.usertype == "2"
@@ -226,7 +225,7 @@ class _SharePostViewState extends State<SharePostView> {
                                             widget.sharepostData!.averageRating!
                                                 .toStringAsFixed(1),
                                             style:
-                                                Pallete.Quicksand12blackwe400,
+                                                AppTypography.caption,
                                           ),
                                           const SizedBox(width: 4),
                                           RatingBarIndicator(
@@ -245,7 +244,7 @@ class _SharePostViewState extends State<SharePostView> {
                                             itemBuilder:
                                                 (context, _) => const Icon(
                                                   Icons.star,
-                                                  color: AppColors.kPinkColor,
+                                                  color: AppColors.actionPrimary,
                                                 ),
                                           ),
                                           const SizedBox(width: 4),
@@ -621,7 +620,7 @@ class _SharePostViewState extends State<SharePostView> {
                                       alignment: Alignment.topLeft,
                                       child: const Icon(
                                         Icons.favorite,
-                                        color: AppColors.kPinkColor,
+                                        color: AppColors.actionPrimary,
                                       ),
                                     )
                                     : const SizedBox(
@@ -629,7 +628,7 @@ class _SharePostViewState extends State<SharePostView> {
                                       width: 20,
                                       child: Icon(
                                         Icons.favorite_outline,
-                                        color: AppColors.kBlackColor,
+                                        color: AppColors.textPrimary,
                                       ),
                                     ),
                           ),
@@ -668,7 +667,7 @@ class _SharePostViewState extends State<SharePostView> {
                       alignment: Alignment.topLeft,
                       child: Text(
                         "${widget.sharepostData!.likeCount} ${Languages.of(context)!.likesText}",
-                        style: Pallete.Quicksand12blackwe600,
+                        style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),
                     // const SizedBox(height: 8),
@@ -688,16 +687,16 @@ class _SharePostViewState extends State<SharePostView> {
                                       TextSpan(
                                         text:
                                             "${widget.sharepostData!.firstName!} ${widget.sharepostData!.lastName!}",
-                                        style: Pallete.Quicksand12blackwe600,
+                                        style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                       ),
                                       TextSpan(
                                         text: " ",
-                                        style: Pallete.Quicksand12blackwe600,
+                                        style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                       ),
                                       TextSpan(
                                         text: widget.sharepostData!.review,
                                         style:
-                                            Pallete.Quicksand12darkGreykwe400,
+                                            AppTypography.caption.copyWith(color: AppColors.textTertiary),
                                       ),
                                       WidgetSpan(
                                         child: InkWell(
@@ -717,7 +716,7 @@ class _SharePostViewState extends State<SharePostView> {
                                             child: Text(
                                               " ${Languages.of(context)!.lessText}",
                                               style:
-                                                  Pallete.Quicksand12blackwe600,
+                                                  AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                             ),
                                           ),
                                         ),
@@ -743,7 +742,7 @@ class _SharePostViewState extends State<SharePostView> {
                                       visible: selectindex == 0 ? more : true,
                                       child: Text(
                                         "..${Languages.of(context)!.moreText}",
-                                        style: Pallete.Quicksand12blackwe600,
+                                        style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                       ),
                                     ),
                                   )
@@ -767,7 +766,7 @@ class _SharePostViewState extends State<SharePostView> {
                                 children: [
                                   Text(
                                     widget.sharepostData!.rating!.toString(),
-                                    style: Pallete.Quicksand12blackwe400,
+                                    style: AppTypography.caption,
                                   ),
                                   const SizedBox(width: 4),
                                   RatingBarIndicator(
@@ -781,13 +780,13 @@ class _SharePostViewState extends State<SharePostView> {
                                     itemBuilder:
                                         (context, _) => const Icon(
                                           Icons.star,
-                                          color: AppColors.kPinkColor,
+                                          color: AppColors.actionPrimary,
                                         ),
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     "(${widget.sharepostData!.ratingCount.toString()})",
-                                    style: Pallete.Quicksand12blackwe400,
+                                    style: AppTypography.caption,
                                   ),
                                 ],
                               ),
@@ -805,7 +804,7 @@ class _SharePostViewState extends State<SharePostView> {
                             },
                             child: Text(
                               "${Languages.of(context)!.viewallText} ${widget.sharepostData!.commentCount.toString()} ${Languages.of(context)!.commentsText}",
-                              style: Pallete.Quicksand12drktxtGreywe500,
+                              style: AppTypography.captionMedium.copyWith(color: AppColors.textTertiary),
                             ),
                           ),
                         )
@@ -815,7 +814,7 @@ class _SharePostViewState extends State<SharePostView> {
                       alignment: Alignment.topLeft,
                       child: Text(
                         getpostTime(widget.sharepostData!.createdAt!),
-                        style: Pallete.Quicksand12drktxtGreywe500,
+                        style: AppTypography.captionMedium.copyWith(color: AppColors.textTertiary),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -852,7 +851,7 @@ class _SharePostViewState extends State<SharePostView> {
               height: (kSize.height * 85) / 100,
               width: kSize.width,
               decoration: const BoxDecoration(
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
@@ -889,7 +888,7 @@ class _SharePostViewState extends State<SharePostView> {
                                       alignment: Alignment.topCenter,
                                       child: Text(
                                         Languages.of(context)!.CommentsText,
-                                        style: Pallete.Quicksand20drkBlackBold,
+                                        style: AppTypography.heading1.copyWith(fontSize: 20),
                                       ),
                                     ),
                                   ],
@@ -955,8 +954,7 @@ class _SharePostViewState extends State<SharePostView> {
                                                         Text(
                                                           "${widget.sharepostData!.comments![cindex].firstName.toString()} ${widget.sharepostData!.comments![cindex].lastName.toString()}",
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand12blackwe600,
+                                                              AppTypography.caption.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                                                         ),
                                                         const SizedBox(
                                                           width: 3,
@@ -969,8 +967,7 @@ class _SharePostViewState extends State<SharePostView> {
                                                                 .createdAt!,
                                                           ),
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand12drktxtGreywe500,
+                                                              AppTypography.captionMedium,
                                                         ),
                                                       ],
                                                     ),
@@ -981,8 +978,7 @@ class _SharePostViewState extends State<SharePostView> {
                                                           .comment
                                                           .toString(),
                                                       style:
-                                                          Pallete
-                                                              .Quicksand12Blackkwe400,
+                                                          AppTypography.caption.copyWith(color: AppColors.textPrimary),
                                                     ),
                                                   ],
                                                 ),
@@ -1000,7 +996,7 @@ class _SharePostViewState extends State<SharePostView> {
                                             context,
                                           )!.NoCommentsavailableText,
                                           style:
-                                              Pallete.Quicksand20drkBlackBold,
+                                              AppTypography.heading1.copyWith(fontSize: 20),
                                         ),
                                       ),
                                     ),
@@ -1024,7 +1020,7 @@ class _SharePostViewState extends State<SharePostView> {
                           right: 15,
                         ),
                         child: TextField(
-                          style: Pallete.textFieldTextStyle,
+                          style: AppTypography.input,
                           controller: commentcontroller,
                           maxLines: 1,
                           autocorrect: true,
@@ -1054,14 +1050,14 @@ class _SharePostViewState extends State<SharePostView> {
                               },
                               child: const Icon(Icons.send),
                             ),
-                            fillColor: AppColors.kWhiteColor,
+                            fillColor: AppColors.bgPrimary,
                             filled: true,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 15,
                               vertical: 14,
                             ),
                             hintText: Languages.of(context)!.sendcommentText,
-                            hintStyle: Pallete.textFieldTextStyle,
+                            hintStyle: AppTypography.input,
                             enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(12),
@@ -1077,10 +1073,10 @@ class _SharePostViewState extends State<SharePostView> {
                               ),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimary,
                               ),
                             ),
-                            focusColor: AppColors.kPinkColor,
+                            focusColor: AppColors.actionPrimary,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),

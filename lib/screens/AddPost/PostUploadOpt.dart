@@ -5,9 +5,8 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/AddPost/SharePostView.dart';
 import 'package:pinkGossip/screens/AddPost/ShareSaloonReview.dart';
 import 'package:pinkGossip/screens/HomeScreens/addstory.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/common_functions.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PostUploadOptPage extends StatefulWidget {
@@ -57,7 +56,7 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar:
           showButtons == false
               ? AppBar(
@@ -71,14 +70,14 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
                   children: [
                     Text(
                       Languages.of(context)!.PostReviewText,
-                      style: Pallete.Quicksand16drkBlackBold,
+                      style: AppTypography.heading3,
                     ),
                     InkWell(
                       onTap: () async {},
                       child: Image.asset(
                         "lib/assets/images/wrong.png",
                         width: 22,
-                        color: AppColors.kBlackColor,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -93,7 +92,7 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
                   children: [
                     Text(
                       Languages.of(context)!.submitnewpostText,
-                      style: Pallete.Quicksand16drkBlackBold,
+                      style: AppTypography.heading3,
                     ),
                   ],
                 ),

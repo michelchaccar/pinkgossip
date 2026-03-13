@@ -7,10 +7,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/salonlistmodel.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/salonlistviewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -121,7 +120,7 @@ class _GooglemapPageState extends State<GooglemapPage> {
               children: [
                 Text(
                   Languages.of(context)!.mapText,
-                  style: Pallete.Quicksand16drkBlackbold,
+                  style: AppTypography.heading3,
                 ),
               ],
             ),
@@ -180,7 +179,7 @@ class _GooglemapPageState extends State<GooglemapPage> {
 
                       border: Border.all(
                         width: 2,
-                        color: AppColors.kBlackColor,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     child: DropdownButtonHideUnderline(
@@ -188,7 +187,7 @@ class _GooglemapPageState extends State<GooglemapPage> {
                         isExpanded: true,
                         hint: Text(
                           Languages.of(context)!.categoriesText,
-                          style: Pallete.Quicksand12blackwe500,
+                          style: AppTypography.captionMedium,
                         ),
                         items:
                             categorydroparray
@@ -197,7 +196,7 @@ class _GooglemapPageState extends State<GooglemapPage> {
                                     value: item,
                                     child: Text(
                                       item,
-                                      style: Pallete.Quicksand12blackwe500,
+                                      style: AppTypography.captionMedium,
                                     ),
                                   ),
                                 )

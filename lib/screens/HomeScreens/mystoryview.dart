@@ -157,7 +157,7 @@
 //                             height: 3,
 //                             decoration: BoxDecoration(
 //                               color: index == _currentStoryIndex
-//                                   ? AppColors.kWhiteColor
+//                                   ? AppColors.bgPrimary
 //                                   : Colors.grey,
 //                               borderRadius: BorderRadius.circular(2),
 //                             ),
@@ -176,7 +176,7 @@
 //                               height: 45,
 //                               width: 45,
 //                               decoration: BoxDecoration(
-//                                 color: AppColors.kWhiteColor,
+//                                 color: AppColors.bgPrimary,
 //                                 borderRadius: BorderRadius.circular(22.5),
 //                                 image: DecorationImage(
 //                                   fit: BoxFit.cover,
@@ -230,9 +230,8 @@
 //   }
 // }
 
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/utils.dart';
@@ -338,7 +337,7 @@ class _MyStoryViewState extends State<MyStoryView> {
                     firstName.isNotEmpty || lastName.isNotEmpty
                         ? "$firstName $lastName"
                         : salonName,
-                    style: Pallete.Quicksand16Whiitewe600,
+                    style: AppTypography.heading3.copyWith(color: AppColors.bgPrimary),
                   ),
                 ),
               ),
@@ -354,7 +353,7 @@ class _MyStoryViewState extends State<MyStoryView> {
                 alignment: Alignment.topRight,
                 child: Icon(
                   Icons.close,
-                  color: AppColors.kWhiteColor,
+                  color: AppColors.bgPrimary,
                   size: 25,
                 ),
               ),

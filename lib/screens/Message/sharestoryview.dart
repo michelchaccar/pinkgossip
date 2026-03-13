@@ -1,5 +1,5 @@
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
@@ -106,7 +106,7 @@ class _ShareStoryViewState extends State<ShareStoryView> {
               SizedBox(
                 height: 35,
                 child: Center(
-                  child: Text(name, style: Pallete.Quicksand16Whiitewe600),
+                  child: Text(name, style: AppTypography.heading3.copyWith(color: AppColors.bgPrimary)),
                 ),
               ),
             ],

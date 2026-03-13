@@ -4,9 +4,8 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/viewModels/notificationviewmode.dart';
 import 'package:flutter/material.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -114,7 +113,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -123,7 +122,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         title: Row(
           children: [
             InkWell(
-              overlayColor: const WidgetStatePropertyAll(AppColors.kWhiteColor),
+              overlayColor: const WidgetStatePropertyAll(AppColors.bgPrimary),
               borderRadius: BorderRadius.circular(20),
               onTap: () {
                 Navigator.pop(context);
@@ -140,7 +139,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             const SizedBox(width: 20),
             Text(
               Languages.of(context)!.notificationsText,
-              style: Pallete.Quicksand16drkBlackBold,
+              style: AppTypography.heading3,
             ),
           ],
         ),
@@ -152,12 +151,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 width: kSize.width,
                 color: Colors.white,
                 child: const Center(
-                  child: CircularProgressIndicator(color: AppColors.kPinkColor),
+                  child: CircularProgressIndicator(color: AppColors.actionPrimary),
                 ),
               )
               : notificationList!.isNotEmpty
               ? RefreshIndicator(
-                color: AppColors.kPinkColor,
+                color: AppColors.actionPrimary,
                 onRefresh: () async {
                   notificationList!.clear();
                   getNotificationList();
@@ -220,9 +219,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       children: [
                                         Text(
                                           "${notificationList![index].firstName!}${notificationList![index].lastName!}",
-                                          style: Pallete
-                                              .Quicksand12whiteBold.copyWith(
-                                            color: AppColors.kBlackColor,
+                                          style: AppTypography.captionMedium.copyWith(
+                                            color: AppColors.textPrimary,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         const SizedBox(width: 3),
@@ -230,7 +229,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           child: Text(
                                             notificationList![index].text!,
                                             style:
-                                                Pallete.Quicksand12blackwe600,
+                                                AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       ],
@@ -240,7 +239,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       getpostTime(
                                         notificationList![index].createdAt!,
                                       ),
-                                      style: Pallete.Quicksand12blackwe500,
+                                      style: AppTypography.captionMedium,
                                     ),
                                   ],
                                 ),
@@ -256,7 +255,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               : Center(
                 child: Text(
                   Languages.of(context)!.nodatafoundText,
-                  style: Pallete.Quicksand16drkBlackBold,
+                  style: AppTypography.heading3,
                 ),
               ),
     );

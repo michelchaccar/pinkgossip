@@ -7,9 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -288,10 +287,10 @@ class CommonWidget {
     return Container(
       height: 30,
       width: 180,
-      decoration: Pallete.getButtonDecoration(),
+      decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
       child: InkWell(
         onTap: onButtonTap,
-        child: Center(child: Text(title, style: Pallete.buttonTextStyle)),
+        child: Center(child: Text(title, style: AppTypography.buttonText)),
       ),
     );
   }

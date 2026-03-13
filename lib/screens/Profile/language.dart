@@ -1,8 +1,7 @@
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/localization/locale_constants.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,7 +42,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -56,7 +55,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               children: [
                 InkWell(
                   overlayColor: const WidgetStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
@@ -74,7 +73,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 const SizedBox(width: 20),
                 Text(
                   Languages.of(context)!.changelanguageText,
-                  style: Pallete.Quicksand16drkBlackBold,
+                  style: AppTypography.heading3,
                 ),
               ],
             ),
@@ -116,11 +115,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
-                      color: AppColors.kWhiteColor,
+                      color: AppColors.bgPrimary,
                       border:
                           isEnglishSelected
                               ? Border.all(
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimary,
                                 width: 2,
                               )
                               : Border.all(color: Colors.black12),
@@ -143,11 +142,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
-                      color: AppColors.kWhiteColor,
+                      color: AppColors.bgPrimary,
                       border:
                           isFrenchSelected
                               ? Border.all(
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimary,
                                 width: 2,
                               )
                               : Border.all(color: Colors.black12),

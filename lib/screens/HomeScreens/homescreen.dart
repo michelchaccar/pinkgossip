@@ -31,10 +31,9 @@ import 'package:pinkGossip/models/postlike.dart';
 import 'package:pinkGossip/screens/HomeScreens/notifications.dart';
 import 'package:pinkGossip/screens/HomeScreens/searchforhomescreen.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/homepagepostviewmodel.dart';
 import 'package:pinkGossip/viewModels/postlikeviewmodel.dart';
@@ -436,7 +435,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(15),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: AppColors.kPinkColor,
+                    color: AppColors.actionPrimaryDark,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -468,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: AppColors.kPinkColor,
+                          color: AppColors.actionPrimaryDark,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -501,7 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -515,7 +514,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 InkWell(
                   overlayColor: const WidgetStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () async {
@@ -541,7 +540,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(width: 8),
                 InkWell(
                   overlayColor: const WidgetStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () async {
@@ -572,7 +571,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //     height: 10,
                       //     width: 10,
                       //     decoration: BoxDecoration(
-                      //       color: AppColors.kPinkColor,
+                      //       color: AppColors.actionPrimaryDark,
                       //       borderRadius: BorderRadius.circular(5),
                       //     ),
                       // child: const Center(
@@ -605,7 +604,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: RefreshIndicator(
-        color: AppColors.kPinkColor,
+        color: AppColors.actionPrimaryDark,
         onRefresh: () async {
           setState(() {
             offsett = 0;
@@ -639,8 +638,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             shape: BoxShape.circle,
                                             gradient: LinearGradient(
                                               colors: [
-                                                AppColors.kPinkColor,
-                                                AppColors.kPinkColor,
+                                                AppColors.actionPrimaryDark,
+                                                AppColors.actionPrimaryDark,
                                               ],
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight,
@@ -770,7 +769,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(height: 5.0),
                             Text(
                               Languages.of(context)!.yourstoryText,
-                              style: Pallete.Quicksand12Blackkwe400,
+                              style: AppTypography.caption.copyWith(color: AppColors.textPrimary),
                             ),
                           ],
                         ),
@@ -785,8 +784,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shape: BoxShape.circle,
                                 gradient: LinearGradient(
                                   colors: [
-                                    AppColors.kPinkColor,
-                                    AppColors.kPinkColor,
+                                    AppColors.actionPrimaryDark,
+                                    AppColors.actionPrimaryDark,
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -1094,8 +1093,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ? item.userName!
                                                     : "${item.firstName!} ${item.lastName!}",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand14blackwe600,
+                                                    AppTypography.bodySemiBold,
                                               ),
                                             ),
                                             item.beforeImage != ""
@@ -1122,8 +1120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   child: Text(
                                                     item.salonName!,
                                                     style:
-                                                        Pallete
-                                                            .Quicksand12Black54we600,
+                                                        AppTypography.captionMedium.copyWith(color: Colors.black54),
                                                   ),
                                                 )
                                                 : Container(),
@@ -1154,8 +1151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         item.averageRating!
                                                             .toStringAsFixed(1),
                                                         style:
-                                                            Pallete
-                                                                .Quicksand12Greywe400,
+                                                            AppTypography.captionMedium.copyWith(color: Colors.grey),
                                                       ),
                                                       const SizedBox(width: 4),
                                                       RatingBarIndicator(
@@ -1185,8 +1181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Text(
                                                         "(${item.ratingCount.toString()})",
                                                         style:
-                                                            Pallete
-                                                                .Quicksand12Greywe400,
+                                                            AppTypography.captionMedium.copyWith(color: Colors.grey),
                                                       ),
                                                     ],
                                                   ),
@@ -1222,14 +1217,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ? item.userName!
                                                     : "${item.firstName!} ${item.lastName!}",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand14blackwe600,
+                                                    AppTypography.bodySemiBold,
                                               ),
                                               Text(
                                                 item.salonName!,
                                                 style:
-                                                    Pallete
-                                                        .Quicksand12Black54we600,
+                                                    AppTypography.captionMedium.copyWith(color: Colors.black54),
                                               ),
                                               Row(
                                                 children: [
@@ -1237,8 +1230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     item.averageRating!
                                                         .toStringAsFixed(1),
                                                     style:
-                                                        Pallete
-                                                            .Quicksand12blackwe400,
+                                                        AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
                                                   ),
                                                   const SizedBox(width: 4),
                                                   RatingBarIndicator(
@@ -1268,8 +1260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Text(
                                                     "(${item.ratingCount.toString()})",
                                                     style:
-                                                        Pallete
-                                                            .Quicksand12Greywe400,
+                                                        AppTypography.captionMedium.copyWith(color: Colors.grey),
                                                   ),
                                                 ],
                                               ),
@@ -1279,7 +1270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                                 PopupMenuButton(
-                                  color: AppColors.kWhiteColor,
+                                  color: AppColors.bgPrimary,
                                   menuPadding: EdgeInsets.zero,
                                   onSelected: (value) {
                                     if (value != null) {
@@ -1429,7 +1420,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       //   value: 'download',
                                       //   child: Text(
                                       //     Languages.of(context)!.downlaodText,
-                                      //     style: Pallete.Quicksand14Blackw500,
+                                      //     style: AppTypography.bodyMedium,
                                       //   ),
                                       // ),
                                       PopupMenuItem<String>(
@@ -1437,7 +1428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         value: 'share',
                                         child: Text(
                                           Languages.of(context)!.shareText,
-                                          style: Pallete.Quicksand14Blackw500,
+                                          style: AppTypography.bodyMedium,
                                         ),
                                       ),
                                       PopupMenuItem<String>(
@@ -1445,7 +1436,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         value: 'report',
                                         child: Text(
                                           Languages.of(context)!.reportText,
-                                          style: Pallete.Quicksand14Blackw500,
+                                          style: AppTypography.bodyMedium,
                                         ),
                                       ),
                                       PopupMenuItem<String>(
@@ -1453,7 +1444,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         value: 'block-user',
                                         child: Text(
                                           Languages.of(context)!.blockText,
-                                          style: Pallete.Quicksand14Blackw500,
+                                          style: AppTypography.bodyMedium,
                                         ),
                                       ),
                                     ];
@@ -1544,7 +1535,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         child: Center(
                                                                           child: CircularProgressIndicator(
                                                                             color:
-                                                                                AppColors.kBlackColor,
+                                                                                AppColors.textPrimary,
                                                                             value:
                                                                                 loadingProgress.expectedTotalBytes !=
                                                                                         null
@@ -1602,7 +1593,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         child: Center(
                                                                           child: CircularProgressIndicator(
                                                                             color:
-                                                                                AppColors.kBlackColor,
+                                                                                AppColors.textPrimary,
                                                                             value:
                                                                                 loadingProgress.expectedTotalBytes !=
                                                                                         null
@@ -1680,7 +1671,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             child: Center(
                                                                               child: CircularProgressIndicator(
                                                                                 color:
-                                                                                    AppColors.kBlackColor,
+                                                                                    AppColors.textPrimary,
                                                                                 value:
                                                                                     loadingProgress.expectedTotalBytes !=
                                                                                             null
@@ -1807,7 +1798,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         child: Center(
                                                                           child: CircularProgressIndicator(
                                                                             color:
-                                                                                AppColors.kBlackColor,
+                                                                                AppColors.textPrimary,
                                                                             value:
                                                                                 loadingProgress.expectedTotalBytes !=
                                                                                         null
@@ -2029,7 +2020,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             alignment: Alignment.topLeft,
                                             child: const Icon(
                                               Icons.favorite,
-                                              color: AppColors.kPinkColor,
+                                              color: AppColors.actionPrimaryDark,
                                             ),
                                           )
                                           : const SizedBox(
@@ -2037,7 +2028,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             width: 20,
                                             child: Icon(
                                               Icons.favorite_outline,
-                                              color: AppColors.kBlackColor,
+                                              color: AppColors.textPrimary,
                                             ),
                                           ),
                                 ),
@@ -2088,7 +2079,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               '${item.likeCount.toString()} ${Languages.of(context)!.likesText}',
-                              style: Pallete.Quicksand14blackwe600,
+                              style: AppTypography.bodySemiBold,
                             ),
                           ),
                           item.review!.isNotEmpty
@@ -2112,12 +2103,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               text:
                                                   "${item.firstName!} ${item.lastName!}",
                                               style:
-                                                  Pallete.Quicksand14blackwe600,
+                                                  AppTypography.bodySemiBold,
                                             ),
                                             TextSpan(
                                               text: " ",
                                               style:
-                                                  Pallete.Quicksand14blackwe600,
+                                                  AppTypography.bodySemiBold,
                                             ),
 
                                             _buildReviewText(
@@ -2147,8 +2138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   child: Text(
                                                     " ${Languages.of(context)!.lessText}",
                                                     style:
-                                                        Pallete
-                                                            .Quicksand14blackwe600,
+                                                        AppTypography.bodySemiBold,
                                                   ),
                                                 ),
                                               ),
@@ -2178,7 +2168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: Text(
                                               "..${Languages.of(context)!.moreText}",
                                               style:
-                                                  Pallete.Quicksand14blackwe600,
+                                                  AppTypography.bodySemiBold,
                                             ),
                                           ),
                                         )
@@ -2203,7 +2193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: [
                                         Text(
                                           item.rating!.toString(),
-                                          style: Pallete.Quicksand14blackwe400,
+                                          style: AppTypography.body.copyWith(color: AppColors.klightGreyColor),
                                         ),
                                         const SizedBox(width: 4),
                                         RatingBarIndicator(
@@ -2219,7 +2209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           itemBuilder:
                                               (context, _) => const Icon(
                                                 Icons.star,
-                                                color: AppColors.kPinkColor,
+                                                color: AppColors.actionPrimaryDark,
                                               ),
                                         ),
                                       ],
@@ -2247,7 +2237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: Text(
                                     "${Languages.of(context)!.viewallText} ${item.commentCount.toString()} ${Languages.of(context)!.commentsText}",
-                                    style: Pallete.Quicksand14drktxtGreywe500,
+                                    style: AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey),
                                   ),
                                 ),
                               )
@@ -2257,7 +2247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               getpostTime(item.createdAt!),
-                              style: Pallete.Quicksand14drktxtGreywe500,
+                              style: AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey),
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -2323,7 +2313,7 @@ class _HomeScreenState extends State<HomeScreen> {
         textSpans.add(
           TextSpan(
             text: '$word ',
-            style: Pallete.Quicksand14blackwe600.copyWith(
+            style: AppTypography.bodySemiBold.copyWith(
               color: AppColors.kblueColor,
             ),
             recognizer:
@@ -2336,7 +2326,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       } else {
         textSpans.add(
-          TextSpan(text: '$word ', style: Pallete.Quicksand14darkGreykwe400),
+          TextSpan(text: '$word ', style: AppTypography.body.copyWith(color: AppColors.drktxtGrey)),
         );
       }
     }
@@ -2458,7 +2448,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Expanded(
                                         child: Text(
                                           usersList[index]['nickname'],
-                                          style: Pallete.Quicksand12Blackkwe400,
+                                          style: AppTypography.caption.copyWith(color: AppColors.textPrimary),
                                         ),
                                       ),
                                     ],
@@ -2471,7 +2461,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.NouserfoundText,
-                                  style: Pallete.Quicksand16drkBlackbold,
+                                  style: AppTypography.heading3,
                                 ),
                               ),
                             ),
@@ -2515,7 +2505,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Center(
                           child: Text(
                             Languages.of(context)!.sendText,
-                            style: Pallete.Quicksand14Whiitewe600,
+                            style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                           ),
                         ),
                       ),
@@ -2559,7 +2549,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(width: 20),
                           Text(
                             Languages.of(context)!.ViewProfileText,
-                            style: Pallete.Quicksand18drkBlackbold,
+                            style: AppTypography.heading2,
                           ),
                         ],
                       ),
@@ -2667,7 +2657,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: (kSize.height * 85) / 100,
               width: kSize.width,
               decoration: const BoxDecoration(
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
@@ -2704,7 +2694,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       alignment: Alignment.topCenter,
                                       child: Text(
                                         Languages.of(context)!.CommentsText,
-                                        style: Pallete.Quicksand20drkBlackBold,
+                                        style: AppTypography.heading2.copyWith(fontSize: 20),
                                       ),
                                     ),
                                   ],
@@ -2804,8 +2794,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           child: Text(
                                                             "${items.comments![cindex].firstName.toString()} ${items.comments![cindex].lastName.toString()}",
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14blackwe600,
+                                                                AppTypography.bodySemiBold,
                                                           ),
                                                         ),
                                                         const SizedBox(
@@ -2818,8 +2807,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 .createdAt!,
                                                           ),
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand14drktxtGreywe500,
+                                                              AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey),
                                                         ),
                                                       ],
                                                     ),
@@ -2829,8 +2817,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .comment
                                                           .toString(),
                                                       style:
-                                                          Pallete
-                                                              .Quicksand14Blackwe400,
+                                                          AppTypography.body,
                                                     ),
                                                   ],
                                                 ),
@@ -2848,7 +2835,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             context,
                                           )!.NoCommentsavailableText,
                                           style:
-                                              Pallete.Quicksand20drkBlackBold,
+                                              AppTypography.heading2.copyWith(fontSize: 20),
                                         ),
                                       ),
                                     ),
@@ -2872,7 +2859,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           right: 15,
                         ),
                         child: TextField(
-                          style: Pallete.textFieldTextStyle,
+                          style: AppTypography.input,
                           controller: commentcontroller,
                           maxLines: 1,
                           autocorrect: true,
@@ -2902,14 +2889,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                               child: const Icon(Icons.send),
                             ),
-                            fillColor: AppColors.kWhiteColor,
+                            fillColor: AppColors.bgPrimary,
                             filled: true,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 15,
                               vertical: 14,
                             ),
                             hintText: Languages.of(context)!.sendcommentText,
-                            hintStyle: Pallete.textFieldTextStyle,
+                            hintStyle: AppTypography.input,
                             enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(12),
@@ -2925,10 +2912,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimaryDark,
                               ),
                             ),
-                            focusColor: AppColors.kPinkColor,
+                            focusColor: AppColors.actionPrimaryDark,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -3164,7 +3151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ? Languages.of(context)!.reportalertmsgText
                                 : Languages.of(context)!.blockalertmsgText,
                             textAlign: TextAlign.center,
-                            style: Pallete.Quicksand17Blackw500,
+                            style: AppTypography.bodyMedium.copyWith(fontSize: 17),
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -3186,14 +3173,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   // width: 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.kPinkColor,
+                                    color: AppColors.actionPrimaryDark,
                                   ),
                                   child: Center(
                                     child: Text(
                                       type == "report"
                                           ? Languages.of(context)!.reportText
                                           : Languages.of(context)!.blockText,
-                                      style: Pallete.Quicksand14whitewe600,
+                                      style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                     ),
                                   ),
                                 ),
@@ -3211,13 +3198,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                      color: AppColors.kPinkColor,
+                                      color: AppColors.actionPrimaryDark,
                                     ),
                                   ),
                                   child: Center(
                                     child: Text(
                                       Languages.of(context)!.cancelText,
-                                      style: Pallete.Quicksand14pinkwe600,
+                                      style: AppTypography.bodySemiBold.copyWith(color: AppColors.actionPrimaryDark),
                                     ),
                                   ),
                                 ),

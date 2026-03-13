@@ -5,9 +5,8 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:pinkGossip/bottomnavi.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/addstorymodel.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/addstoryviewmodel.dart';
 import 'package:camera/camera.dart';
 // import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
@@ -175,7 +174,7 @@ class _AddStoryState extends State<AddStory> {
   //                       child: Text(
   //                         durationString,
   //                         style: Pallete.Quicksand16drkBlackbold.copyWith(
-  //                             color: AppColors.kWhiteColor),
+  //                             color: AppColors.bgPrimary),
   //                       ),
   //                     ),
   //                 ],
@@ -380,11 +379,11 @@ class _AddStoryState extends State<AddStory> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.kBlackColor,
+      backgroundColor: AppColors.textPrimary,
       appBar:
           selectMedia == null
               ? AppBar(
-                backgroundColor: AppColors.kBlackColor,
+                backgroundColor: AppColors.textPrimary,
                 elevation: 0,
                 automaticallyImplyLeading: false,
                 title: Row(
@@ -431,7 +430,7 @@ class _AddStoryState extends State<AddStory> {
                           child: Image.asset(
                             "lib/assets/images/wrong.png",
                             width: 25,
-                            color: AppColors.kWhiteColor,
+                            color: AppColors.bgPrimary,
                           ),
                         ),
                       ),
@@ -439,7 +438,7 @@ class _AddStoryState extends State<AddStory> {
                     ),
                     Text(
                       Languages.of(context)!.addtostoryText,
-                      style: Pallete.Quicksand18Whiitewe600,
+                      style: AppTypography.heading2.copyWith(color: AppColors.bgPrimary),
                     ),
                     Expanded(flex: 1, child: Container()),
                   ],
@@ -447,7 +446,7 @@ class _AddStoryState extends State<AddStory> {
                 centerTitle: false,
               )
               : AppBar(
-                backgroundColor: AppColors.kBlackColor,
+                backgroundColor: AppColors.textPrimary,
                 toolbarHeight: 0,
               ),
       body: Stack(
@@ -567,7 +566,7 @@ class _AddStoryState extends State<AddStory> {
                                                             10,
                                                           ),
                                                     )
-                                                    : Pallete.getButtonDecoration(),
+                                                    : BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                                             child: GestureDetector(
                                               onTap: () {
                                                 setState(() {
@@ -577,8 +576,7 @@ class _AddStoryState extends State<AddStory> {
                                               child: Center(
                                                 child: Text(
                                                   "Image",
-                                                  style: Pallete
-                                                      .Quicksand12Greywe400.copyWith(
+                                                  style: AppTypography.caption.copyWith(
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -593,7 +591,7 @@ class _AddStoryState extends State<AddStory> {
                                             ),
                                             decoration:
                                                 isVideoEnabled
-                                                    ? Pallete.getButtonDecoration()
+                                                    ? BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10))
                                                     : BoxDecoration(
                                                       border: Border.all(
                                                         color:
@@ -614,8 +612,7 @@ class _AddStoryState extends State<AddStory> {
                                               child: Center(
                                                 child: Text(
                                                   "Video",
-                                                  style: Pallete
-                                                      .Quicksand12Greywe400.copyWith(
+                                                  style: AppTypography.caption.copyWith(
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -704,7 +701,7 @@ class _AddStoryState extends State<AddStory> {
                             : Center(
                               child: Text(
                                 "",
-                                style: Pallete.Quicksand14Whiitewe600,
+                                style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                               ),
                             ),
 
@@ -725,7 +722,7 @@ class _AddStoryState extends State<AddStory> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                    color: AppColors.kWhiteColor,
+                                    color: AppColors.bgPrimary,
                                     width: 2,
                                   ),
                                 ),
@@ -738,7 +735,7 @@ class _AddStoryState extends State<AddStory> {
                                     child: const Center(
                                       child: Icon(
                                         Icons.photo,
-                                        color: AppColors.kWhiteColor,
+                                        color: AppColors.bgPrimary,
                                         size: 30,
                                       ),
                                     ),
@@ -765,7 +762,7 @@ class _AddStoryState extends State<AddStory> {
                         //             decoration: BoxDecoration(
                         //               borderRadius: BorderRadius.circular(12),
                         //               border: Border.all(
-                        //                   color: AppColors.kWhiteColor, width: 2),
+                        //                   color: AppColors.bgPrimary, width: 2),
                         //             ),
                         //             height: 50,
                         //             width: 50,
@@ -781,7 +778,7 @@ class _AddStoryState extends State<AddStory> {
                       ],
                     )
                     : Scaffold(
-                      backgroundColor: AppColors.kBlackColor,
+                      backgroundColor: AppColors.textPrimary,
                       bottomNavigationBar: Padding(
                         padding: const EdgeInsets.only(top: 15, left: 10),
                         child: Row(
@@ -812,7 +809,7 @@ class _AddStoryState extends State<AddStory> {
                                         height: 25,
                                         width: 25,
                                         decoration: BoxDecoration(
-                                          color: AppColors.kWhiteColor,
+                                          color: AppColors.bgPrimary,
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image:
@@ -835,7 +832,7 @@ class _AddStoryState extends State<AddStory> {
                                       const SizedBox(width: 10),
                                       Text(
                                         Languages.of(context)!.yourstoryText,
-                                        style: Pallete.Quicksand14Whiitewe600,
+                                        style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                       ),
                                     ],
                                   ),
@@ -978,7 +975,7 @@ class _AddStoryState extends State<AddStory> {
                                         "lib/assets/images/wrong.png",
                                         width: 25,
                                         height: 25,
-                                        color: AppColors.kWhiteColor,
+                                        color: AppColors.bgPrimary,
                                       ),
                                     ),
                                   ),
@@ -992,7 +989,7 @@ class _AddStoryState extends State<AddStory> {
                                 width: kSize.width,
                                 child: const Center(
                                   child: CircularProgressIndicator(
-                                    color: AppColors.kPinkColor,
+                                    color: AppColors.actionPrimary,
                                   ),
                                 ),
                               )
@@ -1007,7 +1004,7 @@ class _AddStoryState extends State<AddStory> {
                 height: kSize.height,
                 width: kSize.width,
                 child: const Center(
-                  child: CircularProgressIndicator(color: AppColors.kPinkColor),
+                  child: CircularProgressIndicator(color: AppColors.actionPrimary),
                 ),
               )
               : Container(),

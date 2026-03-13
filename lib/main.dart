@@ -19,6 +19,7 @@ import 'package:pinkGossip/viewModels/updatefirebaseviewmodel.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:provider/provider.dart';
@@ -179,10 +180,7 @@ class _MyAppState extends State<MyApp> {
         },
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
+        theme: AppTheme.light(),
         home: const SplashScreen(),
       ),
     );

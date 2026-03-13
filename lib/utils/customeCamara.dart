@@ -3,12 +3,11 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as img;
 import 'package:pinkGossip/utils/common_functions.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 
 /// CameraApp is the Main Application.
 class CameraApp extends StatefulWidget {
@@ -180,7 +179,7 @@ class _CameraAppState extends State<CameraApp> {
                               border: Border.all(color: AppColors.kPinkColor),
                               borderRadius: BorderRadius.circular(10),
                             )
-                            : Pallete.getButtonDecoration(),
+                            : BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -190,7 +189,7 @@ class _CameraAppState extends State<CameraApp> {
                       child: Center(
                         child: Text(
                           "Image",
-                          style: Pallete.Quicksand12Greywe400.copyWith(
+                          style: AppTypography.captionMedium.copyWith(color: Colors.grey).copyWith(
                             color: Colors.white,
                           ),
                         ),
@@ -207,7 +206,7 @@ class _CameraAppState extends State<CameraApp> {
                         ),
                         decoration:
                             isVideoEnabled
-                                ? Pallete.getButtonDecoration()
+                                ? BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10))
                                 : BoxDecoration(
                                   border: Border.all(
                                     color: AppColors.kPinkColor,
@@ -223,7 +222,7 @@ class _CameraAppState extends State<CameraApp> {
                           child: Center(
                             child: Text(
                               "Video",
-                              style: Pallete.Quicksand12Greywe400.copyWith(
+                              style: AppTypography.captionMedium.copyWith(color: Colors.grey).copyWith(
                                 color: Colors.white,
                               ),
                             ),
@@ -295,7 +294,7 @@ class _CameraAppState extends State<CameraApp> {
                         //       child: Text(
                         //         "${progress.toStringAsFixed(1) * 10}",
                         //         // "${progress}",
-                        //         style: Pallete.Quicksand12Greywe400.copyWith(
+                        //         style: AppTypography.captionMedium.copyWith(color: Colors.grey).copyWith(
                         //           color: Colors.red,
                         //         ),
                         //       ),

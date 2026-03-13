@@ -16,8 +16,9 @@ import 'package:pinkGossip/screens/HomeScreens/homescreen.dart';
 import 'package:pinkGossip/screens/Mackeups/salonslist.dart';
 import 'package:pinkGossip/screens/Message/message.dart';
 import 'package:pinkGossip/screens/Profile/profile.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
+import 'package:pinkGossip/components/pg_bottom_nav.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
@@ -1048,154 +1049,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: pageList[pageIndex],
-      bottomNavigationBar: SizedBox(
-        // height: 80,
-        child: BottomNavigationBar(
-          backgroundColor: AppColors.kWhiteColor,
-          items: [
-            BottomNavigationBarItem(
-              // key: homeKey,
-              icon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(key: homeKey, ImageUtils.homeLogo),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-              label: "",
-              activeIcon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(key: homeKey, ImageUtils.homeselectLogo),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(key: makeupKey, ImageUtils.makeupLogo),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-              label: "",
-              activeIcon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(
-                      key: makeupKey,
-                      ImageUtils.makeupselectLogo,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(key: postKey, ImageUtils.postLogo),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-              label: "",
-              activeIcon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(key: postKey, ImageUtils.postselectLogo),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(key: messageKey, ImageUtils.messgaeLogo),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-              label: "",
-              activeIcon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(
-                      key: messageKey,
-                      ImageUtils.messgaselectLogo,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(
-                      key: profileKey,
-                      "lib/assets/images/profile-icon@3x.png",
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-              label: "",
-              activeIcon: Column(
-                children: [
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.asset(
-                      key: profileKey,
-                      "lib/assets/images/profile-icon-filled@3x.png",
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                ],
-              ),
-            ),
-          ],
-          type: BottomNavigationBarType.fixed,
-          currentIndex: pageIndex,
-          onTap: _onItemTapped,
-          elevation: 5,
+      bottomNavigationBar: PgBottomNav(
+        currentIndex: pageIndex,
+        onTap: _onItemTapped,
+        items: PgBottomNav.defaultItems(
+          homeKey: homeKey,
+          makeupKey: makeupKey,
+          postKey: postKey,
+          messageKey: messageKey,
+          profileKey: profileKey,
         ),
       ),
     );

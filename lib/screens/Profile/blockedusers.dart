@@ -3,10 +3,9 @@ import 'dart:ui';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/blockedusermodel.dart';
 import 'package:pinkGossip/models/deletepostmodel.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/blockuserviewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -85,7 +84,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.sizeOf(context);
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -98,7 +97,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
               children: [
                 InkWell(
                   overlayColor: const WidgetStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
@@ -116,7 +115,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                 const SizedBox(width: 20),
                 Text(
                   Languages.of(context)!.blockedusersText,
-                  style: Pallete.Quicksand16drkBlackBold,
+                  style: AppTypography.heading3,
                 ),
               ],
             ),
@@ -150,7 +149,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                     child: Center(
                       child: Text(
                         Languages.of(context)!.nodatafoundText,
-                        style: Pallete.Quicksand15blackwe600,
+                        style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                       ),
                     ),
                   )
@@ -206,7 +205,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                                             child: Text(
                                               "${blockedUsersDatum[index].firstName} ${blockedUsersDatum[index].lastName}",
                                               style:
-                                                  Pallete.Quicksand15blackwe600,
+                                                  AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                             ),
                                           ),
                                         ],
@@ -224,7 +223,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                                         height: 35,
                                         width: 135,
                                         decoration: BoxDecoration(
-                                          color: AppColors.kPinkColor,
+                                          color: AppColors.actionPrimary,
                                           borderRadius: BorderRadius.circular(
                                             10,
                                           ),
@@ -233,7 +232,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                                           child: Text(
                                             Languages.of(context)!.unblockText,
                                             style:
-                                                Pallete.Quicksand14Whiitewe600,
+                                                AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                           ),
                                         ),
                                       ),
@@ -254,7 +253,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                 width: kSize.width,
                 color: Colors.transparent,
                 child: const Center(
-                  child: CircularProgressIndicator(color: AppColors.kPinkColor),
+                  child: CircularProgressIndicator(color: AppColors.actionPrimary),
                 ),
               )
               : Container(),
@@ -291,7 +290,7 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                           child: Text(
                             Languages.of(context)!.unblockalertmsgText,
                             textAlign: TextAlign.center,
-                            style: Pallete.Quicksand17Blackw500,
+                            style: AppTypography.bodyMedium.copyWith(fontSize: 17),
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -308,12 +307,12 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                                   // width: 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.kPinkColor,
+                                    color: AppColors.actionPrimary,
                                   ),
                                   child: Center(
                                     child: Text(
                                       Languages.of(context)!.unblockText,
-                                      style: Pallete.Quicksand14whitewe600,
+                                      style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                     ),
                                   ),
                                 ),
@@ -331,13 +330,13 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                      color: AppColors.kPinkColor,
+                                      color: AppColors.actionPrimary,
                                     ),
                                   ),
                                   child: Center(
                                     child: Text(
                                       Languages.of(context)!.cancelText,
-                                      style: Pallete.Quicksand14pinkwe600,
+                                      style: AppTypography.bodySemiBold.copyWith(color: AppColors.actionPrimary),
                                     ),
                                   ),
                                 ),

@@ -30,10 +30,9 @@ import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinkGossip/bottomnavi.dart';
 import 'package:pinkGossip/models/createpostmodel.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:pinkGossip/viewModels/createpostviewmodel.dart';
 import 'package:video_player/video_player.dart';
 import '../../viewModels/searchuserlistviewmodel.dart';
@@ -691,7 +690,7 @@ class _AddPostState extends State<AddPost> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -702,7 +701,7 @@ class _AddPostState extends State<AddPost> {
           children: [
             Text(
               Languages.of(context)!.PostReviewText,
-              style: Pallete.Quicksand16drkBlackBold,
+              style: AppTypography.heading3,
             ),
             InkWell(
               onTap: () async {
@@ -711,7 +710,7 @@ class _AddPostState extends State<AddPost> {
               child: Image.asset(
                 "lib/assets/images/wrong.png",
                 width: 22,
-                color: AppColors.kBlackColor,
+                color: AppColors.textPrimary,
               ),
             ),
           ],
@@ -768,7 +767,7 @@ class _AddPostState extends State<AddPost> {
                                     borderRadius: BorderRadius.circular(20),
                                     color:
                                         salonselectindex == 1
-                                            ? AppColors.kPinkColor
+                                            ? AppColors.actionPrimary
                                             : AppColors.drktxtGrey,
                                   ),
                                   child: const Center(
@@ -789,8 +788,8 @@ class _AddPostState extends State<AddPost> {
                                 Languages.of(context)!.pictureVideoText,
                                 style:
                                     salonselectindex == 1
-                                        ? Pallete.Quicksand10Blackkwe600
-                                        : Pallete.Quicksand10darkGreykwe500,
+                                        ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                        : AppTypography.captionMedium.copyWith(fontSize: 10),
                               ),
                             ],
                           ),
@@ -847,7 +846,7 @@ class _AddPostState extends State<AddPost> {
                                     borderRadius: BorderRadius.circular(20),
                                     color:
                                         salonselectindex == 2
-                                            ? AppColors.kPinkColor
+                                            ? AppColors.actionPrimary
                                             : AppColors.drktxtGrey,
                                   ),
                                   child: const Center(
@@ -868,8 +867,8 @@ class _AddPostState extends State<AddPost> {
                                 Languages.of(context)!.submitpostText,
                                 style:
                                     salonselectindex == 2
-                                        ? Pallete.Quicksand10Blackkwe600
-                                        : Pallete.Quicksand10darkGreykwe500,
+                                        ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                        : AppTypography.captionMedium.copyWith(fontSize: 10),
                               ),
                             ],
                           ),
@@ -982,13 +981,13 @@ class _AddPostState extends State<AddPost> {
                           const SizedBox(height: 5),
                           Text(
                             Languages.of(context)!.UploadpictureorvideoText,
-                            style: Pallete.Quicksand16drktxtGreywe500,
+                            style: AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textSecondary),
                           ),
                           const SizedBox(height: 10),
                           Container(
                             height: 30,
                             width: 150,
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () {
                                 open_bottomsheet_noramPost(context);
@@ -996,7 +995,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.uploadText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -1005,7 +1004,7 @@ class _AddPostState extends State<AddPost> {
                           Container(
                             height: 55,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () async {
                                 SharedPreferences postReviewPref =
@@ -1041,7 +1040,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.continueText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -1062,7 +1061,7 @@ class _AddPostState extends State<AddPost> {
                               height: 200,
                               width: kSize.width,
                               decoration: BoxDecoration(
-                                color: AppColors.kWhiteColor,
+                                color: AppColors.bgPrimary,
                                 border: Border.all(
                                   color: AppColors.kBorderColor,
                                   width: 2,
@@ -1108,7 +1107,7 @@ class _AddPostState extends State<AddPost> {
                             InkWell(
                               child: Container(
                                 height: 55,
-                                decoration: Pallete.getButtonDecoration(),
+                                decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                                 child: InkWell(
                                   onTap: () async {
                                     SharedPreferences postReviewPref =
@@ -1145,7 +1144,7 @@ class _AddPostState extends State<AddPost> {
                                   child: Center(
                                     child: Text(
                                       Languages.of(context)!.submitpostText,
-                                      style: Pallete.buttonTextStyle,
+                                      style: AppTypography.buttonText,
                                     ),
                                   ),
                                 ),
@@ -1155,7 +1154,7 @@ class _AddPostState extends State<AddPost> {
                             Container(
                               height: 60,
                               width: kSize.width,
-                              decoration: Pallete.getBorderButtonDecoration(),
+                              decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
                               child: InkWell(
                                 onTap: () async {
                                   _unselectselectImage();
@@ -1180,7 +1179,7 @@ class _AddPostState extends State<AddPost> {
                                 child: Center(
                                   child: Text(
                                     Languages.of(context)!.previousText,
-                                    style: Pallete.Quicksand15blackwe600,
+                                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                   ),
                                 ),
                               ),
@@ -1234,7 +1233,7 @@ class _AddPostState extends State<AddPost> {
                                       borderRadius: BorderRadius.circular(20),
                                       color:
                                           selectindex == 1
-                                              ? AppColors.kPinkColor
+                                              ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
                                     child: const Center(
@@ -1255,8 +1254,8 @@ class _AddPostState extends State<AddPost> {
                                   textAlign: TextAlign.center,
                                   style:
                                       selectindex == 1
-                                          ? Pallete.Quicksand10Blackkwe600
-                                          : Pallete.Quicksand10darkGreykwe500,
+                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
                                 ),
                               ],
                             ),
@@ -1357,7 +1356,7 @@ class _AddPostState extends State<AddPost> {
                                       borderRadius: BorderRadius.circular(20),
                                       color:
                                           selectindex == 2
-                                              ? AppColors.kPinkColor
+                                              ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
                                     child: const Center(
@@ -1378,8 +1377,8 @@ class _AddPostState extends State<AddPost> {
                                   textAlign: TextAlign.center,
                                   style:
                                       selectindex == 2
-                                          ? Pallete.Quicksand10Blackkwe600
-                                          : Pallete.Quicksand10darkGreykwe500,
+                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
                                 ),
                               ],
                             ),
@@ -1442,7 +1441,7 @@ class _AddPostState extends State<AddPost> {
                                       borderRadius: BorderRadius.circular(20),
                                       color:
                                           selectindex == 3
-                                              ? AppColors.kPinkColor
+                                              ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
                                     child: const Center(
@@ -1463,8 +1462,8 @@ class _AddPostState extends State<AddPost> {
                                   textAlign: TextAlign.center,
                                   style:
                                       selectindex == 3
-                                          ? Pallete.Quicksand10Blackkwe600
-                                          : Pallete.Quicksand10darkGreykwe500,
+                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
                                 ),
                               ],
                             ),
@@ -1541,7 +1540,7 @@ class _AddPostState extends State<AddPost> {
                                       borderRadius: BorderRadius.circular(20),
                                       color:
                                           selectindex == 4
-                                              ? AppColors.kPinkColor
+                                              ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
                                     child: const Center(
@@ -1562,8 +1561,8 @@ class _AddPostState extends State<AddPost> {
                                   Languages.of(context)!.pictureVideoText,
                                   style:
                                       selectindex == 4
-                                          ? Pallete.Quicksand10Blackkwe600
-                                          : Pallete.Quicksand10darkGreykwe500,
+                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
                                 ),
                               ],
                             ),
@@ -1634,7 +1633,7 @@ class _AddPostState extends State<AddPost> {
                                       borderRadius: BorderRadius.circular(20),
                                       color:
                                           selectindex == 5
-                                              ? AppColors.kPinkColor
+                                              ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
                                     child: const Center(
@@ -1655,8 +1654,8 @@ class _AddPostState extends State<AddPost> {
                                   Languages.of(context)!.writereviewText,
                                   style:
                                       selectindex == 5
-                                          ? Pallete.Quicksand10Blackkwe600
-                                          : Pallete.Quicksand10darkGreykwe500,
+                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
                                 ),
                               ],
                             ),
@@ -1674,7 +1673,7 @@ class _AddPostState extends State<AddPost> {
                             child: Text(
                               Languages.of(context)!.searchDescriptionText,
                               textAlign: TextAlign.center,
-                              style: Pallete.Quicksand18drkkBlackColorwe500,
+                              style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                             ),
                           ),
                           const SizedBox(height: 30),
@@ -1724,14 +1723,14 @@ class _AddPostState extends State<AddPost> {
                               textInputAction: TextInputAction.search,
                               cursorColor: AppColors.kTextColor,
                               decoration: InputDecoration(
-                                fillColor: AppColors.kWhiteColor,
+                                fillColor: AppColors.bgPrimary,
                                 filled: true,
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 15,
                                   vertical: 14,
                                 ),
                                 hintText: Languages.of(context)!.search2Text,
-                                hintStyle: Pallete.textFieldTextStyle,
+                                hintStyle: AppTypography.input,
                                 suffixIcon: const Icon(Icons.search, size: 30),
                                 enabledBorder: const OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
@@ -1748,10 +1747,10 @@ class _AddPostState extends State<AddPost> {
                                   ),
                                   borderSide: BorderSide(
                                     width: 1,
-                                    color: AppColors.kPinkColor,
+                                    color: AppColors.actionPrimary,
                                   ),
                                 ),
-                                focusColor: AppColors.kPinkColor,
+                                focusColor: AppColors.actionPrimary,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(35),
                                 ),
@@ -1760,7 +1759,7 @@ class _AddPostState extends State<AddPost> {
                           ),
                           searchsaloncontroller.text.trim().length >= 2
                               ? Card(
-                                color: AppColors.kWhiteColor,
+                                color: AppColors.bgPrimary,
                                 child: Column(
                                   children:
                                       searchsalonlist.map((user) {
@@ -1825,7 +1824,7 @@ class _AddPostState extends State<AddPost> {
                             child: Text(
                               Languages.of(context)!.orText,
                               textAlign: TextAlign.center,
-                              style: Pallete.Quicksand24drktxtGreywe500,
+                              style: AppTypography.heading1.copyWith(fontWeight: FontWeight.w500, color: AppColors.textSecondary),
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -1841,7 +1840,7 @@ class _AddPostState extends State<AddPost> {
                           Container(
                             height: 30,
                             width: 150,
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () {
                                 scanerBottomSheet(context);
@@ -1849,7 +1848,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.ScanQRcodeText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -1858,7 +1857,7 @@ class _AddPostState extends State<AddPost> {
                           Container(
                             height: 55,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () async {
                                 SharedPreferences postReviewPref =
@@ -1921,7 +1920,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.continueText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -1967,13 +1966,13 @@ class _AddPostState extends State<AddPost> {
                             Languages.of(
                               context,
                             )!.ClicktotakeorselectyourbeforeimageText,
-                            style: Pallete.Quicksand15blackwe300,
+                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                           ),
                           const SizedBox(height: 10),
                           Container(
                             height: 30,
                             width: 150,
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () {
                                 print("add before");
@@ -1982,7 +1981,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.uploadText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -1991,7 +1990,7 @@ class _AddPostState extends State<AddPost> {
                           Container(
                             height: 55,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () async {
                                 SharedPreferences postReviewPref =
@@ -2022,7 +2021,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.continueText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -2032,7 +2031,7 @@ class _AddPostState extends State<AddPost> {
                             height: 60,
                             width: kSize.width,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getBorderButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
                             child: InkWell(
                               onTap: () async {
                                 SharedPreferences postReviewPref =
@@ -2056,7 +2055,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.previousText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                               ),
                             ),
@@ -2102,13 +2101,13 @@ class _AddPostState extends State<AddPost> {
                             Languages.of(
                               context,
                             )!.ClicktotakeorselectyourbeforeimageText,
-                            style: Pallete.Quicksand15blackwe300,
+                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                           ),
                           const SizedBox(height: 10),
                           Container(
                             height: 30,
                             width: 150,
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () {
                                 afterPicPressed(context);
@@ -2116,7 +2115,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.uploadText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -2125,7 +2124,7 @@ class _AddPostState extends State<AddPost> {
                           Container(
                             height: 55,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () async {
                                 SharedPreferences postReviewPref =
@@ -2156,7 +2155,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.continueText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -2166,7 +2165,7 @@ class _AddPostState extends State<AddPost> {
                             height: 60,
                             width: kSize.width,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getBorderButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
                             child: InkWell(
                               onTap: () async {
                                 SharedPreferences postReviewPref =
@@ -2185,7 +2184,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.previousText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                               ),
                             ),
@@ -2305,13 +2304,13 @@ class _AddPostState extends State<AddPost> {
                             Languages.of(
                               context,
                             )!.uploadotherpictureorvideoText,
-                            style: Pallete.Quicksand16drktxtGreywe500,
+                            style: AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textSecondary),
                           ),
                           const SizedBox(height: 10),
                           Container(
                             height: 30,
                             width: 150,
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () {
                                 print("object");
@@ -2320,7 +2319,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.uploadText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -2329,7 +2328,7 @@ class _AddPostState extends State<AddPost> {
                           Container(
                             height: 55,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                             child: InkWell(
                               onTap: () async {
                                 SharedPreferences postReviewPref =
@@ -2348,7 +2347,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.continueText,
-                                  style: Pallete.buttonTextStyle,
+                                  style: AppTypography.buttonText,
                                 ),
                               ),
                             ),
@@ -2358,7 +2357,7 @@ class _AddPostState extends State<AddPost> {
                             height: 60,
                             width: kSize.width,
                             margin: const EdgeInsets.only(left: 30, right: 30),
-                            decoration: Pallete.getBorderButtonDecoration(),
+                            decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
                             child: InkWell(
                               onTap: () async {
                                 SharedPreferences postReviewPref =
@@ -2376,7 +2375,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.previousText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                               ),
                             ),
@@ -2396,7 +2395,7 @@ class _AddPostState extends State<AddPost> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 Languages.of(context)!.RatingText,
-                                style: Pallete.Quicksand15blackwe600,
+                                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -2404,12 +2403,12 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.CleanlinessText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
                                   color: AppColors.klightGreyColor,
-                                  selectedColor: AppColors.kPinkColor,
+                                  selectedColor: AppColors.actionPrimary,
                                   defaultSelectedCount: cleanlinesscount,
                                   onChange: (count) async {
                                     SharedPreferences postReviewPref =
@@ -2429,7 +2428,7 @@ class _AddPostState extends State<AddPost> {
                                 const SizedBox(width: 5),
                                 Text(
                                   cleanlinesscount.toString(),
-                                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -2438,13 +2437,13 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.StafffriendlinessText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
                                   color: AppColors.klightGreyColor,
                                   defaultSelectedCount: stafffriendinesscount,
-                                  selectedColor: AppColors.kPinkColor,
+                                  selectedColor: AppColors.actionPrimary,
                                   onChange: (count) async {
                                     SharedPreferences postReviewPref =
                                         await SharedPreferences.getInstance();
@@ -2465,7 +2464,7 @@ class _AddPostState extends State<AddPost> {
                                 const SizedBox(width: 5),
                                 Text(
                                   stafffriendinesscount.toString(),
-                                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -2474,13 +2473,13 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.OrganizationText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
                                   color: AppColors.klightGreyColor,
                                   defaultSelectedCount: organizationcount,
-                                  selectedColor: AppColors.kPinkColor,
+                                  selectedColor: AppColors.actionPrimary,
                                   onChange: (count) async {
                                     SharedPreferences postReviewPref =
                                         await SharedPreferences.getInstance();
@@ -2499,7 +2498,7 @@ class _AddPostState extends State<AddPost> {
                                 const SizedBox(width: 5),
                                 Text(
                                   organizationcount.toString(),
-                                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -2508,13 +2507,13 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.TimemanagementText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
                                   defaultSelectedCount: timemanagementcount,
                                   color: AppColors.klightGreyColor,
-                                  selectedColor: AppColors.kPinkColor,
+                                  selectedColor: AppColors.actionPrimary,
                                   onChange: (count) async {
                                     SharedPreferences postReviewPref =
                                         await SharedPreferences.getInstance();
@@ -2531,7 +2530,7 @@ class _AddPostState extends State<AddPost> {
                                 const SizedBox(width: 5),
                                 Text(
                                   timemanagementcount.toString(),
-                                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -2540,12 +2539,12 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.ModernText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
                                   color: AppColors.klightGreyColor,
-                                  selectedColor: AppColors.kPinkColor,
+                                  selectedColor: AppColors.actionPrimary,
                                   defaultSelectedCount: moderncount,
                                   onChange: (count) async {
                                     SharedPreferences postReviewPref =
@@ -2565,7 +2564,7 @@ class _AddPostState extends State<AddPost> {
                                 const SizedBox(width: 5),
                                 Text(
                                   moderncount.toString(),
-                                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -2574,12 +2573,12 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.BookingprocessText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
                                   color: AppColors.klightGreyColor,
-                                  selectedColor: AppColors.kPinkColor,
+                                  selectedColor: AppColors.actionPrimary,
                                   defaultSelectedCount: bookingprocesscount,
                                   onChange: (count) async {
                                     SharedPreferences postReviewPref =
@@ -2597,7 +2596,7 @@ class _AddPostState extends State<AddPost> {
                                 const SizedBox(width: 5),
                                 Text(
                                   bookingprocesscount.toString(),
-                                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -2606,13 +2605,13 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.CommunicationText,
-                                  style: Pallete.Quicksand15blackwe600,
+                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
                                   defaultSelectedCount: communicationcount,
                                   color: AppColors.klightGreyColor,
-                                  selectedColor: AppColors.kPinkColor,
+                                  selectedColor: AppColors.actionPrimary,
                                   onChange: (count) async {
                                     SharedPreferences postReviewPref =
                                         await SharedPreferences.getInstance();
@@ -2630,7 +2629,7 @@ class _AddPostState extends State<AddPost> {
                                 const SizedBox(width: 5),
                                 Text(
                                   communicationcount.toString(),
-                                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -2639,7 +2638,7 @@ class _AddPostState extends State<AddPost> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 Languages.of(context)!.writereviewText,
-                                style: Pallete.Quicksand15blackwe600,
+                                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                               ),
                             ),
                             const SizedBox(height: 25),
@@ -2647,7 +2646,7 @@ class _AddPostState extends State<AddPost> {
                               height: kSize.height / 4,
                               width: kSize.width,
                               decoration: BoxDecoration(
-                                color: AppColors.kWhiteColor,
+                                color: AppColors.bgPrimary,
                                 border: Border.all(
                                   color: AppColors.kBorderColor,
                                   width: 2,
@@ -2717,14 +2716,14 @@ class _AddPostState extends State<AddPost> {
                               alignment: Alignment.topRight,
                               child: Text(
                                 Languages.of(context)!.characterlimit500Text,
-                                style: Pallete.Quicksand14drktxtGreywe500,
+                                style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
                               ),
                             ),
                             const SizedBox(height: 25),
                             InkWell(
                               child: Container(
                                 height: 55,
-                                decoration: Pallete.getButtonDecoration(),
+                                decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                                 child: InkWell(
                                   onTap: () async {
                                     totalcount =
@@ -2799,7 +2798,7 @@ class _AddPostState extends State<AddPost> {
                                   child: Center(
                                     child: Text(
                                       Languages.of(context)!.submitReviewText,
-                                      style: Pallete.buttonTextStyle,
+                                      style: AppTypography.buttonText,
                                     ),
                                   ),
                                 ),
@@ -2810,13 +2809,13 @@ class _AddPostState extends State<AddPost> {
                             //   height: 60,
                             //   width: kSize.width,
                             //   decoration:
-                            //       Pallete.getBorderButtonDecoration(),
+                            //       BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
                             //   child: InkWell(
                             //     onTap: () {},
                             //     child: Center(
                             //       child: Text(
                             //         Languages.of(context)!.cancelText,
-                            //         style: Pallete.Quicksand15blackwe600,
+                            //         style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                             //       ),
                             //     ),
                             //   ),
@@ -2833,10 +2832,10 @@ class _AddPostState extends State<AddPost> {
               ? Container(
                 height: kSize.height,
                 width: kSize.width,
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 child: const Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.kBlackColor,
+                    color: AppColors.textPrimary,
                   ),
                 ),
               )
@@ -2865,7 +2864,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.TakePhotoText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.camera_alt_outlined,
@@ -2891,7 +2890,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.PhotoLibraryText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.photo_library_outlined,
@@ -2913,7 +2912,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.CancelText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(Icons.cancel_outlined, color: Colors.black),
                     ],
@@ -2992,7 +2991,7 @@ class _AddPostState extends State<AddPost> {
                           height: 500,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: AppColors.kPinkColor,
+                              color: AppColors.actionPrimary,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(0),
@@ -3245,7 +3244,7 @@ class _AddPostState extends State<AddPost> {
                           height: 500,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: AppColors.kPinkColor,
+                              color: AppColors.actionPrimary,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(0),
@@ -3456,7 +3455,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.TakePhotoText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.camera_alt_outlined,
@@ -3482,7 +3481,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.PhotoLibraryText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.photo_library_outlined,
@@ -3505,7 +3504,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.CancelText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(Icons.cancel_outlined, color: Colors.black),
                     ],
@@ -3587,7 +3586,7 @@ class _AddPostState extends State<AddPost> {
                           height: 500,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: AppColors.kPinkColor,
+                              color: AppColors.actionPrimary,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(0),
@@ -3826,7 +3825,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.TakePhotoText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.camera_alt_outlined,
@@ -3855,7 +3854,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.PhotoLibraryText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.photo_library_outlined,
@@ -3877,7 +3876,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.cancelText,
-                        style: Pallete.Quicksand15blackwe300,
+                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                       ),
                       const Icon(Icons.cancel_outlined, color: Colors.black),
                     ],
@@ -4075,14 +4074,14 @@ class _AddPostState extends State<AddPost> {
   //         return BackdropFilter(
   //             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
   //             child: AlertDialog(
-  //               backgroundColor: AppColors.kWhiteColor,
+  //               backgroundColor: AppColors.bgPrimary,
   //               contentPadding: const EdgeInsets.all(10),
   //               shape: RoundedRectangleBorder(
   //                 borderRadius: BorderRadius.circular(10),
   //               ),
   //               title: Text(
   //                 "Upload image & Video",
-  //                 style: Pallete.Quicksand15blackwe600,
+  //                 style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
   //               ),
   //               actions: <Widget>[
   //                 Column(
@@ -4137,14 +4136,14 @@ class _AddPostState extends State<AddPost> {
           (ctx) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: AlertDialog(
-              backgroundColor: AppColors.kWhiteColor,
+              backgroundColor: AppColors.bgPrimary,
               insetPadding: const EdgeInsets.only(left: 20, right: 20),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               content: Text(
                 Languages.of(context)!.postreviewcanceltitleText,
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
               actions: <Widget>[
                 SizedBox(
@@ -4166,7 +4165,7 @@ class _AddPostState extends State<AddPost> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -4245,7 +4244,7 @@ class _AddPostState extends State<AddPost> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),

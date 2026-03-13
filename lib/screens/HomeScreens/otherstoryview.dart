@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:pinkGossip/localization/language/language_en.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:story_view/story_view.dart';
@@ -181,7 +180,7 @@ class _OtherStoryViewScreenState extends State<OtherStoryViewScreen> {
                           Expanded(
                             child: TextField(
                               focusNode: replyFocusNode,
-                              style: Pallete.Quicksand14Whiitewe600,
+                              style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                               controller: replyController,
                               onEditingComplete: () {
                                 replyController.clear();
@@ -190,27 +189,27 @@ class _OtherStoryViewScreenState extends State<OtherStoryViewScreen> {
                               decoration: InputDecoration(
                                 hintText:
                                     Languages.of(context)!.sendamessageText,
-                                hintStyle: Pallete.Quicksand14Whiitewe600,
+                                hintStyle: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                 fillColor: Colors.grey.shade900,
                                 filled: true,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                   borderSide: const BorderSide(
-                                    color: AppColors.kWhiteColor,
+                                    color: AppColors.bgPrimary,
                                     width: 2.0,
                                   ),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                   borderSide: const BorderSide(
-                                    color: AppColors.kWhiteColor,
+                                    color: AppColors.bgPrimary,
                                     width: 2.0,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                   borderSide: const BorderSide(
-                                    color: AppColors.kWhiteColor,
+                                    color: AppColors.bgPrimary,
                                     width: 2.0,
                                   ),
                                 ),
@@ -225,7 +224,7 @@ class _OtherStoryViewScreenState extends State<OtherStoryViewScreen> {
                           IconButton(
                             icon: const Icon(
                               Icons.send,
-                              color: AppColors.kWhiteColor,
+                              color: AppColors.bgPrimary,
                             ),
                             onPressed: () {
                               final replyText = replyController.text;
@@ -289,7 +288,7 @@ class _OtherStoryViewScreenState extends State<OtherStoryViewScreen> {
                     firstName.isNotEmpty || lastName.isNotEmpty
                         ? "$firstName $lastName"
                         : salonName,
-                    style: Pallete.Quicksand16Whiitewe600,
+                    style: AppTypography.heading3.copyWith(color: AppColors.bgPrimary),
                   ),
                 ),
               ),
@@ -305,7 +304,7 @@ class _OtherStoryViewScreenState extends State<OtherStoryViewScreen> {
                 alignment: Alignment.topRight,
                 child: Icon(
                   Icons.close,
-                  color: AppColors.kWhiteColor,
+                  color: AppColors.bgPrimary,
                   size: 25,
                 ),
               ),

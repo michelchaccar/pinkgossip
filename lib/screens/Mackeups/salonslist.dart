@@ -37,9 +37,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinkGossip/screens/HomeScreens/searchforhomescreen.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/salonlistviewmodel.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../../models/salonlistmodel.dart';
@@ -437,7 +436,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: AppColors.kWhiteColor,
+        backgroundColor: AppColors.bgPrimary,
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
           backgroundColor: AppColors.kAppBArBGColor,
@@ -451,7 +450,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                 children: [
                   InkWell(
                     overlayColor: const WidgetStatePropertyAll(
-                      AppColors.kWhiteColor,
+                      AppColors.bgPrimary,
                     ),
                     borderRadius: BorderRadius.circular(20),
                     onTap: () {
@@ -471,7 +470,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                   const SizedBox(width: 5),
                   InkWell(
                     overlayColor: const WidgetStatePropertyAll(
-                      AppColors.kWhiteColor,
+                      AppColors.bgPrimary,
                     ),
                     borderRadius: BorderRadius.circular(20),
                     onTap: () {
@@ -489,7 +488,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                           width: 25,
                           child: Image.asset(
                             ImageUtils.mapImage,
-                            color: AppColors.kBlackColor,
+                            color: AppColors.textPrimary,
                           ),
                         ),
                         // Positioned(
@@ -499,7 +498,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                         //     height: 10,
                         //     width: 10,
                         //     decoration: BoxDecoration(
-                        //       color: AppColors.kPinkColor,
+                        //       color: AppColors.actionPrimary,
                         //       borderRadius: BorderRadius.circular(5),
                         //     ),
                         //     // child: const Center(
@@ -532,10 +531,10 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                         AppColors.kAppBArBGColor,
                       ),
                       controller: _tabController,
-                      indicatorColor: AppColors.kPinkColor,
-                      labelColor: AppColors.kBlackColor,
-                      unselectedLabelStyle: Pallete.Quicksand16drkBlackBold,
-                      labelStyle: Pallete.Quicksand16drkBlackBold,
+                      indicatorColor: AppColors.actionPrimary,
+                      labelColor: AppColors.textPrimary,
+                      unselectedLabelStyle: AppTypography.heading3,
+                      labelStyle: AppTypography.heading3,
                       physics: AlwaysScrollableScrollPhysics(),
                       indicatorSize: TabBarIndicatorSize.tab,
                       tabs: [
@@ -658,7 +657,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                   child: Center(
                                                     child: CircularProgressIndicator(
                                                       color:
-                                                          AppColors.kBlackColor,
+                                                          AppColors.textPrimary,
                                                       value:
                                                           loadingProgress
                                                                       .expectedTotalBytes !=
@@ -709,7 +708,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                             //         .salonName!
                                             //     : "-",
                                             style:
-                                                Pallete.Quicksand16drkBlackBold,
+                                                AppTypography.heading3,
                                           ),
                                           const SizedBox(height: 2),
                                           Row(
@@ -719,8 +718,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                     .averageRating!
                                                     .toStringAsFixed(1),
                                                 style:
-                                                    Pallete
-                                                        .Quicksand12blackwe400,
+                                                    AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
                                               ),
                                               const SizedBox(width: 4),
                                               RatingBarIndicator(
@@ -739,14 +737,13 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                     (context, _) => const Icon(
                                                       Icons.star,
                                                       color:
-                                                          AppColors.kPinkColor,
+                                                          AppColors.actionPrimary,
                                                     ),
                                               ),
                                               Text(
                                                 " (${salonlistArray[index].ratingCount.toString()})",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand12blackwe400,
+                                                    AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
                                               ),
                                             ],
                                           ),
@@ -763,8 +760,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                         .openDays!
                                                     : "-",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand10darkGreykwe500,
+                                                    AppTypography.caption.copyWith(fontSize: 10, fontWeight: FontWeight.w500, color: AppColors.drktxtGrey),
                                               ),
                                             ],
                                           ),
@@ -781,8 +777,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                         .openTime!
                                                     : "-",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand10darkGreykwe500,
+                                                    AppTypography.caption.copyWith(fontSize: 10, fontWeight: FontWeight.w500, color: AppColors.drktxtGrey),
                                               ),
                                             ],
                                           ),
@@ -801,8 +796,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                         .contactNo!
                                                     : "-",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand10darkGreykwe500,
+                                                    AppTypography.caption.copyWith(fontSize: 10, fontWeight: FontWeight.w500, color: AppColors.drktxtGrey),
                                               ),
                                             ],
                                           ),
@@ -821,8 +815,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                         .siteName!
                                                     : "-",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand10darkGreykwe500,
+                                                    AppTypography.caption.copyWith(fontSize: 10, fontWeight: FontWeight.w500, color: AppColors.drktxtGrey),
                                               ),
                                             ],
                                           ),
@@ -848,8 +841,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                               .address!
                                                           : "-",
                                                       style:
-                                                          Pallete
-                                                              .Quicksand10darkGreykwe500,
+                                                          AppTypography.caption.copyWith(fontSize: 10, fontWeight: FontWeight.w500, color: AppColors.drktxtGrey),
                                                     ),
                                                   ),
                                                 ],
@@ -912,7 +904,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                       //           borderRadius: BorderRadius.circular(12),
                       //           border: Border.all(
                       //             width: 2,
-                      //             color: AppColors.kBlackColor,
+                      //             color: AppColors.textPrimary,
                       //           ),
                       //         ),
                       //         child: DropdownButtonHideUnderline(
@@ -1088,8 +1080,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                             BoxShape.circle,
                                                                         gradient: LinearGradient(
                                                                           colors: [
-                                                                            AppColors.kPinkColor,
-                                                                            AppColors.kPinkColor,
+                                                                            AppColors.actionPrimary,
+                                                                            AppColors.actionPrimary,
                                                                           ],
                                                                           begin:
                                                                               Alignment.topLeft,
@@ -1128,8 +1120,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                             BoxShape.circle,
                                                                         gradient: LinearGradient(
                                                                           colors: [
-                                                                            AppColors.kPinkColor,
-                                                                            AppColors.kPinkColor,
+                                                                            AppColors.actionPrimary,
+                                                                            AppColors.actionPrimary,
                                                                           ],
                                                                           begin:
                                                                               Alignment.topLeft,
@@ -1189,8 +1181,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                       .userName!
                                                                   : "${item.firstName!} ${item.lastName!}",
                                                               style:
-                                                                  Pallete
-                                                                      .Quicksand14blackwe600,
+                                                                  AppTypography.bodySemiBold,
                                                             ),
                                                           ),
                                                           item.beforeImage != ""
@@ -1217,8 +1208,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                 child: Text(
                                                                   item.salonName!,
                                                                   style:
-                                                                      Pallete
-                                                                          .Quicksand12Black54we600,
+                                                                      AppTypography.captionMedium.copyWith(color: Colors.black54),
                                                                 ),
                                                               )
                                                               : Container(),
@@ -1251,8 +1241,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                             1,
                                                                           ),
                                                                       style:
-                                                                          Pallete
-                                                                              .Quicksand12Greywe400,
+                                                                          AppTypography.captionMedium.copyWith(color: Colors.grey),
                                                                     ),
                                                                     const SizedBox(
                                                                       width: 4,
@@ -1278,7 +1267,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                           ) => const Icon(
                                                                             Icons.star,
                                                                             color:
-                                                                                AppColors.kPinkColor,
+                                                                                AppColors.actionPrimary,
                                                                           ),
                                                                     ),
                                                                     const SizedBox(
@@ -1287,8 +1276,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                     Text(
                                                                       "(${item.ratingCount.toString()})",
                                                                       style:
-                                                                          Pallete
-                                                                              .Quicksand12Greywe400,
+                                                                          AppTypography.captionMedium.copyWith(color: Colors.grey),
                                                                     ),
                                                                   ],
                                                                 ),
@@ -1329,14 +1317,12 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                       .userName!
                                                                   : "${item.firstName!} ${item.lastName!}",
                                                               style:
-                                                                  Pallete
-                                                                      .Quicksand14blackwe600,
+                                                                  AppTypography.bodySemiBold,
                                                             ),
                                                             Text(
                                                               item.salonName!,
                                                               style:
-                                                                  Pallete
-                                                                      .Quicksand12Black54we600,
+                                                                  AppTypography.captionMedium.copyWith(color: Colors.black54),
                                                             ),
                                                             Row(
                                                               children: [
@@ -1346,8 +1332,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                         1,
                                                                       ),
                                                                   style:
-                                                                      Pallete
-                                                                          .Quicksand12blackwe400,
+                                                                      AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
                                                                 ),
                                                                 const SizedBox(
                                                                   width: 4,
@@ -1373,7 +1358,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                         Icons
                                                                             .star,
                                                                         color:
-                                                                            AppColors.kPinkColor,
+                                                                            AppColors.actionPrimary,
                                                                       ),
                                                                 ),
                                                                 const SizedBox(
@@ -1382,8 +1367,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                 Text(
                                                                   "(${item.ratingCount.toString()})",
                                                                   style:
-                                                                      Pallete
-                                                                          .Quicksand12Greywe400,
+                                                                      AppTypography.captionMedium.copyWith(color: Colors.grey),
                                                                 ),
                                                               ],
                                                             ),
@@ -1393,7 +1377,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                 ],
                                               ),
                                               PopupMenuButton(
-                                                color: AppColors.kWhiteColor,
+                                                color: AppColors.bgPrimary,
                                                 menuPadding: EdgeInsets.zero,
                                                 onSelected: (value) {
                                                   if (value != null) {
@@ -1563,8 +1547,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                           context,
                                                         )!.downlaodText,
                                                         style:
-                                                            Pallete
-                                                                .Quicksand14Blackw500,
+                                                            AppTypography.bodyMedium,
                                                       ),
                                                     ),
                                                     PopupMenuItem<String>(
@@ -1575,8 +1558,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                           context,
                                                         )!.shareText,
                                                         style:
-                                                            Pallete
-                                                                .Quicksand14Blackw500,
+                                                            AppTypography.bodyMedium,
                                                       ),
                                                     ),
                                                     PopupMenuItem<String>(
@@ -1587,8 +1569,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                           context,
                                                         )!.reportText,
                                                         style:
-                                                            Pallete
-                                                                .Quicksand14Blackw500,
+                                                            AppTypography.bodyMedium,
                                                       ),
                                                     ),
                                                     PopupMenuItem<String>(
@@ -1599,8 +1580,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                           context,
                                                         )!.blockText,
                                                         style:
-                                                            Pallete
-                                                                .Quicksand14Blackw500,
+                                                            AppTypography.bodyMedium,
                                                       ),
                                                     ),
                                                   ];
@@ -1687,7 +1667,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                                     child: Center(
                                                                                       child: CircularProgressIndicator(
                                                                                         color:
-                                                                                            AppColors.kBlackColor,
+                                                                                            AppColors.textPrimary,
                                                                                         value:
                                                                                             loadingProgress.expectedTotalBytes !=
                                                                                                     null
@@ -1740,7 +1720,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                                     child: Center(
                                                                                       child: CircularProgressIndicator(
                                                                                         color:
-                                                                                            AppColors.kBlackColor,
+                                                                                            AppColors.textPrimary,
                                                                                         value:
                                                                                             loadingProgress.expectedTotalBytes !=
                                                                                                     null
@@ -1810,7 +1790,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                                         child: Center(
                                                                                           child: CircularProgressIndicator(
                                                                                             color:
-                                                                                                AppColors.kBlackColor,
+                                                                                                AppColors.textPrimary,
                                                                                             value:
                                                                                                 loadingProgress.expectedTotalBytes !=
                                                                                                         null
@@ -1965,8 +1945,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                 child: Text(
                                                   "No media found",
                                                   style:
-                                                      Pallete
-                                                          .Quicksand16drktxtGreywe500,
+                                                      AppTypography.heading3.copyWith(fontWeight: FontWeight.w500, color: AppColors.textSecondary),
                                                 ),
                                               ),
                                             )
@@ -2038,7 +2017,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                             100,
                                                                         child: CircularProgressIndicator(
                                                                           color:
-                                                                              AppColors.kBlackColor,
+                                                                              AppColors.textPrimary,
                                                                           value:
                                                                               loadingProgress.expectedTotalBytes !=
                                                                                       null
@@ -2154,8 +2133,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                   content: Text(
                                                     "Are you sure you want to redeem this offer,${item.revardPoint} points will be deducted from your account",
                                                     style:
-                                                        Pallete
-                                                            .Quicksand15blackwe600,
+                                                        AppTypography.buttonText.copyWith(color: AppColors.textPrimary),
                                                   ),
                                                   actions: [
                                                     TextButton(
@@ -2167,8 +2145,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                       child: Text(
                                                         "Cancel",
                                                         style:
-                                                            Pallete
-                                                                .Quicksand15blackwe600,
+                                                            AppTypography.buttonText.copyWith(color: AppColors.textPrimary),
                                                       ),
                                                     ),
                                                     TextButton(
@@ -2225,8 +2202,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                     child: Text(
                                                                       "OK",
                                                                       style:
-                                                                          Pallete
-                                                                              .Quicksand15blackwe600,
+                                                                          AppTypography.buttonText.copyWith(color: AppColors.textPrimary),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -2238,8 +2214,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                       child: Text(
                                                         "OK",
                                                         style:
-                                                            Pallete
-                                                                .Quicksand15blackwe600,
+                                                            AppTypography.buttonText.copyWith(color: AppColors.textPrimary),
                                                       ),
                                                     ),
                                                   ],
@@ -2250,7 +2225,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                           child: Container(
                                             height: 50,
                                             decoration: const BoxDecoration(
-                                              color: AppColors.kPinkColor,
+                                              color: AppColors.actionPrimary,
                                             ),
                                             child: Padding(
                                               padding:
@@ -2264,18 +2239,16 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                 children: [
                                                   Text(
                                                     "Redeem Now",
-                                                    style: Pallete
-                                                        .Quicksand15blackwe600.copyWith(
+                                                    style: AppTypography.buttonText.copyWith(
                                                       color:
-                                                          AppColors.kWhiteColor,
+                                                          AppColors.bgPrimary,
                                                     ),
                                                   ),
                                                   Row(
                                                     children: [
                                                       Text(
                                                         "${item.revardPoint} Points",
-                                                        style: Pallete
-                                                            .Quicksand14blackwe600.copyWith(
+                                                        style: AppTypography.bodySemiBold.copyWith(
                                                           color:
                                                               AppColors
                                                                   .kWhiteColor,
@@ -2423,7 +2396,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                           child: Text(
                                             '${item.likeCount.toString()} ${Languages.of(context)!.likesText}',
                                             style:
-                                                Pallete.Quicksand14blackwe600,
+                                                AppTypography.bodySemiBold,
                                           ),
                                         ),
                                         item.review!.isNotEmpty
@@ -2451,14 +2424,12 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                             text:
                                                                 "${item.firstName!} ${item.lastName!}",
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14blackwe600,
+                                                                AppTypography.bodySemiBold,
                                                           ),
                                                           TextSpan(
                                                             text: " ",
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14blackwe600,
+                                                                AppTypography.bodySemiBold,
                                                           ),
 
                                                           _buildReviewText(
@@ -2489,8 +2460,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                 child: Text(
                                                                   " ${Languages.of(context)!.lessText}",
                                                                   style:
-                                                                      Pallete
-                                                                          .Quicksand14blackwe600,
+                                                                      AppTypography.bodySemiBold,
                                                                 ),
                                                               ),
                                                             ),
@@ -2521,8 +2491,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                           child: Text(
                                                             "..${Languages.of(context)!.moreText}",
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14blackwe600,
+                                                                AppTypography.bodySemiBold,
                                                           ),
                                                         ),
                                                       )
@@ -2550,8 +2519,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                       Text(
                                                         item.rating!.toString(),
                                                         style:
-                                                            Pallete
-                                                                .Quicksand14blackwe400,
+                                                            AppTypography.body,
                                                       ),
                                                       const SizedBox(width: 4),
                                                       RatingBarIndicator(
@@ -2603,8 +2571,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                 child: Text(
                                                   "${Languages.of(context)!.viewallText} ${item.commentCount.toString()} ${Languages.of(context)!.commentsText}",
                                                   style:
-                                                      Pallete
-                                                          .Quicksand14drktxtGreywe500,
+                                                      AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
                                                 ),
                                               ),
                                             )
@@ -2618,8 +2585,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                           child: Text(
                                             getpostTime(item.createdAt!),
                                             style:
-                                                Pallete
-                                                    .Quicksand14drktxtGreywe500,
+                                                AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
                                           ),
                                         ),
                                         const SizedBox(height: 12),
@@ -2669,7 +2635,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
               height: (kSize.height * 85) / 100,
               width: kSize.width,
               decoration: const BoxDecoration(
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
@@ -2706,7 +2672,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                       alignment: Alignment.topCenter,
                                       child: Text(
                                         Languages.of(context)!.CommentsText,
-                                        style: Pallete.Quicksand20drkBlackBold,
+                                        style: AppTypography.heading2.copyWith(fontSize: 20),
                                       ),
                                     ),
                                   ],
@@ -2806,8 +2772,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                           child: Text(
                                                             "${items.comments![cindex].firstName.toString()} ${items.comments![cindex].lastName.toString()}",
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14blackwe600,
+                                                                AppTypography.bodySemiBold,
                                                           ),
                                                         ),
                                                         const SizedBox(
@@ -2820,8 +2785,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                 .createdAt!,
                                                           ),
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand14drktxtGreywe500,
+                                                              AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
                                                         ),
                                                       ],
                                                     ),
@@ -2831,8 +2795,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                           .comment
                                                           .toString(),
                                                       style:
-                                                          Pallete
-                                                              .Quicksand14Blackwe400,
+                                                          AppTypography.body,
                                                     ),
                                                   ],
                                                 ),
@@ -2850,7 +2813,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                             context,
                                           )!.NoCommentsavailableText,
                                           style:
-                                              Pallete.Quicksand20drkBlackBold,
+                                              AppTypography.heading2.copyWith(fontSize: 20),
                                         ),
                                       ),
                                     ),
@@ -2874,7 +2837,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                           right: 15,
                         ),
                         child: TextField(
-                          style: Pallete.textFieldTextStyle,
+                          style: AppTypography.input,
                           controller: commentcontroller,
                           maxLines: 1,
                           autocorrect: true,
@@ -2904,14 +2867,14 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                               },
                               child: const Icon(Icons.send),
                             ),
-                            fillColor: AppColors.kWhiteColor,
+                            fillColor: AppColors.bgPrimary,
                             filled: true,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 15,
                               vertical: 14,
                             ),
                             hintText: Languages.of(context)!.sendcommentText,
-                            hintStyle: Pallete.textFieldTextStyle,
+                            hintStyle: AppTypography.input,
                             enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(12),
@@ -2927,10 +2890,10 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                               ),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimary,
                               ),
                             ),
-                            focusColor: AppColors.kPinkColor,
+                            focusColor: AppColors.actionPrimary,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -2996,7 +2959,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
         textSpans.add(
           TextSpan(
             text: '$word ',
-            style: Pallete.Quicksand14blackwe600.copyWith(
+            style: AppTypography.bodySemiBold.copyWith(
               color: AppColors.kblueColor,
             ),
             recognizer:
@@ -3009,7 +2972,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
         );
       } else {
         textSpans.add(
-          TextSpan(text: '$word ', style: Pallete.Quicksand14darkGreykwe400),
+          TextSpan(text: '$word ', style: AppTypography.body.copyWith(color: AppColors.drktxtGrey)),
         );
       }
     }
@@ -3131,7 +3094,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                       Expanded(
                                         child: Text(
                                           usersList[index]['nickname'],
-                                          style: Pallete.Quicksand12Blackkwe400,
+                                          style: AppTypography.caption.copyWith(color: AppColors.textPrimary),
                                         ),
                                       ),
                                     ],
@@ -3144,7 +3107,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.NouserfoundText,
-                                  style: Pallete.Quicksand16drkBlackbold,
+                                  style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -3215,7 +3178,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                         child: Center(
                           child: Text(
                             Languages.of(context)!.sendText,
-                            style: Pallete.Quicksand14Whiitewe600,
+                            style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                           ),
                         ),
                       ),
@@ -3259,7 +3222,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                           const SizedBox(width: 20),
                           Text(
                             Languages.of(context)!.ViewProfileText,
-                            style: Pallete.Quicksand18drkBlackbold,
+                            style: AppTypography.heading2.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -3683,7 +3646,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                 ? Languages.of(context)!.reportalertmsgText
                                 : Languages.of(context)!.blockalertmsgText,
                             textAlign: TextAlign.center,
-                            style: Pallete.Quicksand17Blackw500,
+                            style: AppTypography.bodyMedium.copyWith(fontSize: 17),
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -3705,14 +3668,14 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                   // width: 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.kPinkColor,
+                                    color: AppColors.actionPrimary,
                                   ),
                                   child: Center(
                                     child: Text(
                                       type == "report"
                                           ? Languages.of(context)!.reportText
                                           : Languages.of(context)!.blockText,
-                                      style: Pallete.Quicksand14whitewe600,
+                                      style: AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                     ),
                                   ),
                                 ),
@@ -3730,13 +3693,13 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                      color: AppColors.kPinkColor,
+                                      color: AppColors.actionPrimary,
                                     ),
                                   ),
                                   child: Center(
                                     child: Text(
                                       Languages.of(context)!.cancelText,
-                                      style: Pallete.Quicksand14pinkwe600,
+                                      style: AppTypography.bodySemiBold.copyWith(color: AppColors.actionPrimary),
                                     ),
                                   ),
                                 ),

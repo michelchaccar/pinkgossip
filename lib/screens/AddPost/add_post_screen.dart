@@ -4,11 +4,10 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/createpostmodel.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/screens/AddPost/mentionTextifield.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/utils/localfilevideoplay.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:pinkGossip/viewModels/createpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/searchuserlistviewmodel.dart';
 import 'package:flutter/material.dart';
@@ -208,7 +207,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
     return isImageSelected
         ? Scaffold(
-          backgroundColor: AppColors.kWhiteColor,
+          backgroundColor: AppColors.bgPrimary,
 
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -235,16 +234,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 ),
                 Text(
                   Languages.of(context)!.postsText,
-                  style: Pallete.Quicksand18drkBlackbold,
+                  style: AppTypography.heading2,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Pallete.closeKeyboard(context);
+                    FocusScope.of(context).requestFocus(FocusNode());
                     print("captionController.text ${captionController.text}");
                     print("taggedUserIds ${taggedUserIds}");
                     print("selectedMedia == ${selectedMedia}");
 
-                    Pallete.closeKeyboard(context);
+                    FocusScope.of(context).requestFocus(FocusNode());
 
                     // return;
 
@@ -265,7 +264,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   },
                   child: Text(
                     Languages.of(context)!.postCapitalText,
-                    style: Pallete.Quicksand18drkBlackbold.copyWith(
+                    style: AppTypography.heading2.copyWith(
                       color: AppColors.kblueColor,
                     ),
                   ),
@@ -311,7 +310,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             effect: const WormEffect(
                               dotHeight: 10,
                               dotWidth: 10,
-                              activeDotColor: AppColors.kPinkColor,
+                              activeDotColor: AppColors.actionPrimary,
                               dotColor: Colors.grey,
                             ),
                           ),
@@ -354,8 +353,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
             elevation: 0,
             title: Text(
               Languages.of(context)!.newpostText,
-              style: Pallete.Quicksand18Whiitewe600.copyWith(
-                color: AppColors.kBlackColor,
+              style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w600, color: AppColors.bgPrimary).copyWith(
+                color: AppColors.textPrimary,
               ),
             ),
             centerTitle: false,
@@ -381,7 +380,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     },
                     child: Text(
                       Languages.of(context)!.nextText,
-                      style: Pallete.Quicksand15blackwe600.copyWith(
+                      style: AppTypography.bodySemiBold.copyWith(fontSize: 15).copyWith(
                         color: Colors.blue,
                       ),
                     ),
@@ -395,10 +394,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   ? Container(
                     height: kSize.height,
                     width: kSize.width,
-                    color: AppColors.kWhiteColor,
+                    color: AppColors.bgPrimary,
                     child: const Center(
                       child: CircularProgressIndicator(
-                        color: AppColors.kBlackColor,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                   )

@@ -16,11 +16,10 @@ import 'package:pinkGossip/models/successmodel.dart';
 import 'package:pinkGossip/screens/AddPost/mentionTextifield.dart';
 import 'package:pinkGossip/services/localnotification.dart';
 import 'package:pinkGossip/utils/apiservice.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/customeCamara.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:pinkGossip/viewModels/createpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/searchuserlistviewmodel.dart';
@@ -153,7 +152,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
     super.build(context);
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -165,7 +164,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           children: [
             Text(
               Languages.of(context)!.PostReviewText,
-              style: Pallete.Quicksand16drkBlackBold,
+              style: AppTypography.heading3,
             ),
             InkWell(
               onTap: () async {
@@ -192,7 +191,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Image.asset(
                 "lib/assets/images/wrong.png",
                 width: 22,
-                color: AppColors.kBlackColor,
+                color: AppColors.textPrimary,
               ),
             ),
           ],
@@ -242,7 +241,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 child: Text(
                   Languages.of(context)!.scanDescriptionText,
                   textAlign: TextAlign.center,
-                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                 ),
               ),
               const SizedBox(height: 30),
@@ -336,7 +335,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               borderRadius: BorderRadius.circular(20),
               color:
                   currentStep == index
-                      ? AppColors.kPinkColor
+                      ? AppColors.actionPrimary
                       : AppColors.drktxtGrey,
             ),
             child: Center(
@@ -357,8 +356,8 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           title,
           style:
               currentStep == index
-                  ? Pallete.Quicksand10Blackkwe600.copyWith(fontSize: 8)
-                  : Pallete.Quicksand10darkGreykwe500.copyWith(fontSize: 8),
+                  ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary).copyWith(fontSize: 8)
+                  : AppTypography.captionMedium.copyWith(fontSize: 10).copyWith(fontSize: 8),
         ),
       ],
     );
@@ -497,7 +496,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
             child: Text(
               Languages.of(context)!.searchDescriptionText,
               textAlign: TextAlign.center,
-              style: Pallete.Quicksand18drkkBlackColorwe500,
+              style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
             ),
           ),
           const SizedBox(height: 30),
@@ -542,14 +541,14 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               textInputAction: TextInputAction.search,
               cursorColor: AppColors.kTextColor,
               decoration: InputDecoration(
-                fillColor: AppColors.kWhiteColor,
+                fillColor: AppColors.bgPrimary,
                 filled: true,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 15,
                   vertical: 14,
                 ),
                 hintText: Languages.of(context)!.search2Text,
-                hintStyle: Pallete.textFieldTextStyle,
+                hintStyle: AppTypography.input,
                 suffixIcon: const Icon(Icons.search, size: 30),
                 enabledBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(35)),
@@ -560,9 +559,9 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(35)),
-                  borderSide: BorderSide(width: 1, color: AppColors.kPinkColor),
+                  borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
                 ),
-                focusColor: AppColors.kPinkColor,
+                focusColor: AppColors.actionPrimary,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(35),
                 ),
@@ -571,7 +570,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           ),
           searchsaloncontroller.text.trim().length >= 2
               ? Card(
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 child: Column(
                   children:
                       searchsalonlist.map((user) {
@@ -601,7 +600,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                                       return const Center(
                                         child: CircularProgressIndicator(
                                           strokeWidth: 2,
-                                          color: AppColors.kPinkColor,
+                                          color: AppColors.actionPrimary,
                                         ),
                                       );
                                     },
@@ -647,7 +646,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
             child: Text(
               Languages.of(context)!.orText,
               textAlign: TextAlign.center,
-              style: Pallete.Quicksand24drktxtGreywe500,
+              style: AppTypography.heading1.copyWith(fontWeight: FontWeight.w500, color: AppColors.textSecondary),
             ),
           ),
           const SizedBox(height: 10),
@@ -661,7 +660,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           Container(
             height: 30,
             width: 150,
-            decoration: Pallete.getButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
             child: InkWell(
               onTap: () {
                 scanerBottomSheet(context);
@@ -669,7 +668,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.ScanQRcodeText,
-                  style: Pallete.buttonTextStyle,
+                  style: AppTypography.buttonText,
                 ),
               ),
             ),
@@ -678,7 +677,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           Container(
             height: 55,
             margin: const EdgeInsets.only(left: 30, right: 30),
-            decoration: Pallete.getButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
             child: InkWell(
               onTap: () async {
                 print("continue tapppedd");
@@ -695,7 +694,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.continueText,
-                  style: Pallete.buttonTextStyle,
+                  style: AppTypography.buttonText,
                 ),
               ),
             ),
@@ -736,13 +735,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           Text(
             textAlign: TextAlign.center,
             Languages.of(context)!.ClicktotakeorselectyourbeforeimageText,
-            style: Pallete.Quicksand15blackwe300,
+            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
           ),
           const SizedBox(height: 10),
           Container(
             height: 30,
             width: 150,
-            decoration: Pallete.getButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
             child: InkWell(
               onTap: () {
                 print("add before");
@@ -751,7 +750,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.uploadText,
-                  style: Pallete.buttonTextStyle,
+                  style: AppTypography.buttonText,
                 ),
               ),
             ),
@@ -760,7 +759,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           Container(
             height: 55,
             margin: const EdgeInsets.only(left: 30, right: 30),
-            decoration: Pallete.getButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
             child: InkWell(
               onTap: () async {
                 if (beforeImage.path == "") {
@@ -796,7 +795,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.continueText,
-                  style: Pallete.buttonTextStyle,
+                  style: AppTypography.buttonText,
                 ),
               ),
             ),
@@ -806,7 +805,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
             height: 60,
             width: kSize.width,
             margin: const EdgeInsets.only(left: 30, right: 30),
-            decoration: Pallete.getBorderButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
             child: InkWell(
               onTap: () async {
                 setState(() {
@@ -816,7 +815,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.previousText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
               ),
             ),
@@ -850,8 +849,8 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               },
               child: Text(
                 "Ok",
-                style: Pallete.Quicksand14drktxtGreywe500.copyWith(
-                  color: AppColors.kBlackColor,
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary).copyWith(
+                  color: AppColors.textPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -882,8 +881,8 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               },
               child: Text(
                 "Ok",
-                style: Pallete.Quicksand14drktxtGreywe500.copyWith(
-                  color: AppColors.kBlackColor,
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary).copyWith(
+                  color: AppColors.textPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -985,7 +984,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: Pallete.Quicksand15blackwe300),
+            Text(title, style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300)),
             Icon(iconData, color: Colors.black),
           ],
         ),
@@ -1158,13 +1157,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           Text(
             textAlign: TextAlign.center,
             Languages.of(context)!.ClicktotakeorselectyourAfterimageText,
-            style: Pallete.Quicksand15blackwe300,
+            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
           ),
           const SizedBox(height: 10),
           Container(
             height: 30,
             width: 150,
-            decoration: Pallete.getButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
             child: InkWell(
               onTap: () {
                 print("add after");
@@ -1173,7 +1172,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.uploadText,
-                  style: Pallete.buttonTextStyle,
+                  style: AppTypography.buttonText,
                 ),
               ),
             ),
@@ -1182,7 +1181,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           Container(
             height: 55,
             margin: const EdgeInsets.only(left: 30, right: 30),
-            decoration: Pallete.getButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
             child: InkWell(
               onTap: () async {
                 if (afterImage.path == "") {
@@ -1206,7 +1205,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.continueText,
-                  style: Pallete.buttonTextStyle,
+                  style: AppTypography.buttonText,
                 ),
               ),
             ),
@@ -1216,7 +1215,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
             height: 60,
             width: kSize.width,
             margin: const EdgeInsets.only(left: 30, right: 30),
-            decoration: Pallete.getBorderButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
             child: InkWell(
               onTap: () async {
                 setState(() {
@@ -1226,7 +1225,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.previousText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
               ),
             ),
@@ -1282,13 +1281,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           Text(
             textAlign: TextAlign.center,
             Languages.of(context)!.uploadotherpictureorvideoText,
-            style: Pallete.Quicksand15blackwe300,
+            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
           ),
           const SizedBox(height: 10),
           Container(
             height: 30,
             width: 150,
-            decoration: Pallete.getButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
             child: InkWell(
               onTap: () {
                 print("add other");
@@ -1297,7 +1296,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.uploadText,
-                  style: Pallete.buttonTextStyle,
+                  style: AppTypography.buttonText,
                 ),
               ),
             ),
@@ -1306,7 +1305,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           Container(
             height: 55,
             margin: const EdgeInsets.only(left: 30, right: 30),
-            decoration: Pallete.getButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
             child: InkWell(
               onTap: () async {
                 if (otherData.path == "") {
@@ -1327,7 +1326,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.continueText,
-                  style: Pallete.buttonTextStyle,
+                  style: AppTypography.buttonText,
                 ),
               ),
             ),
@@ -1337,7 +1336,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
             height: 60,
             width: kSize.width,
             margin: const EdgeInsets.only(left: 30, right: 30),
-            decoration: Pallete.getBorderButtonDecoration(),
+            decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.kBorderColor, width: 2), borderRadius: BorderRadius.circular(12)),
             child: InkWell(
               onTap: () async {
                 setState(() {
@@ -1347,7 +1346,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               child: Center(
                 child: Text(
                   Languages.of(context)!.previousText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
               ),
             ),
@@ -1383,7 +1382,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               height: 40,
               width: 40,
               decoration: BoxDecoration(
-                color: AppColors.kPinkColor,
+                color: AppColors.actionPrimary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Center(
@@ -1391,7 +1390,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                   _videoController!.value.isPlaying
                       ? Icons.pause
                       : Icons.play_arrow,
-                  color: AppColors.kWhiteColor,
+                  color: AppColors.bgPrimary,
                 ),
               ),
             ),
@@ -1413,7 +1412,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               alignment: Alignment.topLeft,
               child: Text(
                 Languages.of(context)!.RatingText,
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
             ),
             const SizedBox(height: 8),
@@ -1421,12 +1420,12 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               children: [
                 Text(
                   Languages.of(context)!.CleanlinessText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
                 const SizedBox(width: 10),
                 FivePointedStar(
                   color: AppColors.klightGreyColor,
-                  selectedColor: AppColors.kPinkColor,
+                  selectedColor: AppColors.actionPrimary,
                   defaultSelectedCount: cleanlinesscount,
                   onChange: (count) async {
                     SharedPreferences postReviewPref =
@@ -1440,7 +1439,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 const SizedBox(width: 5),
                 Text(
                   cleanlinesscount.toString(),
-                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -1449,13 +1448,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               children: [
                 Text(
                   Languages.of(context)!.StafffriendlinessText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
                 const SizedBox(width: 10),
                 FivePointedStar(
                   color: AppColors.klightGreyColor,
                   defaultSelectedCount: stafffriendinesscount,
-                  selectedColor: AppColors.kPinkColor,
+                  selectedColor: AppColors.actionPrimary,
                   onChange: (count) async {
                     setState(() {
                       stafffriendinesscount = count;
@@ -1465,7 +1464,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 const SizedBox(width: 5),
                 Text(
                   stafffriendinesscount.toString(),
-                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -1474,13 +1473,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               children: [
                 Text(
                   Languages.of(context)!.OrganizationText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
                 const SizedBox(width: 10),
                 FivePointedStar(
                   color: AppColors.klightGreyColor,
                   defaultSelectedCount: organizationcount,
-                  selectedColor: AppColors.kPinkColor,
+                  selectedColor: AppColors.actionPrimary,
                   onChange: (count) async {
                     setState(() {
                       organizationcount = count;
@@ -1490,7 +1489,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 const SizedBox(width: 5),
                 Text(
                   organizationcount.toString(),
-                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -1499,13 +1498,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               children: [
                 Text(
                   Languages.of(context)!.TimemanagementText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
                 const SizedBox(width: 10),
                 FivePointedStar(
                   defaultSelectedCount: timemanagementcount,
                   color: AppColors.klightGreyColor,
-                  selectedColor: AppColors.kPinkColor,
+                  selectedColor: AppColors.actionPrimary,
                   onChange: (count) async {
                     setState(() {
                       timemanagementcount = count;
@@ -1515,7 +1514,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 const SizedBox(width: 5),
                 Text(
                   timemanagementcount.toString(),
-                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -1524,12 +1523,12 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               children: [
                 Text(
                   Languages.of(context)!.ModernText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
                 const SizedBox(width: 10),
                 FivePointedStar(
                   color: AppColors.klightGreyColor,
-                  selectedColor: AppColors.kPinkColor,
+                  selectedColor: AppColors.actionPrimary,
                   defaultSelectedCount: moderncount,
                   onChange: (count) async {
                     setState(() {
@@ -1540,7 +1539,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 const SizedBox(width: 5),
                 Text(
                   moderncount.toString(),
-                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -1549,12 +1548,12 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               children: [
                 Text(
                   Languages.of(context)!.BookingprocessText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
                 const SizedBox(width: 10),
                 FivePointedStar(
                   color: AppColors.klightGreyColor,
-                  selectedColor: AppColors.kPinkColor,
+                  selectedColor: AppColors.actionPrimary,
                   defaultSelectedCount: bookingprocesscount,
                   onChange: (count) async {
                     setState(() {
@@ -1565,7 +1564,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 const SizedBox(width: 5),
                 Text(
                   bookingprocesscount.toString(),
-                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -1574,13 +1573,13 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               children: [
                 Text(
                   Languages.of(context)!.CommunicationText,
-                  style: Pallete.Quicksand15blackwe600,
+                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                 ),
                 const SizedBox(width: 10),
                 FivePointedStar(
                   defaultSelectedCount: communicationcount,
                   color: AppColors.klightGreyColor,
-                  selectedColor: AppColors.kPinkColor,
+                  selectedColor: AppColors.actionPrimary,
                   onChange: (count) async {
                     setState(() {
                       communicationcount = count;
@@ -1590,7 +1589,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                 const SizedBox(width: 5),
                 Text(
                   communicationcount.toString(),
-                  style: Pallete.Quicksand18drkkBlackColorwe500,
+                  style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -1599,7 +1598,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               alignment: Alignment.topLeft,
               child: Text(
                 Languages.of(context)!.writereviewText,
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
             ),
             const SizedBox(height: 25),
@@ -1607,7 +1606,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               height: kSize.height / 4,
               width: kSize.width,
               decoration: BoxDecoration(
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 border: Border.all(color: AppColors.kBorderColor, width: 2),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -1637,14 +1636,14 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
               alignment: Alignment.topRight,
               child: Text(
                 Languages.of(context)!.characterlimit500Text,
-                style: Pallete.Quicksand14drktxtGreywe500,
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
               ),
             ),
             const SizedBox(height: 25),
             InkWell(
               child: Container(
                 height: 55,
-                decoration: Pallete.getButtonDecoration(),
+                decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                 child: InkWell(
                   onTap: () async {
                     totalcount =
@@ -1681,7 +1680,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                   child: Center(
                     child: Text(
                       Languages.of(context)!.submitReviewText,
-                      style: Pallete.buttonTextStyle,
+                      style: AppTypography.buttonText,
                     ),
                   ),
                 ),
@@ -1837,14 +1836,14 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
           (ctx) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: AlertDialog(
-              backgroundColor: AppColors.kWhiteColor,
+              backgroundColor: AppColors.bgPrimary,
               insetPadding: const EdgeInsets.only(left: 20, right: 20),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               content: Text(
                 Languages.of(context)!.postreviewcanceltitleText,
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
               actions: <Widget>[
                 SizedBox(
@@ -1866,7 +1865,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -1901,7 +1900,7 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),

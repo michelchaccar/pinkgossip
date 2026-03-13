@@ -22,10 +22,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinkGossip/models/updateprofilemodel.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/updateprofileviewmodel.dart';
 import 'package:http/http.dart' as http;
 
@@ -430,7 +430,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     ];
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -443,7 +443,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 InkWell(
                   overlayColor: const WidgetStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
@@ -461,7 +461,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 const SizedBox(width: 20),
                 Text(
                   Languages.of(context)!.EditProfileText,
-                  style: Pallete.Quicksand16drkBlackBold,
+                  style: AppTypography.heading3,
                 ),
               ],
             ),
@@ -575,7 +575,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             child: const Icon(
                               Icons.camera_alt_outlined,
                               size: 16.0,
-                              color: AppColors.kWhiteColor,
+                              color: AppColors.bgPrimary,
                             ),
                           ),
                         ),
@@ -588,7 +588,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   margin: const EdgeInsets.only(left: 20, right: 20),
                   child: Text(
                     Languages.of(context)!.usernameText,
-                    style: Pallete.Quicksand15blackwe300,
+                    style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -609,7 +609,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         }
                       }
                     },
-                    style: Pallete.textFieldTextStyle,
+                    style: AppTypography.input,
                     scrollPadding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom,
                     ),
@@ -617,8 +617,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     cursorColor: AppColors.kTextColor,
-                    decoration: Pallete.getTextfieldDecoration(
-                      Languages.of(context)!.usernameText,
+                    decoration: InputDecoration(
+                      fillColor: AppColors.bgPrimary,
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                      hintText: Languages.of(context)!.usernameText,
+                      hintStyle: AppTypography.input,
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                      ),
+                      focusColor: AppColors.actionPrimary,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                 ),
@@ -627,7 +641,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   margin: const EdgeInsets.only(left: 20, right: 20),
                   child: Text(
                     Languages.of(context)!.firstNameText,
-                    style: Pallete.Quicksand15blackwe300,
+                    style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -636,7 +650,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: TextFormField(
                     maxLines: 1,
                     autocorrect: true,
-                    style: Pallete.textFieldTextStyle,
+                    style: AppTypography.input,
                     scrollPadding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom,
                     ),
@@ -644,8 +658,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     cursorColor: AppColors.kTextColor,
-                    decoration: Pallete.getTextfieldDecoration(
-                      Languages.of(context)!.firstNameText,
+                    decoration: InputDecoration(
+                      fillColor: AppColors.bgPrimary,
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                      hintText: Languages.of(context)!.firstNameText,
+                      hintStyle: AppTypography.input,
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                      ),
+                      focusColor: AppColors.actionPrimary,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                 ),
@@ -654,7 +682,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   margin: const EdgeInsets.only(left: 20, right: 20),
                   child: Text(
                     Languages.of(context)!.lastNameText,
-                    style: Pallete.Quicksand15blackwe300,
+                    style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -663,7 +691,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: TextFormField(
                     maxLines: 1,
                     autocorrect: true,
-                    style: Pallete.textFieldTextStyle,
+                    style: AppTypography.input,
                     scrollPadding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom,
                     ),
@@ -671,8 +699,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     cursorColor: AppColors.kTextColor,
-                    decoration: Pallete.getTextfieldDecoration(
-                      Languages.of(context)!.lastNameText,
+                    decoration: InputDecoration(
+                      fillColor: AppColors.bgPrimary,
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                      hintText: Languages.of(context)!.lastNameText,
+                      hintStyle: AppTypography.input,
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                      ),
+                      focusColor: AppColors.actionPrimary,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                 ),
@@ -681,7 +723,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   margin: const EdgeInsets.only(left: 20, right: 20),
                   child: Text(
                     Languages.of(context)!.EmailText,
-                    style: Pallete.Quicksand15blackwe300,
+                    style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -690,7 +732,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: TextFormField(
                     maxLines: 1,
                     autocorrect: true,
-                    style: Pallete.textFieldTextStyle,
+                    style: AppTypography.input,
                     scrollPadding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom,
                     ),
@@ -698,8 +740,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     cursorColor: AppColors.kTextColor,
-                    decoration: Pallete.getTextfieldDecoration(
-                      Languages.of(context)!.EmailText,
+                    decoration: InputDecoration(
+                      fillColor: AppColors.bgPrimary,
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                      hintText: Languages.of(context)!.EmailText,
+                      hintStyle: AppTypography.input,
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                      ),
+                      focusColor: AppColors.actionPrimary,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                 ),
@@ -712,7 +768,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           margin: const EdgeInsets.only(left: 20, right: 20),
                           child: Text(
                             Languages.of(context)!.BioText,
-                            style: Pallete.Quicksand15blackwe300,
+                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -722,7 +778,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: TextFormField(
                             maxLines: null,
                             autocorrect: true,
-                            style: Pallete.textFieldTextStyle,
+                            style: AppTypography.input,
                             // onChanged: _onTextChanged,
                             scrollPadding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -731,8 +787,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.done,
                             cursorColor: AppColors.kTextColor,
-                            decoration: Pallete.getTextfieldDecoration(
-                              Languages.of(context)!.BioText,
+                            decoration: InputDecoration(
+                              fillColor: AppColors.bgPrimary,
+                              filled: true,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                              hintText: Languages.of(context)!.BioText,
+                              hintStyle: AppTypography.input,
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                              ),
+                              focusColor: AppColors.actionPrimary,
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             ),
                           ),
                         ),
@@ -751,7 +821,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           margin: const EdgeInsets.only(left: 20, right: 20),
                           child: Text(
                             Languages.of(context)!.SalonnameText,
-                            style: Pallete.Quicksand15blackwe300,
+                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -760,7 +830,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: TextFormField(
                             maxLines: 1,
                             autocorrect: true,
-                            style: Pallete.textFieldTextStyle,
+                            style: AppTypography.input,
                             scrollPadding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
@@ -768,8 +838,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.done,
                             cursorColor: AppColors.kTextColor,
-                            decoration: Pallete.getTextfieldDecoration(
-                              Languages.of(context)!.SalonnameText,
+                            decoration: InputDecoration(
+                              fillColor: AppColors.bgPrimary,
+                              filled: true,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                              hintText: Languages.of(context)!.SalonnameText,
+                              hintStyle: AppTypography.input,
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                              ),
+                              focusColor: AppColors.actionPrimary,
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             ),
                           ),
                         ),
@@ -778,7 +862,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           margin: const EdgeInsets.only(left: 20, right: 20),
                           child: Text(
                             Languages.of(context)!.BioText,
-                            style: Pallete.Quicksand15blackwe300,
+                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -787,7 +871,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: TextFormField(
                             maxLines: null,
                             autocorrect: true,
-                            style: Pallete.textFieldTextStyle,
+                            style: AppTypography.input,
                             // onChanged: _onTextChanged,
                             scrollPadding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -796,8 +880,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.text,
                             textInputAction: TextInputAction.done,
                             cursorColor: AppColors.kTextColor,
-                            decoration: Pallete.getTextfieldDecoration(
-                              Languages.of(context)!.BioText,
+                            decoration: InputDecoration(
+                              fillColor: AppColors.bgPrimary,
+                              filled: true,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                              hintText: Languages.of(context)!.BioText,
+                              hintStyle: AppTypography.input,
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                              ),
+                              focusColor: AppColors.actionPrimary,
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             ),
                           ),
                         ),
@@ -806,7 +904,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           margin: const EdgeInsets.only(left: 20, right: 20),
                           child: Text(
                             Languages.of(context)!.websiteText,
-                            style: Pallete.Quicksand15blackwe300,
+                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -815,7 +913,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: TextFormField(
                             maxLines: null,
                             autocorrect: true,
-                            style: Pallete.textFieldTextStyle,
+                            style: AppTypography.input,
                             // onChanged: _onTextChanged,
                             scrollPadding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -824,8 +922,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.url,
                             textInputAction: TextInputAction.done,
                             cursorColor: AppColors.kTextColor,
-                            decoration: Pallete.getTextfieldDecoration(
-                              Languages.of(context)!.websiteText,
+                            decoration: InputDecoration(
+                              fillColor: AppColors.bgPrimary,
+                              filled: true,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                              hintText: Languages.of(context)!.websiteText,
+                              hintStyle: AppTypography.input,
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                              ),
+                              focusColor: AppColors.actionPrimary,
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             ),
                           ),
                         ),
@@ -834,7 +946,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           margin: const EdgeInsets.only(left: 20, right: 20),
                           child: Text(
                             Languages.of(context)!.telephonenumberText,
-                            style: Pallete.Quicksand15blackwe300,
+                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -843,7 +955,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: TextFormField(
                             maxLines: 1,
                             autocorrect: true,
-                            style: Pallete.textFieldTextStyle,
+                            style: AppTypography.input,
                             scrollPadding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
@@ -851,8 +963,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.done,
                             cursorColor: AppColors.kTextColor,
-                            decoration: Pallete.getTextfieldDecoration(
-                              Languages.of(context)!.telephonenumberText,
+                            decoration: InputDecoration(
+                              fillColor: AppColors.bgPrimary,
+                              filled: true,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                              hintText: Languages.of(context)!.telephonenumberText,
+                              hintStyle: AppTypography.input,
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 2, color: AppColors.borderLight),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                                borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                              ),
+                              focusColor: AppColors.actionPrimary,
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                             ),
                           ),
                         ),
@@ -861,7 +987,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           margin: const EdgeInsets.only(left: 20, right: 20),
                           child: Text(
                             Languages.of(context)!.AddressText,
-                            style: Pallete.Quicksand15blackwe300,
+                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                           ),
                         ),
                         Stack(
@@ -880,7 +1006,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     onTap: () {
                                       setState(() {});
                                     },
-                                    style: Pallete.textFieldTextStyle,
+                                    style: AppTypography.input,
                                     scrollPadding: EdgeInsets.only(
                                       bottom:
                                           MediaQuery.of(
@@ -894,7 +1020,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     onFieldSubmitted: (value) {
                                       setState(() {});
                                       _predictions.clear();
-                                      Pallete.closeKeyboard(context);
+                                      FocusScope.of(context).requestFocus(FocusNode());
 
                                       setState(() {});
                                     },
@@ -910,7 +1036,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       setState(() {});
                                     },
                                     decoration: InputDecoration(
-                                      fillColor: AppColors.kWhiteColor,
+                                      fillColor: AppColors.bgPrimary,
                                       filled: true,
                                       contentPadding:
                                           const EdgeInsets.symmetric(
@@ -919,7 +1045,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           ),
                                       hintText:
                                           Languages.of(context)!.AddressText,
-                                      hintStyle: Pallete.textFieldTextStyle,
+                                      hintStyle: AppTypography.input,
                                       enabledBorder: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(12),
@@ -935,10 +1061,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         ),
                                         borderSide: BorderSide(
                                           width: 1,
-                                          color: AppColors.kPinkColor,
+                                          color: AppColors.actionPrimary,
                                         ),
                                       ),
-                                      focusColor: AppColors.kPinkColor,
+                                      focusColor: AppColors.actionPrimary,
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
                                       ),
@@ -953,7 +1079,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ),
                                   child: Text(
                                     "${Languages.of(context)!.OpenDaysText} & ${Languages.of(context)!.OpenTimeText}",
-                                    style: Pallete.Quicksand15blackwe300,
+                                    style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                                   ),
                                 ),
                                 const SizedBox(height: 15),
@@ -1000,16 +1126,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                     });
                                                   },
                                                   activeColor:
-                                                      AppColors.kWhiteColor,
+                                                      AppColors.bgPrimary,
                                                   materialTapTargetSize:
                                                       MaterialTapTargetSize
                                                           .shrinkWrap,
                                                   inactiveThumbColor:
-                                                      AppColors.kBlackColor,
+                                                      AppColors.textPrimary,
                                                   inactiveTrackColor:
                                                       AppColors.kAppBArBGColor,
                                                   activeTrackColor:
-                                                      AppColors.kPinkColor,
+                                                      AppColors.actionPrimary,
                                                 ),
                                                 const SizedBox(width: 10),
                                                 Expanded(
@@ -1254,7 +1380,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               itemBuilder: (context, index) {
                                 return Container(
                                   decoration: const BoxDecoration(
-                                    color: AppColors.kWhiteColor,
+                                    color: AppColors.bgPrimary,
                                     boxShadow: [
                                       BoxShadow(
                                         color: AppColors.klightGreyColor,
@@ -1270,7 +1396,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                     title: Text(
                                       _predictions[index],
-                                      style: Pallete.Quicksand12drktxtGreywe500,
+                                      style: AppTypography.captionMedium.copyWith(color: AppColors.textTertiary),
                                     ),
                                     onTap: () async {
                                       _selectPrediction(index);
@@ -1278,7 +1404,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         _fetchPlaceDetails(_selectedPlaceId!);
                                       });
 
-                                      Pallete.closeKeyboard(context);
+                                      FocusScope.of(context).requestFocus(FocusNode());
                                       setState(() {
                                         addressController.text =
                                             _predictions[index];
@@ -1305,7 +1431,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 width: kSize.width,
                 color: Colors.white,
                 child: const Center(
-                  child: CircularProgressIndicator(color: AppColors.kPinkColor),
+                  child: CircularProgressIndicator(color: AppColors.actionPrimary),
                 ),
               )
               : Container(),

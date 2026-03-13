@@ -1,8 +1,7 @@
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +79,7 @@ class _BeautyBusinessMapState extends State<BeautyBusinessMap> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -93,7 +92,7 @@ class _BeautyBusinessMapState extends State<BeautyBusinessMap> {
               children: [
                 InkWell(
                   overlayColor: const MaterialStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
@@ -111,7 +110,7 @@ class _BeautyBusinessMapState extends State<BeautyBusinessMap> {
                 const SizedBox(width: 20),
                 Text(
                   Languages.of(context)!.mapText,
-                  style: Pallete.Quicksand16drkBlackBold,
+                  style: AppTypography.heading3,
                 ),
               ],
             ),

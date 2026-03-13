@@ -15,9 +15,8 @@ import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:video_player/video_player.dart';
@@ -183,7 +182,7 @@ class _MessageDetailState extends State<MessageDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -193,7 +192,7 @@ class _MessageDetailState extends State<MessageDetail> {
           children: [
             InkWell(
               overlayColor: const MaterialStatePropertyAll(
-                AppColors.kWhiteColor,
+                AppColors.bgPrimary,
               ),
               borderRadius: BorderRadius.circular(20),
               onTap: () {
@@ -258,7 +257,7 @@ class _MessageDetailState extends State<MessageDetail> {
               ),
             ),
             const SizedBox(width: 8),
-            Text(widget.name, style: Pallete.Quicksand16drkBlackBold),
+            Text(widget.name, style: AppTypography.heading3),
           ],
         ),
       ),
@@ -292,7 +291,7 @@ class _MessageDetailState extends State<MessageDetail> {
                                 //         DateTime.fromMillisecondsSinceEpoch(
                                 //             message['timestamp'])),
                                 //     style: const TextStyle(
-                                //       color: AppColors.kBlackColor,
+                                //       color: AppColors.textPrimary,
                                 //       fontFamily: "Geist",
                                 //       fontWeight: FontWeight.w600,
                                 //       fontSize: 14,
@@ -358,8 +357,7 @@ class _MessageDetailState extends State<MessageDetail> {
                                                       context,
                                                     )!.repliedtoyourstoryText,
                                                 style:
-                                                    Pallete
-                                                        .Quicksand12blackwe500,
+                                                    AppTypography.captionMedium.copyWith(color: AppColors.textPrimary),
                                               ),
                                               const SizedBox(height: 5),
                                               _buildReplyContent(
@@ -439,7 +437,7 @@ class _MessageDetailState extends State<MessageDetail> {
           ),
           child: Text(
             replyText,
-            style: Pallete.Quicksand16drkBlackbold,
+            style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.left,
           ),
         ),
@@ -493,7 +491,7 @@ class _MessageDetailState extends State<MessageDetail> {
                 width: 100,
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.kPinkColor,
+                    color: AppColors.actionPrimary,
                     value:
                         loadingProgress.expectedTotalBytes != null
                             ? loadingProgress.cumulativeBytesLoaded /
@@ -751,9 +749,7 @@ class _MessageDetailState extends State<MessageDetail> {
                                   Expanded(
                                     child: Text(
                                       "${shareData.firstName!}${shareData.lastName!}",
-                                      style: const TextStyle(
-                                        color: AppColors.kBlackColor,
-                                        fontFamily: "Geist",
+                                      style: AppTypography.bodyMedium.copyWith(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
@@ -808,19 +804,17 @@ class _MessageDetailState extends State<MessageDetail> {
                                               text:
                                                   "${shareData.firstName!} ${shareData.lastName!}",
                                               style:
-                                                  Pallete
-                                                      .Quicksand10Blackkwe600,
+                                                  AppTypography.navLabel.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600),
                                             ),
                                             TextSpan(
                                               text: " ",
                                               style:
-                                                  Pallete.Quicksand12blackwe600,
+                                                  AppTypography.captionMedium.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600),
                                             ),
                                             TextSpan(
                                               text: shareData.review,
                                               style:
-                                                  Pallete
-                                                      .Quicksand10darkGreykwe500,
+                                                  AppTypography.navLabel.copyWith(color: AppColors.textSecondary),
                                             ),
                                           ],
                                         ),
@@ -842,11 +836,9 @@ class _MessageDetailState extends State<MessageDetail> {
                             message['timestamp'],
                           ),
                         ),
-                        style: const TextStyle(
-                          color: AppColors.kBlackColor,
-                          fontFamily: "Geist",
+                        style: AppTypography.navLabel.copyWith(
+                          color: AppColors.textPrimary,
                           fontWeight: FontWeight.w600,
-                          fontSize: 10,
                         ),
                       ),
                     ),
@@ -908,7 +900,7 @@ class _MessageDetailState extends State<MessageDetail> {
                       Image.asset("lib/assets/images/delete.png", height: 20),
                       Text(
                         "Unsend Message",
-                        style: Pallete.Quicksand15blackwe600,
+                        style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                       ),
                       const SizedBox(width: 8),
                     ],
@@ -977,7 +969,7 @@ class _MessageDetailState extends State<MessageDetail> {
   //                             height: 20),
   //                         Text(
   //                           "Unsend Message",
-  //                           style: Pallete.Quicksand15blackwe600,
+  //                           style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
   //                         ),
   //                         const SizedBox(width: 8),
   //                       ],

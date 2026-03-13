@@ -32,10 +32,9 @@ import 'package:pinkGossip/models/updateprofilephoto.dart';
 import 'package:pinkGossip/screens/Profile/editprofile.dart';
 import 'package:pinkGossip/screens/showpostimage.dart';
 import 'package:pinkGossip/screens/showpostvideo.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/salondetailsviewmodel.dart';
 import 'package:pinkGossip/viewModels/updateprofileviewmdoel.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -213,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       length: 3,
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: AppColors.kWhiteColor,
+        backgroundColor: AppColors.bgPrimary,
         appBar:
             salonProfileDetails != null
                 ? AppBar(
@@ -253,7 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 },
                                 child: Image.asset(
                                   ImageUtils.mapImage,
-                                  color: AppColors.kBlackColor,
+                                  color: AppColors.textPrimary,
                                 ),
                               ),
                             )
@@ -270,7 +269,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       const SizedBox(width: 10),
                       Text(
                         salonProfileDetails!.userName!,
-                        style: Pallete.Quicksand16drkBlackBold,
+                        style: AppTypography.heading3,
                       ),
                     ],
                   ),
@@ -287,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                   ),
                   child: Container(
-                    color: AppColors.kWhiteColor,
+                    color: AppColors.bgPrimary,
                     child: ListView(
                       padding: EdgeInsets.zero,
                       children: [
@@ -329,7 +328,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             width: 100,
                                             child: Center(
                                               child: CircularProgressIndicator(
-                                                color: AppColors.kBlackColor,
+                                                color: AppColors.textPrimary,
                                                 value:
                                                     loadingProgress
                                                                 .expectedTotalBytes !=
@@ -372,7 +371,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         child: Text(
                                           salonProfileDetails!.salonName!,
                                           style:
-                                              Pallete.Quicksand16drkBlackbold,
+                                              AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                       )
                                       : Container()
@@ -385,7 +384,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     alignment: Alignment.topLeft,
                                     child: Text(
                                       "${salonProfileDetails!.firstName!}${salonProfileDetails!.lastName!}",
-                                      style: Pallete.Quicksand16drkBlackbold,
+                                      style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
                                     ),
                                   )
                                   : Container(),
@@ -396,7 +395,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(Icons.qr_code_scanner_rounded),
                           title: Text(
                             Languages.of(context)!.QRCodeText,
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                           ),
                           onTap: () {
                             Navigator.push(
@@ -417,7 +416,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               leading: const Icon(Icons.reviews_sharp),
                               title: Text(
                                 "My Rewards",
-                                style: Pallete.Quicksand15blackwe600,
+                                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -433,7 +432,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(Icons.language),
                           title: Text(
                             Languages.of(context)!.LanguageText,
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                           ),
                           onTap: () async {
                             Navigator.push(
@@ -450,7 +449,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(Icons.app_shortcut_rounded),
                           title: Text(
                             Languages.of(context)!.tutorialText,
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                           ),
                           onTap: () async {
                             // Navigator.push(
@@ -478,7 +477,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(Icons.person),
                           title: Text(
                             Languages.of(context)!.blockedusersText,
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                           ),
                           onTap: () async {
                             Navigator.push(
@@ -495,7 +494,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(Icons.email),
                           title: Text(
                             "Email Visibility",
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -528,7 +527,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(Icons.delete_outline_outlined),
                           title: Text(
                             Languages.of(context)!.deleteaccountText,
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                           ),
                           onTap: () async {
                             deleteAccAlert(context, kSize);
@@ -538,7 +537,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(Icons.logout),
                           title: Text(
                             Languages.of(context)!.logoutText,
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                           ),
                           onTap: () async {
                             LogoutAlert(context, kSize);
@@ -551,7 +550,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         //   ),
                         //   title: Text(
                         //     "Test Gossiper Onboarding",
-                        //     style: Pallete.Quicksand15blackwe600.copyWith(
+                        //     style: AppTypography.bodySemiBold.copyWith(fontSize: 15).copyWith(
                         //       color: Colors.green,
                         //     ),
                         //   ),
@@ -583,7 +582,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         //   ),
                         //   title: Text(
                         //     "Test Salon Onboarding",
-                        //     style: Pallete.Quicksand15blackwe600.copyWith(
+                        //     style: AppTypography.bodySemiBold.copyWith(fontSize: 15).copyWith(
                         //       color: Colors.orange,
                         //     ),
                         //   ),
@@ -608,7 +607,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         body:
             isLoading == false
                 ? RefreshIndicator(
-                  color: AppColors.kPinkColor,
+                  color: AppColors.actionPrimaryDark,
                   onRefresh: () async {
                     setState(() {
                       offsett = 0;
@@ -682,10 +681,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                         shape: BoxShape.circle,
                                                         gradient: LinearGradient(
                                                           colors: [
-                                                            AppColors
-                                                                .kPinkColor,
-                                                            AppColors
-                                                                .kPinkColor,
+                                                            AppColors.actionPrimaryDark,
+                                                            AppColors.actionPrimaryDark,
                                                           ],
                                                           begin:
                                                               Alignment.topLeft,
@@ -752,10 +749,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                         shape: BoxShape.circle,
                                                         gradient: LinearGradient(
                                                           colors: [
-                                                            AppColors
-                                                                .kPinkColor,
-                                                            AppColors
-                                                                .kPinkColor,
+                                                            AppColors.actionPrimaryDark,
+                                                            AppColors.actionPrimaryDark,
                                                           ],
                                                           begin:
                                                               Alignment.topLeft,
@@ -851,7 +846,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             child: const Icon(
                                               Icons.add,
                                               size: 16.0,
-                                              color: AppColors.kWhiteColor,
+                                              color: AppColors.bgPrimary,
                                             ),
                                           ),
                                         ),
@@ -881,8 +876,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                           : postCountsReeview
                                                               .toString(),
                                                       style:
-                                                          Pallete
-                                                              .Quicksand16drkBlackBold,
+                                                          AppTypography.heading3,
                                                     ),
                                                     Text(
                                                       salonProfileDetails!
@@ -896,8 +890,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                           )!.reviewText,
 
                                                       style:
-                                                          Pallete
-                                                              .Quicksand16drktxtGreywe500,
+                                                          AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textTertiary),
                                                     ),
                                                   ],
                                                 ),
@@ -952,16 +945,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                 .toString()
                                                             : "0",
                                                         style:
-                                                            Pallete
-                                                                .Quicksand16drkBlackBold,
+                                                            AppTypography.heading3,
                                                       ),
                                                       Text(
                                                         Languages.of(
                                                           context,
                                                         )!.follwersText,
                                                         style:
-                                                            Pallete
-                                                                .Quicksand16drktxtGreywe500,
+                                                            AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textTertiary),
                                                       ),
                                                     ],
                                                   ),
@@ -1014,16 +1005,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                 .toString()
                                                             : "0",
                                                         style:
-                                                            Pallete
-                                                                .Quicksand16drkBlackBold,
+                                                            AppTypography.heading3,
                                                       ),
                                                       Text(
                                                         Languages.of(
                                                           context,
                                                         )!.followingText,
                                                         style:
-                                                            Pallete
-                                                                .Quicksand16drktxtGreywe500,
+                                                            AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textTertiary),
                                                       ),
                                                     ],
                                                   ),
@@ -1045,8 +1034,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                             .averageRating!,
                                                       ).toStringAsFixed(1),
                                                       style:
-                                                          Pallete
-                                                              .Quicksand12blackwe400,
+                                                          AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
                                                     ),
                                                     const SizedBox(width: 4),
                                                     RatingBarIndicator(
@@ -1069,16 +1057,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                           ) => const Icon(
                                                             Icons.star,
                                                             color:
-                                                                AppColors
-                                                                    .kPinkColor,
+                                                                AppColors.actionPrimaryDark,
                                                           ),
                                                     ),
                                                     const SizedBox(width: 4),
                                                     Text(
                                                       "(${salonProfileDetails!.ratingCount.toString()})",
                                                       style:
-                                                          Pallete
-                                                              .Quicksand12blackwe400,
+                                                          AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
                                                     ),
                                                   ],
                                                 ),
@@ -1107,7 +1093,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       : Languages.of(
                                         context,
                                       )!.beautybusinessText,
-                                  style: Pallete.Quicksand16drkBlackbold,
+                                  style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -1122,7 +1108,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     salonProfileDetails!.userType == 1
                                         ? "${salonProfileDetails!.firstName!} ${salonProfileDetails!.lastName!}"
                                         : salonProfileDetails!.salonName!,
-                                    style: Pallete.Quicksand14Blackw500,
+                                    style: AppTypography.bodyMedium,
                                   ),
                                 )
                                 : Container(),
@@ -1137,7 +1123,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     salonProfileDetails!.email!.isNotEmpty
                                         ? salonProfileDetails!.email!
                                         : "",
-                                    style: Pallete.Quicksand14drktxtBluewe500,
+                                    style: AppTypography.bodyMedium.copyWith(color: AppColors.kBlueColor),
                                   ),
                                 )
                                 : Container(),
@@ -1155,8 +1141,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       alignment: Alignment.topLeft,
                                       child: Text(
                                         salonProfileDetails!.salonName!,
-                                        style: Pallete
-                                            .Quicksand14drktxtGreywe500.copyWith(
+                                        style: AppTypography.bodyMedium.copyWith(
                                           color: Colors.black,
                                         ),
                                       ),
@@ -1176,8 +1161,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     salonProfileDetails!.bio != ""
                                         ? salonProfileDetails!.bio!
                                         : "",
-                                    style: Pallete
-                                        .Quicksand14drktxtGreywe500.copyWith(
+                                    style: AppTypography.bodyMedium.copyWith(
                                       color: Colors.black,
                                     ),
                                   ),
@@ -1220,8 +1204,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         alignment: Alignment.topLeft,
                                         child: Text(
                                           salonProfileDetails!.contactNo!,
-                                          style: Pallete
-                                              .Quicksand14drktxtGreywe500.copyWith(
+                                          style: AppTypography.bodyMedium.copyWith(
                                             color: Colors.black,
                                           ),
                                         ),
@@ -1261,8 +1244,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         alignment: Alignment.topLeft,
                                         child: Text(
                                           salonProfileDetails!.siteName!,
-                                          style: Pallete
-                                              .Quicksand14drktxtGreywe500.copyWith(
+                                          style: AppTypography.bodyMedium.copyWith(
                                             color: Colors.blue,
                                             decoration:
                                                 TextDecoration.underline,
@@ -1284,8 +1266,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       alignment: Alignment.topLeft,
                                       child: Text(
                                         salonProfileDetails!.address!,
-                                        style: Pallete
-                                            .Quicksand14drktxtGreywe500.copyWith(
+                                        style: AppTypography.bodyMedium.copyWith(
                                           color: Colors.black,
                                         ),
                                       ),
@@ -1382,12 +1363,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                           child: TabBar(
                             controller: _tabController,
                             isScrollable: false,
-                            labelColor: AppColors.kBlackColor,
+                            labelColor: AppColors.textPrimary,
                             overlayColor: const MaterialStatePropertyAll(
                               AppColors.kAppBArBGColor,
                             ),
                             unselectedLabelColor: AppColors.kBlueColor,
-                            indicatorColor: AppColors.kPinkColor,
+                            indicatorColor: AppColors.actionPrimaryDark,
                             indicatorSize: TabBarIndicatorSize.tab,
                             onTap: (value) {
                               setState(() {
@@ -1422,8 +1403,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             ImageUtils.gridicon,
                                             color:
                                                 currentindex == 0
-                                                    ? AppColors.kPinkColor
-                                                    : AppColors.kBlackColor,
+                                                    ? AppColors.actionPrimaryDark
+                                                    : AppColors.textPrimary,
                                           ),
                                         ),
                                       ),
@@ -1435,8 +1416,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             ImageUtils.videoicon,
                                             color:
                                                 currentindex == 1
-                                                    ? AppColors.kPinkColor
-                                                    : AppColors.kBlackColor,
+                                                    ? AppColors.actionPrimaryDark
+                                                    : AppColors.textPrimary,
                                           ),
                                         ),
                                       ),
@@ -1448,8 +1429,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             "lib/assets/images/tag Background Removed.png",
                                             color:
                                                 currentindex == 2
-                                                    ? AppColors.kPinkColor
-                                                    : AppColors.kBlackColor,
+                                                    ? AppColors.actionPrimaryDark
+                                                    : AppColors.textPrimary,
                                           ),
                                         ),
                                       ),
@@ -1463,8 +1444,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             ImageUtils.gridicon,
                                             color:
                                                 currentindex == 0
-                                                    ? AppColors.kPinkColor
-                                                    : AppColors.kBlackColor,
+                                                    ? AppColors.actionPrimaryDark
+                                                    : AppColors.textPrimary,
                                           ),
                                         ),
                                       ),
@@ -1476,8 +1457,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             ImageUtils.videoicon,
                                             color:
                                                 currentindex == 1
-                                                    ? AppColors.kPinkColor
-                                                    : AppColors.kBlackColor,
+                                                    ? AppColors.actionPrimaryDark
+                                                    : AppColors.textPrimary,
                                           ),
                                         ),
                                       ),
@@ -1489,8 +1470,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             "lib/assets/images/tag Background Removed.png",
                                             color:
                                                 currentindex == 2
-                                                    ? AppColors.kPinkColor
-                                                    : AppColors.kBlackColor,
+                                                    ? AppColors.actionPrimaryDark
+                                                    : AppColors.textPrimary,
                                           ),
                                         ),
                                       ),
@@ -1502,7 +1483,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             "lib/assets/images/ic_reward_redeem.png",
                                             color:
                                                 currentindex == 3
-                                                    ? AppColors.kPinkColor
+                                                    ? AppColors.actionPrimaryDark
                                                     : Colors.black,
                                           ),
                                         ),
@@ -1626,8 +1607,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                   child: Center(
                                                                     child: CircularProgressIndicator(
                                                                       color:
-                                                                          AppColors
-                                                                              .kBlackColor,
+                                                                          AppColors.textPrimary,
                                                                       value:
                                                                           loadingProgress.expectedTotalBytes !=
                                                                                   null
@@ -1774,7 +1754,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                       child: Center(
                                                                         child: CircularProgressIndicator(
                                                                           color:
-                                                                              AppColors.kBlackColor,
+                                                                              AppColors.textPrimary,
                                                                           value:
                                                                               loadingProgress.expectedTotalBytes !=
                                                                                       null
@@ -1920,7 +1900,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                                           child: Center(
                                                                             child: CircularProgressIndicator(
                                                                               color:
-                                                                                  AppColors.kBlackColor,
+                                                                                  AppColors.textPrimary,
                                                                               value:
                                                                                   loadingProgress.expectedTotalBytes !=
                                                                                           null
@@ -2000,7 +1980,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       Languages.of(
                                         context,
                                       )!.NopostavailableText,
-                                      style: Pallete.Quicksand16drkBlackBold,
+                                      style: AppTypography.heading3,
                                     ),
                                   ),
                               //Second tab UI
@@ -2141,7 +2121,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       Languages.of(
                                         context,
                                       )!.NovideoavailableText,
-                                      style: Pallete.Quicksand16drkBlackBold,
+                                      style: AppTypography.heading3,
                                     ),
                                   ),
                               //Third tab UI
@@ -2220,8 +2200,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                               child: Center(
                                                                 child: CircularProgressIndicator(
                                                                   color:
-                                                                      AppColors
-                                                                          .kBlackColor,
+                                                                      AppColors.textPrimary,
                                                                   value:
                                                                       loadingProgress.expectedTotalBytes !=
                                                                               null
@@ -2300,8 +2279,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                               child: Center(
                                                                 child: CircularProgressIndicator(
                                                                   color:
-                                                                      AppColors
-                                                                          .kBlackColor,
+                                                                      AppColors.textPrimary,
                                                                   value:
                                                                       loadingProgress.expectedTotalBytes !=
                                                                               null
@@ -2357,7 +2335,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     children: [
                                       Text(
                                         Languages.of(context)!.postofyouText,
-                                        style: Pallete.Quicksand20drkBlackBold,
+                                        style: AppTypography.heading2.copyWith(fontSize: 20),
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
@@ -2365,7 +2343,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           context,
                                         )!.emptytaglisttitleText,
                                         textAlign: TextAlign.center,
-                                        style: Pallete.Quicksand15blackwe300,
+                                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                                       ),
                                     ],
                                   ),
@@ -2407,7 +2385,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           (ctx) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: AlertDialog(
-              backgroundColor: AppColors.kWhiteColor,
+              backgroundColor: AppColors.bgPrimary,
               title: Text(Languages.of(context)!.LogoutText),
               insetPadding: const EdgeInsets.only(left: 20, right: 20),
               shape: const RoundedRectangleBorder(
@@ -2415,7 +2393,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
               content: Text(
                 Languages.of(context)!.logouttiletText,
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
               actions: <Widget>[
                 SizedBox(
@@ -2437,7 +2415,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -2474,7 +2452,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -2496,7 +2474,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           (ctx) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: AlertDialog(
-              backgroundColor: AppColors.kWhiteColor,
+              backgroundColor: AppColors.bgPrimary,
               title: Text(Languages.of(context)!.deleteaccountText),
               insetPadding: const EdgeInsets.only(left: 20, right: 20),
               shape: const RoundedRectangleBorder(
@@ -2504,7 +2482,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
               content: Text(
                 Languages.of(context)!.deleteaccountmsgText,
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
               actions: <Widget>[
                 SizedBox(
@@ -2526,7 +2504,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -2548,7 +2526,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -2927,7 +2905,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   _showHours
                       ? Languages.of(context)!.hideStoreHours
                       : Languages.of(context)!.viewStorehours,
-                  style: Pallete.Quicksand16drkBlackBold.copyWith(
+                  style: AppTypography.heading3.copyWith(
                     // color: Colors.blue, // clickable look
                     fontWeight: FontWeight.w600,
                   ),
@@ -2954,28 +2932,28 @@ class _ProfileScreenState extends State<ProfileScreen>
                   children: [
                     Text(
                       salonOpenDays[index].open!,
-                      style: Pallete.Quicksand12blackwe400.copyWith(
+                      style: AppTypography.caption.copyWith(
                         color: Colors.black,
                       ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       formatTime(salonOpenDays[index].startTime!),
-                      style: Pallete.Quicksand12blackwe400.copyWith(
+                      style: AppTypography.caption.copyWith(
                         color: Colors.black,
                       ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       Languages.of(context)!.toText,
-                      style: Pallete.Quicksand12blackwe400.copyWith(
+                      style: AppTypography.caption.copyWith(
                         color: Colors.black,
                       ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       formatTime(salonOpenDays[index].endTime!),
-                      style: Pallete.Quicksand12blackwe400.copyWith(
+                      style: AppTypography.caption.copyWith(
                         color: Colors.black,
                       ),
                     ),
@@ -3041,7 +3019,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   },
                   child: Image.asset(
                     ImageUtils.moreoptionimg,
-                    color: AppColors.kWhiteColor,
+                    color: AppColors.bgPrimary,
                     height: 30,
                     width: 15,
                   ),
@@ -3053,13 +3031,13 @@ class _ProfileScreenState extends State<ProfileScreen>
           Container(
             width: kSize.width,
             // color: Colors.red,
-            color: AppColors.kPinkColor,
+            color: AppColors.actionPrimaryDark,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
               children: [
                 Text(
                   Languages.of(context)!.redeemNowText,
-                  style: Pallete.Quicksand16drkBlackbold.copyWith(
+                  style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
@@ -3159,7 +3137,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         child: Image.asset("lib/assets/images/delete.png"),
                       ),
                       SizedBox(width: 20),
-                      Text("Delete", style: Pallete.Quicksand18drkBlackbold),
+                      Text("Delete", style: AppTypography.heading2),
                     ],
                   ),
                 ),
@@ -3178,17 +3156,17 @@ class _ProfileScreenState extends State<ProfileScreen>
           (ctx) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: AlertDialog(
-              backgroundColor: AppColors.kWhiteColor,
+              backgroundColor: AppColors.bgPrimary,
               elevation: 0,
               title: Text(Languages.of(context)!.deleteText),
-              titleTextStyle: Pallete.Quicksand22drkBlackbold,
+              titleTextStyle: AppTypography.heading1.copyWith(fontSize: 22),
               insetPadding: const EdgeInsets.only(left: 20, right: 20),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               content: Text(
                 Languages.of(context)!.deleteposttitleText,
-                style: Pallete.Quicksand18drktxtGreyrwe500,
+                style: AppTypography.heading2.copyWith(fontWeight: FontWeight.w500, color: AppColors.textTertiary),
               ),
               actions: <Widget>[
                 SizedBox(
@@ -3210,7 +3188,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -3233,7 +3211,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: Pallete.Quicksand15blackwe300,
+                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),

@@ -8,10 +8,9 @@ import 'package:pinkGossip/models/unfollwmodel.dart';
 import 'package:pinkGossip/screens/HomeScreens/mystoryview.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
 import 'package:pinkGossip/screens/Profile/singleuserstoryshow.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/allfollowersorfollowviewmodel.dart';
 import 'package:pinkGossip/viewModels/followingviewmodel.dart';
 import 'package:pinkGossip/viewModels/getstoryviewmodel.dart';
@@ -97,7 +96,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: AppColors.kWhiteColor,
+        backgroundColor: AppColors.bgPrimary,
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
           backgroundColor: AppColors.kAppBArBGColor,
@@ -110,7 +109,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                 children: [
                   InkWell(
                     overlayColor: const WidgetStatePropertyAll(
-                      AppColors.kWhiteColor,
+                      AppColors.bgPrimary,
                     ),
                     borderRadius: BorderRadius.circular(20),
                     onTap: () {
@@ -133,7 +132,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                     ),
                   ),
                   const SizedBox(width: 20),
-                  Text(widget.name, style: Pallete.Quicksand16drkBlackBold),
+                  Text(widget.name, style: AppTypography.heading3),
                 ],
               ),
             ],
@@ -147,11 +146,11 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
               child: TabBar(
                 controller: _tabController,
                 isScrollable: false,
-                labelColor: AppColors.kPinkColor,
+                labelColor: AppColors.actionPrimary,
                 overlayColor: const WidgetStatePropertyAll(
                   AppColors.kAppBArBGColor,
                 ),
-                indicatorColor: AppColors.kPinkColor,
+                indicatorColor: AppColors.actionPrimary,
                 indicatorSize: TabBarIndicatorSize.tab,
                 onTap: (value) {},
                 tabs: [
@@ -505,15 +504,13 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                         ? Text(
                                                           "${followdetaillist[index].firstName} ${followdetaillist[index].lastName}",
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand15blackwe600,
+                                                              AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                                         )
                                                         : Text(
                                                           followdetaillist[index]
                                                               .salonName!,
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand15blackwe600,
+                                                              AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                                         ),
                                                     const SizedBox(height: 2),
                                                   ],
@@ -544,8 +541,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                               context,
                                                             )!.RemoveText,
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14Whiitewe600,
+                                                                AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                                           ),
                                                         ),
                                                       ),
@@ -586,8 +582,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                               context,
                                                             )!.followText,
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14Whiitewe600,
+                                                                AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                                           ),
                                                         ),
                                                       ),
@@ -617,8 +612,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                               context,
                                                             )!.unfollowText,
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14Whiitewe600,
+                                                                AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                                           ),
                                                         ),
                                                       ),
@@ -634,7 +628,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                 : Center(
                                   child: Text(
                                     "0 ${Languages.of(context)!.follwersText}",
-                                    style: Pallete.Quicksand16drkBlackbold,
+                                    style: AppTypography.heading3,
                                   ),
                                 ),
                             followdetaillist.isNotEmpty
@@ -1016,15 +1010,13 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                         ? Text(
                                                           "${followdetaillist[index].firstName} ${followdetaillist[index].lastName}",
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand15blackwe600,
+                                                              AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                                         )
                                                         : Text(
                                                           followdetaillist[index]
                                                               .salonName!,
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand15blackwe600,
+                                                              AppTypography.bodySemiBold.copyWith(fontSize: 15),
                                                         ),
                                                     const SizedBox(height: 2),
                                                   ],
@@ -1055,8 +1047,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                               context,
                                                             )!.followingText,
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14Whiitewe600,
+                                                                AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                                           ),
                                                         ),
                                                       ),
@@ -1094,8 +1085,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                               context,
                                                             )!.followText,
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14Whiitewe600,
+                                                                AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                                           ),
                                                         ),
                                                       ),
@@ -1125,8 +1115,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                               context,
                                                             )!.unfollowText,
                                                             style:
-                                                                Pallete
-                                                                    .Quicksand14Whiitewe600,
+                                                                AppTypography.bodySemiBold.copyWith(color: AppColors.bgPrimary),
                                                           ),
                                                         ),
                                                       ),
@@ -1142,7 +1131,7 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                 : Center(
                                   child: Text(
                                     "0 ${Languages.of(context)!.followingText}",
-                                    style: Pallete.Quicksand16drkBlackbold,
+                                    style: AppTypography.heading3,
                                   ),
                                 ),
                           ],

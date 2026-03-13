@@ -1,7 +1,6 @@
 import 'package:pinkGossip/localization/language/languages.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -50,14 +49,14 @@ class _ProfileShareWidgetState extends State<ProfileShareWidget> {
             // ),
             Text(
               Languages.of(context)!.scan_to_view_profile,
-              style: Pallete.Quicksand16drkBlackbold,
+              style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: SelectableText(
                 widget.qrCodeDataString,
-                style: Pallete.Quicksand15blackwe600,
+                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
               ),
             ),
             const SizedBox(height: 20),

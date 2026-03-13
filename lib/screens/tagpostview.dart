@@ -4,10 +4,9 @@ import 'package:pinkGossip/models/commentpostmodel.dart';
 import 'package:pinkGossip/models/postlike.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/videoplayer.dart';
 import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/postlikeviewmodel.dart';
@@ -98,7 +97,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -111,7 +110,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
               children: [
                 InkWell(
                   overlayColor: const MaterialStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
@@ -129,7 +128,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                 const SizedBox(width: 20),
                 Text(
                   Languages.of(context)!.taggedText,
-                  style: Pallete.Quicksand16drkBlackBold,
+                  style: AppTypography.heading3,
                 ),
               ],
             ),
@@ -224,7 +223,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                   .isNotEmpty
                                               ? widget.postData[index].userName!
                                               : "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
-                                          style: Pallete.Quicksand12blackwe600,
+                                          style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                         ),
                                       ),
                                       widget.postData[index].beforeImage != ""
@@ -250,8 +249,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                             child: Text(
                                               widget.postData[index].salonName!,
                                               style:
-                                                  Pallete
-                                                      .Quicksand12Black54we600,
+                                                  AppTypography.caption.copyWith(fontWeight: FontWeight.w600),
                                             ),
                                           )
                                           : Container(),
@@ -264,8 +262,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                     .averageRating!
                                                     .toStringAsFixed(1),
                                                 style:
-                                                    Pallete
-                                                        .Quicksand12blackwe400,
+                                                    AppTypography.caption.copyWith(color: AppColors.textPrimary),
                                               ),
                                               const SizedBox(width: 4),
                                               RatingBarIndicator(
@@ -285,15 +282,14 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                     (context, _) => const Icon(
                                                       Icons.star,
                                                       color:
-                                                          AppColors.kPinkColor,
+                                                          AppColors.actionPrimary,
                                                     ),
                                               ),
                                               const SizedBox(width: 4),
                                               Text(
                                                 "(${widget.postData[index].ratingCount.toString()})",
                                                 style:
-                                                    Pallete
-                                                        .Quicksand12Greywe400,
+                                                    AppTypography.caption,
                                               ),
                                             ],
                                           )
@@ -332,7 +328,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                   .isNotEmpty
                                               ? widget.postData[index].userName!
                                               : "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
-                                          style: Pallete.Quicksand12blackwe600,
+                                          style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                         ),
                                       ),
                                       GestureDetector(
@@ -356,7 +352,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                         child: Text(
                                           widget.postData[index].salonName!,
                                           style:
-                                              Pallete.Quicksand12Black54we600,
+                                              AppTypography.captionMedium.copyWith(color: Colors.black54, fontWeight: FontWeight.w600),
                                         ),
                                       ),
                                       Row(
@@ -367,7 +363,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                 .averageRating!
                                                 .toStringAsFixed(1),
                                             style:
-                                                Pallete.Quicksand12blackwe400,
+                                                AppTypography.caption,
                                           ),
                                           const SizedBox(width: 4),
                                           RatingBarIndicator(
@@ -386,13 +382,13 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                             itemBuilder:
                                                 (context, _) => const Icon(
                                                   Icons.star,
-                                                  color: AppColors.kPinkColor,
+                                                  color: AppColors.actionPrimary,
                                                 ),
                                           ),
                                           const SizedBox(width: 4),
                                           Text(
                                             "(${widget.postData[index].ratingCount.toString()})",
-                                            style: Pallete.Quicksand12Greywe400,
+                                            style: AppTypography.caption,
                                           ),
                                         ],
                                       ),
@@ -402,7 +398,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                               //   widget.postData[index].userName!.isNotEmpty
                               //       ? widget.postData[index].userName!
                               //       : "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
-                              //   style: Pallete.Quicksand12blackwe600,
+                              //   style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                               // ),
                               // widget.postData[index].beforeImage != ""
                               //     ? InkWell(
@@ -423,7 +419,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                               //         },
                               //         child: Text(
                               //           widget.postData[index].salonName!,
-                              //           style: Pallete.Quicksand12Black54we600,
+                              //           style: AppTypography.captionMedium.copyWith(color: Colors.black54, fontWeight: FontWeight.w600),
                               //         ),
                               //       )
                               //     : Container(),
@@ -477,7 +473,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                 child: Center(
                                                   child: CircularProgressIndicator(
                                                     color:
-                                                        AppColors.kBlackColor,
+                                                        AppColors.textPrimary,
                                                     value:
                                                         loadingProgress
                                                                     .expectedTotalBytes !=
@@ -519,7 +515,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                 child: Center(
                                                   child: CircularProgressIndicator(
                                                     color:
-                                                        AppColors.kBlackColor,
+                                                        AppColors.textPrimary,
                                                     value:
                                                         loadingProgress
                                                                     .expectedTotalBytes !=
@@ -688,7 +684,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                 child: Center(
                                                   child: CircularProgressIndicator(
                                                     color:
-                                                        AppColors.kBlackColor,
+                                                        AppColors.textPrimary,
                                                     value:
                                                         loadingProgress
                                                                     .expectedTotalBytes !=
@@ -780,7 +776,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                   alignment: Alignment.topLeft,
                                   child: const Icon(
                                     Icons.favorite,
-                                    color: AppColors.kPinkColor,
+                                    color: AppColors.actionPrimary,
                                   ),
                                 )
                                 : const SizedBox(
@@ -788,7 +784,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                   width: 20,
                                   child: Icon(
                                     Icons.favorite_outline,
-                                    color: AppColors.kBlackColor,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                       ),
@@ -820,7 +816,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     "${widget.postData[index].likeCount} ${Languages.of(context)!.likesText}",
-                    style: Pallete.Quicksand12blackwe600,
+                    style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
                 // const SizedBox(height: 8),
@@ -840,11 +836,11 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                   TextSpan(
                                     text:
                                         "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
-                                    style: Pallete.Quicksand12blackwe600,
+                                    style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                   ),
                                   TextSpan(
                                     text: " ",
-                                    style: Pallete.Quicksand12blackwe600,
+                                    style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                   ),
                                   _buildReviewText(
                                     widget.postData[index].review!,
@@ -867,7 +863,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                         visible: less,
                                         child: Text(
                                           " ${Languages.of(context)!.lessText}",
-                                          style: Pallete.Quicksand12blackwe600,
+                                          style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                         ),
                                       ),
                                     ),
@@ -893,7 +889,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                   visible: selectindex == index ? more : true,
                                   child: Text(
                                     "..${Languages.of(context)!.moreText}",
-                                    style: Pallete.Quicksand12blackwe600,
+                                    style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               )
@@ -914,7 +910,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                         },
                         child: Text(
                           "${Languages.of(context)!.viewallText} ${widget.postData[index].commentCount.toString()} ${Languages.of(context)!.commentsText}",
-                          style: Pallete.Quicksand12drktxtGreywe500,
+                          style: AppTypography.captionMedium.copyWith(color: AppColors.textTertiary),
                         ),
                       ),
                     )
@@ -924,7 +920,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     getpostTime(widget.postData[index].createdAt!),
-                    style: Pallete.Quicksand12drktxtGreywe500,
+                    style: AppTypography.captionMedium.copyWith(color: AppColors.textTertiary),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -982,7 +978,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
         textSpans.add(
           TextSpan(
             text: '$word ',
-            style: Pallete.Quicksand12blackwe600.copyWith(
+            style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600).copyWith(
               color: AppColors.kblueColor,
             ),
             recognizer:
@@ -995,7 +991,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
         );
       } else {
         textSpans.add(
-          TextSpan(text: '$word ', style: Pallete.Quicksand12darkGreykwe400),
+          TextSpan(text: '$word ', style: AppTypography.caption.copyWith(color: AppColors.textTertiary)),
         );
       }
     }
@@ -1026,7 +1022,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
               height: (kSize.height * 85) / 100,
               width: kSize.width,
               decoration: const BoxDecoration(
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
@@ -1063,7 +1059,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                       alignment: Alignment.topCenter,
                                       child: Text(
                                         Languages.of(context)!.CommentsText,
-                                        style: Pallete.Quicksand20drkBlackBold,
+                                        style: AppTypography.heading1.copyWith(fontSize: 20),
                                       ),
                                     ),
                                   ],
@@ -1129,8 +1125,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                         Text(
                                                           "${widget.postData[index].comments![cindex].firstName.toString()} ${widget.postData[index].comments![cindex].lastName.toString()}",
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand12blackwe600,
+                                                              AppTypography.caption.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                                                         ),
                                                         const SizedBox(
                                                           width: 3,
@@ -1143,8 +1138,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                                 .createdAt!,
                                                           ),
                                                           style:
-                                                              Pallete
-                                                                  .Quicksand12drktxtGreywe500,
+                                                              AppTypography.captionMedium,
                                                         ),
                                                       ],
                                                     ),
@@ -1155,8 +1149,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                           .comment
                                                           .toString(),
                                                       style:
-                                                          Pallete
-                                                              .Quicksand12Blackkwe400,
+                                                          AppTypography.caption.copyWith(color: AppColors.textPrimary),
                                                     ),
                                                   ],
                                                 ),
@@ -1174,7 +1167,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                             context,
                                           )!.NoCommentsavailableText,
                                           style:
-                                              Pallete.Quicksand20drkBlackBold,
+                                              AppTypography.heading1.copyWith(fontSize: 20),
                                         ),
                                       ),
                                     ),
@@ -1198,7 +1191,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                           right: 15,
                         ),
                         child: TextField(
-                          style: Pallete.textFieldTextStyle,
+                          style: AppTypography.input,
                           controller: commentcontroller,
                           maxLines: 1,
                           autocorrect: true,
@@ -1228,14 +1221,14 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                               },
                               child: const Icon(Icons.send),
                             ),
-                            fillColor: AppColors.kWhiteColor,
+                            fillColor: AppColors.bgPrimary,
                             filled: true,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 15,
                               vertical: 14,
                             ),
                             hintText: Languages.of(context)!.sendcommentText,
-                            hintStyle: Pallete.textFieldTextStyle,
+                            hintStyle: AppTypography.input,
                             enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(12),
@@ -1251,10 +1244,10 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                               ),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimary,
                               ),
                             ),
-                            focusColor: AppColors.kPinkColor,
+                            focusColor: AppColors.actionPrimary,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),

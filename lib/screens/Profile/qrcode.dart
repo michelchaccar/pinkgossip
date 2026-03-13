@@ -5,10 +5,9 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:pinkGossip/localization/language/languages.dart';
 
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -98,11 +97,11 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
       SnackBar(
         content: Text(
           message,
-          style: Pallete.Quicksand18drkBlackbold.copyWith(
-            color: AppColors.kWhiteColor,
+          style: AppTypography.heading2.copyWith(
+            color: AppColors.bgPrimary,
           ),
         ),
-        backgroundColor: AppColors.kPinkColor,
+        backgroundColor: AppColors.actionPrimary,
       ),
     );
   }
@@ -111,7 +110,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -124,7 +123,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
               children: [
                 InkWell(
                   overlayColor: const WidgetStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
@@ -142,7 +141,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                 const SizedBox(width: 20),
                 Text(
                   Languages.of(context)!.QRCodeText,
-                  style: Pallete.Quicksand16drkBlackBold,
+                  style: AppTypography.heading3,
                 ),
               ],
             ),
@@ -179,7 +178,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                 boxShadow: const [
                   BoxShadow(color: Colors.black38, blurRadius: 12.0),
                 ],
-                color: AppColors.kWhiteColor,
+                color: AppColors.bgPrimary,
                 borderRadius: BorderRadius.circular(12.0),
               ),
               margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
@@ -188,7 +187,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                   Container(
                     margin: const EdgeInsets.only(left: 15, right: 15, top: 20),
                     child: QrImageView(
-                      foregroundColor: AppColors.kPinkColor,
+                      foregroundColor: AppColors.actionPrimary,
                       data: "${API.baseUrl}/profile/${widget.userid}",
                       // data:
                       //     "pinkgossipQRCode=${widget.usertype} ${widget.userid}",

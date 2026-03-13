@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
+import 'package:pinkGossip/theme/theme.dart';
 
 /// Reusable 3D button for onboarding (salon and gossiper)
 class OnboardingButton extends StatelessWidget {

@@ -19,11 +19,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinkGossip/bottomnavi.dart';
 import 'package:pinkGossip/models/signupmodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/signupviewmodel.dart';
 
 import '../../models/updatefirebasemodel.dart';
-import '../../utils/color_utils.dart';
 import '../../viewModels/updatefirebaseviewmodel.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -110,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ];
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -121,7 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Container(
                     height: 160,
                     padding: const EdgeInsets.only(left: 50, right: 50),
-                    color: AppColors.kWhiteColor,
+                    color: AppColors.bgPrimary,
                     alignment: Alignment.topCenter,
                     child: Image.asset("lib/assets/images/logo@3x.png"),
                   ),
@@ -130,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: TextFormField(
                       maxLines: 1,
                       autocorrect: true,
-                      style: Pallete.textFieldTextStyle,
+                      style: AppTypography.input,
                       onChanged: (value) {
                         getcheckUsernameExist(value);
                       },
@@ -140,9 +139,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: usernameTextController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
-                      cursorColor: AppColors.kTextColor,
-                      decoration: Pallete.getTextfieldDecoration(
-                        Languages.of(context)!.usernameText,
+                      cursorColor: AppColors.textTertiary,
+                      decoration: InputDecoration(
+                        fillColor: AppColors.bgPrimary,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                        hintText: Languages.of(context)!.usernameText,
+                        hintStyle: AppTypography.input,
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 2, color: AppColors.border),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                        ),
+                        focusColor: AppColors.actionPrimary,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
                   ),
@@ -152,16 +165,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: TextFormField(
                       maxLines: 1,
                       autocorrect: true,
-                      style: Pallete.textFieldTextStyle,
+                      style: AppTypography.input,
                       scrollPadding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
                       controller: firstNameTextController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
-                      cursorColor: AppColors.kTextColor,
-                      decoration: Pallete.getTextfieldDecoration(
-                        Languages.of(context)!.firstNameText,
+                      cursorColor: AppColors.textTertiary,
+                      decoration: InputDecoration(
+                        fillColor: AppColors.bgPrimary,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                        hintText: Languages.of(context)!.firstNameText,
+                        hintStyle: AppTypography.input,
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 2, color: AppColors.border),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                        ),
+                        focusColor: AppColors.actionPrimary,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
                   ),
@@ -171,16 +198,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: TextFormField(
                       maxLines: 1,
                       autocorrect: true,
-                      style: Pallete.textFieldTextStyle,
+                      style: AppTypography.input,
                       scrollPadding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
                       controller: lastNameTextController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
-                      cursorColor: AppColors.kTextColor,
-                      decoration: Pallete.getTextfieldDecoration(
-                        Languages.of(context)!.lastNameText,
+                      cursorColor: AppColors.textTertiary,
+                      decoration: InputDecoration(
+                        fillColor: AppColors.bgPrimary,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                        hintText: Languages.of(context)!.lastNameText,
+                        hintStyle: AppTypography.input,
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 2, color: AppColors.border),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                        ),
+                        focusColor: AppColors.actionPrimary,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
                   ),
@@ -190,16 +231,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: TextFormField(
                       maxLines: 1,
                       autocorrect: true,
-                      style: Pallete.textFieldTextStyle,
+                      style: AppTypography.input,
                       scrollPadding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
                       controller: emailTextController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
-                      cursorColor: AppColors.kTextColor,
-                      decoration: Pallete.getTextfieldDecoration(
-                        Languages.of(context)!.emailText,
+                      cursorColor: AppColors.textTertiary,
+                      decoration: InputDecoration(
+                        fillColor: AppColors.bgPrimary,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+                        hintText: Languages.of(context)!.emailText,
+                        hintStyle: AppTypography.input,
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 2, color: AppColors.border),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(width: 1, color: AppColors.actionPrimary),
+                        ),
+                        focusColor: AppColors.actionPrimary,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
                   ),
@@ -214,7 +269,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: TextFormField(
                           autocorrect: true,
                           maxLines: 1,
-                          style: Pallete.textFieldTextStyle,
+                          style: AppTypography.input,
                           scrollPadding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom,
                           ),
@@ -222,23 +277,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.done,
                           obscureText: _obscureText,
-                          cursorColor: AppColors.kTextColor,
+                          cursorColor: AppColors.textTertiary,
                           decoration: InputDecoration(
-                            fillColor: AppColors.kWhiteColor,
+                            fillColor: AppColors.bgPrimary,
                             filled: true,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 15,
                               vertical: 14,
                             ),
                             hintText: Languages.of(context)!.passwordText,
-                            hintStyle: Pallete.textFieldTextStyle,
+                            hintStyle: AppTypography.input,
                             enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(12),
                               ),
                               borderSide: BorderSide(
                                 width: 2,
-                                color: AppColors.kBorderColor,
+                                color: AppColors.borderLight,
                               ),
                             ),
                             focusedBorder: const OutlineInputBorder(
@@ -247,10 +302,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimary,
                               ),
                             ),
-                            focusColor: AppColors.kPinkColor,
+                            focusColor: AppColors.actionPrimary,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -259,7 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 _obscureText
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: AppColors.kTextColor,
+                                color: AppColors.textTertiary,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -281,7 +336,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: TextFormField(
                           autocorrect: true,
                           maxLines: 1,
-                          style: Pallete.textFieldTextStyle,
+                          style: AppTypography.input,
                           scrollPadding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom,
                           ),
@@ -289,9 +344,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.done,
                           obscureText: _confirmobscureText,
-                          cursorColor: AppColors.kTextColor,
+                          cursorColor: AppColors.textTertiary,
                           decoration: InputDecoration(
-                            fillColor: AppColors.kWhiteColor,
+                            fillColor: AppColors.bgPrimary,
                             filled: true,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: 15,
@@ -299,14 +354,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             hintText:
                                 Languages.of(context)!.confirmpasswordText,
-                            hintStyle: Pallete.textFieldTextStyle,
+                            hintStyle: AppTypography.input,
                             enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(12),
                               ),
                               borderSide: BorderSide(
                                 width: 2,
-                                color: AppColors.kBorderColor,
+                                color: AppColors.borderLight,
                               ),
                             ),
                             focusedBorder: const OutlineInputBorder(
@@ -315,10 +370,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimary,
                               ),
                             ),
-                            focusColor: AppColors.kPinkColor,
+                            focusColor: AppColors.actionPrimary,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -327,7 +382,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 _confirmobscureText
                                     ? Icons.visibility_off
                                     : Icons.visibility,
-                                color: AppColors.kTextColor,
+                                color: AppColors.textTertiary,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -345,7 +400,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         width: 2,
-                        color: AppColors.kBorderColor,
+                        color: AppColors.borderLight,
                       ),
                     ),
                     width: kSize.width,
@@ -357,7 +412,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Expanded(
                               child: Text(
                                 Languages.of(context)!.selectaccounttypeText,
-                                style: Pallete.textFieldTextStyle,
+                                style: AppTypography.input,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -370,7 +425,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     value: item,
                                     child: Text(
                                       item,
-                                      style: Pallete.textFieldTextStyle,
+                                      style: AppTypography.input,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -395,7 +450,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             width: 2,
-                            color: AppColors.kBorderColor,
+                            color: AppColors.borderLight,
                           ),
                         ),
                         width: kSize.width,
@@ -407,7 +462,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Expanded(
                                   child: Text(
                                     Languages.of(context)!.categoriesText,
-                                    style: Pallete.textFieldTextStyle,
+                                    style: AppTypography.input,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -420,7 +475,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         value: item,
                                         child: Text(
                                           item,
-                                          style: Pallete.textFieldTextStyle,
+                                          style: AppTypography.input,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
@@ -442,7 +497,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Checkbox(
-                          activeColor: AppColors.kPinkColor,
+                          activeColor: AppColors.actionPrimary,
                           value: _isChecked,
                           onChanged: (val) => _showTermsDialog(),
                         ),
@@ -450,7 +505,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onTap: _showTermsDialog,
                           child: Text(
                             'Accept Terms & Conditions',
-                            style: Pallete.Quicksand15blackBold,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                           ),
                         ),
                       ],
@@ -460,7 +515,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Container(
                     height: 55,
                     margin: const EdgeInsets.only(left: 30, right: 30),
-                    decoration: Pallete.getButtonDecoration(),
+                    decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
                     child: InkWell(
                       child: ElevatedButton(
                         onPressed: () async {
@@ -532,7 +587,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         style: ButtonStyle(
                           backgroundColor: const WidgetStatePropertyAll(
-                            AppColors.kPinkColor,
+                            AppColors.actionPrimary,
                           ),
                           elevation: const WidgetStatePropertyAll(0),
                           shape: WidgetStatePropertyAll(
@@ -544,7 +599,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Center(
                           child: Text(
                             Languages.of(context)!.createAccountText,
-                            style: Pallete.buttonTextStyle,
+                            style: AppTypography.buttonText,
                           ),
                         ),
                       ),
@@ -557,7 +612,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     margin: const EdgeInsets.only(left: 30, right: 30),
                     child: Text(
                       Languages.of(context)!.orText,
-                      style: Pallete.Quicksand16drktxtGreywe500,
+                      style: AppTypography.heading3.copyWith(color: AppColors.textSecondary, fontWeight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -565,20 +620,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   //   height: 60,
                   //   width: kSize.width,
                   //   margin: const EdgeInsets.only(left: 30, right: 30),
-                  //   decoration: Pallete.getBorderButtonDecoration(),
+                  //   decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.border, width: 2), borderRadius: BorderRadius.circular(12)),
                   //   child: ElevatedButton(
                   //     onPressed: () {},
                   //     style: ButtonStyle(
                   //         backgroundColor: const MaterialStatePropertyAll(
-                  //             AppColors.kWhiteColor),
+                  //             AppColors.bgPrimary),
                   //         elevation: const MaterialStatePropertyAll(0),
                   //         overlayColor: const MaterialStatePropertyAll(
-                  //             AppColors.kAppBArBGColor),
+                  //             AppColors.bgPink),
                   //         shape: MaterialStatePropertyAll(
                   //             RoundedRectangleBorder(
                   //                 borderRadius: BorderRadius.circular(10),
                   //                 side: const BorderSide(
-                  //                     color: AppColors.kBorderColor,
+                  //                     color: AppColors.borderLight,
                   //                     width: 1)))),
                   //     child: Row(
                   //       mainAxisAlignment: MainAxisAlignment.center,
@@ -587,7 +642,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   //             color: Colors.transparent, size: 35),
                   //         Text(
                   //           Pallete.loginwithemailText,
-                  //           style: Pallete.Quicksand15blackwe600,
+                  //           style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   //         ),
                   //       ],
                   //     ),
@@ -598,24 +653,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 60,
                     width: kSize.width,
                     margin: const EdgeInsets.only(left: 30, right: 30),
-                    decoration: Pallete.getBorderButtonDecoration(),
+                    decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.border, width: 2), borderRadius: BorderRadius.circular(12)),
                     child: ElevatedButton(
                       onPressed: () {
                         _handleGoogleSignIn();
                       },
                       style: ButtonStyle(
                         backgroundColor: const WidgetStatePropertyAll(
-                          AppColors.kWhiteColor,
+                          AppColors.bgPrimary,
                         ),
                         elevation: const WidgetStatePropertyAll(0),
                         overlayColor: const WidgetStatePropertyAll(
-                          AppColors.kAppBArBGColor,
+                          AppColors.bgPink,
                         ),
                         shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                             side: const BorderSide(
-                              color: AppColors.kBorderColor,
+                              color: AppColors.borderLight,
                               width: 1,
                             ),
                           ),
@@ -631,7 +686,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Text(
                             Languages.of(context)!.loginwithgoogleText,
-                            style: Pallete.Quicksand15blackwe600,
+                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                           ),
                         ],
                       ),
@@ -644,24 +699,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 55,
                         width: kSize.width,
                         margin: const EdgeInsets.only(left: 30, right: 30),
-                        decoration: Pallete.getBorderButtonDecoration(),
+                        decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.border, width: 2), borderRadius: BorderRadius.circular(12)),
                         child: ElevatedButton(
                           onPressed: () {
                             signInWithApple();
                           },
                           style: ButtonStyle(
                             backgroundColor: const WidgetStatePropertyAll(
-                              AppColors.kWhiteColor,
+                              AppColors.bgPrimary,
                             ),
                             elevation: const WidgetStatePropertyAll(0),
                             overlayColor: const WidgetStatePropertyAll(
-                              AppColors.kAppBArBGColor,
+                              AppColors.bgPink,
                             ),
                             shape: WidgetStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 side: const BorderSide(
-                                  color: AppColors.kBorderColor,
+                                  color: AppColors.borderLight,
                                   width: 1,
                                 ),
                               ),
@@ -674,12 +729,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               const Icon(
                                 Icons.apple,
                                 size: 28,
-                                color: AppColors.kBlackColor,
+                                color: AppColors.textPrimary,
                               ),
                               const SizedBox(width: 5),
                               Text(
                                 Languages.of(context)!.loginwithappleText,
-                                style: Pallete.Quicksand15blackwe600,
+                                style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                               ),
                             ],
                           ),
@@ -691,21 +746,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 60,
                     width: kSize.width,
                     margin: const EdgeInsets.only(left: 30, right: 30),
-                    decoration: Pallete.getBorderButtonDecoration(),
+                    decoration: BoxDecoration(color: AppColors.bgPrimary, border: Border.all(color: AppColors.border, width: 2), borderRadius: BorderRadius.circular(12)),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: const WidgetStatePropertyAll(
-                          AppColors.kWhiteColor,
+                          AppColors.bgPrimary,
                         ),
                         elevation: const WidgetStatePropertyAll(0),
                         overlayColor: const WidgetStatePropertyAll(
-                          AppColors.kAppBArBGColor,
+                          AppColors.bgPink,
                         ),
                         shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                             side: const BorderSide(
-                              color: AppColors.kBorderColor,
+                              color: AppColors.borderLight,
                               width: 1,
                             ),
                           ),
@@ -722,7 +777,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Center(
                         child: Text(
                           Languages.of(context)!.loginwithemailText,
-                          style: Pallete.Quicksand15blackwe600,
+                          style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                         ),
                       ),
                     ),
@@ -1401,7 +1456,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return AlertDialog(
           title: Text(
             'Pink Gossip – Terms & Conditions',
-            style: Pallete.Quicksand20blackBold,
+            style: AppTypography.heading2.copyWith(fontSize: 20, color: AppColors.textPrimary),
           ),
           content: SingleChildScrollView(
             child: RichText(
@@ -1414,120 +1469,120 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   TextSpan(
                     text: '1. Acceptance of Terms\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                     // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   TextSpan(
                     text:
                         'By creating an account on Pink Gossip, scanning salon QR codes, or creating content in-salon (including reviews, photos, and videos), you (“User” or “Gossiper”) agree to these Terms and Conditions.\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '2. User-Generated Content (UGC)\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         'By submitting, uploading, or sharing content (reviews, photos, videos, testimonials, etc.) through Pink Gossip, you grant Pink Gossip and the participating salon a worldwide, royalty-free, non-exclusive, transferable license to use, reproduce, distribute, and publicly display this content for marketing and promotional purposes, including on websites, social media, and advertising campaigns.\n\nYou acknowledge that once content is shared on the platform, it may also be shared externally by Pink Gossip or the salon for visibility purposes.\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '3. Ownership of Content\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         'Users retain ownership of their original content. However, Pink Gossip maintains full rights to use, publish, edit, and promote any content created or shared through the platform. By using Pink Gossip, you waive any claims for compensation regarding the use of your content.\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '4. Data and Privacy\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         'Personal data collected (such as name, email, location data, device information) is used to operate the platform, personalize your experience, and provide salons with insights about their clients. Your data will not be sold to third parties. It may be shared with participating salons for business purposes only (ex: client engagement, loyalty programs, feedback collection).\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '5. Limitations of Liability\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         'Pink Gossip and participating salons are not responsible for:\n- The accuracy of reviews or user content.\n- Any misuse of content by third parties outside the platform.\n- Any technical issues, outages, or unauthorized access.\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '--- Privacy Policy ---\n\n',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
-                      color: AppColors.kPinkColor,
+                      color: AppColors.actionPrimary,
                     ),
                   ),
                   TextSpan(
                     text: '1. Information We Collect\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         '- Information you provide (name, email, photos, videos, reviews).\n- Data collected when you scan salon QR codes (salon visited, date/time).\n- Technical information (device type, IP address, location data if enabled).\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '2. How We Use Your Information\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         '- To allow salons to receive and showcase reviews and UGC.\n- To personalize your experience on Pink Gossip.\n- To enable marketing and promotional use of UGC by salons and Pink Gossip.\n- To maintain the safety and performance of the platform.\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '3. Sharing of Information\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         '- With salons you interact with.\n- With third-party service providers (hosting, analytics, email notifications).\n- If legally required (to comply with laws, regulations, or court orders).\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '4. Content & Consent\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         'By scanning a QR code, posting reviews, or uploading content, you consent to the use of your content for marketing and promotional purposes by both Pink Gossip and the salon.\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '5. Your Rights\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         'You may request to access, correct, or delete your personal data at any time by contacting privacy@pinkgossip.com. However, content already shared publicly (ex: in a salon’s marketing materials) cannot be withdrawn retroactively.\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '6. Data Retention\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         'We retain your information and content as long as your account is active, or as needed to provide our services.\n\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text: '7. Contact\n',
-                    style: Pallete.Quicksand15blackBold,
+                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15, color: AppColors.textPrimary),
                   ),
                   TextSpan(
                     text:
                         'For questions about these Terms or Privacy Policy, contact us at privacy@pinkgossip.ca.\n',
-                    style: Pallete.Quicksand13black400,
+                    style: AppTypography.caption.copyWith(fontSize: 13, color: AppColors.textPrimary),
                   ),
                 ],
               ),
@@ -1541,7 +1596,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               },
               child: const Text(
                 'I Agree',
-                style: TextStyle(color: AppColors.kPinkColor),
+                style: TextStyle(color: AppColors.actionPrimary),
               ),
             ),
           ],

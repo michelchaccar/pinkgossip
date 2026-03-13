@@ -2,9 +2,8 @@
 
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/Shops/productdetails.dart';
-import 'package:pinkGossip/utils/color_utils.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
-import 'package:pinkGossip/utils/pallete.dart';
+import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -27,7 +26,7 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.kWhiteColor,
+      backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.kAppBArBGColor,
@@ -41,7 +40,7 @@ class _ShopScreenState extends State<ShopScreen> {
               children: [
                 InkWell(
                   overlayColor: const WidgetStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {},
@@ -54,7 +53,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 const SizedBox(width: 8),
                 InkWell(
                   overlayColor: const WidgetStatePropertyAll(
-                    AppColors.kWhiteColor,
+                    AppColors.bgPrimary,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {},
@@ -97,14 +96,14 @@ class _ShopScreenState extends State<ShopScreen> {
                         cursorColor: AppColors.kTextColor,
                         onChanged: (value) {},
                         decoration: InputDecoration(
-                          fillColor: AppColors.kWhiteColor,
+                          fillColor: AppColors.bgPrimary,
                           filled: true,
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 15,
                             vertical: 14,
                           ),
                           hintText: Languages.of(context)!.searchText,
-                          hintStyle: Pallete.textFieldTextStyle,
+                          hintStyle: AppTypography.input,
                           suffixIcon: const Icon(Icons.search, size: 30),
                           enabledBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(35)),
@@ -117,10 +116,10 @@ class _ShopScreenState extends State<ShopScreen> {
                             borderRadius: BorderRadius.all(Radius.circular(35)),
                             borderSide: BorderSide(
                               width: 1,
-                              color: AppColors.kPinkColor,
+                              color: AppColors.actionPrimary,
                             ),
                           ),
-                          focusColor: AppColors.kPinkColor,
+                          focusColor: AppColors.actionPrimary,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(35),
                           ),
@@ -140,7 +139,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 const SizedBox(height: 20),
                 Text(
                   Languages.of(context)!.categoriesText,
-                  style: Pallete.Quicksand18drkBlackbold,
+                  style: AppTypography.heading2,
                 ),
                 const SizedBox(height: 18),
                 Row(
@@ -307,31 +306,31 @@ class _ShopScreenState extends State<ShopScreen> {
                             const SizedBox(height: 10),
                             Text(
                               "ST Lundon",
-                              style: Pallete.Quicksand15blackwe600,
+                              style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                             ),
                             const SizedBox(height: 5),
                             Text(
                               "ST London - Dual Wet & Dry Compact Powder",
                               maxLines: 2,
-                              style: Pallete.Quicksand15blackwe300,
+                              style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
                             ),
                             const SizedBox(height: 10),
                             Text(
                               "\$39.99",
-                              style: Pallete.Quicksand15blackwe600,
+                              style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
                             ),
                             const SizedBox(height: 10),
                             Container(
                               height: 40,
                               decoration: BoxDecoration(
-                                color: AppColors.kPinkColor,
+                                color: AppColors.actionPrimary,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ButtonStyle(
                                   backgroundColor: WidgetStateProperty.all(
-                                    AppColors.kPinkColor,
+                                    AppColors.actionPrimary,
                                   ),
                                   shape: WidgetStateProperty.all(
                                     RoundedRectangleBorder(
@@ -343,12 +342,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                 child: Center(
                                   child: Text(
                                     Languages.of(context)!.addtocartText,
-                                    style: const TextStyle(
-                                      color: AppColors.kWhiteColor,
-                                      fontFamily: "Geist",
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
+                                    style: AppTypography.buttonText,
                                   ),
                                 ),
                               ),
