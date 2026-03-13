@@ -124,11 +124,18 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Quicksand
+    - family: Geist
       fonts:
-        - asset: lib/assets/fonts/Quicksand-Regular.ttf
-        - asset: lib/assets/fonts/Quicksand-SemiBold.ttf
-        - asset: lib/assets/fonts/Quicksand-Bold.ttf
+        - asset: lib/assets/fonts/Geist-Light.ttf
+          weight: 300
+        - asset: lib/assets/fonts/Geist-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/Geist-Medium.ttf
+          weight: 500
+        - asset: lib/assets/fonts/Geist-SemiBold.ttf
+          weight: 600
+        - asset: lib/assets/fonts/Geist-Bold.ttf
+          weight: 700
   # fonts:
   #   - family: Schyler
   #     fonts:

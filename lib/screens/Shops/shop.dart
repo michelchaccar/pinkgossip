@@ -345,7 +345,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                     Languages.of(context)!.addtocartText,
                                     style: const TextStyle(
                                       color: AppColors.kWhiteColor,
-                                      fontFamily: "Quicksand",
+                                      fontFamily: "Geist",
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
                                     ),

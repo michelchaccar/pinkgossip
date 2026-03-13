@@ -293,7 +293,7 @@ class _MessageDetailState extends State<MessageDetail> {
                                 //             message['timestamp'])),
                                 //     style: const TextStyle(
                                 //       color: AppColors.kBlackColor,
-                                //       fontFamily: "Quicksand",
+                                //       fontFamily: "Geist",
                                 //       fontWeight: FontWeight.w600,
                                 //       fontSize: 14,
                                 //     ),
@@ -753,7 +753,7 @@ class _MessageDetailState extends State<MessageDetail> {
                                       "${shareData.firstName!}${shareData.lastName!}",
                                       style: const TextStyle(
                                         color: AppColors.kBlackColor,
-                                        fontFamily: "Quicksand",
+                                        fontFamily: "Geist",
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
@@ -844,7 +844,7 @@ class _MessageDetailState extends State<MessageDetail> {
                         ),
                         style: const TextStyle(
                           color: AppColors.kBlackColor,
-                          fontFamily: "Quicksand",
+                          fontFamily: "Geist",
                           fontWeight: FontWeight.w600,
                           fontSize: 10,
                         ),

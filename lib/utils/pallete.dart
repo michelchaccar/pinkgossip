@@ -158,13 +158,13 @@ class Pallete {
 
   static TextStyle textFieldTextStyle = const TextStyle(
     color: AppColors.kTextColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 15,
     fontWeight: FontWeight.w500,
   );
   static TextStyle buttonTextStyle = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 15,
     fontWeight: FontWeight.w600,
   );
@@ -177,218 +177,218 @@ class Pallete {
 
   static TextStyle Quicksand15blackwe600 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 15,
   );
   static TextStyle Quicksand15blackBold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.bold,
     fontSize: 15,
   );
   static TextStyle Quicksand20blackBold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.bold,
     fontSize: 20,
   );
   static TextStyle Quicksand15grey600 = const TextStyle(
     color: Colors.grey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 15,
   );
   static TextStyle Quicksand13black400 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w400,
     fontSize: 13,
   );
 
   static TextStyle Quicksand15grey400 = const TextStyle(
     color: Colors.grey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w400,
     fontSize: 15,
   );
 
   static TextStyle Quicksand15blackwe300 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w300,
     fontSize: 15,
   );
 
   static TextStyle Quicksand15darkgreye500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 15,
   );
   static TextStyle Quicksand12blackwe600 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 12,
   );
   static TextStyle Quicksand14blackwe600 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 14,
   );
   static TextStyle Quicksand14whitewe600 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 14,
   );
   static TextStyle Quicksand14pinkwe600 = const TextStyle(
     color: AppColors.kPinkColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 14,
   );
   static TextStyle Quicksand12blackwe500 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 12,
   );
 
   static TextStyle Quicksand12whiteBold = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.bold,
     fontSize: 12,
   );
   static TextStyle Quicksand12whiteWe500 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 12,
   );
 
   static TextStyle Quicksand12drktxtGreywe500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 12,
   );
 
   static TextStyle Quicksand14drktxtGreywe500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 14,
   );
 
   static TextStyle Quicksand12blackwe400 = const TextStyle(
     color: AppColors.klightGreyColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w400,
     fontSize: 12,
   );
   static TextStyle Quicksand14blackwe400 = const TextStyle(
     color: AppColors.klightGreyColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w400,
     fontSize: 14,
   );
   static TextStyle Quicksand12Greywe400 = const TextStyle(
     color: Colors.grey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 12,
   );
   static TextStyle Quicksand12darkGreykwe400 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w400,
     fontSize: 12,
   );
   static TextStyle Quicksand14darkGreykwe400 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w400,
     fontSize: 14,
   );
   static TextStyle Quicksand12Blackkwe400 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w400,
     fontSize: 12,
   );
   static TextStyle Quicksand14Blackwe400 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w400,
     fontSize: 14,
   );
   static TextStyle Quicksand10darkGreykwe500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 10,
   );
   static TextStyle Quicksand12darkGreykwe500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 12,
   );
   static TextStyle Quicksand10Blackkwe600 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 10,
   );
   static TextStyle Quicksand10Whiitewe600 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 10,
   );
   static TextStyle Quicksand12Black54we600 = const TextStyle(
     color: Colors.black54,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 12,
   );
   static TextStyle Quicksand14Whiitewe600 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 14,
   );
   static TextStyle Quicksand16Whiitewe600 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 16,
   );
   static TextStyle Quicksand16Whiitewe500 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 16,
   );
   static TextStyle Quicksand17Whiitewe600 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 17,
   );
   static TextStyle Quicksand14Whiitewe500 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w500,
     fontSize: 14,
   );
   static TextStyle Quicksand18Whiitewe600 = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontWeight: FontWeight.w600,
     fontSize: 18,
   );
@@ -403,98 +403,98 @@ class Pallete {
 
   static TextStyle Quicksand16drktxtGreywe500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 16,
     fontWeight: FontWeight.w500,
   );
   static TextStyle Quicksand18drkkBlackColorwe500 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 18,
     fontWeight: FontWeight.w500,
   );
   static TextStyle Quicksand18drktxtGreyrwe500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 18,
     fontWeight: FontWeight.w500,
   );
   static TextStyle Quicksand28drktxtGreywe500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 28,
     fontWeight: FontWeight.w500,
   );
   static TextStyle Quicksand24drktxtGreywe500 = const TextStyle(
     color: AppColors.drktxtGrey,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 24,
     fontWeight: FontWeight.w500,
   );
 
   static TextStyle Quicksand14drktxtBluewe500 = const TextStyle(
     color: AppColors.kBlueColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 14,
     fontWeight: FontWeight.w500,
   );
   static TextStyle Quicksand16drkBlackBold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
   static TextStyle Quicksand16drkBlackbold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 16,
     fontWeight: FontWeight.bold,
   );
   static TextStyle Quicksand14Blackbold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 14,
     fontWeight: FontWeight.bold,
   );
   static TextStyle Quicksand14Blackw500 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 14,
     fontWeight: FontWeight.w500,
   );
   static TextStyle Quicksand17Blackw500 = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 17,
     fontWeight: FontWeight.w500,
   );
   static TextStyle Quicksand17Blackbold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 17,
     fontWeight: FontWeight.bold,
   );
   static TextStyle Quicksand18drkBlackbold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 18,
     fontWeight: FontWeight.bold,
   );
   static TextStyle Quicksand18drkWhitebold = const TextStyle(
     color: AppColors.kWhiteColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 18,
     fontWeight: FontWeight.bold,
   );
   static TextStyle Quicksand22drkBlackbold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 22,
     fontWeight: FontWeight.bold,
   );
   static TextStyle Quicksand20drkBlackBold = const TextStyle(
     color: AppColors.kBlackColor,
-    fontFamily: "Quicksand",
+    fontFamily: "Geist",
     fontSize: 20,
     fontWeight: FontWeight.w600,
   );
