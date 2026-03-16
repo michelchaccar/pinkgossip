@@ -69,7 +69,7 @@ class PgBottomNav extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
-        vertical: 10,
+        vertical: 16,
       ),
       decoration: const BoxDecoration(
         color: AppColors.actionPrimary,
@@ -108,7 +108,7 @@ class PgBottomNav extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   iconWidget,
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 6),
                   if (isActive)
                     Container(
                       width: 4,
