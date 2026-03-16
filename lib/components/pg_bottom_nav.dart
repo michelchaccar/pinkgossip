@@ -42,7 +42,7 @@ class PgBottomNav extends StatelessWidget {
         key: homeKey,
       ),
       PgBottomNavItem(
-        icon: LucideIcons.sparkles,
+        icon: LucideIcons.map,
         label: 'Makeup',
         key: makeupKey,
       ),
@@ -67,7 +67,10 @@ class PgBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 64,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: 10,
+      ),
       decoration: const BoxDecoration(
         color: AppColors.actionPrimary,
         boxShadow: [
@@ -102,10 +105,10 @@ class PgBottomNav extends StatelessWidget {
               onTap: () => onTap(index),
               behavior: HitTestBehavior.opaque,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   iconWidget,
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   if (isActive)
                     Container(
                       width: 4,

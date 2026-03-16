@@ -149,10 +149,10 @@ packages:
     dependency: "direct main"
     description:
       name: chat_bubbles
-      sha256: "9ee1493b31a7f847363c5d69725ec55db94f720c7c116d403b4d322a4da0f08c"
+      sha256: "902bc84e22f9ce6b993d015457067a37d37eb7478bd7b5b185712d5c5329b866"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.7.0"
   chewie:
     dependency: "direct main"
     description:
@@ -285,10 +285,10 @@ packages:
     dependency: transitive
     description:
       name: fake_async
-      sha256: "6a95e56b2449df2273fd8c45a662d6947ce1ebb7aafe80e550a3f68297f3cacc"
+      sha256: "5368f224a74523e8d2e7399ea1638b37aecfca824a3cc4dfdf77bf1fa905ac44"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.2"
+    version: "1.3.3"
   ffi:
     dependency: transitive
     description:
@@ -733,6 +733,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
+  iconsax_flutter:
+    dependency: "direct main"
+    description:
+      name: iconsax_flutter
+      sha256: d14b4cec8586025ac15276bdd40f6eea308cb85748135965bb6255f14beb2564
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   image:
     dependency: "direct main"
     description:
@@ -849,34 +857,34 @@ packages:
     dependency: transitive
     description:
       name: intl
-      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.19.0"
+    version: "0.20.2"
   leak_tracker:
     dependency: transitive
     description:
       name: leak_tracker
-      sha256: c35baad643ba394b40aac41080300150a4f08fd0fd6a10378f8f7c6bc161acec
+      sha256: "33e2e26bdd85a0112ec15400c8cbffea70d0f9c3407491f672a2fad47915e2de"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.8"
+    version: "11.0.2"
   leak_tracker_flutter_testing:
     dependency: transitive
     description:
       name: leak_tracker_flutter_testing
-      sha256: f8b613e7e6a13ec79cfdc0e97638fddb3ab848452eff057653abd3edba760573
+      sha256: "1dbc140bb5a23c75ea9c4811222756104fbcd1a27173f0c34ca01e16bea473c1"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.9"
+    version: "3.0.10"
   leak_tracker_testing:
     dependency: transitive
     description:
       name: leak_tracker_testing
-      sha256: "6ba465d5d76e67ddf503e1161d1f4a6bc42306f9d66ca1e8f079a47290fb06d3"
+      sha256: "8d5a2d49f4a66b49744b23b018848400d23e54caf9463f4eb20df3eb8acb2eb1"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   lints:
     dependency: transitive
     description:
@@ -885,6 +893,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.1"
+  lucide_icons_flutter:
+    dependency: "direct main"
+    description:
+      name: lucide_icons_flutter
+      sha256: f9fc191c852901b7f8d0d5739166327bd71a0fc32ae32c1ba07501d16b966a1a
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.10"
   matcher:
     dependency: transitive
     description:
@@ -1406,10 +1422,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: fb31f383e2ee25fbbfe06b40fe21e1e458d14080e3c67e7ba0acfde4df4e0bbd
+      sha256: "522f00f556e73044315fa4585ec3270f1808a4b186c936e612cab0b565ff1e00"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.4"
+    version: "0.7.6"
   timeago:
     dependency: "direct main"
     description:
@@ -1430,10 +1446,10 @@ packages:
     dependency: "direct main"
     description:
       name: tutorial_coach_mark
-      sha256: "9cdb721165d1cfb6e9b1910a1af1b3570fa6caa5059cf1506fcbd00bf7102abf"
+      sha256: "5a325d53bcf16ce7a969e2ab8d4dc9610f39ee3eab2b3cc57d5c98936129b891"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.3"
   typed_data:
     dependency: transitive
     description:
@@ -1518,10 +1534,10 @@ packages:
     dependency: transitive
     description:
       name: vector_math
-      sha256: "80b3257d1492ce4d091729e3a67a60407d227c27241d6927be0130c98e741803"
+      sha256: d530bd74fea330e6e364cda7a85019c434070188383e1cd8d9777ee586914c5b
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.4"
+    version: "2.2.0"
   video_compress:
     dependency: "direct main"
     description:
@@ -1643,5 +1659,5 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
-  dart: ">=3.7.2 <4.0.0"
+  dart: ">=3.8.0-0 <4.0.0"
   flutter: ">=3.29.0"
