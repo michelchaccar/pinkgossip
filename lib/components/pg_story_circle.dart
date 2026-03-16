@@ -37,8 +37,8 @@ class PgStoryCircle extends StatelessWidget {
     this.size = 58,
   });
 
-  static const _borderWidth = 2.0;
-  static const _gapWidth = 2.0;
+  static const _borderWidth = 1.82;
+  static const _gapWidth = 1.82;
 
   static const _gradientUnseen = LinearGradient(
     colors: [Color(0xFFFE2AAE), Color(0xFFFF6B9D)],
@@ -59,19 +59,21 @@ class PgStoryCircle extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildCircle(),
-            const SizedBox(height: 5),
-            Text(
-              label,
-              style: const TextStyle(
-                fontFamily: 'Geist',
-                fontSize: 11,
-                fontWeight: FontWeight.w400,
-                color: Color(0xFF4A5565),
+            if (label.isNotEmpty) ...[
+              const SizedBox(height: 5),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontFamily: 'Geist',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFF4A5565),
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-            ),
+            ],
           ],
         ),
       ),

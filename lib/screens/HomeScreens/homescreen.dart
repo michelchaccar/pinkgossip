@@ -34,6 +34,7 @@ import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/components/pg_story_circle.dart';
+import 'package:pinkGossip/components/pg_post_header.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
@@ -678,480 +679,166 @@ class _HomeScreenState extends State<HomeScreen> {
                               bottom: 8,
                             ),
                             color: Colors.white,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (item.story!.isNotEmpty) {
-                                          if (firebaseId ==
-                                              item.story![index].firebaseId) {
-                                            print("ifff ");
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (context) => MyStoryView(
-                                                      myStorysArray:
-                                                          myStoryArray,
-                                                      firstname:
-                                                          item.firstName ?? "",
-                                                      lastname:
-                                                          item.lastName ?? "",
-                                                      img:
-                                                          item.profileImage ??
-                                                          "",
-                                                      salonanme:
-                                                          item.salonName ?? "",
-                                                    ),
-                                              ),
-                                            ).then((value) {
-                                              getStory();
-                                            });
-                                          } else {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (
-                                                      context,
-                                                    ) => SingleUserStoryView(
-                                                      storyOtherHomeData:
-                                                          item.story!,
-                                                      myFireabseiD: firebaseId,
-                                                      firstname:
-                                                          item.firstName!,
-                                                      lastname: item.lastName!,
-                                                      profileimage:
-                                                          "${API.baseUrl}/api/${item.profileImage!}",
-                                                      salonname:
-                                                          item.salonName!,
-                                                      type: "Home",
-                                                    ),
-                                              ),
-                                            );
-                                          }
-                                        } else {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder:
-                                                  (
-                                                    context,
-                                                  ) => SalonDetailScreen(
-                                                    id: item.userId.toString(),
-                                                    userType:
-                                                        item.userType
-                                                            .toString(),
-                                                  ),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                      child:
-                                          item.profileImage != ""
-                                              ? Container(
-                                                height: 45,
-                                                width: 45,
-                                                decoration:
-                                                    item.story!.isNotEmpty
-                                                        ? const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          gradient: LinearGradient(
-                                                            colors: [
-                                                              AppColors
-                                                                  .kPinkColor,
-                                                              AppColors
-                                                                  .kPinkColor,
-                                                            ],
-                                                            begin:
-                                                                Alignment
-                                                                    .topLeft,
-                                                            end:
-                                                                Alignment
-                                                                    .bottomRight,
-                                                          ),
-                                                        )
-                                                        : const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                padding: const EdgeInsets.all(
-                                                  2.0,
-                                                ),
-                                                child: CircleAvatar(
-                                                  radius: 50,
-                                                  backgroundColor:
-                                                      Colors.grey[300],
-                                                  backgroundImage: NetworkImage(
-                                                    "${API.baseUrl}/api/${item.profileImage}",
-                                                  ),
-                                                ),
-                                              )
-                                              : Container(
-                                                height: 45,
-                                                width: 45,
-                                                decoration:
-                                                    item.story!.isNotEmpty
-                                                        ? const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          gradient: LinearGradient(
-                                                            colors: [
-                                                              AppColors
-                                                                  .kPinkColor,
-                                                              AppColors
-                                                                  .kPinkColor,
-                                                            ],
-                                                            begin:
-                                                                Alignment
-                                                                    .topLeft,
-                                                            end:
-                                                                Alignment
-                                                                    .bottomRight,
-                                                          ),
-                                                        )
-                                                        : const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                padding: const EdgeInsets.all(
-                                                  2.0,
-                                                ),
-                                                child: CircleAvatar(
-                                                  radius: 50,
-                                                  backgroundColor:
-                                                      Colors.grey[300],
-                                                  child: const Icon(
-                                                    Icons.person,
-                                                  ),
-                                                ),
-                                              ),
+                            child: PgPostHeader(
+                              imageUrl: item.profileImage != null && item.profileImage!.isNotEmpty
+                                  ? "${API.baseUrl}/api/${item.profileImage}"
+                                  : null,
+                              username: item.userName!.isNotEmpty
+                                  ? item.userName!
+                                  : "${item.firstName!} ${item.lastName!}",
+                              subtitle: (item.userType == 1 && item.beforeImage == "")
+                                  ? null
+                                  : item.salonName,
+                              rating: (item.userType == 1 && item.beforeImage == "")
+                                  ? null
+                                  : item.averageRating?.toDouble(),
+                              ratingCount: (item.userType == 1 && item.beforeImage == "")
+                                  ? null
+                                  : item.ratingCount,
+                              hasStory: item.story!.isNotEmpty,
+                              onStoryTap: () {
+                                if (item.story!.isNotEmpty) {
+                                  if (firebaseId ==
+                                      item.story![index].firebaseId) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MyStoryView(
+                                          myStorysArray: myStoryArray,
+                                          firstname: item.firstName ?? "",
+                                          lastname: item.lastName ?? "",
+                                          img: item.profileImage ?? "",
+                                          salonanme: item.salonName ?? "",
+                                        ),
+                                      ),
+                                    ).then((value) {
+                                      getStory();
+                                    });
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            SingleUserStoryView(
+                                          storyOtherHomeData: item.story!,
+                                          myFireabseiD: firebaseId,
+                                          firstname: item.firstName!,
+                                          lastname: item.lastName!,
+                                          profileimage:
+                                              "${API.baseUrl}/api/${item.profileImage!}",
+                                          salonname: item.salonName!,
+                                          type: "Home",
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SalonDetailScreen(
+                                        id: item.userId.toString(),
+                                        userType: item.userType.toString(),
+                                      ),
                                     ),
-                                    const SizedBox(width: 10),
-                                    item.userType == 1
-                                        //  && item.beforeImage != ""
-                                        ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder:
-                                                        (
-                                                          context,
-                                                        ) => SalonDetailScreen(
-                                                          id:
-                                                              item.userId
-                                                                  .toString(),
-                                                          userType:
-                                                              item.userType
-                                                                  .toString(),
-                                                        ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Text(
-                                                item.userName!.isNotEmpty
-                                                    ? item.userName!
-                                                    : "${item.firstName!} ${item.lastName!}",
-                                                style:
-                                                    AppTypography.bodySemiBold,
-                                              ),
-                                            ),
-                                            item.beforeImage != ""
-                                                ? InkWell(
-                                                  onTap: () {
-                                                    print(
-                                                      "id  = ${item.userSalonId}",
-                                                    );
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder:
-                                                            (
-                                                              context,
-                                                            ) => SalonDetailScreen(
-                                                              id:
-                                                                  item.userSalonId
-                                                                      .toString(),
-                                                              userType: "2",
-                                                            ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Text(
-                                                    item.salonName!,
-                                                    style:
-                                                        AppTypography.captionMedium.copyWith(color: Colors.black54),
-                                                  ),
-                                                )
-                                                : Container(),
-                                            item.beforeImage != ""
-                                                ? InkWell(
-                                                  onTap: () {
-                                                    print(
-                                                      "id  = ${item.userSalonId}",
-                                                    );
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder:
-                                                            (
-                                                              context,
-                                                            ) => SalonDetailScreen(
-                                                              id:
-                                                                  item.userSalonId
-                                                                      .toString(),
-                                                              userType: "2",
-                                                            ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Row(
+                                  );
+                                }
+                              },
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SalonDetailScreen(
+                                      id: item.userId.toString(),
+                                      userType: item.userType.toString(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              moreMenu: PopupMenuButton(
+                                color: AppColors.bgPrimary,
+                                menuPadding: EdgeInsets.zero,
+                                onSelected: (value) {
+                                  if (value != null) {
+                                    if (value == "share") {
+                                      String name =
+                                          item.userName!.isNotEmpty
+                                              ? item.userName!
+                                              : "${item.firstName!} ${item.lastName!}";
+                                      showShareOptions(
+                                        context,
+                                        name,
+                                        item.userId.toString(),
+                                      );
+                                    } else if (value == "download") {
+                                      String fileUrl = "";
+                                      String fileName = "";
+                                      if (item.postType == "SalonReview") {
+                                        if (page == 1) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (ctx) => AlertDialog(
+                                              title: const Text("Download"),
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Row(
                                                     children: [
-                                                      Text(
-                                                        item.averageRating!
-                                                            .toStringAsFixed(1),
-                                                        style:
-                                                            AppTypography.captionMedium.copyWith(color: Colors.grey),
-                                                      ),
-                                                      const SizedBox(width: 4),
-                                                      RatingBarIndicator(
-                                                        rating: double.parse(
-                                                          item.averageRating!
-                                                              .toString(),
-                                                        ),
-                                                        itemCount: 5,
-                                                        itemSize: 18.0,
-                                                        unratedColor:
-                                                            AppColors
-                                                                .klightGreyColor,
-                                                        physics:
-                                                            const BouncingScrollPhysics(),
-                                                        itemBuilder:
-                                                            (
+                                                      Expanded(
+                                                        child: CommonWidget()
+                                                            .getSmallButton(
+                                                          "Before Image",
+                                                          () {
+                                                            Navigator.of(ctx)
+                                                                .pop();
+                                                            String beforeImg =
+                                                                "${API.baseUrl}/api/${item.beforeImage!}";
+                                                            String
+                                                                beforeImgName =
+                                                                item.beforeImage!;
+                                                            CommonFunctions()
+                                                                .downloadPhoto(
                                                               context,
-                                                              _,
-                                                            ) => const Icon(
-                                                              Icons.star,
-                                                              color:
-                                                                  AppColors
-                                                                      .kPinkColor,
-                                                            ),
+                                                              beforeImg,
+                                                              beforeImgName,
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
-                                                      const SizedBox(width: 4),
-                                                      Text(
-                                                        "(${item.ratingCount.toString()})",
-                                                        style:
-                                                            AppTypography.captionMedium.copyWith(color: Colors.grey),
+                                                      SizedBox(width: 10),
+                                                      Expanded(
+                                                        child: CommonWidget()
+                                                            .getSmallButton(
+                                                          "After Image",
+                                                          () {
+                                                            Navigator.of(ctx)
+                                                                .pop();
+                                                            String afterImg =
+                                                                "${API.baseUrl}/api/${item.afterImage!}";
+                                                            String
+                                                                beforeImgName =
+                                                                item.beforeImage!;
+                                                            CommonFunctions()
+                                                                .downloadPhoto(
+                                                              context,
+                                                              afterImg,
+                                                              beforeImgName,
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
-                                                )
-                                                : Container(),
-                                          ],
-                                        )
-                                        : InkWell(
-                                          onTap: () {
-                                            print("InkWell 123");
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (context) =>
-                                                        SalonDetailScreen(
-                                                          id:
-                                                              item.userId
-                                                                  .toString(),
-                                                          userType:
-                                                              item.userType
-                                                                  .toString(),
-                                                        ),
-                                              ),
-                                            );
-                                          },
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                item.userName!.isNotEmpty
-                                                    ? item.userName!
-                                                    : "${item.firstName!} ${item.lastName!}",
-                                                style:
-                                                    AppTypography.bodySemiBold,
-                                              ),
-                                              Text(
-                                                item.salonName!,
-                                                style:
-                                                    AppTypography.captionMedium.copyWith(color: Colors.black54),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    item.averageRating!
-                                                        .toStringAsFixed(1),
-                                                    style:
-                                                        AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
-                                                  ),
-                                                  const SizedBox(width: 4),
-                                                  RatingBarIndicator(
-                                                    rating: double.parse(
-                                                      item.averageRating!
-                                                          .toString(),
-                                                    ),
-                                                    itemCount: 5,
-                                                    itemSize: 18.0,
-                                                    unratedColor:
-                                                        AppColors
-                                                            .klightGreyColor,
-                                                    physics:
-                                                        const BouncingScrollPhysics(),
-                                                    itemBuilder:
-                                                        (
-                                                          context,
-                                                          _,
-                                                        ) => const Icon(
-                                                          Icons.star,
-                                                          color:
-                                                              AppColors
-                                                                  .kPinkColor,
-                                                        ),
-                                                  ),
-                                                  const SizedBox(width: 4),
-                                                  Text(
-                                                    "(${item.ratingCount.toString()})",
-                                                    style:
-                                                        AppTypography.captionMedium.copyWith(color: Colors.grey),
-                                                  ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                  ],
-                                ),
-                                PopupMenuButton(
-                                  color: AppColors.bgPrimary,
-                                  menuPadding: EdgeInsets.zero,
-                                  onSelected: (value) {
-                                    if (value != null) {
-                                      if (value == "share") {
-                                        // final username = Uri.encodeComponent(
-                                        //     item.userName ?? "");
-                                        String name =
-                                            item.userName!.isNotEmpty
-                                                ? item.userName!
-                                                : "${item.firstName!} ${item.lastName!}";
-                                        showShareOptions(
-                                          context,
-                                          name,
-                                          item.userId.toString(),
-                                        );
-                                        // final String profileUrl =
-                                        //     'https://pinkmapdemo.com/profile/$username';
-                                        // Share.share(
-                                        //   'Check out $username\'s profile on PinkGossip: $profileUrl',
-                                        // );
-                                      } else if (value == "download") {
-                                        String fileUrl = "";
-                                        String fileName = "";
-                                        if (item.postType == "SalonReview") {
-                                          if (page == 1) {
-                                            showDialog(
-                                              context: context,
-                                              builder:
-                                                  (ctx) => AlertDialog(
-                                                    title: const Text(
-                                                      "Download",
-                                                    ),
-                                                    content: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: CommonWidget().getSmallButton(
-                                                                "Before Image",
-                                                                () {
-                                                                  Navigator.of(
-                                                                    ctx,
-                                                                  ).pop();
-                                                                  String
-                                                                  beforeImg =
-                                                                      "${API.baseUrl}/api/${item.beforeImage!}";
-                                                                  String
-                                                                  beforeImgName =
-                                                                      item.beforeImage!;
-                                                                  CommonFunctions()
-                                                                      .downloadPhoto(
-                                                                        context,
-                                                                        beforeImg,
-                                                                        beforeImgName,
-                                                                      );
-                                                                },
-                                                              ),
-                                                            ),
-                                                            SizedBox(width: 10),
-                                                            Expanded(
-                                                              child: CommonWidget().getSmallButton(
-                                                                "After Image",
-                                                                () {
-                                                                  Navigator.of(
-                                                                    ctx,
-                                                                  ).pop();
-                                                                  String
-                                                                  afterImg =
-                                                                      "${API.baseUrl}/api/${item.afterImage!}";
-                                                                  String
-                                                                  beforeImgName =
-                                                                      item.beforeImage!;
-                                                                  CommonFunctions()
-                                                                      .downloadPhoto(
-                                                                        context,
-                                                                        afterImg,
-                                                                        beforeImgName,
-                                                                      );
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                            );
-                                          } else {
-                                            fileUrl =
-                                                "${API.baseUrl}/api/${item.otherMultiPost![0].otherData}" ??
-                                                "";
-                                            fileName =
-                                                item
-                                                    .otherMultiPost![0]
-                                                    .otherData
-                                                    .toString();
-                                            CommonFunctions().downloadPhoto(
-                                              context,
-                                              fileUrl,
-                                              fileName,
-                                            );
-                                          }
+                                            ),
+                                          );
                                         } else {
-                                          //
                                           fileUrl =
-                                              "${API.baseUrl}/api/${item.otherMultiPost![0].otherData}" ??
-                                              "";
-                                          fileName =
-                                              item.otherMultiPost![0].otherData
-                                                  .toString();
+                                              "${API.baseUrl}/api/${item.otherMultiPost![0].otherData}";
+                                          fileName = item
+                                              .otherMultiPost![0].otherData
+                                              .toString();
                                           CommonFunctions().downloadPhoto(
                                             context,
                                             fileUrl,
@@ -1159,69 +846,62 @@ class _HomeScreenState extends State<HomeScreen> {
                                           );
                                         }
                                       } else {
-                                        _showReportUserAlertDialog(
-                                          value == "report"
-                                              ? item.id.toString()
-                                              : item.userId.toString(),
-                                          value,
-                                          index,
+                                        fileUrl =
+                                            "${API.baseUrl}/api/${item.otherMultiPost![0].otherData}";
+                                        fileName = item
+                                            .otherMultiPost![0].otherData
+                                            .toString();
+                                        CommonFunctions().downloadPhoto(
+                                          context,
+                                          fileUrl,
+                                          fileName,
                                         );
                                       }
+                                    } else {
+                                      _showReportUserAlertDialog(
+                                        value == "report"
+                                            ? item.id.toString()
+                                            : item.userId.toString(),
+                                        value,
+                                        index,
+                                      );
                                     }
-                                  },
-                                  onOpened: () {
-                                    print(
-                                      "userType ${item.userType} page $page postType ${item.postType}",
-                                    );
-                                    print("userType ${item.toJson()}");
-                                  },
-                                  icon: SizedBox(
-                                    height: 30,
-                                    width: 15,
-                                    child: Image.asset(
-                                      ImageUtils.moreoptionimg,
-                                    ),
-                                  ),
-                                  itemBuilder: (BuildContext context) {
-                                    return [
-                                      // PopupMenuItem<String>(
-                                      //   // padding: EdgeInsets.zero,
-                                      //   value: 'download',
-                                      //   child: Text(
-                                      //     Languages.of(context)!.downlaodText,
-                                      //     style: AppTypography.bodyMedium,
-                                      //   ),
-                                      // ),
-                                      PopupMenuItem<String>(
-                                        // padding: EdgeInsets.zero,
-                                        value: 'share',
-                                        child: Text(
-                                          Languages.of(context)!.shareText,
-                                          style: AppTypography.bodyMedium,
-                                        ),
-                                      ),
-                                      PopupMenuItem<String>(
-                                        // padding: EdgeInsets.zero,
-                                        value: 'report',
-                                        child: Text(
-                                          Languages.of(context)!.reportText,
-                                          style: AppTypography.bodyMedium,
-                                        ),
-                                      ),
-                                      PopupMenuItem<String>(
-                                        // padding: EdgeInsets.zero,
-                                        value: 'block-user',
-                                        child: Text(
-                                          Languages.of(context)!.blockText,
-                                          style: AppTypography.bodyMedium,
-                                        ),
-                                      ),
-                                    ];
-                                  },
+                                  }
+                                },
+                                icon: const Icon(
+                                  LucideIcons.ellipsisVertical,
+                                  size: 18,
+                                  color: Color(0xFF9CA3AF),
                                 ),
-                              ],
+                                itemBuilder: (BuildContext context) {
+                                  return [
+                                    PopupMenuItem<String>(
+                                      value: 'share',
+                                      child: Text(
+                                        Languages.of(context)!.shareText,
+                                        style: AppTypography.bodyMedium,
+                                      ),
+                                    ),
+                                    PopupMenuItem<String>(
+                                      value: 'report',
+                                      child: Text(
+                                        Languages.of(context)!.reportText,
+                                        style: AppTypography.bodyMedium,
+                                      ),
+                                    ),
+                                    PopupMenuItem<String>(
+                                      value: 'block-user',
+                                      child: Text(
+                                        Languages.of(context)!.blockText,
+                                        style: AppTypography.bodyMedium,
+                                      ),
+                                    ),
+                                  ];
+                                },
+                              ),
                             ),
                           ),
+
                           item.userType == 1
                               ? ExpandablePageView.builder(
                                 itemCount: (item.otherMultiPost!.length) + 1,
