@@ -758,6 +758,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               moreMenu: PopupMenuButton(
                                 color: AppColors.bgPrimary,
                                 menuPadding: EdgeInsets.zero,
+                                elevation: 8,
+                                shadowColor: const Color(0x40000000),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                                 onSelected: (value) {
                                   if (value != null) {
                                     if (value == "share") {
@@ -874,26 +879,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: Color(0xFF9CA3AF),
                                 ),
                                 itemBuilder: (BuildContext context) {
+                                  const menuTextStyle = TextStyle(
+                                    fontFamily: 'Geist',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFF4A5565),
+                                  );
                                   return [
                                     PopupMenuItem<String>(
                                       value: 'share',
                                       child: Text(
                                         Languages.of(context)!.shareText,
-                                        style: AppTypography.bodyMedium,
+                                        style: menuTextStyle,
                                       ),
                                     ),
                                     PopupMenuItem<String>(
                                       value: 'report',
                                       child: Text(
                                         Languages.of(context)!.reportText,
-                                        style: AppTypography.bodyMedium,
+                                        style: menuTextStyle,
                                       ),
                                     ),
                                     PopupMenuItem<String>(
                                       value: 'block-user',
                                       child: Text(
                                         Languages.of(context)!.blockText,
-                                        style: AppTypography.bodyMedium,
+                                        style: menuTextStyle,
                                       ),
                                     ),
                                   ];
