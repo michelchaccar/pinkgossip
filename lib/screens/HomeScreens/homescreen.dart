@@ -33,6 +33,7 @@ import 'package:pinkGossip/screens/HomeScreens/searchforhomescreen.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:pinkGossip/components/pg_story_circle.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
@@ -554,269 +555,99 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const SizedBox(height: 10),
               SizedBox(
-                height: 100.0,
+                height: 90.0,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   itemCount: otherArray.length + 1,
                   itemBuilder: (context, index) {
-                    print("otherArray.length + 1 == ${otherArray.length + 1}");
                     if (index == 0) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  decoration:
-                                      myStoryArray.isNotEmpty
-                                          ? const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                AppColors.actionPrimaryDark,
-                                                AppColors.actionPrimaryDark,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            ),
-                                          )
-                                          : const BoxDecoration(),
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      if (myStoryArray.isNotEmpty) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) => MyStoryView(
-                                                  myStorysArray: myStoryArray,
-                                                  firstname:
-                                                      myStoryArray[index]
-                                                          .firstName ??
-                                                      "",
-                                                  lastname:
-                                                      myStoryArray[index]
-                                                          .lastName ??
-                                                      "",
-                                                  img:
-                                                      myStoryArray[index]
-                                                          .profileImage ??
-                                                      "",
-                                                  salonanme:
-                                                      myStoryArray[index]
-                                                          .salonName ??
-                                                      "",
-                                                ),
-                                          ),
-                                        );
-                                      } else {
-                                        Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder:
-                                                (
-                                                  context,
-                                                  animation,
-                                                  secondaryAnimation,
-                                                ) => AddStory(type: "Home"),
-                                            transitionsBuilder: (
-                                              context,
-                                              animation,
-                                              secondaryAnimation,
-                                              child,
-                                            ) {
-                                              const begin = Offset(-1.0, 0.0);
-                                              const end = Offset(0.0, 0.0);
-                                              const curve = Curves.easeInOut;
-
-                                              var tween = Tween(
-                                                begin: begin,
-                                                end: end,
-                                              ).chain(CurveTween(curve: curve));
-                                              var offsetAnimation = animation
-                                                  .drive(tween);
-                                              return SlideTransition(
-                                                position: offsetAnimation,
-                                                child: child,
-                                              );
-                                            },
-                                          ),
-                                        ).then((value) {
-                                          getStory();
-                                        });
-                                      }
-                                    },
-                                    child: CircleAvatar(
-                                      radius: 33.0,
-                                      backgroundColor: Colors.grey[300],
-                                      backgroundImage:
-                                          profileimg.isNotEmpty
-                                              ? NetworkImage(
-                                                "${API.baseUrl}/api/${profileimg}",
-                                              )
-                                              : const AssetImage(
-                                                    "lib/assets/images/person.png",
-                                                  )
-                                                  as ImageProvider<Object>,
-                                    ),
+                        padding: const EdgeInsets.only(right: 8),
+                        child: PgStoryCircle(
+                          state: myStoryArray.isNotEmpty
+                              ? StoryCircleState.myStory
+                              : StoryCircleState.addStory,
+                          image: myStoryArray.isNotEmpty && profileimg.isNotEmpty
+                              ? NetworkImage("${API.baseUrl}/api/$profileimg")
+                              : profileimg.isNotEmpty
+                                  ? NetworkImage("${API.baseUrl}/api/$profileimg")
+                                  : const AssetImage("lib/assets/images/person.png")
+                                      as ImageProvider,
+                          label: Languages.of(context)!.yourstoryText,
+                          onTap: () async {
+                            if (myStoryArray.isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyStoryView(
+                                    myStorysArray: myStoryArray,
+                                    firstname: myStoryArray[0].firstName ?? "",
+                                    lastname: myStoryArray[0].lastName ?? "",
+                                    img: myStoryArray[0].profileImage ?? "",
+                                    salonanme: myStoryArray[0].salonName ?? "",
                                   ),
                                 ),
-                                Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: InkWell(
-                                    onTap: () async {
-                                      _showAppBarTooltip(
-                                        'addstory',
-                                        widget.addstoryKey,
-                                        TooltipType.addStory,
-                                      );
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder:
-                                              (context) =>
-                                                  AddStory(type: "Home"),
-                                        ),
-                                      ).then((value) {
-                                        getStory();
-                                      });
-                                    },
-                                    child: Container(
-                                      key: widget.addstoryKey,
-                                      height: 20.0,
-                                      width: 20.0,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.blue,
-                                      ),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 16.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddStory(type: "Home"),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 5.0),
-                            Text(
-                              Languages.of(context)!.yourstoryText,
-                              style: AppTypography.caption.copyWith(color: AppColors.textPrimary),
-                            ),
-                          ],
+                              ).then((_) => getStory());
+                            }
+                          },
+                          onAddTap: () async {
+                            _showAppBarTooltip(
+                              'addstory',
+                              widget.addstoryKey,
+                              TooltipType.addStory,
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddStory(type: "Home"),
+                              ),
+                            ).then((_) => getStory());
+                          },
+                          addKey: widget.addstoryKey,
                         ),
                       );
                     } else {
+                      final story = otherArray[index - 1];
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: LinearGradient(
-                                  colors: [
-                                    AppColors.actionPrimaryDark,
-                                    AppColors.actionPrimaryDark,
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
+                        padding: const EdgeInsets.only(right: 8),
+                        child: PgStoryCircle(
+                          state: StoryCircleState.unseen,
+                          image: NetworkImage(
+                            "${API.baseUrl}/api/${story['profile_image']}",
+                          ),
+                          label: "${story['first_name']}",
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OtherStoryViewScreen(
+                                  myFireabseiD: myFireabseiD,
+                                  myStories: otherArray.map((s) {
+                                    return {
+                                      'user_id': s['user_id'] ?? '',
+                                      'firebaseid': s['firebaseid'] ?? '',
+                                      'profile_image': s['profile_image'] ?? '',
+                                      'first_name': s['first_name'] ?? 'Unknown',
+                                      'last_name': s['last_name'] ?? 'User',
+                                      'salon_name': s['salon_name'] ?? 'Unnamed Salon',
+                                      'stories': (s['stories'] as List<dynamic>)
+                                          .map((st) => {'url': st['image'] as String? ?? ''})
+                                          .toList(),
+                                    };
+                                  }).toList(),
+                                  initialIndex: index - 1,
                                 ),
                               ),
-                              padding: const EdgeInsets.all(3.0),
-                              child: InkWell(
-                                onTap: () {
-                                  print(
-                                    "otherArray[index - 1] ${otherArray[index - 1]}",
-                                  );
-
-                                  var selectedUserId =
-                                      otherArray[index - 1]['user_id'];
-                                  var userStories =
-                                      otherArray
-                                          .where(
-                                            (story) =>
-                                                story['user_id'] ==
-                                                selectedUserId,
-                                          )
-                                          .toList();
-
-                                  // Print all stories for the selected user
-                                  print("Stories for user $selectedUserId: ");
-                                  for (var story in userStories) {
-                                    print("Story Data: ${story['stories']}");
-                                  }
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => OtherStoryViewScreen(
-                                            myFireabseiD: myFireabseiD,
-                                            myStories:
-                                                otherArray.map((story) {
-                                                  return {
-                                                    'user_id':
-                                                        story['user_id'] ?? '',
-                                                    'firebaseid':
-                                                        story['firebaseid'] ??
-                                                        '',
-
-                                                    'profile_image':
-                                                        story['profile_image'] ??
-                                                        '', // Add profile image
-                                                    'first_name':
-                                                        story['first_name'] ??
-                                                        'Unknown', // Add first name
-                                                    'last_name':
-                                                        story['last_name'] ??
-                                                        'User', // Add last name
-                                                    'salon_name':
-                                                        story['salon_name'] ??
-                                                        'Unnamed Salon', // Add salon name
-
-                                                    'stories':
-                                                        (story['stories']
-                                                                as List<
-                                                                  dynamic
-                                                                >)
-                                                            .map((s) {
-                                                              return {
-                                                                'url':
-                                                                    s['image']
-                                                                        as String? ??
-                                                                    '', // Ensure you're accessing the correct key for the URL
-                                                              };
-                                                            })
-                                                            .toList(),
-                                                  };
-                                                }).toList(),
-                                            initialIndex: index - 1,
-                                          ),
-                                    ),
-                                  );
-                                },
-                                child: CircleAvatar(
-                                  radius: 34.0,
-                                  backgroundColor: Colors.grey[300],
-                                  backgroundImage: NetworkImage(
-                                    "${API.baseUrl}/api/${otherArray[index - 1]['profile_image']}",
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 5.0),
-                            Text(
-                              "${otherArray[index - 1]['first_name']!}${otherArray[index - 1]['last_name']!}",
-                              style: const TextStyle(fontSize: 12.0),
-                            ),
-                          ],
+                            );
+                          },
                         ),
                       );
                     }
