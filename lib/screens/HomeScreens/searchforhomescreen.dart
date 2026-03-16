@@ -14,8 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../viewModels/searchuserlistviewmodel.dart';
 
@@ -127,83 +127,69 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
         appBar: AppBar(
           toolbarHeight: 60,
           surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.kAppBArBGColor,
+          backgroundColor: AppColors.bgPrimary,
           automaticallyImplyLeading: false,
-          elevation: 2.0,
-          title: Row(
-            children: [
-              InkWell(
-                overlayColor: const WidgetStatePropertyAll(
-                  AppColors.bgPrimary,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          leading: IconButton(
+            icon: const Icon(
+              LucideIcons.chevronLeft,
+              color: AppColors.actionPrimary,
+              size: 24,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          titleSpacing: 0,
+          title: Container(
+            margin: const EdgeInsets.only(bottom: 8, right: 16),
+            child: TextFormField(
+              maxLines: 1,
+              autocorrect: true,
+              controller: _searchController,
+              scrollPadding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.search,
+              cursorColor: AppColors.kTextColor,
+              onChanged: (value) {
+                if (_tabController.index == 0) {
+                  enthusiastsfilterList();
+                } else if (_tabController.index == 1) {
+                  salonsearchingListfilterList();
+                }
+                setState(() {});
+              },
+              decoration: InputDecoration(
+                fillColor: AppColors.bgPrimary,
+                filled: true,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 14,
                 ),
-                borderRadius: BorderRadius.circular(20),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Image.asset(ImageUtils.leftarrow),
+                hintText: Languages.of(context)!.searchText,
+                hintStyle: AppTypography.input,
+                suffixIcon: const Icon(LucideIcons.search, size: 22),
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(35)),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: AppColors.kTextFieldBorderColor,
                   ),
                 ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: TextFormField(
-                    maxLines: 1,
-                    autocorrect: true,
-                    controller: _searchController,
-                    scrollPadding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom,
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.search,
-                    cursorColor: AppColors.kTextColor,
-                    onChanged: (value) {
-                      if (_tabController.index == 0) {
-                        enthusiastsfilterList();
-                      } else if (_tabController.index == 1) {
-                        salonsearchingListfilterList();
-                      }
-                      setState(() {});
-                    },
-                    decoration: InputDecoration(
-                      fillColor: AppColors.bgPrimary,
-                      filled: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 14,
-                      ),
-                      hintText: Languages.of(context)!.searchText,
-                      hintStyle: AppTypography.input,
-                      suffixIcon: const Icon(Icons.search, size: 30),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(35)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: AppColors.kTextFieldBorderColor,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(35)),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: AppColors.actionPrimary,
-                        ),
-                      ),
-                      focusColor: AppColors.actionPrimary,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(35),
-                      ),
-                    ),
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(35)),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: AppColors.actionPrimary,
                   ),
                 ),
+                focusColor: AppColors.actionPrimary,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(35),
+                ),
               ),
-            ],
+            ),
           ),
         ),
         body: SafeArea(
@@ -550,7 +536,7 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                     backgroundColor:
                                                         Colors.grey[300],
                                                     child: const Icon(
-                                                      Icons.person,
+                                                      LucideIcons.user,
                                                     ),
                                                   ),
                                                 ),
@@ -878,7 +864,7 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                     backgroundColor:
                                                         Colors.grey[300],
                                                     child: const Icon(
-                                                      Icons.person,
+                                                      LucideIcons.user,
                                                     ),
                                                   ),
                                                 ),
