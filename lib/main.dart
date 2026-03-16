@@ -18,6 +18,7 @@ import 'package:pinkGossip/viewModels/removestorycroneviewmodel.dart';
 import 'package:pinkGossip/viewModels/updatefirebaseviewmodel.dart';
 
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter/services.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -46,6 +47,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  timeago.setLocaleMessages('fr', timeago.FrMessages());
   await LocalNotificationService.init();
   await LocalNotificationService.requestAndroidPermission();
 

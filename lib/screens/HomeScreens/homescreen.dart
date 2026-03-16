@@ -313,12 +313,11 @@ class _HomeScreenState extends State<HomeScreen> {
       PagingController(firstPageKey: 1);
 
   String getpostTime(DateTime loadedTime) {
-    // print("loadedTime === ${loadedTime}");
     final now = DateTime.now();
     final difference = now.difference(loadedTime);
     DateTime postTime = now.subtract(difference);
-    String timeAgo = timeago.format(postTime, locale: 'en');
-    // print("postDateTime === ${timeAgo}");
+    final locale = Localizations.localeOf(context).languageCode;
+    String timeAgo = timeago.format(postTime, locale: locale);
     return timeAgo;
   }
 
