@@ -44,7 +44,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import '../../models/salonlistmodel.dart';
 import '../../utils/imagesutils.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../HomeScreens/notifications.dart';
 
 class MackeupsScreen extends StatefulWidget {
@@ -442,7 +442,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
         appBar: PgAppBar.logo(
           actions: [
             PgAppBarAction(
-              icon: LucideIcons.search,
+              icon: PhosphorIconsRegular.magnifyingGlass,
               onTap: () {
                 Navigator.push(
                   context,
@@ -453,7 +453,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
               },
             ),
             PgAppBarAction(
-              icon: LucideIcons.mapPin,
+              icon: PhosphorIconsRegular.mapPin,
               onTap: () {
                 Navigator.push(
                   context,

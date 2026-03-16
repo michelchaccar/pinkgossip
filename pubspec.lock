@@ -893,14 +893,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.1"
-  lucide_icons_flutter:
-    dependency: "direct main"
-    description:
-      name: lucide_icons_flutter
-      sha256: f9fc191c852901b7f8d0d5739166327bd71a0fc32ae32c1ba07501d16b966a1a
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.10"
   matcher:
     dependency: transitive
     description:
@@ -1085,6 +1077,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  phosphor_flutter:
+    dependency: "direct main"
+    description:
+      name: phosphor_flutter
+      sha256: "8a14f238f28a0b54842c5a4dc20676598dd4811fcba284ed828bd5a262c11fde"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   photo_manager:
     dependency: "direct main"
     description:

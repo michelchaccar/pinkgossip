@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/theme/theme.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../viewModels/searchuserlistviewmodel.dart';
 
@@ -133,7 +133,7 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
           scrolledUnderElevation: 0,
           leading: IconButton(
             icon: const Icon(
-              LucideIcons.chevronLeft,
+              PhosphorIconsRegular.caretLeft,
               color: AppColors.actionPrimary,
               size: 24,
             ),
@@ -169,7 +169,7 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                 ),
                 hintText: Languages.of(context)!.searchText,
                 hintStyle: AppTypography.input,
-                suffixIcon: const Icon(LucideIcons.search, size: 22),
+                suffixIcon: const Icon(PhosphorIconsRegular.magnifyingGlass, size: 22),
                 enabledBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(35)),
                   borderSide: BorderSide(
@@ -536,7 +536,7 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                     backgroundColor:
                                                         Colors.grey[300],
                                                     child: const Icon(
-                                                      LucideIcons.user,
+                                                      PhosphorIconsRegular.user,
                                                     ),
                                                   ),
                                                 ),
@@ -864,7 +864,7 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                     backgroundColor:
                                                         Colors.grey[300],
                                                     child: const Icon(
-                                                      LucideIcons.user,
+                                                      PhosphorIconsRegular.user,
                                                     ),
                                                   ),
                                                 ),

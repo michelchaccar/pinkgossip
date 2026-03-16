@@ -11,7 +11,7 @@ import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -151,7 +151,7 @@ class _MessageScreenState extends State<MessageScreen> {
       appBar: PgAppBar.logo(
         actions: [
           PgAppBarAction(
-            icon: LucideIcons.bell,
+            icon: PhosphorIconsRegular.bell,
             onTap: () {
               Navigator.push(
                 context,

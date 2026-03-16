@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/components/pg_story_circle.dart';
 import 'package:pinkGossip/theme/theme.dart';
 
@@ -102,7 +102,7 @@ class PgPostHeader extends StatelessWidget {
         ...List.generate(5, (index) {
           final filledCount = (rating ?? 0).round();
           return Icon(
-            LucideIcons.star,
+            PhosphorIconsRegular.star,
             size: 11,
             color: index < filledCount
                 ? AppColors.actionPrimary

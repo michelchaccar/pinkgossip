@@ -35,7 +35,7 @@ import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/components/pg_story_circle.dart';
 import 'package:pinkGossip/components/pg_post_header.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
@@ -507,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: PgAppBar.logo(
         actions: [
           PgAppBarAction(
-            icon: LucideIcons.search,
+            icon: PhosphorIconsRegular.magnifyingGlass,
             iconKey: widget.searchKey,
             onTap: () async {
               await _showAppBarTooltip(
@@ -524,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           PgAppBarAction(
-            icon: LucideIcons.bell,
+            icon: PhosphorIconsRegular.bell,
             iconKey: widget.notificationKey,
             onTap: () async {
               await _showAppBarTooltip(
@@ -873,7 +873,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   }
                                 },
                                 icon: const Icon(
-                                  LucideIcons.ellipsisVertical,
+                                  PhosphorIconsRegular.dotsThreeVertical,
                                   size: 18,
                                   color: Color(0xFF9CA3AF),
                                 ),
@@ -1466,8 +1466,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: Icon(
                                     item.like == 1
-                                        ? LucideIcons.heart
-                                        : LucideIcons.heart,
+                                        ? PhosphorIconsFill.heart
+                                        : PhosphorIconsRegular.heart,
                                     size: 20,
                                     color: item.like == 1
                                         ? AppColors.actionPrimary
@@ -1485,7 +1485,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     );
                                   },
                                   child: const Icon(
-                                    LucideIcons.messageCircle,
+                                    PhosphorIconsRegular.chatCircle,
                                     size: 20,
                                     color: AppColors.textPrimary,
                                   ),
@@ -1504,7 +1504,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     );
                                   },
                                   child: const Icon(
-                                    LucideIcons.send,
+                                    PhosphorIconsRegular.paperPlaneTilt,
                                     size: 20,
                                     color: AppColors.textPrimary,
                                   ),

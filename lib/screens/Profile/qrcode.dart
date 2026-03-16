@@ -8,7 +8,7 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -116,11 +116,11 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
         title: Languages.of(context)!.QRCodeText,
         actions: [
           PgAppBarAction(
-            icon: LucideIcons.download,
+            icon: PhosphorIconsRegular.download,
             onTap: _downloadQRCode,
           ),
           PgAppBarAction(
-            icon: LucideIcons.share2,
+            icon: PhosphorIconsRegular.shareNetwork,
             onTap: () {
               showShareOptions(context, widget.userName, widget.userid);
             },

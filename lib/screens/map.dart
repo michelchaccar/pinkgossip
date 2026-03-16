@@ -9,7 +9,7 @@ import 'package:pinkGossip/models/salonlistmodel.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/theme/theme.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/viewModels/salonlistviewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -129,7 +129,7 @@ class _GooglemapPageState extends State<GooglemapPage> {
             ),
             leading: IconButton(
               icon: const Icon(
-                LucideIcons.chevronLeft,
+                PhosphorIconsRegular.caretLeft,
                 color: AppColors.actionPrimary,
                 size: 24,
               ),

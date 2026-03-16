@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 
@@ -76,7 +76,7 @@ class PgAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (!showBack || useLogo) return null;
     return IconButton(
       icon: const Icon(
-        LucideIcons.chevronLeft,
+        PhosphorIconsRegular.caretLeft,
         color: AppColors.actionPrimary,
         size: AppIconSize.lg,
       ),

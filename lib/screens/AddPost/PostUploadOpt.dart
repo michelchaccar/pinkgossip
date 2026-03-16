@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/AddPost/SharePostView.dart';
 import 'package:pinkGossip/screens/AddPost/ShareSaloonReview.dart';
@@ -76,7 +76,7 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
                     InkWell(
                       onTap: () async {},
                       child: const Icon(
-                        LucideIcons.x,
+                        PhosphorIconsRegular.x,
                         size: 22,
                         color: AppColors.actionPrimary,
                       ),

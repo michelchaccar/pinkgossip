@@ -2,7 +2,7 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/localization/locale_constants.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,7 +48,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         title: Languages.of(context)!.changelanguageText,
         actions: [
           PgAppBarAction(
-            icon: LucideIcons.check,
+            icon: PhosphorIconsRegular.check,
             onTap: () async {
               if (isEnglishSelected == true) {
                 changeLanguage(context, "en");

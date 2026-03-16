@@ -4,7 +4,7 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/Shops/productdetails.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,11 +31,11 @@ class _ShopScreenState extends State<ShopScreen> {
       appBar: PgAppBar.logo(
         actions: [
           PgAppBarAction(
-            icon: LucideIcons.heart,
+            icon: PhosphorIconsRegular.heart,
             onTap: () {},
           ),
           PgAppBarAction(
-            icon: LucideIcons.shoppingBag,
+            icon: PhosphorIconsRegular.shoppingBag,
             onTap: () {},
           ),
         ],

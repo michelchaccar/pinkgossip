@@ -5,7 +5,7 @@ import 'package:pinkGossip/models/createpostmodel.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/screens/AddPost/mentionTextifield.dart';
 import 'package:pinkGossip/theme/theme.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/utils/localfilevideoplay.dart';
@@ -229,7 +229,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     });
                   },
                   child: const Icon(
-                    LucideIcons.chevronLeft,
+                    PhosphorIconsRegular.caretLeft,
                     color: AppColors.actionPrimary,
                     size: 24,
                   ),

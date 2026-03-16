@@ -25,7 +25,7 @@ import 'package:pinkGossip/models/updateprofilemodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/utils/pallete.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/updateprofileviewmodel.dart';
@@ -437,7 +437,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         title: Languages.of(context)!.EditProfileText,
         actions: [
           PgAppBarAction(
-            icon: LucideIcons.check,
+            icon: PhosphorIconsRegular.check,
             onTap: () async {
               print("usernameController ${usernameController.text}");
               print("saloncontroller ${saloncontroller.text}");

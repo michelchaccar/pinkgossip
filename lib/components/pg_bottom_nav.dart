@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/theme/theme.dart';
 
 class PgBottomNavItem {
@@ -37,27 +37,32 @@ class PgBottomNav extends StatelessWidget {
   }) {
     return [
       PgBottomNavItem(
-        icon: LucideIcons.house,
+        icon: PhosphorIconsRegular.house,
+        activeIcon: PhosphorIconsFill.house,
         label: 'Home',
         key: homeKey,
       ),
       PgBottomNavItem(
-        icon: LucideIcons.map,
+        icon: PhosphorIconsRegular.mapTrifold,
+        activeIcon: PhosphorIconsFill.mapTrifold,
         label: 'Makeup',
         key: makeupKey,
       ),
       PgBottomNavItem(
-        icon: LucideIcons.circlePlus,
+        icon: PhosphorIconsRegular.plusCircle,
+        activeIcon: PhosphorIconsFill.plusCircle,
         label: 'Post',
         key: postKey,
       ),
       PgBottomNavItem(
-        icon: LucideIcons.messageCircle,
+        icon: PhosphorIconsRegular.chatCircle,
+        activeIcon: PhosphorIconsFill.chatCircle,
         label: 'Message',
         key: messageKey,
       ),
       PgBottomNavItem(
-        icon: LucideIcons.user,
+        icon: PhosphorIconsRegular.user,
+        activeIcon: PhosphorIconsFill.user,
         label: 'Profile',
         key: profileKey,
       ),

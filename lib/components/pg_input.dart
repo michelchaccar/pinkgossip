@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/theme/theme.dart';
 
 class PgInput extends StatelessWidget {
@@ -61,7 +61,7 @@ class PgInput extends StatelessWidget {
             ? const Padding(
                 padding: EdgeInsets.only(left: 12, right: 8),
                 child: Icon(
-                  LucideIcons.search,
+                  PhosphorIconsRegular.magnifyingGlass,
                   size: AppIconSize.md,
                   color: AppColors.textSecondary,
                 ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/theme/theme.dart';
 
 /// Story circle states matching the Figma design system.
@@ -120,7 +120,7 @@ class PgStoryCircle extends StatelessWidget {
               ),
               child: Icon(
                 key: addKey,
-                LucideIcons.plus,
+                PhosphorIconsRegular.plus,
                 size: 15,
                 color: Colors.white,
               ),
@@ -180,7 +180,7 @@ class PgStoryCircle extends StatelessWidget {
                 color: AppColors.actionPrimary,
               ),
               child: const Icon(
-                LucideIcons.plus,
+                PhosphorIconsRegular.plus,
                 size: 13,
                 color: Colors.white,
               ),

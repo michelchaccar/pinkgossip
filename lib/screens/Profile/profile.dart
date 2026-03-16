@@ -36,7 +36,7 @@ import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/viewModels/salondetailsviewmodel.dart';
 import 'package:pinkGossip/viewModels/updateprofileviewmdoel.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -224,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         salonProfileDetails!.address!.isNotEmpty &&
                         !Platform.isAndroid)
                       PgAppBarAction(
-                        icon: LucideIcons.mapPin,
+                        icon: PhosphorIconsRegular.mapPin,
                         onTap: () {
                           Navigator.push(
                             context,
@@ -242,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         },
                       ),
                     PgAppBarAction(
-                      icon: LucideIcons.menu,
+                      icon: PhosphorIconsRegular.list,
                       onTap: () {
                         _scaffoldKey.currentState?.openEndDrawer();
                       },
@@ -331,7 +331,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(40),
-                                      child: const Icon(LucideIcons.user),
+                                      child: const Icon(PhosphorIconsRegular.user),
                                     ),
                                   ),
                               const SizedBox(height: 10),
@@ -367,7 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                         ListTile(
-                          leading: const Icon(LucideIcons.qrCode),
+                          leading: const Icon(PhosphorIconsRegular.qrCode),
                           title: Text(
                             Languages.of(context)!.QRCodeText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -388,7 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                         userTyppe == "1"
                             ? ListTile(
-                              leading: const Icon(LucideIcons.gift),
+                              leading: const Icon(PhosphorIconsRegular.gift),
                               title: Text(
                                 "My Rewards",
                                 style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -404,7 +404,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             )
                             : Container(),
                         ListTile(
-                          leading: const Icon(LucideIcons.globe),
+                          leading: const Icon(PhosphorIconsRegular.globe),
                           title: Text(
                             Languages.of(context)!.LanguageText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -421,7 +421,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           },
                         ),
                         ListTile(
-                          leading: const Icon(LucideIcons.graduationCap),
+                          leading: const Icon(PhosphorIconsRegular.graduationCap),
                           title: Text(
                             Languages.of(context)!.tutorialText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -449,7 +449,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           },
                         ),
                         ListTile(
-                          leading: const Icon(LucideIcons.userX),
+                          leading: const Icon(PhosphorIconsRegular.userMinus),
                           title: Text(
                             Languages.of(context)!.blockedusersText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -466,7 +466,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           },
                         ),
                         ListTile(
-                          leading: const Icon(LucideIcons.mail),
+                          leading: const Icon(PhosphorIconsRegular.envelope),
                           title: Text(
                             "Email Visibility",
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -499,7 +499,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                         ListTile(
-                          leading: const Icon(LucideIcons.trash2),
+                          leading: const Icon(PhosphorIconsRegular.trash),
                           title: Text(
                             Languages.of(context)!.deleteaccountText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -509,7 +509,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           },
                         ),
                         ListTile(
-                          leading: const Icon(LucideIcons.logOut),
+                          leading: const Icon(PhosphorIconsRegular.signOut),
                           title: Text(
                             Languages.of(context)!.logoutText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),

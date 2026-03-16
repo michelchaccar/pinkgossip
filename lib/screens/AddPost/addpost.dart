@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'dart:ui';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
@@ -709,7 +709,7 @@ class _AddPostState extends State<AddPost> {
                 ClearPostDataAlert(context, kSize);
               },
               child: const Icon(
-                LucideIcons.x,
+                PhosphorIconsRegular.x,
                 size: 22,
                 color: AppColors.actionPrimary,
               ),
