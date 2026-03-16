@@ -8,8 +8,8 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/salonlistmodel.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/viewModels/salonlistviewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -113,29 +113,27 @@ class _GooglemapPageState extends State<GooglemapPage> {
       body: Column(
         children: [
           AppBar(
-            backgroundColor: AppColors.kAppBArBGColor,
-            elevation: 1,
+            backgroundColor: AppColors.bgPrimary,
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            surfaceTintColor: Colors.transparent,
             centerTitle: true,
-            title: Row(
-              children: [
-                Text(
-                  Languages.of(context)!.mapText,
-                  style: AppTypography.heading3,
-                ),
-              ],
-            ),
-            leading: SizedBox(
-              width: 40,
-              height: 40,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Image.asset(ImageUtils.leftarrow),
-                ),
+            title: Text(
+              Languages.of(context)!.mapText,
+              style: const TextStyle(
+                fontFamily: 'Geist',
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
               ),
+            ),
+            leading: IconButton(
+              icon: const Icon(
+                LucideIcons.chevronLeft,
+                color: AppColors.actionPrimary,
+                size: 24,
+              ),
+              onPressed: () => Navigator.pop(context),
             ),
           ),
           Expanded(
