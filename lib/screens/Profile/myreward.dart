@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/viewModels/salondetailsviewmodel.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
 import 'package:provider/provider.dart';
@@ -72,9 +73,8 @@ class _MyRewardPageState extends State<MyRewardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.kAppBArBGColor,
-        title: Text("My Rewards", style: AppTypography.heading3),
+      appBar: const PgAppBar(
+        title: "My Rewards",
       ),
       body:
           isLoading

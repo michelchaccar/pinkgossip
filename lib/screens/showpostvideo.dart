@@ -6,8 +6,8 @@ import 'package:pinkGossip/utils/videoplayer.dart';
 import 'package:chewie/chewie.dart';
 // import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:video_player/video_player.dart';
 
 class ShowPostVideo extends StatefulWidget {
@@ -66,37 +66,8 @@ class _ShowPostVideoState extends State<ShowPostVideo> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.kAppBArBGColor,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          children: [
-            InkWell(
-              overlayColor: const MaterialStatePropertyAll(
-                AppColors.bgPrimary,
-              ),
-              borderRadius: BorderRadius.circular(20),
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Image.asset(ImageUtils.leftarrow),
-                ),
-              ),
-            ),
-            const SizedBox(width: 20),
-            Text(
-              Languages.of(context)!.videoText,
-              style: AppTypography.heading3,
-            ),
-          ],
-        ),
+      appBar: PgAppBar(
+        title: Languages.of(context)!.videoText,
       ),
       body: Scaffold(
         backgroundColor: AppColors.bgPrimary,

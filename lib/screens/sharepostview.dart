@@ -9,6 +9,7 @@ import 'package:pinkGossip/models/salondetailmodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/utils/videoplayer.dart';
 import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/postlikeviewmodel.dart';
@@ -77,32 +78,8 @@ class _SharePostViewState extends State<SharePostView> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          children: [
-            InkWell(
-              overlayColor: const WidgetStatePropertyAll(AppColors.bgPrimary),
-              borderRadius: BorderRadius.circular(20),
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Image.asset(ImageUtils.leftarrow),
-                ),
-              ),
-            ),
-            const SizedBox(width: 20),
-            SizedBox(height: 50, child: Image.asset(ImageUtils.appbarlogo)),
-          ],
-        ),
+      appBar: const PgAppBar(
+        useLogo: true,
       ),
       body: SingleChildScrollView(
         child: SafeArea(

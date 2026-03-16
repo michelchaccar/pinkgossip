@@ -1,6 +1,7 @@
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -37,39 +38,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          children: [
-            InkWell(
-              overlayColor: const MaterialStatePropertyAll(
-                AppColors.bgPrimary,
-              ),
-              borderRadius: BorderRadius.circular(20),
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Image.asset(ImageUtils.leftarrow),
-                ),
-              ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Text(
-                "ST London - Dual Wet & Dry Compact Powder",
-                style: AppTypography.heading3,
-              ),
-            ),
-          ],
-        ),
+      appBar: const PgAppBar(
+        title: "ST London - Dual Wet & Dry Compact Powder",
       ),
       body: SafeArea(
         child: Padding(

@@ -4,8 +4,8 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/blockedusermodel.dart';
 import 'package:pinkGossip/models/deletepostmodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/viewModels/blockuserviewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -85,48 +85,8 @@ class _BlockedusersScreenState extends State<BlockedusersScreen> {
     Size kSize = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                InkWell(
-                  overlayColor: const WidgetStatePropertyAll(
-                    AppColors.bgPrimary,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Image.asset(ImageUtils.leftarrow),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Text(
-                  Languages.of(context)!.blockedusersText,
-                  style: AppTypography.heading3,
-                ),
-              ],
-            ),
-            // IconButton(
-            //   onPressed: _downloadQRCode,
-            //   icon: SizedBox(
-            //       height: 30,
-            //       child: Image.asset("lib/assets/images/downloadicon.png")),
-            // )
-          ],
-        ),
+      appBar: PgAppBar(
+        title: Languages.of(context)!.blockedusersText,
       ),
       body: Stack(
         children: [

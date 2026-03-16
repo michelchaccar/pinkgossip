@@ -28,6 +28,7 @@ import 'package:pinkGossip/models/postlike.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/postlikeviewmodel.dart';
@@ -138,43 +139,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                InkWell(
-                  overlayColor: const MaterialStatePropertyAll(
-                    AppColors.bgPrimary,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () {
-                    Navigator.pop(context);
-                    print("");
-                  },
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Image.asset(ImageUtils.leftarrow),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Text(
-                  Languages.of(context)!.allpostText,
-                  style: AppTypography.heading3,
-                ),
-              ],
-            ),
-          ],
-        ),
+      appBar: PgAppBar(
+        title: Languages.of(context)!.allpostText,
       ),
       body: ListView.builder(
         controller: _controller,

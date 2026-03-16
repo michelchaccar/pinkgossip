@@ -43,6 +43,8 @@ import 'package:pinkGossip/viewModels/salonlistviewmodel.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../../models/salonlistmodel.dart';
 import '../../utils/imagesutils.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../HomeScreens/notifications.dart';
 
 class MackeupsScreen extends StatefulWidget {
@@ -437,85 +439,31 @@ class _MackeupsScreenState extends State<MackeupsScreen>
       length: 3,
       child: Scaffold(
         backgroundColor: AppColors.bgPrimary,
-        appBar: AppBar(
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.kAppBArBGColor,
-          automaticallyImplyLeading: false,
-          elevation: 2.0,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(height: 50, child: Image.asset(ImageUtils.appbarlogo)),
-              Row(
-                children: [
-                  InkWell(
-                    overlayColor: const WidgetStatePropertyAll(
-                      AppColors.bgPrimary,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SearchForHomeScreen(),
-                        ),
-                      );
-                    },
-                    child: SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: Image.asset(ImageUtils.searchimg),
-                    ),
+        appBar: PgAppBar.logo(
+          actions: [
+            PgAppBarAction(
+              icon: LucideIcons.search,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SearchForHomeScreen(),
                   ),
-                  const SizedBox(width: 5),
-                  InkWell(
-                    overlayColor: const WidgetStatePropertyAll(
-                      AppColors.bgPrimary,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const GooglemapPage(),
-                        ),
-                      );
-                    },
-                    child: Stack(
-                      children: [
-                        SizedBox(
-                          height: 25,
-                          width: 25,
-                          child: Image.asset(
-                            ImageUtils.mapImage,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                        // Positioned(
-                        //   left: 13,
-                        //   top: 0,
-                        //   child: Container(
-                        //     height: 10,
-                        //     width: 10,
-                        //     decoration: BoxDecoration(
-                        //       color: AppColors.actionPrimary,
-                        //       borderRadius: BorderRadius.circular(5),
-                        //     ),
-                        //     // child: const Center(
-                        //     //   child: Text(
-                        //     //     "1",
-                        //     //     style: TextStyle(color: Colors.white),
-                        //     //   ),
-                        //     // ),
-                        //   ),
-                        // )
-                      ],
-                    ),
+                );
+              },
+            ),
+            PgAppBarAction(
+              icon: LucideIcons.mapPin,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const GooglemapPage(),
                   ),
-                ],
-              ),
-            ],
-          ),
+                );
+              },
+            ),
+          ],
         ),
         body: Stack(
           children: [

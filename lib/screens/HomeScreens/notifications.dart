@@ -4,8 +4,8 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/viewModels/notificationviewmode.dart';
 import 'package:flutter/material.dart';
-import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -114,35 +114,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          children: [
-            InkWell(
-              overlayColor: const WidgetStatePropertyAll(AppColors.bgPrimary),
-              borderRadius: BorderRadius.circular(20),
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Image.asset(ImageUtils.leftarrow),
-                ),
-              ),
-            ),
-            const SizedBox(width: 20),
-            Text(
-              Languages.of(context)!.notificationsText,
-              style: AppTypography.heading3,
-            ),
-          ],
-        ),
+      appBar: PgAppBar(
+        title: Languages.of(context)!.notificationsText,
       ),
       body:
           isLoading

@@ -17,6 +17,8 @@ import 'package:pinkGossip/screens/AddPost/mentionTextifield.dart';
 import 'package:pinkGossip/services/localnotification.dart';
 import 'package:pinkGossip/utils/apiservice.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/customeCamara.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
@@ -153,49 +155,35 @@ class _SharesaloonreviewPageState extends State<SharesaloonreviewPage>
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              Languages.of(context)!.PostReviewText,
-              style: AppTypography.heading3,
-            ),
-            InkWell(
-              onTap: () async {
-                LocalNotificationService.cancelAfterImageNotifications();
-                pref!.remove("step");
-                pref!.remove("curruntsalonid");
-                pref!.remove("beforeImage");
-                pref!.remove("afterImage");
-                pref!.remove("otherData");
-                if (beforeImage.path.isNotEmpty ||
-                    afterImage.path.isNotEmpty ||
-                    otherData.path.isNotEmpty) {
-                  clearPostDataAlert(context, kSize);
-                } else {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => BottomNavBar(index: 2),
-                    ),
-                    ModalRoute.withName('/'),
-                  );
-                }
-              },
-              child: Image.asset(
-                "lib/assets/images/wrong.png",
-                width: 22,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ],
-        ),
+      appBar: PgAppBar(
+        title: Languages.of(context)!.PostReviewText,
+        showBack: false,
+        actions: [
+          PgAppBarAction(
+            icon: LucideIcons.x,
+            onTap: () async {
+              LocalNotificationService.cancelAfterImageNotifications();
+              pref!.remove("step");
+              pref!.remove("curruntsalonid");
+              pref!.remove("beforeImage");
+              pref!.remove("afterImage");
+              pref!.remove("otherData");
+              if (beforeImage.path.isNotEmpty ||
+                  afterImage.path.isNotEmpty ||
+                  otherData.path.isNotEmpty) {
+                clearPostDataAlert(context, kSize);
+              } else {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => BottomNavBar(index: 2),
+                  ),
+                  ModalRoute.withName('/'),
+                );
+              }
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: [

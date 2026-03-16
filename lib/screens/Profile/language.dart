@@ -1,7 +1,8 @@
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/localization/locale_constants.dart';
-import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,59 +44,22 @@ class _LanguageScreenState extends State<LanguageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                InkWell(
-                  overlayColor: const WidgetStatePropertyAll(
-                    AppColors.bgPrimary,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Image.asset(ImageUtils.leftarrow),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Text(
-                  Languages.of(context)!.changelanguageText,
-                  style: AppTypography.heading3,
-                ),
-              ],
-            ),
-            InkWell(
-              borderRadius: BorderRadius.circular(17.5),
-              onTap: () async {
-                if (isEnglishSelected == true) {
-                  changeLanguage(context, "en");
-                } else {
-                  changeLanguage(context, "fr");
-                }
-                await getLocale();
-                Navigator.pop(context);
-              },
-              child: const SizedBox(
-                height: 35,
-                width: 35,
-                child: Icon(Icons.done),
-              ),
-            ),
-          ],
-        ),
+      appBar: PgAppBar(
+        title: Languages.of(context)!.changelanguageText,
+        actions: [
+          PgAppBarAction(
+            icon: LucideIcons.check,
+            onTap: () async {
+              if (isEnglishSelected == true) {
+                changeLanguage(context, "en");
+              } else {
+                changeLanguage(context, "fr");
+              }
+              await getLocale();
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [

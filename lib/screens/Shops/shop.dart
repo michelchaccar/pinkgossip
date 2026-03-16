@@ -2,8 +2,9 @@
 
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/Shops/productdetails.dart';
-import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -27,50 +28,17 @@ class _ShopScreenState extends State<ShopScreen> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(height: 50, child: Image.asset(ImageUtils.appbarlogo)),
-            Row(
-              children: [
-                InkWell(
-                  overlayColor: const WidgetStatePropertyAll(
-                    AppColors.bgPrimary,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () {},
-                  child: SizedBox(
-                    height: 25,
-                    width: 25,
-                    child: Image.asset(ImageUtils.heartimg),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                InkWell(
-                  overlayColor: const WidgetStatePropertyAll(
-                    AppColors.bgPrimary,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () {},
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        height: 30,
-                        child: Image.asset("lib/assets/images/shopping.png"),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 12),
-              ],
-            ),
-          ],
-        ),
+      appBar: PgAppBar.logo(
+        actions: [
+          PgAppBarAction(
+            icon: LucideIcons.heart,
+            onTap: () {},
+          ),
+          PgAppBarAction(
+            icon: LucideIcons.shoppingBag,
+            onTap: () {},
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

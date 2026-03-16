@@ -35,6 +35,8 @@ import 'package:pinkGossip/screens/showpostvideo.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/viewModels/salondetailsviewmodel.dart';
 import 'package:pinkGossip/viewModels/updateprofileviewmdoel.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -215,64 +217,37 @@ class _ProfileScreenState extends State<ProfileScreen>
         backgroundColor: AppColors.bgPrimary,
         appBar:
             salonProfileDetails != null
-                ? AppBar(
-                  surfaceTintColor: Colors.transparent,
-                  backgroundColor: AppColors.kAppBArBGColor,
-                  automaticallyImplyLeading: false,
-                  elevation: 2.0,
+                ? PgAppBar.logo(
                   actions: [
-                    salonProfileDetails!.userType == 2
-                        ? (salonProfileDetails!.address == null ||
-                                salonProfileDetails!.address!.isEmpty ||
-                                Platform.isAndroid)
-                            ? Container()
-                            : SizedBox(
-                              height: 23,
-                              width: 23,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => BeautyBusinessMap(
-                                            lat: salonProfileDetails!.latitude!,
-                                            long:
-                                                salonProfileDetails!.longitude!,
-                                            salonname:
-                                                salonProfileDetails!.salonName!,
-                                            opendays:
-                                                salonProfileDetails!.openDays!,
-                                            id:
-                                                salonProfileDetails!.id!
-                                                    .toString(),
-                                          ),
-                                    ),
-                                  );
-                                },
-                                child: Image.asset(
-                                  ImageUtils.mapImage,
-                                  color: AppColors.textPrimary,
-                                ),
-                              ),
-                            )
-                        : Container(),
-                    IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () {
+                    if (salonProfileDetails!.userType == 2 &&
+                        salonProfileDetails!.address != null &&
+                        salonProfileDetails!.address!.isNotEmpty &&
+                        !Platform.isAndroid)
+                      PgAppBarAction(
+                        icon: LucideIcons.mapPin,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => BeautyBusinessMap(
+                                    lat: salonProfileDetails!.latitude!,
+                                    long: salonProfileDetails!.longitude!,
+                                    salonname: salonProfileDetails!.salonName!,
+                                    opendays: salonProfileDetails!.openDays!,
+                                    id: salonProfileDetails!.id!.toString(),
+                                  ),
+                            ),
+                          );
+                        },
+                      ),
+                    PgAppBarAction(
+                      icon: LucideIcons.menu,
+                      onTap: () {
                         _scaffoldKey.currentState?.openEndDrawer();
                       },
                     ),
                   ],
-                  title: Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      Text(
-                        salonProfileDetails!.userName!,
-                        style: AppTypography.heading3,
-                      ),
-                    ],
-                  ),
                 )
                 : AppBar(automaticallyImplyLeading: false),
         endDrawer:
@@ -356,7 +331,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(40),
-                                      child: const Icon(Icons.person),
+                                      child: const Icon(LucideIcons.user),
                                     ),
                                   ),
                               const SizedBox(height: 10),
@@ -392,7 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                         ListTile(
-                          leading: const Icon(Icons.qr_code_scanner_rounded),
+                          leading: const Icon(LucideIcons.qrCode),
                           title: Text(
                             Languages.of(context)!.QRCodeText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -413,7 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                         userTyppe == "1"
                             ? ListTile(
-                              leading: const Icon(Icons.reviews_sharp),
+                              leading: const Icon(LucideIcons.gift),
                               title: Text(
                                 "My Rewards",
                                 style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -429,7 +404,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             )
                             : Container(),
                         ListTile(
-                          leading: const Icon(Icons.language),
+                          leading: const Icon(LucideIcons.globe),
                           title: Text(
                             Languages.of(context)!.LanguageText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -446,7 +421,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           },
                         ),
                         ListTile(
-                          leading: const Icon(Icons.app_shortcut_rounded),
+                          leading: const Icon(LucideIcons.graduationCap),
                           title: Text(
                             Languages.of(context)!.tutorialText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -474,7 +449,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           },
                         ),
                         ListTile(
-                          leading: const Icon(Icons.person),
+                          leading: const Icon(LucideIcons.userX),
                           title: Text(
                             Languages.of(context)!.blockedusersText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -491,7 +466,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           },
                         ),
                         ListTile(
-                          leading: const Icon(Icons.email),
+                          leading: const Icon(LucideIcons.mail),
                           title: Text(
                             "Email Visibility",
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -524,7 +499,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                         ListTile(
-                          leading: const Icon(Icons.delete_outline_outlined),
+                          leading: const Icon(LucideIcons.trash2),
                           title: Text(
                             Languages.of(context)!.deleteaccountText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
@@ -534,7 +509,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           },
                         ),
                         ListTile(
-                          leading: const Icon(Icons.logout),
+                          leading: const Icon(LucideIcons.logOut),
                           title: Text(
                             Languages.of(context)!.logoutText,
                             style: AppTypography.bodySemiBold.copyWith(fontSize: 15),

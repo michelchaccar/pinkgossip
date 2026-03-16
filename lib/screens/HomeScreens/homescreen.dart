@@ -32,6 +32,8 @@ import 'package:pinkGossip/screens/HomeScreens/notifications.dart';
 import 'package:pinkGossip/screens/HomeScreens/searchforhomescreen.dart';
 import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
@@ -501,107 +503,43 @@ class _HomeScreenState extends State<HomeScreen> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(height: 50, child: Image.asset(ImageUtils.appbarlogo)),
-            Row(
-              children: [
-                InkWell(
-                  overlayColor: const WidgetStatePropertyAll(
-                    AppColors.bgPrimary,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () async {
-                    await _showAppBarTooltip(
-                      'search',
-                      widget.searchKey,
-                      TooltipType.search,
-                    );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SearchForHomeScreen(),
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    key: widget.searchKey,
-                    height: 25,
-                    width: 25,
-                    child: Image.asset(ImageUtils.searchimg),
-                  ),
+      appBar: PgAppBar.logo(
+        actions: [
+          PgAppBarAction(
+            icon: LucideIcons.search,
+            iconKey: widget.searchKey,
+            onTap: () async {
+              await _showAppBarTooltip(
+                'search',
+                widget.searchKey,
+                TooltipType.search,
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchForHomeScreen(),
                 ),
-                const SizedBox(width: 8),
-                InkWell(
-                  overlayColor: const WidgetStatePropertyAll(
-                    AppColors.bgPrimary,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () async {
-                    await _showAppBarTooltip(
-                      'notification',
-                      widget.notificationKey,
-                      TooltipType.notification,
-                    );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NotificationScreen(),
-                      ),
-                    );
-                  },
-                  child: Stack(
-                    key: widget.notificationKey,
-                    children: [
-                      SizedBox(
-                        height: 25,
-                        width: 25,
-                        child: Image.asset(ImageUtils.notificationimg),
-                      ),
-                      // Positioned(
-                      //   left: 13,
-                      //   top: 0,
-                      //   child: Container(
-                      //     height: 10,
-                      //     width: 10,
-                      //     decoration: BoxDecoration(
-                      //       color: AppColors.actionPrimaryDark,
-                      //       borderRadius: BorderRadius.circular(5),
-                      //     ),
-                      // child: const Center(
-                      //   child: Text(
-                      //     "1",
-                      //     style: TextStyle(color: Colors.white),
-                      //   ),
-                      // ),
-                      // ),
-                      // )
-                    ],
-                  ),
+              );
+            },
+          ),
+          PgAppBarAction(
+            icon: LucideIcons.bell,
+            iconKey: widget.notificationKey,
+            onTap: () async {
+              await _showAppBarTooltip(
+                'notification',
+                widget.notificationKey,
+                TooltipType.notification,
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationScreen(),
                 ),
-                const SizedBox(width: 12),
-                // SizedBox(
-                //     height: 25,
-                //     width: 25,
-                //     child: InkWell(
-                //         onTap: () {
-                //           Navigator.push(
-                //               context,
-                //               MaterialPageRoute(
-                //                 builder: (context) => const ProfileScreen(),
-                //               ));
-                //         },
-                //         child: Image.asset(ImageUtils.profileLogo)))
-              ],
-            ),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
       ),
       body: RefreshIndicator(
         color: AppColors.actionPrimaryDark,

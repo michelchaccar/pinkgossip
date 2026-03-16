@@ -6,8 +6,9 @@ import 'dart:ui';
 import 'package:pinkGossip/localization/language/languages.dart';
 
 import 'package:pinkGossip/utils/custom.dart';
-import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -111,57 +112,18 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
     Size kSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        elevation: 2.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                InkWell(
-                  overlayColor: const WidgetStatePropertyAll(
-                    AppColors.bgPrimary,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Image.asset(ImageUtils.leftarrow),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Text(
-                  Languages.of(context)!.QRCodeText,
-                  style: AppTypography.heading3,
-                ),
-              ],
-            ),
-            IconButton(
-              onPressed: _downloadQRCode,
-              icon: SizedBox(
-                height: 30,
-                child: Image.asset("lib/assets/images/downloadicon.png"),
-              ),
-            ),
-          ],
-        ),
+      appBar: PgAppBar(
+        title: Languages.of(context)!.QRCodeText,
         actions: [
-          IconButton(
-            onPressed: () {
-              //https://pinkmapdemo.com/profile/testuser
-
+          PgAppBarAction(
+            icon: LucideIcons.download,
+            onTap: _downloadQRCode,
+          ),
+          PgAppBarAction(
+            icon: LucideIcons.share2,
+            onTap: () {
               showShareOptions(context, widget.userName, widget.userid);
             },
-            icon: const Icon(Icons.share_sharp, size: 25),
           ),
         ],
       ),

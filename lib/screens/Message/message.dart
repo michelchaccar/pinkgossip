@@ -10,6 +10,8 @@ import 'package:pinkGossip/screens/HomeScreens/notifications.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
@@ -146,28 +148,18 @@ class _MessageScreenState extends State<MessageScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        backgroundColor: AppColors.kAppBArBGColor,
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(height: 50, child: Image.asset(ImageUtils.appbarlogo)),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const NotificationScreen()),
-                );
-              },
-              child: SizedBox(
-                width: 25,
-                height: 25,
-                child: Image.asset(ImageUtils.notificationimg),
-              ),
-            ),
-          ],
-        ),
+      appBar: PgAppBar.logo(
+        actions: [
+          PgAppBarAction(
+            icon: LucideIcons.bell,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const NotificationScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [

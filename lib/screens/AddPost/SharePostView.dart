@@ -14,6 +14,8 @@ import 'package:pinkGossip/models/rewardtemplatemodel.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/screens/AddPost/mentionTextifield.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/customeCamara.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
@@ -163,44 +165,30 @@ class _SharepostviewPageState extends State<SharepostviewPage> {
       canPop: false,
       child: Scaffold(
         backgroundColor: AppColors.bgPrimary,
-        appBar: AppBar(
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.kAppBArBGColor,
-          automaticallyImplyLeading: false,
-          elevation: 2.0,
-
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.type == "NormalPost"
-                    ? Languages.of(context)!.sharepostText
-                    : Languages.of(context)!.postARewardText,
-                style: AppTypography.heading3,
-              ),
-              InkWell(
-                onTap: () async {
-                  if (postData != null) {
-                    clearPostDataAlert(context, kSize);
-                  } else {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (BuildContext context) => BottomNavBar(index: 2),
-                      ),
-                      ModalRoute.withName('/'),
-                    );
-                  }
-                },
-                child: Image.asset(
-                  "lib/assets/images/wrong.png",
-                  width: 22,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
+        appBar: PgAppBar(
+          title: widget.type == "NormalPost"
+              ? Languages.of(context)!.sharepostText
+              : Languages.of(context)!.postARewardText,
+          showBack: false,
+          actions: [
+            PgAppBarAction(
+              icon: LucideIcons.x,
+              onTap: () async {
+                if (postData != null) {
+                  clearPostDataAlert(context, kSize);
+                } else {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (BuildContext context) => BottomNavBar(index: 2),
+                    ),
+                    ModalRoute.withName('/'),
+                  );
+                }
+              },
+            ),
+          ],
         ),
         body: Stack(
           children: [
