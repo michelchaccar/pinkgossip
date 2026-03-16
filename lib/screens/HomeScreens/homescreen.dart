@@ -1437,15 +1437,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                               ),
-                          const SizedBox(height: 3),
+                          const SizedBox(height: 10),
                           Padding(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            padding: const EdgeInsets.only(left: 18, right: 18),
                             child: Row(
                               children: [
                                 InkWell(
-                                  // key: index == 0
-                                  //     ? widget.likepostKey
-                                  //     : UniqueKey(),
                                   onTap: () async {
                                     if (item.like == 1) {
                                       item.like = 0;
@@ -1466,177 +1463,163 @@ class _HomeScreenState extends State<HomeScreen> {
                                         index,
                                       );
                                     }
-
-                                    print(
-                                      "item.likeCount after ===  ${item.likeCount}",
-                                    );
                                     setState(() {});
                                   },
-                                  child:
-                                      item.like == 1
-                                          ? Container(
-                                            height: 20,
-                                            width: 20,
-                                            alignment: Alignment.topLeft,
-                                            child: const Icon(
-                                              Icons.favorite,
-                                              color: AppColors.actionPrimaryDark,
-                                            ),
-                                          )
-                                          : const SizedBox(
-                                            height: 20,
-                                            width: 20,
-                                            child: Icon(
-                                              Icons.favorite_outline,
-                                              color: AppColors.textPrimary,
-                                            ),
-                                          ),
-                                ),
-                                const SizedBox(width: 5),
-                                SizedBox(
-                                  // key: widget.commentKey,
-                                  height: 30,
-                                  width: 40,
-                                  child: InkWell(
-                                    onTap: () {
-                                      CommentBottomSheet(
-                                        context,
-                                        kSize,
-                                        index,
-                                        item,
-                                      );
-                                    },
-                                    child: Image.asset(ImageUtils.lipimage),
+                                  child: Icon(
+                                    item.like == 1
+                                        ? LucideIcons.heart
+                                        : LucideIcons.heart,
+                                    size: 20,
+                                    color: item.like == 1
+                                        ? AppColors.actionPrimary
+                                        : AppColors.textPrimary,
                                   ),
                                 ),
-                                const SizedBox(width: 5),
-                                SizedBox(
-                                  // key: widget.sendpostKey,
-                                  height: 20,
-                                  width: 20,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Post usersendpost = Post.fromJson(
-                                        item.toJson(),
-                                      );
-                                      print("useertype == ${item.userType}");
-                                      shareData = usersendpost;
-                                      SharepostwithFriends(
-                                        context,
-                                        kSize,
-                                        item.userType!,
-                                      );
-                                    },
-                                    child: Image.asset(ImageUtils.sendimage),
+                                const SizedBox(width: 8),
+                                InkWell(
+                                  onTap: () {
+                                    CommentBottomSheet(
+                                      context,
+                                      kSize,
+                                      index,
+                                      item,
+                                    );
+                                  },
+                                  child: const Icon(
+                                    LucideIcons.messageCircle,
+                                    size: 20,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
-                                const SizedBox(width: 5),
+                                const SizedBox(width: 8),
+                                InkWell(
+                                  onTap: () {
+                                    Post usersendpost = Post.fromJson(
+                                      item.toJson(),
+                                    );
+                                    shareData = usersendpost;
+                                    SharepostwithFriends(
+                                      context,
+                                      kSize,
+                                      item.userType!,
+                                    );
+                                  },
+                                  child: const Icon(
+                                    LucideIcons.send,
+                                    size: 20,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
+                          // Likes count
                           Container(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
                             alignment: Alignment.topLeft,
                             child: Text(
                               '${item.likeCount.toString()} ${Languages.of(context)!.likesText}',
-                              style: AppTypography.bodySemiBold,
+                              style: const TextStyle(
+                                fontFamily: 'Geist',
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                          item.review!.isNotEmpty
-                              ? Container(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                  right: 15,
+                          const SizedBox(height: 4),
+                          // Username
+                          if (item.review!.isNotEmpty)
+                            Container(
+                              padding: const EdgeInsets.only(left: 18, right: 18),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                item.userName!.isNotEmpty
+                                    ? item.userName!
+                                    : "${item.firstName!} ${item.lastName!}",
+                                style: const TextStyle(
+                                  fontFamily: 'Geist',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF101828),
+                                  height: 1.5,
                                 ),
-                                alignment: Alignment.topLeft,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: RichText(
-                                        maxLines:
-                                            selectindex == index ? mxline : 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text:
-                                                  "${item.firstName!} ${item.lastName!}",
-                                              style:
-                                                  AppTypography.bodySemiBold,
-                                            ),
-                                            TextSpan(
-                                              text: " ",
-                                              style:
-                                                  AppTypography.bodySemiBold,
-                                            ),
-
-                                            _buildReviewText(
-                                              item.review!,
-                                              item.userTags!,
-                                            ),
-                                            // TextSpan(
-                                            //   text: item.review,
-                                            //   style: Pallete
-                                            //       .Quicksand12darkGreykwe400,
-                                            // ),
+                              ),
+                            ),
+                          // Review text
+                          if (item.review!.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 18, right: 18),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Expanded(
+                                    child: RichText(
+                                      maxLines:
+                                          selectindex == index ? mxline : 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      text: TextSpan(
+                                        children: [
+                                          _buildReviewText(
+                                            item.review!,
+                                            item.userTags!,
+                                          ),
+                                          if (item.review!.length > 100 && selectindex == index && less)
                                             WidgetSpan(
                                               child: InkWell(
                                                 onTap: () {
-                                                  print(
-                                                    "length === ${item.review!.length}",
-                                                  );
                                                   setState(() {
-                                                    mxline = 2;
+                                                    mxline = 3;
                                                     more = true;
                                                     less = false;
                                                     selectindex = -1;
                                                   });
                                                 },
-                                                child: Visibility(
-                                                  visible: less,
-                                                  child: Text(
-                                                    " ${Languages.of(context)!.lessText}",
-                                                    style:
-                                                        AppTypography.bodySemiBold,
+                                                child: Text(
+                                                  "  ${Languages.of(context)!.lessText}",
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Geist',
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Color(0xFF6A7282),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                    item.review!.length > 100
-                                        ? InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              print(
-                                                "lenght === ${item.review!.length}",
-                                              );
-                                              mxline = 15;
-                                              more = false;
-                                              less = true;
-                                              selectindex = index;
-                                            });
-                                          },
-                                          child: Visibility(
-                                            visible:
-                                                selectindex == index
-                                                    ? more
-                                                    : true,
-                                            child: Text(
-                                              "..${Languages.of(context)!.moreText}",
-                                              style:
-                                                  AppTypography.bodySemiBold,
+                                  ),
+                                  item.review!.length > 100
+                                      ? InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            mxline = 15;
+                                            more = false;
+                                            less = true;
+                                            selectindex = index;
+                                          });
+                                        },
+                                        child: Visibility(
+                                          visible:
+                                              selectindex == index
+                                                  ? more
+                                                  : true,
+                                          child: Text(
+                                            "..${Languages.of(context)!.moreText}",
+                                            style: const TextStyle(
+                                              fontFamily: 'Geist',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xFF6A7282),
                                             ),
                                           ),
-                                        )
-                                        : Container(),
-                                  ],
-                                ),
-                              )
-                              : Container(),
+                                        ),
+                                      )
+                                      : const SizedBox.shrink(),
+                                ],
+                              ),
+                            ),
                           item.userType == 2
                               ? Container()
                               : item.userType == 1 && item.beforeImage != ""
@@ -1645,8 +1628,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBox(height: 5),
                                   Container(
                                     padding: const EdgeInsets.only(
-                                      left: 15,
-                                      right: 15,
+                                      left: 18,
+                                      right: 18,
                                     ),
                                     alignment: Alignment.topLeft,
                                     child: Row(
@@ -1678,12 +1661,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               )
                               : Container(),
-                          const SizedBox(height: 2),
+                          const SizedBox(height: 4),
                           item.commentCount != 0
                               ? Container(
                                 padding: const EdgeInsets.only(
-                                  left: 15,
-                                  right: 15,
+                                  left: 18,
+                                  right: 18,
                                 ),
                                 alignment: Alignment.topLeft,
                                 child: InkWell(
@@ -1697,17 +1680,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: Text(
                                     "${Languages.of(context)!.viewallText} ${item.commentCount.toString()} ${Languages.of(context)!.commentsText}",
-                                    style: AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey),
+                                    style: const TextStyle(
+                                      fontFamily: 'Geist',
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF6A7282),
+                                    ),
                                   ),
                                 ),
                               )
                               : Container(),
                           Container(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            padding: const EdgeInsets.only(left: 18, right: 18),
                             alignment: Alignment.topLeft,
                             child: Text(
                               getpostTime(item.createdAt!),
-                              style: AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey),
+                              style: const TextStyle(
+                                fontFamily: 'Geist',
+                                fontSize: 11,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF6A7282),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -1773,8 +1766,12 @@ class _HomeScreenState extends State<HomeScreen> {
         textSpans.add(
           TextSpan(
             text: '$word ',
-            style: AppTypography.bodySemiBold.copyWith(
-              color: AppColors.kblueColor,
+            style: const TextStyle(
+              fontFamily: 'Geist',
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF3B82F6),
+              height: 1.43,
             ),
             recognizer:
                 TapGestureRecognizer()
@@ -1786,7 +1783,16 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       } else {
         textSpans.add(
-          TextSpan(text: '$word ', style: AppTypography.body.copyWith(color: AppColors.drktxtGrey)),
+          TextSpan(
+            text: '$word ',
+            style: const TextStyle(
+              fontFamily: 'Geist',
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF6A7282),
+              height: 1.43,
+            ),
+          ),
         );
       }
     }
