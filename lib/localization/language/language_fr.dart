@@ -20,7 +20,7 @@ class LanguageFr extends Languages {
   @override
   String get pleaseentersalonnameText => "veuillez entrer le nom du salon";
   @override
-  String get submitpostText => "Soumettre un message";
+  String get submitpostText => "Soumettre une publication";
   @override
   String get cancelText => "Annuler";
   @override
@@ -38,7 +38,7 @@ class LanguageFr extends Languages {
   String get sendlinktText => "Envoyer le lien";
 
   @override
-  String get previousText => "Précédente";
+  String get previousText => "Précédent";
   @override
   String get lessText => "Moins";
 
@@ -55,7 +55,7 @@ class LanguageFr extends Languages {
   String get yesText => "Oui";
 
   @override
-  String get justnowText => "Tout à l' heure";
+  String get justnowText => "À l'instant";
 
   @override
   String get noInternetText => "Pas de connexion Internet";
@@ -128,16 +128,16 @@ class LanguageFr extends Languages {
   String get messageText => "Message";
 
   @override
-  String get follwersText => "Abonnées";
+  String get follwersText => "Abonnés";
 
   @override
-  String get followingText => "Suivante";
+  String get followingText => "Abonnements";
 
   @override
   String get followText => "Suivre";
 
   @override
-  String get NopostavailableText => "Aucun article disponible";
+  String get NopostavailableText => "Aucune publication disponible";
 
   @override
   String get BrandText => "Marque";
@@ -155,7 +155,7 @@ class LanguageFr extends Languages {
   String get LogoutText => "Déconnexion";
 
   @override
-  String get postsText => "Articles";
+  String get postsText => "Publications";
 
   @override
   String get QRCodeText => "Code QR";
@@ -167,7 +167,7 @@ class LanguageFr extends Languages {
   String get TueText => "Mar";
 
   @override
-  String get WedText => "Épouser";
+  String get WedText => "Mer";
 
   @override
   String get ThuText => "Jeu";
@@ -176,10 +176,10 @@ class LanguageFr extends Languages {
   String get FriText => "Ven";
 
   @override
-  String get SatText => "Assise";
+  String get SatText => "Sam";
 
   @override
-  String get SunText => "Soleil";
+  String get SunText => "Dim";
 
   @override
   String get EmailText => "E-mail";
@@ -190,9 +190,9 @@ class LanguageFr extends Languages {
   @override
   String get BioText => "Biographie";
   @override
-  String get websiteText => "Website";
+  String get websiteText => "Site web";
   @override
-  String get OpenDaysText => "Journées portes ouvertes";
+  String get OpenDaysText => "Jours d'ouverture";
 
   @override
   String get OpenTimeText => "Horaires d'ouverture";
@@ -210,7 +210,7 @@ class LanguageFr extends Languages {
   String get addacommentText => "ajouter un commentaire";
 
   @override
-  String get PostReviewText => "Avis sur le poste";
+  String get PostReviewText => "Avis sur la publication";
 
   @override
   String get pleaseselectatleastonepictureText =>
@@ -314,7 +314,7 @@ class LanguageFr extends Languages {
 
   @override
   String get ClicktotakeorselectyourAfterimageText =>
-      "Cliquez pour prendre ou sélectionner votre imageur rémanent";
+      "Cliquez pour prendre ou sélectionner votre image après";
 
   @override
   String get pleaseenterpasswordText => "veuillez entrer le mot de passe";
@@ -331,7 +331,7 @@ class LanguageFr extends Languages {
       "Le mot de passe doit comporter au moins 6 caractères";
 
   @override
-  String get AMText => "SUIS";
+  String get AMText => "AM";
 
   @override
   String get NodatafoundText => "Aucune donnée trouvée";
@@ -387,7 +387,7 @@ class LanguageFr extends Languages {
   String get eyesText => "Yeux";
 
   @override
-  String get faceText => "Affronter";
+  String get faceText => "Visage";
 
   @override
   String get lipsText => "Lèvres";
@@ -396,22 +396,22 @@ class LanguageFr extends Languages {
   String get handsText => "Mains";
 
   @override
-  String get likesText => "goûts";
+  String get likesText => "likes";
 
   @override
   String get addtocartText => "Ajouter au panier";
 
   @override
-  String get allpostText => "Tous les messages";
+  String get allpostText => "Toutes les publications";
 
   @override
-  String get FollowingText => "Suivante";
+  String get FollowingText => "Abonnements";
 
   @override
   String get RemoveText => "Retirer";
 
   @override
-  String get FollowersText => "Abonnées";
+  String get FollowersText => "Abonnés";
 
   @override
   String get categoriesText => "Catégories";
@@ -424,7 +424,7 @@ class LanguageFr extends Languages {
 
   @override
   String get deleteposttitleText =>
-      "Etes-vous sûr de vouloir supprimer ce message ?";
+      "Êtes-vous sûr de vouloir supprimer cette publication ?";
 
   @override
   String get searchDescriptionText =>
@@ -445,7 +445,7 @@ class LanguageFr extends Languages {
   @override
   String get starttimeText => "Heure de début";
   @override
-  String get endtimeText => "Fin des temps";
+  String get endtimeText => "Heure de fin";
 
   @override
   String get toText => "À";
@@ -481,10 +481,10 @@ class LanguageFr extends Languages {
   String get nodatafoundText => "Aucune donnée trouvée";
 
   @override
-  String get yourstoryText => "Votre histoire";
+  String get yourstoryText => "Votre story";
 
   @override
-  String get addtostoryText => "Ajouter à l'histoire";
+  String get addtostoryText => "Ajouter à la story";
 
   @override
   String get addtopostText => "Ajouter à la publication";
@@ -493,11 +493,11 @@ class LanguageFr extends Languages {
   String get addtosalonreviewText => "Ajouter à l'avis du salon";
 
   @override
-  String get postCapitalText => "POSTE";
+  String get postCapitalText => "PUBLICATION";
   @override
-  String get storyCapitalText => "HISTOIRE";
+  String get storyCapitalText => "STORY";
   @override
-  String get reviewsalonCapitalText => "REVUE DU SALON";
+  String get reviewsalonCapitalText => "AVIS SALON";
   @override
   String get newpostText => "Nouvelle publication";
 
@@ -514,21 +514,21 @@ class LanguageFr extends Languages {
   String get sharedapostText => "A partagé une publication";
 
   @override
-  String get shareText => "partagér";
+  String get shareText => "Partager";
 
   @override
-  String get storyreplyText => "Répondre à l'histoire";
+  String get storyreplyText => "Répondre à la story";
 
   @override
-  String get yourepliedtotheirstoryText => "Vous avez répondu à leur histoire";
+  String get yourepliedtotheirstoryText => "Vous avez répondu à leur story";
 
   @override
-  String get repliedtoyourstoryText => "J'ai répondu à votre histoire";
+  String get repliedtoyourstoryText => "A répondu à votre story";
 
   @override
-  String get salonreviewText => "SALONREVIEW";
+  String get salonreviewText => "AVIS SALON";
   @override
-  String get nextText => "Suivante";
+  String get nextText => "Suivant";
 
   @override
   String get captionText => "Écrire une légende";
@@ -554,29 +554,29 @@ class LanguageFr extends Languages {
   String get pleaseenterusernameText => "veuillez entrer le nom d'utilisateur";
 
   @override
-  String get nopostsyetText => "Pas encore de messages";
+  String get nopostsyetText => "Pas encore de publications";
 
   @override
   String get taggedText => "Tagué";
 
   @override
-  String get qrcodesavedatText => "¡Código QR guardado en la galería!";
+  String get qrcodesavedatText => "Code QR sauvegardé dans la galerie !";
   @override
   String get permissiondeniedText =>
-      "Permiso denegado. No se puede guardar el código QR en la galería.";
+      "Permission refusée. Impossible de sauvegarder le code QR dans la galerie.";
   @override
-  String get errortosavedqrText => "Error al descargar el código QR";
+  String get errortosavedqrText => "Erreur lors du téléchargement du code QR";
 
   @override
   String get uploadimageText => "Télécharger l'image";
 
   @override
-  String get submitstoryText => "Soumettre une histoire";
+  String get submitstoryText => "Soumettre une story";
   @override
   String get submitsalonreviewText => "Soumettre un avis sur le salon";
 
   @override
-  String get submitnewpostText => "Soumettre un nouveau message";
+  String get submitnewpostText => "Soumettre une nouvelle publication";
 
   @override
   String get uploadText => "Télécharger";
@@ -600,7 +600,7 @@ class LanguageFr extends Languages {
 
   @override
   String get confirmpasswordnotmatchedText =>
-      "confirmer que le mot de passe ne correspond pas";
+      "Le mot de passe de confirmation ne correspond pas";
 
   @override
   String get sharepostText => "Partager la publication";
@@ -609,13 +609,13 @@ class LanguageFr extends Languages {
   String get postARewardText => "Proposer une récompense";
 
   @override
-  String get sharestoryText => "Partager l'histoire";
+  String get sharestoryText => "Partager la story";
 
   @override
   String get sharesalonreviewText => "Partager l'avis sur le salon";
 
   @override
-  String get gossiperText => "Bavard";
+  String get gossiperText => "Gossiper";
   @override
   String get beautybusinessText => "Entreprise de beauté";
 
@@ -638,7 +638,7 @@ class LanguageFr extends Languages {
   String get tatooText => "Tatouage";
 
   @override
-  String get barbershopText => "Salon de coiffure";
+  String get barbershopText => "Barbier";
 
   @override
   String get spafacilityText => "Installations de spa";
@@ -661,9 +661,9 @@ class LanguageFr extends Languages {
   @override
   String get mapText => "Carte";
   @override
-  String get blockText => "Bloc";
+  String get blockText => "Bloquer";
   @override
-  String get reportText => "Rapport";
+  String get reportText => "Signaler";
   @override
   String get downlaodText => "Télécharger";
   @override
@@ -692,12 +692,12 @@ class LanguageFr extends Languages {
   String get notificationtutorialmsgText =>
       "Restez à jour avec les mentions J'aime, les commentaires et les messages ici.";
   @override
-  String get shareStoryText => "Partager l'histoire";
+  String get shareStoryText => "Partager la story";
   @override
   String get shareStorytutorialmsgText =>
       "Créez et partagez des moments forts temporaires de votre visite en salon ou de votre transformation beauté qui disparaissent après 24 heures. Parfait pour les looks avant/après ou les conseils beauté rapides !";
   @override
-  String get homeText => "Maison";
+  String get homeText => "Accueil";
   @override
   String get hometutorialmsgText =>
       "Retournez à votre fil principal d'avis et de publications sur les salons";
