@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/screens/AddPost/SharePostView.dart';
 import 'package:pinkGossip/screens/AddPost/ShareSaloonReview.dart';
@@ -61,9 +62,9 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
           showButtons == false
               ? AppBar(
                 surfaceTintColor: Colors.transparent,
-                backgroundColor: AppColors.kAppBArBGColor,
+                backgroundColor: AppColors.bgPrimary,
                 automaticallyImplyLeading: false,
-                elevation: 2.0,
+                elevation: 0,
                 toolbarHeight: 0.1,
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,10 +75,10 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
                     ),
                     InkWell(
                       onTap: () async {},
-                      child: Image.asset(
-                        "lib/assets/images/wrong.png",
-                        width: 22,
-                        color: AppColors.textPrimary,
+                      child: const Icon(
+                        LucideIcons.x,
+                        size: 22,
+                        color: AppColors.actionPrimary,
                       ),
                     ),
                   ],
@@ -85,9 +86,9 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
               )
               : AppBar(
                 surfaceTintColor: Colors.transparent,
-                backgroundColor: AppColors.kAppBArBGColor,
+                backgroundColor: AppColors.bgPrimary,
                 automaticallyImplyLeading: false,
-                elevation: 2.0,
+                elevation: 0,
                 title: Row(
                   children: [
                     Text(

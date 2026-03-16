@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'dart:ui';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
@@ -693,9 +694,9 @@ class _AddPostState extends State<AddPost> {
       backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
+        backgroundColor: AppColors.bgPrimary,
         automaticallyImplyLeading: false,
-        elevation: 2.0,
+        elevation: 0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -707,10 +708,10 @@ class _AddPostState extends State<AddPost> {
               onTap: () async {
                 ClearPostDataAlert(context, kSize);
               },
-              child: Image.asset(
-                "lib/assets/images/wrong.png",
-                width: 22,
-                color: AppColors.textPrimary,
+              child: const Icon(
+                LucideIcons.x,
+                size: 22,
+                color: AppColors.actionPrimary,
               ),
             ),
           ],

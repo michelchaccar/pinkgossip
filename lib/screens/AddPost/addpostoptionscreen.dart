@@ -51,9 +51,9 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
               ispostSelected == false && isstorySelected == false
                   ? AppBar(
                     surfaceTintColor: Colors.transparent,
-                    backgroundColor: AppColors.kAppBArBGColor,
+                    backgroundColor: AppColors.bgPrimary,
                     automaticallyImplyLeading: false,
-                    elevation: 2.0,
+                    elevation: 0,
                     title: Row(
                       children: [
                         Text(
@@ -172,9 +172,9 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                       issalonreviewSelected == false
                   ? AppBar(
                     surfaceTintColor: Colors.transparent,
-                    backgroundColor: AppColors.kAppBArBGColor,
+                    backgroundColor: AppColors.bgPrimary,
                     automaticallyImplyLeading: false,
-                    elevation: 2.0,
+                    elevation: 0,
                     title: Row(
                       children: [
                         Text(

@@ -5,6 +5,7 @@ import 'package:pinkGossip/models/createpostmodel.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/screens/AddPost/mentionTextifield.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/utils/localfilevideoplay.dart';
@@ -211,6 +212,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
           appBar: AppBar(
             automaticallyImplyLeading: false,
+            backgroundColor: AppColors.bgPrimary,
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            surfaceTintColor: Colors.transparent,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -223,13 +228,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       prefs!.setString('caption', captionController.text);
                     });
                   },
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Image.asset(ImageUtils.leftarrow),
-                    ),
+                  child: const Icon(
+                    LucideIcons.chevronLeft,
+                    color: AppColors.actionPrimary,
+                    size: 24,
                   ),
                 ),
                 Text(
