@@ -36,7 +36,7 @@ import 'package:pinkGossip/viewModels/postlikeviewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinkGossip/screens/HomeScreens/searchforhomescreen.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/viewModels/salonlistviewmodel.dart';
@@ -299,7 +299,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
               context,
               MaterialPageRoute(
                 builder:
-                    (context) => SalonDetailScreen(id: salonid, userType: "2"),
+                    (context) => ProfileScreen(userId: salonid, userType: "2"),
               ),
             );
           },
@@ -535,8 +535,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (context) => SalonDetailScreen(
-                                        id: salonlistArray[index].id.toString(),
+                                      (context) => ProfileScreen(
+                                        userId: salonlistArray[index].id.toString(),
                                         userType:
                                             salonlistArray[index].userType
                                                 .toString(),
@@ -1002,8 +1002,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                             builder:
                                                                 (
                                                                   context,
-                                                                ) => SalonDetailScreen(
-                                                                  id:
+                                                                ) => ProfileScreen(
+                                                                  userId:
                                                                       item.userId
                                                                           .toString(),
                                                                   userType:
@@ -1112,8 +1112,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                   builder:
                                                                       (
                                                                         context,
-                                                                      ) => SalonDetailScreen(
-                                                                        id:
+                                                                      ) => ProfileScreen(
+                                                                        userId:
                                                                             item.userId.toString(),
                                                                         userType:
                                                                             item.userType.toString(),
@@ -1144,8 +1144,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                       builder:
                                                                           (
                                                                             context,
-                                                                          ) => SalonDetailScreen(
-                                                                            id:
+                                                                          ) => ProfileScreen(
+                                                                            userId:
                                                                                 item.userSalonId.toString(),
                                                                             userType:
                                                                                 "2",
@@ -1172,8 +1172,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                       builder:
                                                                           (
                                                                             context,
-                                                                          ) => SalonDetailScreen(
-                                                                            id:
+                                                                          ) => ProfileScreen(
+                                                                            userId:
                                                                                 item.userSalonId.toString(),
                                                                             userType:
                                                                                 "2",
@@ -1241,8 +1241,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                               builder:
                                                                   (
                                                                     context,
-                                                                  ) => SalonDetailScreen(
-                                                                    id:
+                                                                  ) => ProfileScreen(
+                                                                    userId:
                                                                         item.userId
                                                                             .toString(),
                                                                     userType:
@@ -2707,8 +2707,8 @@ class _MackeupsScreenState extends State<MackeupsScreen>
                                                                   builder:
                                                                       (
                                                                         context,
-                                                                      ) => SalonDetailScreen(
-                                                                        id:
+                                                                      ) => ProfileScreen(
+                                                                        userId:
                                                                             items.comments![cindex].appUserId.toString(),
                                                                         userType:
                                                                             items.comments![cindex].userType.toString(),
@@ -2870,7 +2870,7 @@ class _MackeupsScreenState extends State<MackeupsScreen>
         context,
         MaterialPageRoute(
           builder:
-              (context) => SalonDetailScreen(id: id.toString(), userType: "1"),
+              (context) => ProfileScreen(userId: id.toString(), userType: "1"),
         ),
       );
     } else {

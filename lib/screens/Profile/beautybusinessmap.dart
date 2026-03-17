@@ -1,5 +1,5 @@
 import 'package:pinkGossip/localization/language/languages.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:flutter/foundation.dart';
@@ -53,7 +53,7 @@ class _BeautyBusinessMapState extends State<BeautyBusinessMap> {
               context,
               MaterialPageRoute(
                 builder:
-                    (context) => SalonDetailScreen(id: salonid, userType: "2"),
+                    (context) => ProfileScreen(userId: salonid, userType: "2"),
               ),
             );
           },

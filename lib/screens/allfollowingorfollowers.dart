@@ -6,7 +6,7 @@ import 'package:pinkGossip/models/followingmodel.dart';
 import 'package:pinkGossip/models/getstorylistmodel.dart';
 import 'package:pinkGossip/models/unfollwmodel.dart';
 import 'package:pinkGossip/screens/HomeScreens/mystoryview.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/screens/Profile/singleuserstoryshow.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/theme/theme.dart';
@@ -195,8 +195,8 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                   builder:
                                                       (
                                                         context,
-                                                      ) => SalonDetailScreen(
-                                                        id:
+                                                      ) => ProfileScreen(
+                                                        userId:
                                                             followdetaillist[index]
                                                                 .id
                                                                 .toString(),
@@ -291,8 +291,8 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                                   builder:
                                                                       (
                                                                         context,
-                                                                      ) => SalonDetailScreen(
-                                                                        id:
+                                                                      ) => ProfileScreen(
+                                                                        userId:
                                                                             followdetaillist[index].id.toString(),
                                                                         userType:
                                                                             followdetaillist[index].userType.toString(),
@@ -415,8 +415,8 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                                   builder:
                                                                       (
                                                                         context,
-                                                                      ) => SalonDetailScreen(
-                                                                        id:
+                                                                      ) => ProfileScreen(
+                                                                        userId:
                                                                             followdetaillist[index].id.toString(),
                                                                         userType:
                                                                             followdetaillist[index].userType.toString(),
@@ -631,8 +631,8 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                   builder:
                                                       (
                                                         context,
-                                                      ) => SalonDetailScreen(
-                                                        id:
+                                                      ) => ProfileScreen(
+                                                        userId:
                                                             followdetaillist[index]
                                                                 .id
                                                                 .toString(),
@@ -727,8 +727,8 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                                   builder:
                                                                       (
                                                                         context,
-                                                                      ) => SalonDetailScreen(
-                                                                        id:
+                                                                      ) => ProfileScreen(
+                                                                        userId:
                                                                             followdetaillist[index].id.toString(),
                                                                         userType:
                                                                             followdetaillist[index].userType.toString(),
@@ -851,8 +851,8 @@ class _AllFollowingorFollowersState extends State<AllFollowingorFollowers>
                                                                   builder:
                                                                       (
                                                                         context,
-                                                                      ) => SalonDetailScreen(
-                                                                        id:
+                                                                      ) => ProfileScreen(
+                                                                        userId:
                                                                             followdetaillist[index].id.toString(),
                                                                         userType:
                                                                             followdetaillist[index].userType.toString(),

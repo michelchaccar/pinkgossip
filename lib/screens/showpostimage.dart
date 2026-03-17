@@ -8,7 +8,7 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/deletepostmodel.dart';
 import 'package:pinkGossip/models/getstorylistmodel.dart';
 import 'package:pinkGossip/screens/HomeScreens/mystoryview.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/screens/Profile/singleuserstoryshow.dart';
 import 'package:pinkGossip/utils/common_functions.dart';
 import 'package:pinkGossip/utils/videoplayer.dart';
@@ -209,8 +209,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                     context,
                                     MaterialPageRoute(
                                       builder:
-                                          (context) => SalonDetailScreen(
-                                            id:
+                                          (context) => ProfileScreen(
+                                            userId:
                                                 widget.postData[index].userId
                                                     .toString(),
                                             userType:
@@ -252,8 +252,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                     context,
                                     MaterialPageRoute(
                                       builder:
-                                          (context) => SalonDetailScreen(
-                                            id:
+                                          (context) => ProfileScreen(
+                                            userId:
                                                 widget.postData[index].userId
                                                     .toString(),
                                             userType:
@@ -359,8 +359,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                         context,
                                         MaterialPageRoute(
                                           builder:
-                                              (context) => SalonDetailScreen(
-                                                id:
+                                              (context) => ProfileScreen(
+                                                userId:
                                                     widget
                                                         .postData[index]
                                                         .userId
@@ -389,8 +389,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                             MaterialPageRoute(
                                               builder:
                                                   (context) =>
-                                                      SalonDetailScreen(
-                                                        id:
+                                                      ProfileScreen(
+                                                        userId:
                                                             widget
                                                                 .postData[index]
                                                                 .userSalonId
@@ -458,8 +458,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                         context,
                                         MaterialPageRoute(
                                           builder:
-                                              (context) => SalonDetailScreen(
-                                                id:
+                                              (context) => ProfileScreen(
+                                                userId:
                                                     widget
                                                         .postData[index]
                                                         .userId
@@ -486,8 +486,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                         context,
                                         MaterialPageRoute(
                                           builder:
-                                              (context) => SalonDetailScreen(
-                                                id:
+                                              (context) => ProfileScreen(
+                                                userId:
                                                     widget
                                                         .postData[index]
                                                         .userSalonId
@@ -2015,7 +2015,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
         context,
         MaterialPageRoute(
           builder:
-              (context) => SalonDetailScreen(id: id.toString(), userType: "1"),
+              (context) => ProfileScreen(userId: id.toString(), userType: "1"),
         ),
       );
     } else {

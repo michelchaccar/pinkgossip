@@ -30,7 +30,7 @@ import 'package:pinkGossip/models/homepagepostmodel.dart';
 import 'package:pinkGossip/models/postlike.dart';
 import 'package:pinkGossip/screens/HomeScreens/notifications.dart';
 import 'package:pinkGossip/screens/HomeScreens/searchforhomescreen.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/components/pg_story_circle.dart';
@@ -735,8 +735,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => SalonDetailScreen(
-                                        id: item.userId.toString(),
+                                      builder: (context) => ProfileScreen(
+                                        userId: item.userId.toString(),
                                         userType: item.userType.toString(),
                                       ),
                                     ),
@@ -747,8 +747,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => SalonDetailScreen(
-                                      id: item.userId.toString(),
+                                    builder: (context) => ProfileScreen(
+                                      userId: item.userId.toString(),
                                       userType: item.userType.toString(),
                                     ),
                                   ),
@@ -1728,7 +1728,7 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         MaterialPageRoute(
           builder:
-              (context) => SalonDetailScreen(id: id.toString(), userType: "1"),
+              (context) => ProfileScreen(userId: id.toString(), userType: "1"),
         ),
       );
     } else {
@@ -2246,8 +2246,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   builder:
                                                                       (
                                                                         context,
-                                                                      ) => SalonDetailScreen(
-                                                                        id:
+                                                                      ) => ProfileScreen(
+                                                                        userId:
                                                                             items.comments![cindex].appUserId.toString(),
                                                                         userType:
                                                                             items.comments![cindex].userType.toString(),

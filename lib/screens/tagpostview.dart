@@ -3,7 +3,7 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/commentpostmodel.dart';
 import 'package:pinkGossip/models/postlike.dart';
 import 'package:pinkGossip/models/salondetailmodel.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
@@ -170,8 +170,8 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                             MaterialPageRoute(
                                               builder:
                                                   (context) =>
-                                                      SalonDetailScreen(
-                                                        id:
+                                                      ProfileScreen(
+                                                        userId:
                                                             widget
                                                                 .postData[index]
                                                                 .userId
@@ -202,8 +202,8 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                                   builder:
                                                       (
                                                         context,
-                                                      ) => SalonDetailScreen(
-                                                        id:
+                                                      ) => ProfileScreen(
+                                                        userId:
                                                             widget
                                                                 .postData[index]
                                                                 .userSalonId
@@ -275,8 +275,8 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                             MaterialPageRoute(
                                               builder:
                                                   (context) =>
-                                                      SalonDetailScreen(
-                                                        id:
+                                                      ProfileScreen(
+                                                        userId:
                                                             widget
                                                                 .postData[index]
                                                                 .userId
@@ -305,8 +305,8 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                                             MaterialPageRoute(
                                               builder:
                                                   (context) =>
-                                                      SalonDetailScreen(
-                                                        id:
+                                                      ProfileScreen(
+                                                        userId:
                                                             widget
                                                                 .postData[index]
                                                                 .userSalonId
@@ -376,7 +376,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
                               //               context,
                               //               MaterialPageRoute(
                               //                 builder: (context) =>
-                              //                     SalonDetailScreen(
+                              //                     ProfileScreen(
                               //                   id: widget
                               //                       .postData[index].userSalonId
                               //                       .toString(),0
@@ -908,7 +908,7 @@ class _TagPostViewScreenState extends State<TagPostViewScreen> {
         context,
         MaterialPageRoute(
           builder:
-              (context) => SalonDetailScreen(id: id.toString(), userType: "1"),
+              (context) => ProfileScreen(userId: id.toString(), userType: "1"),
         ),
       );
     } else {

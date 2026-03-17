@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:pinkGossip/models/successmodel.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/utils/apiservice.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:app_links/app_links.dart';
@@ -62,8 +62,8 @@ class DeepLinkHandler {
             navigatorKey.currentState?.push(
               MaterialPageRoute(
                 builder:
-                    (_) => SalonDetailScreen(
-                      id: passedId,
+                    (_) => ProfileScreen(
+                      userId: passedId,
                       userType: userType,
                       pageType: 'deepLink',
                     ),

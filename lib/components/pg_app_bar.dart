@@ -69,6 +69,7 @@ class PgAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         ...actions,
         if (actions.isNotEmpty) const SizedBox(width: 8),
+        if (actions.isEmpty) const SizedBox.shrink(),
       ],
     );
   }

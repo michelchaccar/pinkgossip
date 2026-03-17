@@ -7,7 +7,7 @@ import 'package:pinkGossip/models/getstorylistmodel.dart';
 import 'package:pinkGossip/screens/HomeScreens/addstory.dart';
 import 'package:pinkGossip/screens/HomeScreens/mystoryview.dart';
 import 'package:pinkGossip/screens/HomeScreens/otherstoryview.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/screens/Profile/singleuserstoryshow.dart';
 import 'package:pinkGossip/viewModels/getstoryviewmodel.dart';
 import 'package:flutter/material.dart';
@@ -251,8 +251,8 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                       context,
                                       MaterialPageRoute(
                                         builder:
-                                            (context) => SalonDetailScreen(
-                                              id:
+                                            (context) => ProfileScreen(
+                                              userId:
                                                   enthusiastssearchingList[index]
                                                       .id
                                                       .toString(),
@@ -388,8 +388,8 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                           builder:
                                                               (
                                                                 context,
-                                                              ) => SalonDetailScreen(
-                                                                id:
+                                                              ) => ProfileScreen(
+                                                                userId:
                                                                     enthusiastssearchingList[index]
                                                                         .id
                                                                         .toString(),
@@ -520,8 +520,8 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                           builder:
                                                               (
                                                                 context,
-                                                              ) => SalonDetailScreen(
-                                                                id:
+                                                              ) => ProfileScreen(
+                                                                userId:
                                                                     enthusiastssearchingList[index]
                                                                         .id
                                                                         .toString(),
@@ -582,8 +582,8 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                       context,
                                       MaterialPageRoute(
                                         builder:
-                                            (context) => SalonDetailScreen(
-                                              id:
+                                            (context) => ProfileScreen(
+                                              userId:
                                                   salonsearchingList[index].id
                                                       .toString(),
                                               userType: "2",
@@ -717,8 +717,8 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                           builder:
                                                               (
                                                                 context,
-                                                              ) => SalonDetailScreen(
-                                                                id:
+                                                              ) => ProfileScreen(
+                                                                userId:
                                                                     salonsearchingList[index]
                                                                         .id
                                                                         .toString(),
@@ -848,8 +848,8 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
                                                           builder:
                                                               (
                                                                 context,
-                                                              ) => SalonDetailScreen(
-                                                                id:
+                                                              ) => ProfileScreen(
+                                                                userId:
                                                                     salonsearchingList[index]
                                                                         .id
                                                                         .toString(),

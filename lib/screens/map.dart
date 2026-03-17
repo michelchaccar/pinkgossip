@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/salonlistmodel.dart';
-import 'package:pinkGossip/screens/Mackeups/salondetail.dart';
+import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -74,7 +74,7 @@ class _GooglemapPageState extends State<GooglemapPage> {
               context,
               MaterialPageRoute(
                 builder:
-                    (context) => SalonDetailScreen(id: salonid, userType: "2"),
+                    (context) => ProfileScreen(userId: salonid, userType: "2"),
               ),
             );
           },
