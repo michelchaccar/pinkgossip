@@ -47,7 +47,6 @@ import 'package:pinkGossip/viewModels/salondetailsviewmodel.dart';
 import 'package:pinkGossip/viewModels/updateprofileviewmdoel.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:pinkGossip/services/tooltip_service.dart';
@@ -135,11 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     print("isOwnProfile   ${isOwnProfile}");
     print("targetId   ${targetId}");
 
-    if (targetType == "2") {
-      _tabController = TabController(length: 4, vsync: this);
-    } else {
-      _tabController = TabController(length: 3, vsync: this);
-    }
+    _tabController = TabController(length: 3, vsync: this);
 
     _tabController.animation!.addListener(_handleTabChange);
   }
@@ -1348,14 +1343,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           size: 17,
                                         ),
                                       ),
-                                      Tab(
-                                        child: Icon(
-                                          currentindex == 3
-                                              ? PhosphorIconsFill.gift
-                                              : PhosphorIconsRegular.gift,
-                                          size: 17,
-                                        ),
-                                      ),
                                     ],
                           ),
                         ),
@@ -1495,18 +1482,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 3,
                                           childAspectRatio: 1,
+                                          crossAxisSpacing: 2,
+                                          mainAxisSpacing: 2,
                                         ),
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
-                                      _videoPlayercontroller[index] =
-                                          VideoPlayerController.networkUrl(
-                                            Uri.parse(videoList[index]),
-                                          );
-                                      return InkWell(
-                                        borderRadius: BorderRadius.circular(3),
-                                        overlayColor: MaterialStatePropertyAll(
-                                          Colors.black.withAlpha(10),
-                                        ),
+                                      return GestureDetector(
                                         onTap: () {
                                           Navigator.push(
                                             context,
@@ -1518,103 +1499,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                   ),
                                             ),
                                           );
-                                          setState(() {});
                                         },
-                                        child: Container(
-                                          margin: const EdgeInsets.all(3),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              5,
-                                            ),
-                                            border: Border.all(
-                                              color: Colors.grey,
-                                            ),
-                                            color: Colors.white,
-                                          ),
-                                          child:
-                                              _videoPlayercontroller.isNotEmpty
-                                                  ? FutureBuilder(
-                                                    future:
-                                                        _videoPlayercontroller[index]
-                                                            .initialize(),
-                                                    builder: (
-                                                      context,
-                                                      snapshot,
-                                                    ) {
-                                                      if (snapshot
-                                                              .connectionState ==
-                                                          ConnectionState
-                                                              .done) {
-                                                        return Stack(
-                                                          children: [
-                                                            SizedBox(
-                                                              height:
-                                                                  kSize.height,
-                                                              width:
-                                                                  kSize.width,
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                      5,
-                                                                    ),
-                                                                child: AspectRatio(
-                                                                  aspectRatio:
-                                                                      _videoPlayercontroller[index]
-                                                                          .value
-                                                                          .aspectRatio,
-                                                                  child: VideoPlayer(
-                                                                    _videoPlayercontroller[index],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            const Center(
-                                                              child: Icon(
-                                                                Icons
-                                                                    .play_arrow_rounded,
-                                                                size: 50,
-                                                                color:
-                                                                    Colors
-                                                                        .white,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      } else {
-                                                        return Shimmer.fromColors(
-                                                          baseColor:
-                                                              Colors
-                                                                  .grey
-                                                                  .shade200,
-                                                          highlightColor:
-                                                              Colors
-                                                                  .grey
-                                                                  .shade300,
-                                                          enabled: true,
-                                                          child: Container(
-                                                            decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(
-                                                                    5,
-                                                                  ),
-                                                              border: Border.all(
-                                                                color:
-                                                                    Colors.grey,
-                                                              ),
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                            height:
-                                                                kSize.height,
-                                                            width: kSize.width,
-                                                          ),
-                                                        );
-                                                      }
-                                                    },
-                                                  )
-                                                  : Container(
-                                                    color: Colors.white,
-                                                  ),
+                                        child: _buildGridItem(
+                                          imageUrl: videoList[index],
+                                          isMultiPost: false,
                                         ),
                                       );
                                     },
@@ -1850,10 +1738,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                     ],
                                   ),
-                              //fourth tab UI only shown in salon user
-                              userTyppe == "2"
-                                  ? getRewardRedempPostListUI(kSize)
-                                  : Container(),
                             ],
                           ),
                         ),
