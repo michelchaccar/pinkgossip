@@ -30,6 +30,7 @@ import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/viewModels/commentpostviewmodel.dart';
 import 'package:pinkGossip/viewModels/postlikeviewmodel.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -546,10 +547,10 @@ class _ShowPostImageState extends State<ShowPostImage> {
                             page,
                           );
                         },
-                        child: Container(
-                          height: 30,
-                          width: 15,
-                          child: Image.asset(ImageUtils.moreoptionimg),
+                        child: const Icon(
+                          PhosphorIconsRegular.dotsThreeVertical,
+                          size: 20,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                     ],
@@ -1169,8 +1170,9 @@ class _ShowPostImageState extends State<ShowPostImage> {
                         );
                       },
                     ),
+                const SizedBox(height: 10),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  padding: const EdgeInsets.only(left: 18, right: 18),
                   child: Row(
                     children: [
                       InkWell(
@@ -1179,9 +1181,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                             widget.postData[index].like = 0;
                             widget.postData[index].likeCount =
                                 widget.postData[index].likeCount! - 1;
-                            setState(() {
-                              widget.postData[index].like = 0;
-                            });
+                            setState(() {});
                             doPostLike(
                               userid,
                               widget.postData[index].id!.toString(),
@@ -1192,9 +1192,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                             widget.postData[index].like = 1;
                             widget.postData[index].likeCount =
                                 widget.postData[index].likeCount! + 1;
-                            setState(() {
-                              widget.postData[index].like = 1;
-                            });
+                            setState(() {});
                             doPostLike(
                               userid,
                               widget.postData[index].id!.toString(),
@@ -1203,158 +1201,150 @@ class _ShowPostImageState extends State<ShowPostImage> {
                             );
                           }
                         },
-                        child:
-                            widget.postData[index].like == 1
-                                ? Container(
-                                  height: 20,
-                                  width: 20,
-                                  alignment: Alignment.topLeft,
-                                  child: const Icon(
-                                    Icons.favorite,
-                                    color: AppColors.actionPrimary,
-                                  ),
-                                )
-                                : const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: Icon(
-                                    Icons.favorite_outline,
-                                    color: AppColors.textPrimary,
-                                  ),
-                                ),
-                      ),
-                      const SizedBox(width: 5),
-                      SizedBox(
-                        height: 30,
-                        width: 40,
-                        child: InkWell(
-                          onTap: () {
-                            CommentBottomSheet(context, kSize, index);
-                          },
-                          child: Image.asset(ImageUtils.lipimage),
+                        child: Icon(
+                          widget.postData[index].like == 1
+                              ? PhosphorIconsFill.heart
+                              : PhosphorIconsRegular.heart,
+                          size: 20,
+                          color: widget.postData[index].like == 1
+                              ? AppColors.actionPrimary
+                              : AppColors.textPrimary,
                         ),
                       ),
-                      const SizedBox(width: 5),
-                      SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: InkWell(
-                          onTap: () {
-                            print(
-                              "widget.postData[index]; = ${widget.postData[index].toJson()}",
-                            );
-                            shareData = widget.postData[index];
-
-                            print("sendimage");
-
-                            if (widget
-                                .postData[index]
-                                .beforeImage!
-                                .isNotEmpty) {
-                              SharepostwithFriends(context, kSize, 1);
-                            } else {
-                              SharepostwithFriends(context, kSize, 2);
-                            }
-                          },
-                          child: Image.asset(ImageUtils.sendimage),
+                      const SizedBox(width: 8),
+                      InkWell(
+                        onTap: () {
+                          CommentBottomSheet(context, kSize, index);
+                        },
+                        child: const Icon(
+                          PhosphorIconsRegular.chatCircle,
+                          size: 20,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      InkWell(
+                        onTap: () {
+                          shareData = widget.postData[index];
+                          if (widget
+                              .postData[index]
+                              .beforeImage!
+                              .isNotEmpty) {
+                            SharepostwithFriends(context, kSize, 1);
+                          } else {
+                            SharepostwithFriends(context, kSize, 2);
+                          }
+                        },
+                        child: const Icon(
+                          PhosphorIconsRegular.paperPlaneTilt,
+                          size: 20,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  padding: const EdgeInsets.only(left: 18, right: 18, top: 8),
                   alignment: Alignment.topLeft,
                   child: Text(
                     "${widget.postData[index].likeCount} ${Languages.of(context)!.likesText}",
-                    style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                      fontFamily: 'Geist',
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 // const SizedBox(height: 8),
-                widget.postData[index].review!.isNotEmpty
-                    ? Container(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      alignment: Alignment.topLeft,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: RichText(
-                              maxLines: selectindex == index ? mxline : 2,
-                              overflow: TextOverflow.ellipsis,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
-                                    style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                  TextSpan(
-                                    text: " ",
-                                    style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
-                                  ),
-
-                                  _buildReviewText(
-                                    widget.postData[index].review!,
-                                    widget.postData[index].userTags!,
-                                  ),
-
-                                  // TextSpan(
-                                  //   text: widget.postData[index].review,
-                                  //   style: AppTypography.caption.copyWith(color: AppColors.textTertiary),
-                                  // ),
+                const SizedBox(height: 4),
+                if (widget.postData[index].review!.isNotEmpty)
+                  Container(
+                    padding: const EdgeInsets.only(left: 18, right: 18),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      widget.postData[index].userName!.isNotEmpty
+                          ? widget.postData[index].userName!
+                          : "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
+                      style: const TextStyle(
+                        fontFamily: 'Geist',
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF101828),
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                if (widget.postData[index].review!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18, right: 18),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: RichText(
+                            maxLines: selectindex == index ? mxline : 3,
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              children: [
+                                _buildReviewText(
+                                  widget.postData[index].review!,
+                                  widget.postData[index].userTags!,
+                                ),
+                                if (widget.postData[index].review!.length > 100 && selectindex == index && less)
                                   WidgetSpan(
                                     child: InkWell(
                                       onTap: () {
-                                        print(
-                                          "length === ${widget.postData[index].review!.length}",
-                                        );
                                         setState(() {
-                                          mxline = 2;
+                                          mxline = 3;
                                           more = true;
                                           less = false;
                                           selectindex = -1;
                                         });
                                       },
-                                      child: Visibility(
-                                        visible: less,
-                                        child: Text(
-                                          " ${Languages.of(context)!.lessText}",
-                                          style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
+                                      child: Text(
+                                        "  ${Languages.of(context)!.lessText}",
+                                        style: const TextStyle(
+                                          fontFamily: 'Geist',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF6A7282),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                              ],
                             ),
                           ),
-                          widget.postData[index].review!.length > 100
-                              ? InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    print(
-                                      "lenght === ${widget.postData[index].review!.length}",
-                                    );
-                                    mxline = 15;
-                                    more = false;
-                                    less = true;
-                                    selectindex = index;
-                                  });
-                                },
-                                child: Visibility(
-                                  visible: selectindex == index ? more : true,
-                                  child: Text(
-                                    "..${Languages.of(context)!.moreText}",
-                                    style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        widget.postData[index].review!.length > 100
+                            ? InkWell(
+                              onTap: () {
+                                setState(() {
+                                  mxline = 15;
+                                  more = false;
+                                  less = true;
+                                  selectindex = index;
+                                });
+                              },
+                              child: Visibility(
+                                visible: selectindex == index ? more : true,
+                                child: Text(
+                                  "..${Languages.of(context)!.moreText}",
+                                  style: const TextStyle(
+                                    fontFamily: 'Geist',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF6A7282),
                                   ),
                                 ),
-                              )
-                              : Container(),
-                        ],
-                      ),
-                    )
-                    : Container(),
+                              ),
+                            )
+                            : const SizedBox.shrink(),
+                      ],
+                    ),
+                  ),
 
                 widget.usertype == "2"
                     ? Container(
@@ -1367,7 +1357,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                       children: [
                         const SizedBox(height: 5),
                         Container(
-                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          padding: const EdgeInsets.only(left: 18, right: 18),
                           alignment: Alignment.topLeft,
                           child: Row(
                             children: [
@@ -1403,7 +1393,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                 const SizedBox(height: 2),
                 widget.postData[index].commentCount != 0
                     ? Container(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      padding: const EdgeInsets.only(left: 18, right: 18),
                       alignment: Alignment.topLeft,
                       child: InkWell(
                         onTap: () {
@@ -1417,7 +1407,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                     )
                     : Container(),
                 Container(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  padding: const EdgeInsets.only(left: 18, right: 18),
                   alignment: Alignment.topLeft,
                   child: Text(
                     getpostTime(widget.postData[index].createdAt!),
