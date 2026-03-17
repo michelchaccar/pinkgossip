@@ -17,6 +17,8 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:pinkGossip/components/pg_back_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
@@ -184,51 +186,62 @@ class _MessageDetailState extends State<MessageDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgPrimary,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.bgPrimary,
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(PhosphorIconsRegular.arrowLeft, size: 22),
-          onPressed: () {
-            if (widget.type == "fromdetail") {
-              Navigator.pop(context);
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BottomNavBar(index: 3),
+      appBar: PgAppBar(
+        onBack: () {
+          if (widget.type == "fromdetail") {
+            Navigator.pop(context);
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BottomNavBar(index: 3),
+              ),
+            );
+          }
+        },
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 14),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              PgBackButton(
+                onBack: () {
+                  if (widget.type == "fromdetail") {
+                    Navigator.pop(context);
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BottomNavBar(index: 3),
+                      ),
+                    );
+                  }
+                },
+              ),
+              Container(
+                height: 36,
+                width: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.bgSecondary,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: AppColors.border, width: 1),
                 ),
-              );
-            }
-          },
-        ),
-        title: Row(
-          children: [
-            Container(
-              height: 36,
-              width: 36,
-              decoration: BoxDecoration(
-                color: AppColors.bgSecondary,
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: AppColors.border, width: 1),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(18),
+                  child: widget.userImg != ""
+                      ? Image.network(
+                          "${API.baseUrl}/api/${widget.userImg}",
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(PhosphorIconsRegular.user, size: 18, color: AppColors.textSecondary),
+                        )
+                      : const Icon(PhosphorIconsRegular.user, size: 18, color: AppColors.textSecondary),
+                ),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: widget.userImg != ""
-                    ? Image.network(
-                        "${API.baseUrl}/api/${widget.userImg}",
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(PhosphorIconsRegular.user, size: 18, color: AppColors.textSecondary),
-                      )
-                    : const Icon(PhosphorIconsRegular.user, size: 18, color: AppColors.textSecondary),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Text(widget.name, style: AppTypography.heading3),
-          ],
+              const SizedBox(width: 10),
+              Text(widget.name, style: AppTypography.heading3),
+            ],
+          ),
         ),
       ),
       body:

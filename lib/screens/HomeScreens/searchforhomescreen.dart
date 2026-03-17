@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pinkGossip/models/salonsearchlistmodel.dart';
 import 'package:pinkGossip/utils/custom.dart';
+import 'package:pinkGossip/components/pg_back_button.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -131,13 +132,12 @@ class _SearchForHomeScreenState extends State<SearchForHomeScreen>
           automaticallyImplyLeading: false,
           elevation: 0,
           scrolledUnderElevation: 0,
-          leading: IconButton(
-            icon: const Icon(
-              PhosphorIconsRegular.caretLeft,
-              color: AppColors.actionPrimary,
-              size: 24,
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 14),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: PgBackButton(),
             ),
-            onPressed: () => Navigator.pop(context),
           ),
           titleSpacing: 0,
           title: Container(

@@ -8,8 +8,8 @@ import 'package:pinkGossip/localization/language/languages.dart';
 import 'package:pinkGossip/models/salonlistmodel.dart';
 import 'package:pinkGossip/screens/Profile/profile.dart';
 import 'package:pinkGossip/utils/custom.dart';
+import 'package:pinkGossip/components/pg_app_bar.dart';
 import 'package:pinkGossip/theme/theme.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/viewModels/salonlistviewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,30 +112,7 @@ class _GooglemapPageState extends State<GooglemapPage> {
     return Scaffold(
       body: Column(
         children: [
-          AppBar(
-            backgroundColor: AppColors.bgPrimary,
-            elevation: 0,
-            scrolledUnderElevation: 0,
-            surfaceTintColor: Colors.transparent,
-            centerTitle: true,
-            title: Text(
-              Languages.of(context)!.mapText,
-              style: const TextStyle(
-                fontFamily: 'Geist',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            leading: IconButton(
-              icon: const Icon(
-                PhosphorIconsRegular.caretLeft,
-                color: AppColors.actionPrimary,
-                size: 24,
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
+          PgAppBar(title: Languages.of(context)!.mapText),
           Expanded(
             child: Stack(
               children: [

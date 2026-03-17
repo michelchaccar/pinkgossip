@@ -42,6 +42,7 @@ import 'package:pinkGossip/utils/custom.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/components/pg_app_bar.dart';
+import 'package:pinkGossip/components/pg_back_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:pinkGossip/viewModels/salondetailsviewmodel.dart';
 import 'package:pinkGossip/viewModels/updateprofileviewmdoel.dart';
@@ -338,8 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        PgAppBar.pinkBackButton(
-                          context,
+                        PgBackButton(
                           onBack: () {
                             if (isOwnProfile) {
                               Navigator.pushAndRemoveUntil(

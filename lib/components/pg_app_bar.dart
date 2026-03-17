@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:pinkGossip/components/pg_back_button.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 
@@ -77,32 +77,11 @@ class PgAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget? _buildLeading(BuildContext context) {
     if (leading != null) return leading;
     if (!showBack || useLogo) return null;
-    return IconButton(
-      icon: const Icon(
-        PhosphorIconsRegular.caretLeft,
-        color: AppColors.actionPrimary,
-        size: AppIconSize.lg,
-      ),
-      onPressed: onBack ?? () => Navigator.of(context).pop(),
-    );
-  }
-
-  /// Back button with pink rounded-square background (used in Profile header).
-  static Widget pinkBackButton(BuildContext context, {VoidCallback? onBack}) {
-    return GestureDetector(
-      onTap: onBack ?? () => Navigator.of(context).pop(),
-      child: Container(
-        width: 31,
-        height: 31,
-        decoration: BoxDecoration(
-          color: AppColors.actionPrimary,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: const Icon(
-          PhosphorIconsBold.caretLeft,
-          color: Colors.white,
-          size: 16,
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 14),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: PgBackButton(onBack: onBack),
       ),
     );
   }
