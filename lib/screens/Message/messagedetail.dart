@@ -17,6 +17,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:pinkGossip/utils/imagesutils.dart';
 import 'package:pinkGossip/theme/theme.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:video_player/video_player.dart';
@@ -185,78 +186,47 @@ class _MessageDetailState extends State<MessageDetail> {
       backgroundColor: AppColors.bgPrimary,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        backgroundColor: AppColors.kAppBArBGColor,
+        backgroundColor: AppColors.bgPrimary,
         automaticallyImplyLeading: false,
-        elevation: 2.0,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(PhosphorIconsRegular.arrowLeft, size: 22),
+          onPressed: () {
+            if (widget.type == "fromdetail") {
+              Navigator.pop(context);
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BottomNavBar(index: 3),
+                ),
+              );
+            }
+          },
+        ),
         title: Row(
           children: [
-            InkWell(
-              overlayColor: const MaterialStatePropertyAll(
-                AppColors.bgPrimary,
-              ),
-              borderRadius: BorderRadius.circular(20),
-              onTap: () {
-                if (widget.type == "fromdetail") {
-                  Navigator.pop(context);
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BottomNavBar(index: 3),
-                    ),
-                  );
-                }
-              },
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Image.asset(ImageUtils.leftarrow),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
             Container(
-              height: 40,
-              width: 40,
+              height: 36,
+              width: 36,
               decoration: BoxDecoration(
-                color: AppColors.chatReceiverColor.withAlpha(50),
-                borderRadius: BorderRadius.circular(20),
+                color: AppColors.bgSecondary,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: AppColors.border, width: 1),
               ),
-              child: Stack(
-                alignment: Alignment.bottomRight,
-                children: [
-                  widget.userImg != ""
-                      ? Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              "${API.baseUrl}/api/${widget.userImg}",
-                            ),
-                          ),
-                          color: AppColors.chatReceiverColor.withAlpha(50),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: widget.userImg != ""
+                    ? Image.network(
+                        "${API.baseUrl}/api/${widget.userImg}",
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(PhosphorIconsRegular.user, size: 18, color: AppColors.textSecondary),
                       )
-                      : Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          color: AppColors.chatSenderColor,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: const Icon(Icons.person),
-                      ),
-                ],
+                    : const Icon(PhosphorIconsRegular.user, size: 18, color: AppColors.textSecondary),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 10),
             Text(widget.name, style: AppTypography.heading3),
           ],
         ),
