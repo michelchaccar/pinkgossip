@@ -1347,7 +1347,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                         SizedBox(
-                          height: kSize.height / 2,
+                          height: kSize.height * 0.6,
                           width: kSize.width,
                           child: TabBarView(
                             controller: _tabController,
