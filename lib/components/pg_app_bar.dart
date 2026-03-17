@@ -49,21 +49,23 @@ class PgAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: false,
-      centerTitle: !useLogo,
-      leading: _buildLeading(context),
-      title: useLogo
-          ? SizedBox(height: 50, child: Image.asset(ImageUtils.appbarlogo))
-          : title != null
-              ? Text(
-                  title!,
-                  style: const TextStyle(
-                    fontFamily: 'Geist',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                )
-              : null,
+      centerTitle: leading != null ? false : !useLogo,
+      titleSpacing: leading != null ? 0 : null,
+      leading: leading == null ? _buildLeading(context) : null,
+      title: leading ??
+          (useLogo
+              ? SizedBox(height: 50, child: Image.asset(ImageUtils.appbarlogo))
+              : title != null
+                  ? Text(
+                      title!,
+                      style: const TextStyle(
+                        fontFamily: 'Geist',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textPrimary,
+                      ),
+                    )
+                  : null),
       actions: [
         ...actions,
         if (actions.isNotEmpty) const SizedBox(width: 8),
@@ -81,6 +83,26 @@ class PgAppBar extends StatelessWidget implements PreferredSizeWidget {
         size: AppIconSize.lg,
       ),
       onPressed: onBack ?? () => Navigator.of(context).pop(),
+    );
+  }
+
+  /// Back button with pink rounded-square background (used in Profile header).
+  static Widget pinkBackButton(BuildContext context, {VoidCallback? onBack}) {
+    return GestureDetector(
+      onTap: onBack ?? () => Navigator.of(context).pop(),
+      child: Container(
+        width: 31,
+        height: 31,
+        decoration: BoxDecoration(
+          color: AppColors.actionPrimary,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Icon(
+          PhosphorIconsBold.caretLeft,
+          color: Colors.white,
+          size: 16,
+        ),
+      ),
     );
   }
 }

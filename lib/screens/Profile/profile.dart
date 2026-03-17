@@ -207,6 +207,94 @@ class _ProfileScreenState extends State<ProfileScreen>
   List<StoryUserDetails>? getDetailsStories;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Widget _buildGridItem({
+    required String imageUrl,
+    required bool isMultiPost,
+    required Size kSize,
+  }) {
+    final isVideo = imageUrl.endsWith(".mp4") ||
+        imageUrl.endsWith(".mov") ||
+        imageUrl.endsWith(".MP4");
+
+    Widget content;
+    if (isVideo) {
+      content = Stack(
+        children: [
+          SizedBox(
+            height: kSize.height,
+            width: kSize.width,
+            child: Tagvideothumbnail(videoUrl: imageUrl),
+          ),
+          const Center(
+            child: Icon(PhosphorIconsFill.play, size: 40, color: Colors.white),
+          ),
+        ],
+      );
+    } else {
+      content = Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: CircularProgressIndicator(
+              color: AppColors.textPrimary,
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes!
+                  : null,
+            ),
+          );
+        },
+        errorBuilder: (context, error, stackTrace) =>
+            Image.asset(ImageUtils.profileLogo),
+      );
+    }
+
+    if (!isMultiPost) return content;
+
+    return Stack(
+      alignment: Alignment.topRight,
+      children: [
+        content,
+        Padding(
+          padding: const EdgeInsets.only(top: 6, right: 6),
+          child: Icon(
+            PhosphorIconsFill.squaresFour,
+            size: 16,
+            color: Colors.white.withOpacity(0.9),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatColumn({required String value, required String label}) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          value,
+          style: const TextStyle(
+            fontFamily: 'Geist',
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        Text(
+          label,
+          style: const TextStyle(
+            fontFamily: 'Geist',
+            fontSize: 10,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFF6A7282),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size kSize = MediaQuery.of(context).size;
@@ -217,7 +305,38 @@ class _ProfileScreenState extends State<ProfileScreen>
         backgroundColor: AppColors.bgPrimary,
         appBar:
             salonProfileDetails != null
-                ? PgAppBar.logo(
+                ? PgAppBar(
+                  showBack: false,
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 14),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        PgAppBar.pinkBackButton(
+                          context,
+                          onBack: () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => BottomNavBar(index: 0),
+                              ),
+                              (route) => false,
+                            );
+                          },
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          '@${userName}',
+                          style: const TextStyle(
+                            fontFamily: 'Geist',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   actions: [
                     if (salonProfileDetails!.userType == 2 &&
                         salonProfileDetails!.address != null &&
@@ -242,7 +361,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         },
                       ),
                     PgAppBarAction(
-                      icon: PhosphorIconsRegular.list,
+                      icon: PhosphorIconsRegular.dotsThreeVertical,
                       onTap: () {
                         _scaffoldKey.currentState?.openEndDrawer();
                       },
@@ -600,655 +719,236 @@ class _ProfileScreenState extends State<ProfileScreen>
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: Column(
+                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      salonProfileDetails!.profileImage != ""
-                                          ? GestureDetector(
-                                            onTap: () {
-                                              if (myStoryArray.isNotEmpty) {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder:
-                                                        (
-                                                          context,
-                                                        ) => MyStoryView(
-                                                          myStorysArray:
-                                                              myStoryArray,
-                                                          firstname:
-                                                              salonProfileDetails!
-                                                                  .firstName ??
-                                                              "",
-                                                          lastname:
-                                                              salonProfileDetails!
-                                                                  .lastName ??
-                                                              "",
-                                                          img:
-                                                              salonProfileDetails!
-                                                                  .profileImage ??
-                                                              "",
-                                                          salonanme:
-                                                              salonProfileDetails!
-                                                                  .salonName ??
-                                                              "",
-                                                        ),
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                            child: Container(
-                                              height: 80,
-                                              width: 80,
-                                              decoration:
-                                                  getDetailsStories!.isNotEmpty
-                                                      ? const BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        gradient: LinearGradient(
-                                                          colors: [
-                                                            AppColors.actionPrimaryDark,
-                                                            AppColors.actionPrimaryDark,
-                                                          ],
-                                                          begin:
-                                                              Alignment.topLeft,
-                                                          end:
-                                                              Alignment
-                                                                  .bottomRight,
-                                                        ),
-                                                      )
-                                                      : const BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                              padding: const EdgeInsets.all(
-                                                3.0,
-                                              ),
-                                              child: CircleAvatar(
-                                                radius: 50,
-                                                backgroundColor:
-                                                    Colors.grey[300],
-                                                backgroundImage: NetworkImage(
-                                                  "${API.baseUrl}/api/${salonProfileDetails!.profileImage!}",
-                                                ),
-                                              ),
-                                            ),
+                              // Avatar with pink border
+                              GestureDetector(
+                                onTap: () {
+                                  if (myStoryArray.isNotEmpty) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => MyStoryView(
+                                          myStorysArray: myStoryArray,
+                                          firstname: salonProfileDetails!.firstName ?? "",
+                                          lastname: salonProfileDetails!.lastName ?? "",
+                                          img: salonProfileDetails!.profileImage ?? "",
+                                          salonanme: salonProfileDetails!.salonName ?? "",
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  width: 61,
+                                  height: 61,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: AppColors.actionPrimary,
+                                      width: 2.5,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(2.5),
+                                  child: CircleAvatar(
+                                    radius: 28,
+                                    backgroundColor: Colors.grey[300],
+                                    backgroundImage: salonProfileDetails!.profileImage != ""
+                                        ? NetworkImage(
+                                            "${API.baseUrl}/api/${salonProfileDetails!.profileImage!}",
                                           )
-                                          : GestureDetector(
-                                            onTap: () {
-                                              if (myStoryArray.isNotEmpty) {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder:
-                                                        (
-                                                          context,
-                                                        ) => MyStoryView(
-                                                          myStorysArray:
-                                                              myStoryArray,
-                                                          firstname:
-                                                              salonProfileDetails!
-                                                                  .firstName ??
-                                                              "",
-                                                          lastname:
-                                                              salonProfileDetails!
-                                                                  .lastName ??
-                                                              "",
-                                                          img:
-                                                              salonProfileDetails!
-                                                                  .profileImage ??
-                                                              "",
-                                                          salonanme:
-                                                              salonProfileDetails!
-                                                                  .salonName ??
-                                                              "",
-                                                        ),
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                            child: Container(
-                                              height: 80,
-                                              width: 80,
-                                              decoration:
-                                                  getDetailsStories!.isNotEmpty
-                                                      ? const BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        gradient: LinearGradient(
-                                                          colors: [
-                                                            AppColors.actionPrimaryDark,
-                                                            AppColors.actionPrimaryDark,
-                                                          ],
-                                                          begin:
-                                                              Alignment.topLeft,
-                                                          end:
-                                                              Alignment
-                                                                  .bottomRight,
-                                                        ),
-                                                      )
-                                                      : const BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                              padding: const EdgeInsets.all(
-                                                3.0,
-                                              ),
-                                              child: CircleAvatar(
-                                                radius: 50,
-                                                backgroundColor:
-                                                    Colors.grey[300],
-                                                child: const Icon(Icons.person),
+                                        : null,
+                                    child: salonProfileDetails!.profileImage == ""
+                                        ? const Icon(PhosphorIconsRegular.user, size: 24)
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 14),
+                              // Stats: Points / Followers / Following
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      // Points / Reviews
+                                      _buildStatColumn(
+                                        value: salonProfileDetails!.userType == 1
+                                            ? totalPoints.toString()
+                                            : postCountsReeview.toString(),
+                                        label: salonProfileDetails!.userType == 1
+                                            ? Languages.of(context)!.pointsText
+                                            : Languages.of(context)!.reviewText,
+                                      ),
+                                      // Followers
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => AllFollowingorFollowers(
+                                                userid: salonProfileDetails!.id!,
+                                                name: salonProfileDetails!.userType == 1
+                                                    ? "${salonProfileDetails!.firstName} ${salonProfileDetails!.lastName}"
+                                                    : salonProfileDetails!.salonName!,
+                                                type: "follower",
+                                                totlefollowing: salonProfileDetails!.followingCount!,
+                                                totlefollowers: salonProfileDetails!.followersCount!,
+                                                usertype: "profile",
+                                                navigationType: "profile",
                                               ),
                                             ),
-                                          ),
-                                      Positioned(
-                                        bottom: 4,
-                                        right: 5,
-                                        child: Container(
-                                          height: 20.0,
-                                          width: 20.0,
-                                          decoration: BoxDecoration(
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                color: Colors.black38,
-                                                blurRadius: 12.0,
+                                          ).then((_) => getProfileDetails());
+                                        },
+                                        child: _buildStatColumn(
+                                          value: salonProfileDetails!.followersCount?.toString() ?? "0",
+                                          label: Languages.of(context)!.follwersText,
+                                        ),
+                                      ),
+                                      // Following
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => AllFollowingorFollowers(
+                                                userid: salonProfileDetails!.id!,
+                                                name: salonProfileDetails!.userType == 1
+                                                    ? "${salonProfileDetails!.firstName} ${salonProfileDetails!.lastName}"
+                                                    : salonProfileDetails!.salonName!,
+                                                type: "following",
+                                                totlefollowing: salonProfileDetails!.followingCount!,
+                                                totlefollowers: salonProfileDetails!.followersCount!,
+                                                usertype: "profile",
+                                                navigationType: "profile",
                                               ),
-                                            ],
-                                            color: AppColors.kblueColor,
-                                            borderRadius: BorderRadius.circular(
-                                              13,
                                             ),
-                                          ),
-                                          child: InkWell(
-                                            borderRadius: BorderRadius.circular(
-                                              13,
-                                            ),
-                                            onTap: () {
-                                              // pickImage();
-                                              Navigator.push(
-                                                context,
-                                                PageRouteBuilder(
-                                                  pageBuilder:
-                                                      (
-                                                        context,
-                                                        animation,
-                                                        secondaryAnimation,
-                                                      ) => AddStory(
-                                                        type: "Home",
-                                                      ),
-                                                  transitionsBuilder: (
-                                                    context,
-                                                    animation,
-                                                    secondaryAnimation,
-                                                    child,
-                                                  ) {
-                                                    const begin = Offset(
-                                                      -1.0,
-                                                      0.0,
-                                                    );
-                                                    const end = Offset(
-                                                      0.0,
-                                                      0.0,
-                                                    );
-                                                    const curve =
-                                                        Curves.easeInOut;
-
-                                                    var tween = Tween(
-                                                      begin: begin,
-                                                      end: end,
-                                                    ).chain(
-                                                      CurveTween(curve: curve),
-                                                    );
-                                                    var offsetAnimation =
-                                                        animation.drive(tween);
-                                                    return SlideTransition(
-                                                      position: offsetAnimation,
-                                                      child: child,
-                                                    );
-                                                  },
-                                                ),
-                                              ).then((value) {
-                                                getStory();
-                                              });
-                                            },
-                                            child: const Icon(
-                                              Icons.add,
-                                              size: 16.0,
-                                              color: AppColors.bgPrimary,
-                                            ),
-                                          ),
+                                          );
+                                        },
+                                        child: _buildStatColumn(
+                                          value: salonProfileDetails!.followingCount?.toString() ?? "0",
+                                          label: Languages.of(context)!.followingText,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(width: 20),
-                                  Expanded(
-                                    child: Container(
-                                      // color: Colors.green,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    const SizedBox(height: 5),
-                                                    Text(
-                                                      salonProfileDetails!
-                                                                  .userType ==
-                                                              1
-                                                          ? totalPoints
-                                                              .toString()
-                                                          : postCountsReeview
-                                                              .toString(),
-                                                      style:
-                                                          AppTypography.heading3,
-                                                    ),
-                                                    Text(
-                                                      salonProfileDetails!
-                                                                  .userType ==
-                                                              1
-                                                          ? Languages.of(
-                                                            context,
-                                                          )!.pointsText
-                                                          : Languages.of(
-                                                            context,
-                                                          )!.reviewText,
-
-                                                      style:
-                                                          AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textTertiary),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-
-                                              Expanded(
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder:
-                                                            (
-                                                              context,
-                                                            ) => AllFollowingorFollowers(
-                                                              userid:
-                                                                  salonProfileDetails!
-                                                                      .id!,
-                                                              name:
-                                                                  salonProfileDetails!
-                                                                              .userType ==
-                                                                          1
-                                                                      ? "${salonProfileDetails!.firstName} ${salonProfileDetails!.lastName}"
-                                                                      : salonProfileDetails!
-                                                                          .salonName!,
-                                                              type: "follower",
-                                                              totlefollowing:
-                                                                  salonProfileDetails!
-                                                                      .followingCount!,
-                                                              totlefollowers:
-                                                                  salonProfileDetails!
-                                                                      .followersCount!,
-                                                              usertype:
-                                                                  "profile",
-                                                              navigationType:
-                                                                  "profile",
-                                                            ),
-                                                      ),
-                                                    ).then((value) {
-                                                      getProfileDetails();
-                                                    });
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      const SizedBox(height: 5),
-                                                      Text(
-                                                        salonProfileDetails!
-                                                                    .followersCount !=
-                                                                null
-                                                            ? salonProfileDetails!
-                                                                .followersCount
-                                                                .toString()
-                                                            : "0",
-                                                        style:
-                                                            AppTypography.heading3,
-                                                      ),
-                                                      Text(
-                                                        Languages.of(
-                                                          context,
-                                                        )!.follwersText,
-                                                        style:
-                                                            AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textTertiary),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder:
-                                                            (
-                                                              context,
-                                                            ) => AllFollowingorFollowers(
-                                                              userid:
-                                                                  salonProfileDetails!
-                                                                      .id!,
-                                                              name:
-                                                                  salonProfileDetails!
-                                                                              .userType ==
-                                                                          1
-                                                                      ? "${salonProfileDetails!.firstName} ${salonProfileDetails!.lastName}"
-                                                                      : salonProfileDetails!
-                                                                          .salonName!,
-                                                              type: "following",
-                                                              totlefollowing:
-                                                                  salonProfileDetails!
-                                                                      .followingCount!,
-                                                              totlefollowers:
-                                                                  salonProfileDetails!
-                                                                      .followersCount!,
-                                                              usertype:
-                                                                  "profile",
-                                                              navigationType:
-                                                                  "profile",
-                                                            ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      const SizedBox(height: 5),
-                                                      Text(
-                                                        salonProfileDetails!
-                                                                    .followingCount !=
-                                                                null
-                                                            ? salonProfileDetails!
-                                                                .followingCount
-                                                                .toString()
-                                                            : "0",
-                                                        style:
-                                                            AppTypography.heading3,
-                                                      ),
-                                                      Text(
-                                                        Languages.of(
-                                                          context,
-                                                        )!.followingText,
-                                                        style:
-                                                            AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textTertiary),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10),
-                                          userTyppe == "2"
-                                              ? Container(
-                                                // color: Colors.blue,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      double.parse(
-                                                        salonProfileDetails!
-                                                            .averageRating!,
-                                                      ).toStringAsFixed(1),
-                                                      style:
-                                                          AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
-                                                    ),
-                                                    const SizedBox(width: 4),
-                                                    RatingBarIndicator(
-                                                      rating: double.parse(
-                                                        salonProfileDetails!
-                                                            .averageRating
-                                                            .toString(),
-                                                      ),
-                                                      itemCount: 5,
-                                                      itemSize: 18.0,
-                                                      unratedColor:
-                                                          AppColors
-                                                              .klightGreyColor,
-                                                      physics:
-                                                          const BouncingScrollPhysics(),
-                                                      itemBuilder:
-                                                          (
-                                                            context,
-                                                            _,
-                                                          ) => const Icon(
-                                                            Icons.star,
-                                                            color:
-                                                                AppColors.actionPrimaryDark,
-                                                          ),
-                                                    ),
-                                                    const SizedBox(width: 4),
-                                                    Text(
-                                                      "(${salonProfileDetails!.ratingCount.toString()})",
-                                                      style:
-                                                          AppTypography.caption.copyWith(color: AppColors.klightGreyColor),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                              : Container(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                ],
+                                ),
                               ),
-                              const SizedBox(height: 5),
                             ],
                           ),
                         ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  salonProfileDetails!.userType == 1
-                                      ? Languages.of(context)!.gossiperText
-                                      : Languages.of(
-                                        context,
-                                      )!.beautybusinessText,
-                                  style: AppTypography.heading3.copyWith(fontWeight: FontWeight.bold),
+                        // Bio section
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Name
+                              Text(
+                                salonProfileDetails!.userType == 1
+                                    ? "${salonProfileDetails!.firstName!} ${salonProfileDetails!.lastName!}"
+                                    : salonProfileDetails!.salonName ?? "",
+                                style: const TextStyle(
+                                  fontFamily: 'Geist',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.textPrimary,
                                 ),
                               ),
-                            ),
-                            salonProfileDetails!.userType == 1
-                                ? Container(
-                                  alignment: Alignment.topLeft,
-                                  padding: const EdgeInsets.only(
-                                    left: 20,
-                                    right: 20,
+                              const SizedBox(height: 3),
+                              // Bio
+                              if (salonProfileDetails!.bio != null &&
+                                  salonProfileDetails!.bio!.isNotEmpty)
+                                Text(
+                                  salonProfileDetails!.bio!,
+                                  style: const TextStyle(
+                                    fontFamily: 'Geist',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xFF6A7282),
+                                    height: 1.43,
                                   ),
-                                  child: Text(
-                                    salonProfileDetails!.userType == 1
-                                        ? "${salonProfileDetails!.firstName!} ${salonProfileDetails!.lastName!}"
-                                        : salonProfileDetails!.salonName!,
-                                    style: AppTypography.bodyMedium,
-                                  ),
-                                )
-                                : Container(),
-                            salonProfileDetails!.userType == 1
-                                ? Container(
-                                  padding: const EdgeInsets.only(
-                                    left: 20,
-                                    right: 20,
-                                  ),
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    salonProfileDetails!.email!.isNotEmpty
-                                        ? salonProfileDetails!.email!
-                                        : "",
-                                    style: AppTypography.bodyMedium.copyWith(color: AppColors.kBlueColor),
-                                  ),
-                                )
-                                : Container(),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            salonProfileDetails!.userType == 2
-                                ? salonProfileDetails!.salonName != ""
-                                    ? Container(
-                                      padding: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                      ),
-                                      alignment: Alignment.topLeft,
+                                ),
+                              // Salon-specific info
+                              if (salonProfileDetails!.userType == 2) ...[
+                                if (salonOpenDays.isNotEmpty)
+                                  _showHoursUI(),
+                                if (salonProfileDetails!.contactNo != null &&
+                                    salonProfileDetails!.contactNo!.isNotEmpty)
+                                  GestureDetector(
+                                    onTap: () async {
+                                      final phoneNumber = salonProfileDetails!.contactNo!;
+                                      final Uri launchUri = Uri(scheme: 'tel', path: phoneNumber);
+                                      if (await canLaunchUrl(launchUri)) {
+                                        await launchUrl(launchUri);
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 2),
                                       child: Text(
-                                        salonProfileDetails!.salonName!,
-                                        style: AppTypography.bodyMedium.copyWith(
-                                          color: Colors.black,
+                                        salonProfileDetails!.contactNo!,
+                                        style: const TextStyle(
+                                          fontFamily: 'Geist',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xFF6A7282),
                                         ),
                                       ),
-                                    )
-                                    : Container()
-                                : Container(),
-                            const SizedBox(height: 2),
-                            salonProfileDetails!.bio != ""
-                                ? Container(
-                                  padding: const EdgeInsets.only(
-                                    left: 20,
-                                    right: 20,
-                                  ),
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    textAlign: TextAlign.start,
-                                    salonProfileDetails!.bio != ""
-                                        ? salonProfileDetails!.bio!
-                                        : "",
-                                    style: AppTypography.bodyMedium.copyWith(
-                                      color: Colors.black,
                                     ),
                                   ),
-                                )
-                                : Container(),
-                            // const SizedBox(height: 2),
-                            salonProfileDetails!.userType == 2
-                                ? salonOpenDays.isNotEmpty
-                                    ? Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                      ),
-                                      child: _showHoursUI(),
-                                    )
-                                    : Container()
-                                : Container(),
-                            // const SizedBox(height: 2),
-                            salonProfileDetails!.userType == 2
-                                ? salonProfileDetails!.contactNo != ""
-                                    ? GestureDetector(
-                                      onTap: () async {
-                                        final phoneNumber =
-                                            salonProfileDetails!.contactNo!;
-                                        final Uri launchUri = Uri(
-                                          scheme: 'tel',
-                                          path: phoneNumber,
-                                        );
-                                        if (await canLaunchUrl(launchUri)) {
-                                          await launchUrl(launchUri);
-                                        } else {
-                                          throw 'Could not launch $phoneNumber';
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.only(
-                                          left: 20,
-                                          right: 20,
-                                        ),
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          salonProfileDetails!.contactNo!,
-                                          style: AppTypography.bodyMedium.copyWith(
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    : Container()
-                                : Container(),
-                            const SizedBox(height: 2),
-                            salonProfileDetails!.userType == 2
-                                ? salonProfileDetails!.siteName != ""
-                                    ? GestureDetector(
-                                      onTap: () async {
-                                        String siteUrl =
-                                            salonProfileDetails!.siteName ?? "";
-                                        // Ensure the URL has a scheme
-                                        if (!siteUrl.startsWith("http://") &&
-                                            !siteUrl.startsWith("https://")) {
-                                          siteUrl = "https://$siteUrl";
-                                        }
-
-                                        final Uri url = Uri.parse(siteUrl);
-
-                                        print("Launching: $url");
-
-                                        if (!await launchUrl(
-                                          url,
-                                          mode: LaunchMode.externalApplication,
-                                        )) {
-                                          throw 'Could not launch $url';
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.only(
-                                          left: 20,
-                                          right: 20,
-                                        ),
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          salonProfileDetails!.siteName!,
-                                          style: AppTypography.bodyMedium.copyWith(
-                                            color: Colors.blue,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationColor: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    : Container()
-                                : Container(),
-                            const SizedBox(height: 2),
-                            salonProfileDetails!.userType == 2
-                                ? salonProfileDetails!.address != ""
-                                    ? Container(
-                                      padding: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                      ),
-                                      alignment: Alignment.topLeft,
+                                if (salonProfileDetails!.siteName != null &&
+                                    salonProfileDetails!.siteName!.isNotEmpty)
+                                  GestureDetector(
+                                    onTap: () async {
+                                      String siteUrl = salonProfileDetails!.siteName ?? "";
+                                      if (!siteUrl.startsWith("http://") &&
+                                          !siteUrl.startsWith("https://")) {
+                                        siteUrl = "https://$siteUrl";
+                                      }
+                                      final Uri url = Uri.parse(siteUrl);
+                                      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                                        print('Could not launch $url');
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 2),
                                       child: Text(
-                                        salonProfileDetails!.address!,
-                                        style: AppTypography.bodyMedium.copyWith(
-                                          color: Colors.black,
+                                        salonProfileDetails!.siteName!,
+                                        style: const TextStyle(
+                                          fontFamily: 'Geist',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor: Colors.blue,
                                         ),
                                       ),
-                                    )
-                                    : Container()
-                                : Container(),
-                          ],
+                                    ),
+                                  ),
+                                if (salonProfileDetails!.address != null &&
+                                    salonProfileDetails!.address!.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 2),
+                                    child: Text(
+                                      salonProfileDetails!.address!,
+                                      style: const TextStyle(
+                                        fontFamily: 'Geist',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xFF6A7282),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 30),
                         Padding(
@@ -1333,18 +1033,26 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                         const SizedBox(height: 15),
-                        SizedBox(
-                          height: 50,
+                        Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Color(0xFFF3F4F6),
+                                width: 0.85,
+                              ),
+                            ),
+                          ),
                           child: TabBar(
                             controller: _tabController,
                             isScrollable: false,
-                            labelColor: AppColors.textPrimary,
-                            overlayColor: const MaterialStatePropertyAll(
-                              AppColors.kAppBArBGColor,
-                            ),
-                            unselectedLabelColor: AppColors.kBlueColor,
-                            indicatorColor: AppColors.actionPrimaryDark,
+                            labelColor: AppColors.actionPrimary,
+                            unselectedLabelColor: const Color(0xFF9CA3AF),
+                            overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+                            indicatorColor: AppColors.actionPrimary,
+                            indicatorWeight: 1.7,
                             indicatorSize: TabBarIndicatorSize.tab,
+                            dividerColor: Colors.transparent,
+                            labelPadding: EdgeInsets.zero,
                             onTap: (value) {
                               setState(() {
                                 currentindex = value;
@@ -1354,12 +1062,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   Future.delayed(
                                     const Duration(seconds: 5),
                                     () {
-                                      print("Future.delayed");
                                       _videogridviewController.animateTo(
                                         1.0,
-                                        duration: const Duration(
-                                          milliseconds: 500,
-                                        ),
+                                        duration: const Duration(milliseconds: 500),
                                         curve: Curves.bounceIn,
                                       );
                                     },
@@ -1371,102 +1076,66 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 userTyppe == "1"
                                     ? [
                                       Tab(
-                                        child: SizedBox(
-                                          height: 25,
-                                          width: 25,
-                                          child: Image.asset(
-                                            ImageUtils.gridicon,
-                                            color:
-                                                currentindex == 0
-                                                    ? AppColors.actionPrimaryDark
-                                                    : AppColors.textPrimary,
-                                          ),
+                                        child: Icon(
+                                          currentindex == 0
+                                              ? PhosphorIconsFill.squaresFour
+                                              : PhosphorIconsRegular.squaresFour,
+                                          size: 17,
                                         ),
                                       ),
                                       Tab(
-                                        child: SizedBox(
-                                          height: 25,
-                                          width: 25,
-                                          child: Image.asset(
-                                            ImageUtils.videoicon,
-                                            color:
-                                                currentindex == 1
-                                                    ? AppColors.actionPrimaryDark
-                                                    : AppColors.textPrimary,
-                                          ),
+                                        child: Icon(
+                                          currentindex == 1
+                                              ? PhosphorIconsFill.playCircle
+                                              : PhosphorIconsRegular.playCircle,
+                                          size: 17,
                                         ),
                                       ),
                                       Tab(
-                                        child: SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: Image.asset(
-                                            "lib/assets/images/tag Background Removed.png",
-                                            color:
-                                                currentindex == 2
-                                                    ? AppColors.actionPrimaryDark
-                                                    : AppColors.textPrimary,
-                                          ),
+                                        child: Icon(
+                                          currentindex == 2
+                                              ? PhosphorIconsFill.at
+                                              : PhosphorIconsRegular.at,
+                                          size: 17,
                                         ),
                                       ),
                                     ]
                                     : [
                                       Tab(
-                                        child: SizedBox(
-                                          height: 25,
-                                          width: 25,
-                                          child: Image.asset(
-                                            ImageUtils.gridicon,
-                                            color:
-                                                currentindex == 0
-                                                    ? AppColors.actionPrimaryDark
-                                                    : AppColors.textPrimary,
-                                          ),
+                                        child: Icon(
+                                          currentindex == 0
+                                              ? PhosphorIconsFill.squaresFour
+                                              : PhosphorIconsRegular.squaresFour,
+                                          size: 17,
                                         ),
                                       ),
                                       Tab(
-                                        child: SizedBox(
-                                          height: 25,
-                                          width: 25,
-                                          child: Image.asset(
-                                            ImageUtils.videoicon,
-                                            color:
-                                                currentindex == 1
-                                                    ? AppColors.actionPrimaryDark
-                                                    : AppColors.textPrimary,
-                                          ),
+                                        child: Icon(
+                                          currentindex == 1
+                                              ? PhosphorIconsFill.playCircle
+                                              : PhosphorIconsRegular.playCircle,
+                                          size: 17,
                                         ),
                                       ),
                                       Tab(
-                                        child: SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: Image.asset(
-                                            "lib/assets/images/tag Background Removed.png",
-                                            color:
-                                                currentindex == 2
-                                                    ? AppColors.actionPrimaryDark
-                                                    : AppColors.textPrimary,
-                                          ),
+                                        child: Icon(
+                                          currentindex == 2
+                                              ? PhosphorIconsFill.at
+                                              : PhosphorIconsRegular.at,
+                                          size: 17,
                                         ),
                                       ),
                                       Tab(
-                                        child: SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: Image.asset(
-                                            "lib/assets/images/ic_reward_redeem.png",
-                                            color:
-                                                currentindex == 3
-                                                    ? AppColors.actionPrimaryDark
-                                                    : Colors.black,
-                                          ),
+                                        child: Icon(
+                                          currentindex == 3
+                                              ? PhosphorIconsFill.gift
+                                              : PhosphorIconsRegular.gift,
+                                          size: 17,
                                         ),
                                       ),
                                     ],
                           ),
                         ),
-                        const SizedBox(height: 15),
                         SizedBox(
                           height: kSize.height / 2,
                           width: kSize.width,
@@ -1483,6 +1152,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 3,
                                               childAspectRatio: 1,
+                                              crossAxisSpacing: 2,
+                                              mainAxisSpacing: 2,
                                             ),
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
@@ -1521,228 +1192,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 ),
                                               );
                                             },
-                                            child:
-                                                salonProfilePostArray[index]
-                                                            .beforeImage !=
-                                                        ""
-                                                    ? Stack(
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      children: [
-                                                        Container(
-                                                          height: kSize.height,
-                                                          width: kSize.width,
-                                                          margin:
-                                                              const EdgeInsets.all(
-                                                                3,
-                                                              ),
-                                                          decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  5,
-                                                                ),
-                                                            border: Border.all(
-                                                              color:
-                                                                  AppColors
-                                                                      .kTextFieldBorderColor,
-                                                            ),
-                                                            color: Colors.white,
-                                                          ),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  5,
-                                                                ),
-                                                            child: Image.network(
-                                                              fit: BoxFit.cover,
-                                                              "${API.baseUrl}/api/${salonProfilePostArray[index].afterImage}",
-                                                              errorBuilder: (
-                                                                context,
-                                                                error,
-                                                                stackTrace,
-                                                              ) {
-                                                                return Image.asset(
-                                                                  ImageUtils
-                                                                      .profileLogo,
-                                                                );
-                                                              },
-                                                              loadingBuilder: (
-                                                                BuildContext
-                                                                context,
-                                                                Widget child,
-                                                                ImageChunkEvent?
-                                                                loadingProgress,
-                                                              ) {
-                                                                if (loadingProgress ==
-                                                                    null)
-                                                                  return child;
-                                                                return SizedBox(
-                                                                  height: 100,
-                                                                  width: 100,
-                                                                  child: Center(
-                                                                    child: CircularProgressIndicator(
-                                                                      color:
-                                                                          AppColors.textPrimary,
-                                                                      value:
-                                                                          loadingProgress.expectedTotalBytes !=
-                                                                                  null
-                                                                              ? loadingProgress.cumulativeBytesLoaded /
-                                                                                  loadingProgress.expectedTotalBytes!
-                                                                              : null,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        salonProfilePostArray[index]
-                                                                .otherMultiPost!
-                                                                .isNotEmpty
-                                                            ? Padding(
-                                                              padding:
-                                                                  const EdgeInsets.only(
-                                                                    top: 8,
-                                                                    right: 8,
-                                                                  ),
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                      color: Colors
-                                                                          .black12
-                                                                          .withOpacity(
-                                                                            0.2,
-                                                                          ),
-                                                                      blurRadius:
-                                                                          4,
-                                                                      offset:
-                                                                          const Offset(
-                                                                            0,
-                                                                            0.3,
-                                                                          ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                child: Image.asset(
-                                                                  "lib/assets/images/multipost.png",
-                                                                  height: 22,
-                                                                  color:
-                                                                      Colors
-                                                                          .white,
-                                                                ),
-                                                              ),
-                                                            )
-                                                            : Container(),
-                                                      ],
-                                                    )
-                                                    : Container(
-                                                      height: kSize.height,
-                                                      width: kSize.width,
-                                                      margin:
-                                                          const EdgeInsets.all(
-                                                            3,
-                                                          ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              5,
-                                                            ),
-                                                        color: Colors.white,
-                                                        border: Border.all(
-                                                          color:
-                                                              AppColors
-                                                                  .kTextFieldBorderColor,
-                                                        ),
-                                                      ),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              5,
-                                                            ),
-                                                        child:
-                                                            showotherimg[index]['f_img']
-                                                                        .endsWith(
-                                                                          ".mp4",
-                                                                        ) ||
-                                                                    showotherimg[index]['f_img']
-                                                                        .endsWith(
-                                                                          ".mov",
-                                                                        ) ||
-                                                                    showotherimg[index]['f_img']
-                                                                        .endsWith(
-                                                                          ".MP4",
-                                                                        )
-                                                                ? Stack(
-                                                                  children: [
-                                                                    SizedBox(
-                                                                      height:
-                                                                          kSize
-                                                                              .height,
-                                                                      width:
-                                                                          kSize
-                                                                              .width,
-                                                                      child: ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                              5,
-                                                                            ),
-                                                                        child: Tagvideothumbnail(
-                                                                          videoUrl:
-                                                                              showotherimg[index]['f_img'],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    const Center(
-                                                                      child: Icon(
-                                                                        Icons
-                                                                            .play_arrow_rounded,
-                                                                        size:
-                                                                            50,
-                                                                        color:
-                                                                            Colors.white,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                )
-                                                                : Image.network(
-                                                                  showotherimg[index]['f_img'],
-                                                                  fit:
-                                                                      BoxFit
-                                                                          .cover,
-                                                                  loadingBuilder: (
-                                                                    BuildContext
-                                                                    context,
-                                                                    Widget
-                                                                    child,
-                                                                    ImageChunkEvent?
-                                                                    loadingProgress,
-                                                                  ) {
-                                                                    if (loadingProgress ==
-                                                                        null)
-                                                                      return child;
-                                                                    return SizedBox(
-                                                                      height:
-                                                                          100,
-                                                                      width:
-                                                                          100,
-                                                                      child: Center(
-                                                                        child: CircularProgressIndicator(
-                                                                          color:
-                                                                              AppColors.textPrimary,
-                                                                          value:
-                                                                              loadingProgress.expectedTotalBytes !=
-                                                                                      null
-                                                                                  ? loadingProgress.cumulativeBytesLoaded /
-                                                                                      loadingProgress.expectedTotalBytes!
-                                                                                  : null,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ),
-                                                      ),
-                                                    ),
+                                            child: _buildGridItem(
+                                              imageUrl: salonProfilePostArray[index].beforeImage != ""
+                                                  ? "${API.baseUrl}/api/${salonProfilePostArray[index].afterImage}"
+                                                  : showotherimg[index]['f_img'],
+                                              isMultiPost: salonProfilePostArray[index].otherMultiPost?.isNotEmpty ?? false,
+                                              kSize: kSize,
+                                            ),
                                           );
                                         },
                                       )
@@ -1752,7 +1208,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         gridDelegate:
                                             const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 3,
-                                              childAspectRatio: 0.85,
+                                              childAspectRatio: 1,
+                                              crossAxisSpacing: 2,
+                                              mainAxisSpacing: 2,
                                             ),
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
@@ -1785,168 +1243,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             },
                                             child:
                                                 showotherimg[index].isNotEmpty
-                                                    ? Stack(
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      children: [
-                                                        Container(
-                                                          height: kSize.height,
-                                                          width: kSize.width,
-                                                          margin:
-                                                              const EdgeInsets.all(
-                                                                3,
-                                                              ),
-                                                          decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  5,
-                                                                ),
-                                                            color: Colors.white,
-                                                            border: Border.all(
-                                                              color:
-                                                                  AppColors
-                                                                      .kTextFieldBorderColor,
-                                                            ),
-                                                          ),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  5,
-                                                                ),
-                                                            child:
-                                                                showotherimg[index]['f_img'].endsWith(
-                                                                          ".mp4",
-                                                                        ) ||
-                                                                        showotherimg[index]['f_img'].endsWith(
-                                                                          ".mov",
-                                                                        ) ||
-                                                                        showotherimg[index]['f_img'].endsWith(
-                                                                          ".MP4",
-                                                                        )
-                                                                    ? Stack(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height:
-                                                                              kSize.height,
-                                                                          width:
-                                                                              kSize.width,
-                                                                          child: ClipRRect(
-                                                                            borderRadius: BorderRadius.circular(
-                                                                              5,
-                                                                            ),
-                                                                            child: Tagvideothumbnail(
-                                                                              videoUrl:
-                                                                                  showotherimg[index]['f_img'],
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        const Center(
-                                                                          child: Icon(
-                                                                            Icons.play_arrow_rounded,
-                                                                            size:
-                                                                                50,
-                                                                            color:
-                                                                                Colors.white,
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    )
-                                                                    : Image.network(
-                                                                      showotherimg[index]['f_img'],
-                                                                      fit:
-                                                                          BoxFit
-                                                                              .cover,
-                                                                      loadingBuilder: (
-                                                                        BuildContext
-                                                                        context,
-                                                                        Widget
-                                                                        child,
-                                                                        ImageChunkEvent?
-                                                                        loadingProgress,
-                                                                      ) {
-                                                                        if (loadingProgress ==
-                                                                            null)
-                                                                          return child;
-                                                                        return SizedBox(
-                                                                          height:
-                                                                              100,
-                                                                          width:
-                                                                              100,
-                                                                          child: Center(
-                                                                            child: CircularProgressIndicator(
-                                                                              color:
-                                                                                  AppColors.textPrimary,
-                                                                              value:
-                                                                                  loadingProgress.expectedTotalBytes !=
-                                                                                          null
-                                                                                      ? loadingProgress.cumulativeBytesLoaded /
-                                                                                          loadingProgress.expectedTotalBytes!
-                                                                                      : null,
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    ),
-                                                          ),
-                                                        ),
-                                                        showotherimg[index]['otherpostlen']! >
-                                                                1
-                                                            ? Padding(
-                                                              padding:
-                                                                  const EdgeInsets.only(
-                                                                    top: 8,
-                                                                    right: 8,
-                                                                  ),
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                      color: Colors
-                                                                          .black12
-                                                                          .withOpacity(
-                                                                            0.2,
-                                                                          ),
-                                                                      blurRadius:
-                                                                          4,
-                                                                      offset:
-                                                                          const Offset(
-                                                                            0,
-                                                                            0.3,
-                                                                          ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                child: Image.asset(
-                                                                  "lib/assets/images/multipost.png",
-                                                                  height: 22,
-                                                                  color:
-                                                                      Colors
-                                                                          .white,
-                                                                ),
-                                                              ),
-                                                            )
-                                                            : Container(),
-                                                      ],
-                                                    )
+                                                    ? _buildGridItem(
+                                                        imageUrl: showotherimg[index]['f_img'],
+                                                        isMultiPost: showotherimg[index]['otherpostlen']! > 1,
+                                                        kSize: kSize,
+                                                      )
                                                     : Container(
-                                                      margin:
-                                                          const EdgeInsets.all(
-                                                            3,
-                                                          ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              5,
-                                                            ),
-                                                        border: Border.all(
-                                                          color: Colors.grey,
-                                                        ),
-                                                        color: Colors.white,
+                                                        color: Colors.grey[200],
+                                                        child: const Icon(PhosphorIconsRegular.user),
                                                       ),
-                                                      child: const Icon(
-                                                        Icons.person,
-                                                      ),
-                                                    ),
                                           );
                                         },
                                       )
