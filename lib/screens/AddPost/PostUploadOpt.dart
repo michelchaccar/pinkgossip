@@ -7,7 +7,6 @@ import 'package:pinkGossip/screens/AddPost/SharePostView.dart';
 import 'package:pinkGossip/screens/AddPost/ShareSaloonReview.dart';
 import 'package:pinkGossip/screens/HomeScreens/addstory.dart';
 import 'package:pinkGossip/theme/theme.dart';
-import 'package:pinkGossip/utils/common_functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PostUploadOptPage extends StatefulWidget {
@@ -106,49 +105,116 @@ class _PostUploadOptPageState extends State<PostUploadOptPage> {
   }
 
   getButtons() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CommonWidget().getSmallButton(Languages.of(context)!.sharepostText, () {
-          setState(() {
-            showButtons = false;
-            openedViewIndex = 1;
-          });
-        }),
-        const SizedBox(height: 50),
-        CommonWidget().getSmallButton(
-          Languages.of(context)!.sharestoryText,
-          () {
-            setState(() {
-              showButtons = false;
-              openedViewIndex = 2;
-            });
-          },
-        ),
-        const SizedBox(height: 50),
-        userType == "1"
-            ? CommonWidget().getSmallButton(
-              Languages.of(context)!.sharesalonreviewText,
-              () {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Column(
+        children: [
+          _buildOptionCard(
+            icon: PhosphorIconsRegular.image,
+            title: Languages.of(context)!.sharepostText,
+            subtitle: Languages.of(context)!.sharepostdescText,
+            onTap: () {
+              setState(() {
+                showButtons = false;
+                openedViewIndex = 1;
+              });
+            },
+          ),
+          const SizedBox(height: 12),
+          _buildOptionCard(
+            icon: PhosphorIconsRegular.clockCounterClockwise,
+            title: Languages.of(context)!.sharestoryText,
+            subtitle: Languages.of(context)!.sharestorydescText,
+            onTap: () {
+              setState(() {
+                showButtons = false;
+                openedViewIndex = 2;
+              });
+            },
+          ),
+          if (userType == "1") ...[
+            const SizedBox(height: 12),
+            _buildOptionCard(
+              icon: PhosphorIconsRegular.star,
+              title: Languages.of(context)!.sharesalonreviewText,
+              subtitle: Languages.of(context)!.sharesalonreviewdescText,
+              onTap: () {
                 setState(() {
                   showButtons = false;
                   openedViewIndex = 3;
                 });
               },
-            )
-            : SizedBox(),
-        userType == "2"
-            ? CommonWidget().getSmallButton(
-              Languages.of(context)!.postARewardText,
-              () {
+            ),
+          ],
+          if (userType == "2") ...[
+            const SizedBox(height: 12),
+            _buildOptionCard(
+              icon: PhosphorIconsRegular.gift,
+              title: Languages.of(context)!.postARewardText,
+              subtitle: Languages.of(context)!.postARewarddescText,
+              onTap: () {
                 setState(() {
                   showButtons = false;
                   openedViewIndex = 4;
                 });
               },
-            )
-            : SizedBox(),
-      ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOptionCard({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.bgSecondary,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.border, width: 1),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.bgPink,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: AppColors.actionPrimary,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: AppTypography.heading3),
+                  const SizedBox(height: 4),
+                  Text(subtitle, style: AppTypography.caption),
+                ],
+              ),
+            ),
+            const Icon(
+              PhosphorIconsRegular.caretRight,
+              color: AppColors.textSecondary,
+              size: 20,
+            ),
+          ],
+        ),
+      ),
     );
   }
 

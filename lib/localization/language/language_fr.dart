@@ -609,10 +609,22 @@ class LanguageFr extends Languages {
   String get postARewardText => "Proposer une récompense";
 
   @override
+  String get postARewarddescText => "Offrez une récompense à votre communauté";
+
+  @override
   String get sharestoryText => "Partager la story";
 
   @override
-  String get sharesalonreviewText => "Partager l'avis sur le salon";
+  String get sharesalonreviewText => "Proposer une expérience";
+
+  @override
+  String get sharepostdescText => "Partagez une photo ou vidéo avec votre communauté";
+
+  @override
+  String get sharestorydescText => "Publiez un moment éphémère visible 24h";
+
+  @override
+  String get sharesalonreviewdescText => "Partagez votre avis sur un salon";
 
   @override
   String get gossiperText => "Gossiper";

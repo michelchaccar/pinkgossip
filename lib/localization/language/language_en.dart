@@ -615,9 +615,17 @@ class LanguageEn extends Languages {
   @override
   String get postARewardText => "Post a Reward";
   @override
+  String get postARewarddescText => "Offer a reward to your community";
+  @override
   String get sharestoryText => "Share Story";
   @override
-  String get sharesalonreviewText => "Share Salon Review";
+  String get sharesalonreviewText => "Share an Experience";
+  @override
+  String get sharepostdescText => "Share a photo or video with your community";
+  @override
+  String get sharestorydescText => "Post an ephemeral moment visible for 24h";
+  @override
+  String get sharesalonreviewdescText => "Share your review of a salon";
   @override
   String get reviewText => "Reviews";
   @override

@@ -18,6 +18,7 @@ abstract class Languages {
   String get submitpostText;
   String get sharepostText;
   String get postARewardText;
+  String get postARewarddescText;
   String get cancelText;
   String get fpText;
   String get signupText;
@@ -206,6 +207,9 @@ abstract class Languages {
   String get sharestoryText;
   String get submitsalonreviewText;
   String get sharesalonreviewText;
+  String get sharepostdescText;
+  String get sharestorydescText;
+  String get sharesalonreviewdescText;
   String get submitnewpostText;
   String get uploadText;
   String get postreviewcanceltitleText;

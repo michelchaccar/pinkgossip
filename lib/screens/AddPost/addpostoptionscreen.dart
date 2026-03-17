@@ -3,6 +3,7 @@ import 'package:pinkGossip/screens/AddPost/addpost.dart';
 import 'package:pinkGossip/screens/HomeScreens/addstory.dart';
 import 'package:pinkGossip/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'add_post_screen.dart';
@@ -105,61 +106,34 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                     //   }
                     // }
                   )
-                  : Align(
-                    alignment: Alignment.topCenter,
+                  : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // SizedBox(
-                        //   width: 130,
-                        //   child: Image.asset("lib/assets/images/post.png"),
-                        // ),
-                        const SizedBox(height: 20),
-                        Container(
-                          height: 30,
-                          width: 180,
-                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                isselectedPostOrStory = false;
-                                ispostSelected = true;
-                                isstorySelected = false;
-                              });
-                            },
-                            child: Center(
-                              child: Text(
-                                Languages.of(context)!.sharepostText,
-                                style: AppTypography.buttonText,
-                              ),
-                            ),
-                          ),
+                        _buildOptionCard(
+                          icon: PhosphorIconsRegular.image,
+                          title: Languages.of(context)!.sharepostText,
+                          subtitle: Languages.of(context)!.sharepostdescText,
+                          onTap: () {
+                            setState(() {
+                              isselectedPostOrStory = false;
+                              ispostSelected = true;
+                              isstorySelected = false;
+                            });
+                          },
                         ),
-                        const SizedBox(height: 35),
-                        // SizedBox(
-                        //   width: 130,
-                        //   child: Image.asset("lib/assets/images/story.png"),
-                        // ),
-                        const SizedBox(height: 20),
-                        Container(
-                          height: 30,
-                          width: 180,
-                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                isselectedPostOrStory = false;
-                                ispostSelected = false;
-                                isstorySelected = true;
-                              });
-                            },
-                            child: Center(
-                              child: Text(
-                                Languages.of(context)!.sharestoryText,
-                                style: AppTypography.buttonText,
-                              ),
-                            ),
-                          ),
+                        const SizedBox(height: 12),
+                        _buildOptionCard(
+                          icon: PhosphorIconsRegular.clockCounterClockwise,
+                          title: Languages.of(context)!.sharestoryText,
+                          subtitle: Languages.of(context)!.sharestorydescText,
+                          onTap: () {
+                            setState(() {
+                              isselectedPostOrStory = false;
+                              ispostSelected = false;
+                              isstorySelected = true;
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -240,100 +214,110 @@ class _AddPostOptionScreenState extends State<AddPostOptionScreen> {
                       }
                     },
                   )
-                  : Align(
-                    alignment: Alignment.topCenter,
+                  : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(height: 20),
-
-                        // const SizedBox(height: 10),
-                        // SizedBox(
-                        //   width: 130,
-                        //   child: Image.asset(
-                        //       "lib/assets/images/post.png"),
-                        // ),
-                        // const SizedBox(height: 10),
-                        Container(
-                          height: 30,
-                          width: 180,
-                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                istype1Select = false;
-                                isposttype1Selected = true;
-                                isstorytype1Selected = false;
-                                issalonreviewSelected = false;
-                              });
-                            },
-                            child: Center(
-                              child: Text(
-                                Languages.of(context)!.sharepostText,
-                                style: AppTypography.buttonText,
-                              ),
-                            ),
-                          ),
+                        _buildOptionCard(
+                          icon: PhosphorIconsRegular.image,
+                          title: Languages.of(context)!.sharepostText,
+                          subtitle: Languages.of(context)!.sharepostdescText,
+                          onTap: () {
+                            setState(() {
+                              istype1Select = false;
+                              isposttype1Selected = true;
+                              isstorytype1Selected = false;
+                              issalonreviewSelected = false;
+                            });
+                          },
                         ),
-                        const SizedBox(height: 35),
-                        // SizedBox(
-                        //   width: 130,
-                        //   child: Image.asset(
-                        //       "lib/assets/images/story.png"),
-                        // ),
-                        const SizedBox(height: 20),
-                        Container(
-                          height: 30,
-                          width: 180,
-                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                istype1Select = false;
-                                isposttype1Selected = false;
-                                isstorytype1Selected = true;
-                                issalonreviewSelected = false;
-                              });
-                            },
-                            child: Center(
-                              child: Text(
-                                Languages.of(context)!.sharestoryText,
-                                style: AppTypography.buttonText,
-                              ),
-                            ),
-                          ),
+                        const SizedBox(height: 12),
+                        _buildOptionCard(
+                          icon: PhosphorIconsRegular.clockCounterClockwise,
+                          title: Languages.of(context)!.sharestoryText,
+                          subtitle: Languages.of(context)!.sharestorydescText,
+                          onTap: () {
+                            setState(() {
+                              istype1Select = false;
+                              isposttype1Selected = false;
+                              isstorytype1Selected = true;
+                              issalonreviewSelected = false;
+                            });
+                          },
                         ),
-                        const SizedBox(height: 35),
-                        // SizedBox(
-                        //   width: 130,
-                        //   child: Image.asset(
-                        //       "lib/assets/images/salonreview.png"),
-                        // ),
-                        const SizedBox(height: 20),
-                        Container(
-                          height: 30,
-                          width: 180,
-                          decoration: BoxDecoration(color: AppColors.actionPrimary, borderRadius: BorderRadius.circular(10)),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                istype1Select = false;
-                                isposttype1Selected = false;
-                                isstorytype1Selected = false;
-                                issalonreviewSelected = true;
-                              });
-                            },
-                            child: Center(
-                              child: Text(
-                                Languages.of(context)!.sharesalonreviewText,
-                                style: AppTypography.buttonText,
-                              ),
-                            ),
-                          ),
+                        const SizedBox(height: 12),
+                        _buildOptionCard(
+                          icon: PhosphorIconsRegular.star,
+                          title: Languages.of(context)!.sharesalonreviewText,
+                          subtitle: Languages.of(context)!.sharesalonreviewdescText,
+                          onTap: () {
+                            setState(() {
+                              istype1Select = false;
+                              isposttype1Selected = false;
+                              isstorytype1Selected = false;
+                              issalonreviewSelected = true;
+                            });
+                          },
                         ),
                       ],
                     ),
                   ),
         );
+  }
+
+  Widget _buildOptionCard({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.bgSecondary,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.border, width: 1),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.bgPink,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: AppColors.actionPrimary,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: AppTypography.heading3),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: AppTypography.caption,
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              PhosphorIconsRegular.caretRight,
+              color: AppColors.textSecondary,
+              size: 20,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
