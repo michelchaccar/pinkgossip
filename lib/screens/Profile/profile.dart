@@ -10,7 +10,13 @@ import 'package:pinkGossip/screens/Auth/loginscreen.dart';
 import 'package:pinkGossip/screens/HomeScreens/addstory.dart';
 import 'package:pinkGossip/screens/HomeScreens/mystoryview.dart';
 import 'package:pinkGossip/screens/Mackeups/tagvideothumbnail.dart';
+import 'package:pinkGossip/screens/Message/messagedetail.dart';
 import 'package:pinkGossip/screens/Profile/beautybusinessmap.dart';
+import 'package:pinkGossip/screens/Profile/singleuserstoryshow.dart';
+import 'package:pinkGossip/models/followingmodel.dart';
+import 'package:pinkGossip/models/unfollwmodel.dart';
+import 'package:pinkGossip/viewModels/followingviewmodel.dart';
+import 'package:pinkGossip/viewModels/unfollwviewmodel.dart';
 import 'package:pinkGossip/screens/Profile/blockedusers.dart';
 import 'package:pinkGossip/screens/Profile/language.dart';
 import 'package:pinkGossip/screens/Profile/myreward.dart';
@@ -47,7 +53,10 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:pinkGossip/services/tooltip_service.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final String? userId;
+  final String? userType;
+  final String pageType;
+  const ProfileScreen({super.key, this.userId, this.userType, this.pageType = ''});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -105,15 +114,28 @@ class _ProfileScreenState extends State<ProfileScreen>
   String userid = "";
   String userTyppe = "";
   String userName = "";
+  String firebaseID = "";
   bool isOn = true;
+  late bool isOwnProfile = widget.userId == null;
+  String targetId = "";
+  String targetType = "";
+
   getuserid() async {
     prefs = await SharedPreferences.getInstance();
     userid = prefs!.getString('userid') ?? "";
+    firebaseID = prefs!.getString('FirebaseId') ?? "";
     userTyppe = prefs!.getString('userType') ?? "apple";
+
+    isOwnProfile = (widget.userId == null || widget.userId == userid);
+    targetId = widget.userId ?? userid;
+    targetType = widget.userType ?? userTyppe;
 
     print("userid   ${userid}");
     print("userTyppe   ${userTyppe}");
-    if (userTyppe == "2") {
+    print("isOwnProfile   ${isOwnProfile}");
+    print("targetId   ${targetId}");
+
+    if (targetType == "2") {
       _tabController = TabController(length: 4, vsync: this);
     } else {
       _tabController = TabController(length: 3, vsync: this);
@@ -133,6 +155,13 @@ class _ProfileScreenState extends State<ProfileScreen>
     getProfileDetails();
 
     getStory();
+
+    // Deep link dialog
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.pageType == 'deepLink' && userTyppe == "1") {
+        _showDeepLinkWelcomeDialog();
+      }
+    });
 
     _scrollController.addListener(_loadMoreData);
     for (int i = 0; i < videoList.length; i++) {
@@ -175,12 +204,13 @@ class _ProfileScreenState extends State<ProfileScreen>
     if (Platform.isIOS) {
       if (roundedValue == 1) {
         Future.delayed(const Duration(seconds: 5), () {
-          print("Future.delayed");
-          _videogridviewController.animateTo(
-            1.0,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.bounceIn,
-          );
+          if (_videogridviewController.hasClients) {
+            _videogridviewController.animateTo(
+              1.0,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.bounceIn,
+            );
+          }
         });
       }
     }
@@ -210,7 +240,6 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget _buildGridItem({
     required String imageUrl,
     required bool isMultiPost,
-    required Size kSize,
   }) {
     final isVideo = imageUrl.endsWith(".mp4") ||
         imageUrl.endsWith(".mov") ||
@@ -220,9 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     if (isVideo) {
       content = Stack(
         children: [
-          SizedBox(
-            height: kSize.height,
-            width: kSize.width,
+          SizedBox.expand(
             child: Tagvideothumbnail(videoUrl: imageUrl),
           ),
           const Center(
@@ -231,25 +258,29 @@ class _ProfileScreenState extends State<ProfileScreen>
         ],
       );
     } else {
-      content = Image.network(
-        imageUrl,
-        fit: BoxFit.cover,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return Center(
-            child: CircularProgressIndicator(
-              color: AppColors.textPrimary,
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded /
-                      loadingProgress.expectedTotalBytes!
-                  : null,
-            ),
-          );
-        },
-        errorBuilder: (context, error, stackTrace) =>
-            Image.asset(ImageUtils.profileLogo),
+      content = SizedBox.expand(
+        child: Image.network(
+          imageUrl,
+          fit: BoxFit.cover,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                color: AppColors.textPrimary,
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+          },
+          errorBuilder: (context, error, stackTrace) =>
+              Image.asset(ImageUtils.profileLogo),
+        ),
       );
     }
+
+    content = ClipRect(child: content);
 
     if (!isMultiPost) return content;
 
@@ -315,13 +346,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                         PgAppBar.pinkBackButton(
                           context,
                           onBack: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => BottomNavBar(index: 0),
-                              ),
-                              (route) => false,
-                            );
+                            if (isOwnProfile) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => BottomNavBar(index: 0),
+                                ),
+                                (route) => false,
+                              );
+                            } else {
+                              Navigator.pop(context);
+                            }
                           },
                         ),
                         const SizedBox(width: 10),
@@ -338,10 +373,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                   ),
                   actions: [
-                    if (salonProfileDetails!.userType == 2 &&
+                    if (!isOwnProfile &&
+                        salonProfileDetails!.userType == 2 &&
                         salonProfileDetails!.address != null &&
-                        salonProfileDetails!.address!.isNotEmpty &&
-                        !Platform.isAndroid)
+                        salonProfileDetails!.address!.isNotEmpty)
                       PgAppBarAction(
                         icon: PhosphorIconsRegular.mapPin,
                         onTap: () {
@@ -360,17 +395,18 @@ class _ProfileScreenState extends State<ProfileScreen>
                           );
                         },
                       ),
-                    PgAppBarAction(
-                      icon: PhosphorIconsRegular.dotsThreeVertical,
-                      onTap: () {
-                        _scaffoldKey.currentState?.openEndDrawer();
-                      },
-                    ),
+                    if (isOwnProfile)
+                      PgAppBarAction(
+                        icon: PhosphorIconsRegular.dotsThreeVertical,
+                        onTap: () {
+                          _scaffoldKey.currentState?.openEndDrawer();
+                        },
+                      ),
                   ],
                 )
                 : AppBar(automaticallyImplyLeading: false),
         endDrawer:
-            salonProfileDetails != null
+            isOwnProfile && salonProfileDetails != null
                 ? Drawer(
                   elevation: 10.0,
                   shape: const RoundedRectangleBorder(
@@ -730,19 +766,53 @@ class _ProfileScreenState extends State<ProfileScreen>
                               // Avatar with pink border
                               GestureDetector(
                                 onTap: () {
-                                  if (myStoryArray.isNotEmpty) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => MyStoryView(
-                                          myStorysArray: myStoryArray,
-                                          firstname: salonProfileDetails!.firstName ?? "",
-                                          lastname: salonProfileDetails!.lastName ?? "",
-                                          img: salonProfileDetails!.profileImage ?? "",
-                                          salonanme: salonProfileDetails!.salonName ?? "",
+                                  if (isOwnProfile) {
+                                    if (myStoryArray.isNotEmpty) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => MyStoryView(
+                                            myStorysArray: myStoryArray,
+                                            firstname: salonProfileDetails!.firstName ?? "",
+                                            lastname: salonProfileDetails!.lastName ?? "",
+                                            img: salonProfileDetails!.profileImage ?? "",
+                                            salonanme: salonProfileDetails!.salonName ?? "",
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
+                                    }
+                                  } else {
+                                    if (getDetailsStories != null && getDetailsStories!.isNotEmpty) {
+                                      if (firebaseID == salonProfileDetails!.firebaseId!) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => MyStoryView(
+                                              myStorysArray: myStoryArray,
+                                              firstname: salonProfileDetails!.firstName ?? "",
+                                              lastname: salonProfileDetails!.lastName ?? "",
+                                              img: salonProfileDetails!.profileImage ?? "",
+                                              salonanme: salonProfileDetails!.salonName ?? "",
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => SingleUserStoryView(
+                                              storyUserDetailsData: getDetailsStories,
+                                              myFireabseiD: firebaseID,
+                                              firstname: salonProfileDetails!.firstName!,
+                                              lastname: salonProfileDetails!.lastName!,
+                                              profileimage: "${API.baseUrl}/api/${salonProfileDetails!.profileImage!}",
+                                              salonname: salonProfileDetails!.salonName!,
+                                              type: "Details",
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    }
                                   }
                                 },
                                 child: Container(
@@ -750,10 +820,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   height: 61,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: AppColors.actionPrimary,
-                                      width: 2.5,
-                                    ),
+                                    border: (isOwnProfile ? myStoryArray.isNotEmpty : (getDetailsStories != null && getDetailsStories!.isNotEmpty))
+                                        ? Border.all(
+                                            color: AppColors.actionPrimary,
+                                            width: 2.5,
+                                          )
+                                        : null,
                                   ),
                                   padding: const EdgeInsets.all(2.5),
                                   child: CircleAvatar(
@@ -862,6 +934,59 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   color: AppColors.textPrimary,
                                 ),
                               ),
+                              // User type label
+                              Text(
+                                salonProfileDetails!.userType == 1
+                                    ? Languages.of(context)!.gossiperText
+                                    : Languages.of(context)!.beautybusinessText,
+                                style: const TextStyle(
+                                  fontFamily: 'Geist',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xFF6A7282),
+                                ),
+                              ),
+                              // Star rating for salons
+                              if (salonProfileDetails!.userType == 2 &&
+                                  salonProfileDetails!.averageRating != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        double.parse(salonProfileDetails!.averageRating!).toStringAsFixed(1),
+                                        style: const TextStyle(
+                                          fontFamily: 'Geist',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.textPrimary,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      RatingBarIndicator(
+                                        rating: double.parse(salonProfileDetails!.averageRating!),
+                                        itemCount: 5,
+                                        itemSize: 14.0,
+                                        unratedColor: AppColors.klightGreyColor,
+                                        physics: const BouncingScrollPhysics(),
+                                        itemBuilder: (context, _) => const Icon(
+                                          Icons.star,
+                                          color: AppColors.actionPrimary,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        "(${salonProfileDetails!.ratingCount.toString()})",
+                                        style: const TextStyle(
+                                          fontFamily: 'Geist',
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xFF6A7282),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               const SizedBox(height: 3),
                               // Bio
                               if (salonProfileDetails!.bio != null &&
@@ -951,87 +1076,183 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ),
                         ),
                         const SizedBox(height: 30),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(8),
-                                  onTap: () {
-                                    Map<String, dynamic> userData = {
-                                      "firstname":
-                                          salonProfileDetails!.firstName ?? "",
-                                      "username":
-                                          salonProfileDetails!.userName ?? "",
-                                      "lastname":
-                                          salonProfileDetails!.lastName ?? "",
-                                      "bio": salonProfileDetails!.bio ?? "",
-                                      "site_name":
-                                          salonProfileDetails!.siteName ?? "",
-                                      "email": salonProfileDetails!.email ?? "",
-                                      "usertype":
-                                          salonProfileDetails!.userType ?? "",
-                                      "contact":
-                                          salonProfileDetails!.contactNo ?? "",
-                                      "address":
-                                          salonProfileDetails!.address ?? "",
-                                      "salonname":
-                                          salonProfileDetails!.salonName ?? "",
-                                      "opendays":
-                                          salonProfileDetails!.openDays ?? "",
-                                      "opentime":
-                                          salonProfileDetails!.openTime ?? "",
-                                      "profileImage":
-                                          salonProfileDetails!.profileImage ??
-                                          "",
-                                    };
+                        isOwnProfile
+                            ? Padding(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(8),
+                                        onTap: () {
+                                          Map<String, dynamic> userData = {
+                                            "firstname":
+                                                salonProfileDetails!.firstName ?? "",
+                                            "username":
+                                                salonProfileDetails!.userName ?? "",
+                                            "lastname":
+                                                salonProfileDetails!.lastName ?? "",
+                                            "bio": salonProfileDetails!.bio ?? "",
+                                            "site_name":
+                                                salonProfileDetails!.siteName ?? "",
+                                            "email": salonProfileDetails!.email ?? "",
+                                            "usertype":
+                                                salonProfileDetails!.userType ?? "",
+                                            "contact":
+                                                salonProfileDetails!.contactNo ?? "",
+                                            "address":
+                                                salonProfileDetails!.address ?? "",
+                                            "salonname":
+                                                salonProfileDetails!.salonName ?? "",
+                                            "opendays":
+                                                salonProfileDetails!.openDays ?? "",
+                                            "opentime":
+                                                salonProfileDetails!.openTime ?? "",
+                                            "profileImage":
+                                                salonProfileDetails!.profileImage ??
+                                                "",
+                                          };
 
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) => EditProfileScreen(
-                                              userData: userData,
-                                              latitude:
-                                                  salonProfileDetails!
-                                                              .latitude !=
-                                                          null
-                                                      ? salonProfileDetails!
-                                                          .latitude!
-                                                      : "",
-                                              longitude:
-                                                  salonProfileDetails!
-                                                              .longitude !=
-                                                          null
-                                                      ? salonProfileDetails!
-                                                          .longitude!
-                                                      : "",
-                                              getsalonOpenDays: salonOpenDays,
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (context) => EditProfileScreen(
+                                                    userData: userData,
+                                                    latitude:
+                                                        salonProfileDetails!
+                                                                    .latitude !=
+                                                                null
+                                                            ? salonProfileDetails!
+                                                                .latitude!
+                                                            : "",
+                                                    longitude:
+                                                        salonProfileDetails!
+                                                                    .longitude !=
+                                                                null
+                                                            ? salonProfileDetails!
+                                                                .longitude!
+                                                            : "",
+                                                    getsalonOpenDays: salonOpenDays,
+                                                  ),
                                             ),
+                                          ).then((value) {
+                                            // getProfileDetails();
+                                          });
+                                        },
+                                        child: Container(
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.btnColor,
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              Languages.of(context)!.editProfileText,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ).then((value) {
-                                      // getProfileDetails();
-                                    });
-                                  },
-                                  child: Container(
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.btnColor,
-                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        Languages.of(context)!.editProfileText,
+                                    const SizedBox(width: 20),
+                                  ],
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 14),
+                                child: Row(
+                                  children: [
+                                    // Follow / Following button (pill, full width)
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          if (salonProfileDetails!.isFollowed == 0) {
+                                            userFollowing(userid, targetId, "0");
+                                          } else {
+                                            userUnfollow(userid, targetId);
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 37,
+                                          decoration: BoxDecoration(
+                                            color: salonProfileDetails!.isFollowed == 0
+                                                ? AppColors.actionPrimary
+                                                : Colors.transparent,
+                                            borderRadius: BorderRadius.circular(9999),
+                                            border: salonProfileDetails!.isFollowed != 0
+                                                ? Border.all(color: AppColors.actionPrimary, width: 1.7)
+                                                : null,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                salonProfileDetails!.isFollowed == 0
+                                                    ? PhosphorIconsBold.userPlus
+                                                    : PhosphorIconsBold.userCheck,
+                                                size: 14,
+                                                color: salonProfileDetails!.isFollowed == 0
+                                                    ? Colors.white
+                                                    : AppColors.actionPrimary,
+                                              ),
+                                              const SizedBox(width: 7),
+                                              Text(
+                                                salonProfileDetails!.isFollowed == 0
+                                                    ? Languages.of(context)!.followText
+                                                    : Languages.of(context)!.followingText,
+                                                style: TextStyle(
+                                                  fontFamily: 'Geist',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: salonProfileDetails!.isFollowed == 0
+                                                      ? Colors.white
+                                                      : AppColors.actionPrimary,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    const SizedBox(width: 7),
+                                    // Message button (circle with pink border)
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MessageDetail(
+                                              oppId: salonProfileDetails!.firebaseId!.toString(),
+                                              firebaseUId: firebaseID,
+                                              name: "${salonProfileDetails!.firstName}${salonProfileDetails!.lastName}",
+                                              userImg: salonProfileDetails!.profileImage!,
+                                              type: "fromdetail",
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 37,
+                                        height: 37,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: AppColors.actionPrimary,
+                                            width: 1.7,
+                                          ),
+                                        ),
+                                        child: const Center(
+                                          child: Icon(
+                                            PhosphorIconsRegular.chatCircle,
+                                            size: 17,
+                                            color: AppColors.actionPrimary,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(width: 20),
-                            ],
-                          ),
-                        ),
                         const SizedBox(height: 15),
                         Container(
                           decoration: const BoxDecoration(
@@ -1062,11 +1283,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   Future.delayed(
                                     const Duration(seconds: 5),
                                     () {
-                                      _videogridviewController.animateTo(
-                                        1.0,
-                                        duration: const Duration(milliseconds: 500),
-                                        curve: Curves.bounceIn,
-                                      );
+                                      if (_videogridviewController.hasClients) {
+                                        _videogridviewController.animateTo(
+                                          1.0,
+                                          duration: const Duration(milliseconds: 500),
+                                          curve: Curves.bounceIn,
+                                        );
+                                      }
                                     },
                                   );
                                 }
@@ -1196,8 +1419,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                               imageUrl: salonProfilePostArray[index].beforeImage != ""
                                                   ? "${API.baseUrl}/api/${salonProfilePostArray[index].afterImage}"
                                                   : showotherimg[index]['f_img'],
-                                              isMultiPost: salonProfilePostArray[index].otherMultiPost?.isNotEmpty ?? false,
-                                              kSize: kSize,
+                                              isMultiPost: salonProfilePostArray[index].beforeImage != ""
+                                                  ? (salonProfilePostArray[index].otherMultiPost?.isNotEmpty ?? false)
+                                                  : (salonProfilePostArray[index].otherMultiPost?.length ?? 0) > 1,
                                             ),
                                           );
                                         },
@@ -1245,8 +1469,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 showotherimg[index].isNotEmpty
                                                     ? _buildGridItem(
                                                         imageUrl: showotherimg[index]['f_img'],
-                                                        isMultiPost: showotherimg[index]['otherpostlen']! > 1,
-                                                        kSize: kSize,
+                                                        isMultiPost: (showotherimg[index]['otherpostlen'] ?? 0) > 1,
                                                       )
                                                     : Container(
                                                         color: Colors.grey[200],
@@ -1833,7 +2056,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         await Provider.of<SalonDetailsViewModel>(
           context,
           listen: false,
-        ).getSalonDetails(userid, userid, offsett, userTyppe);
+        ).getSalonDetails(targetId, userid, offsett, targetType);
         if (Provider.of<SalonDetailsViewModel>(
               context,
               listen: false,
@@ -1931,7 +2154,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       element.beforeImage != "") {
                     showotherimg.add({
                       "f_img": "${API.baseUrl}/api/${element.afterImage}",
-                      "otherpostlen": 0,
+                      "otherpostlen": (element.otherMultiPost?.length ?? 0) + 1,
                     });
                   }
                   if (model.userProfile!.userType == 2 &&
@@ -1939,7 +2162,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       element.beforeImage != "") {
                     showotherimg.add({
                       "f_img": "${API.baseUrl}/api/${element.afterImage}",
-                      "otherpostlen": 0,
+                      "otherpostlen": (element.otherMultiPost?.length ?? 0) + 1,
                     });
                   }
 
@@ -2161,10 +2384,8 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   _showHoursUI() {
     return Container(
-      // height: 35,
-      margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade400),
         borderRadius: BorderRadius.circular(8),
@@ -2181,25 +2402,30 @@ class _ProfileScreenState extends State<ProfileScreen>
             },
             child: Row(
               children: [
-                Text(
-                  _showHours
-                      ? Languages.of(context)!.hideStoreHours
-                      : Languages.of(context)!.viewStorehours,
-                  style: AppTypography.heading3.copyWith(
-                    // color: Colors.blue, // clickable look
-                    fontWeight: FontWeight.w600,
+                Expanded(
+                  child: Text(
+                    _showHours
+                        ? Languages.of(context)!.hideStoreHours
+                        : Languages.of(context)!.viewStorehours,
+                    style: const TextStyle(
+                      fontFamily: 'Geist',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Spacer(),
                 Icon(
                   _showHours
                       ? Icons.arrow_drop_up_outlined
                       : Icons.arrow_drop_down,
+                  size: 20,
                 ),
               ],
             ),
           ),
-          if (_showHours) Divider(),
+          if (_showHours) const Divider(height: 12),
           if (_showHours)
             ListView.builder(
               itemCount: salonOpenDays.length,
@@ -2207,38 +2433,50 @@ class _ProfileScreenState extends State<ProfileScreen>
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      salonOpenDays[index].open!,
-                      style: AppTypography.caption.copyWith(
-                        color: Colors.black,
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 30,
+                        child: Text(
+                          salonOpenDays[index].open!,
+                          style: const TextStyle(
+                            fontFamily: 'Geist',
+                            fontSize: 11,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      formatTime(salonOpenDays[index].startTime!),
-                      style: AppTypography.caption.copyWith(
-                        color: Colors.black,
+                      const SizedBox(width: 5),
+                      Text(
+                        formatTime(salonOpenDays[index].startTime!),
+                        style: const TextStyle(
+                          fontFamily: 'Geist',
+                          fontSize: 11,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      Languages.of(context)!.toText,
-                      style: AppTypography.caption.copyWith(
-                        color: Colors.black,
+                      const SizedBox(width: 4),
+                      Text(
+                        Languages.of(context)!.toText,
+                        style: const TextStyle(
+                          fontFamily: 'Geist',
+                          fontSize: 11,
+                          color: Color(0xFF6A7282),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      formatTime(salonOpenDays[index].endTime!),
-                      style: AppTypography.caption.copyWith(
-                        color: Colors.black,
+                      const SizedBox(width: 4),
+                      Text(
+                        formatTime(salonOpenDays[index].endTime!),
+                        style: const TextStyle(
+                          fontFamily: 'Geist',
+                          fontSize: 11,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
@@ -2558,5 +2796,224 @@ class _ProfileScreenState extends State<ProfileScreen>
         kToast(Languages.of(context)!.noInternetText);
       }
     });
+  }
+
+  userFollowing(String following_id, String follower_id, String status) async {
+    print("get userFollowing function call");
+    setState(() {});
+    getuserid();
+    isInternetAvailable().then((isConnected) async {
+      if (isConnected) {
+        await Provider.of<FollowingViewModel>(
+          context,
+          listen: false,
+        ).userFollowing(following_id, follower_id, status);
+        if (Provider.of<FollowingViewModel>(context, listen: false).isLoading ==
+            false) {
+          if (Provider.of<FollowingViewModel>(
+                context,
+                listen: false,
+              ).isSuccess ==
+              true) {
+            setState(() {
+              print("Success");
+              FollowingModel model =
+                  Provider.of<FollowingViewModel>(
+                        context,
+                        listen: false,
+                      ).followingresponse.response
+                      as FollowingModel;
+
+              if (model.success == true) {
+                followCheck(targetId);
+              }
+
+              kToast(model.message!);
+            });
+          }
+        }
+      } else {
+        setState(() {});
+        kToast(Languages.of(context)!.noInternetText);
+      }
+    });
+  }
+
+  userUnfollow(String following_id, String follower_id) async {
+    print("get userUnfollow function call");
+    setState(() {});
+    getuserid();
+    isInternetAvailable().then((isConnected) async {
+      if (isConnected) {
+        await Provider.of<UnfollowViewModel>(
+          context,
+          listen: false,
+        ).userUnfollow(following_id, follower_id);
+        if (Provider.of<UnfollowViewModel>(context, listen: false).isLoading ==
+            false) {
+          if (Provider.of<UnfollowViewModel>(
+                context,
+                listen: false,
+              ).isSuccess ==
+              true) {
+            setState(() {
+              print("Success");
+              UnfollowiModel model =
+                  Provider.of<UnfollowViewModel>(
+                        context,
+                        listen: false,
+                      ).unfollowresponse.response
+                      as UnfollowiModel;
+              if (model.success == true) {
+                followCheck(targetId);
+              }
+              kToast(model.message!);
+            });
+          }
+        }
+      } else {
+        setState(() {});
+        kToast(Languages.of(context)!.noInternetText);
+      }
+    });
+  }
+
+  followCheck(String id) async {
+    salonProfilePostArray.clear();
+    print("get followCheck function call");
+    setState(() {});
+    isInternetAvailable().then((isConnected) async {
+      if (isConnected) {
+        await Provider.of<SalonDetailsViewModel>(
+          context,
+          listen: false,
+        ).getSalonDetails(id, userid, 0, targetType);
+        if (Provider.of<SalonDetailsViewModel>(
+              context,
+              listen: false,
+            ).isLoading ==
+            false) {
+          if (Provider.of<SalonDetailsViewModel>(
+                context,
+                listen: false,
+              ).isSuccess ==
+              true) {
+            setState(() {
+              videoList.clear();
+              salonProfilePostArray.clear();
+              showotherimg.clear();
+              print("Success");
+              SalonDetailModel model =
+                  Provider.of<SalonDetailsViewModel>(
+                        context,
+                        listen: false,
+                      ).salondetailsresponse.response
+                      as SalonDetailModel;
+
+              salonProfileDetails = model.userProfile!;
+              print(salonProfileDetails!.toJson());
+              salonProfilePostArray = model.posts!;
+
+              salonProfilePostArray.forEach((element) {
+                if (element.otherMultiPost!.isNotEmpty) {
+                  String ext = getFileExtension(
+                    element.otherMultiPost!.first.otherData!,
+                  );
+                  if (ext == ".jpg" || ext == ".mp4" || ext == ".mov" || ext == ".MP4") {
+                    if (element.afterImage == "" && element.beforeImage == "") {
+                      showotherimg.add({
+                        "f_img": "${API.baseUrl}/api/${element.otherMultiPost!.first.otherData}",
+                        "otherpostlen": element.otherMultiPost!.length,
+                      });
+                    }
+                  }
+                }
+                if (element.afterImage != "" && element.beforeImage != "") {
+                  showotherimg.add({
+                    "f_img": "${API.baseUrl}/api/${element.afterImage}",
+                    "otherpostlen": (element.otherMultiPost?.length ?? 0) + 1,
+                  });
+                }
+                element.otherMultiPost!.forEach((mp) {
+                  String ext = getFileExtension(mp.otherData.toString());
+                  if (ext == ".mp4") {
+                    videoList.add("${API.baseUrl}/api/${mp.otherData.toString()}");
+                  }
+                });
+              });
+
+              print("video list ===${videoList}");
+            });
+          }
+        }
+      } else {
+        setState(() {});
+        kToast(Languages.of(context)!.noInternetText);
+      }
+    });
+  }
+
+  void _showDeepLinkWelcomeDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: const Text(
+            "Hey 💕 welcome on Pink Gossip",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const Text(
+            "Where your in-salon content is actually rewarding.\n\n"
+            "Start your beauty journey by winning 50 points by taking a before picture 📸✨",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Later",
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey).copyWith(
+                  color: AppColors.textPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.actionPrimary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                prefs!.remove("beforeImage");
+                prefs!.remove("afterImage");
+                prefs!.remove("otherData");
+                prefs!.setInt("step", 2);
+                prefs!.setString("curruntsalonid", targetId);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BottomNavBar(index: 2),
+                  ),
+                );
+              },
+              child: Text(
+                "Start Now",
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.drktxtGrey).copyWith(
+                  color: AppColors.btnColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
