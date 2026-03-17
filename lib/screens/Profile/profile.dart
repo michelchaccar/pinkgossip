@@ -1388,9 +1388,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                         context,
                                                       ) => ShowPostImage(
                                                         postData:
-                                                            salonProfilePostArray,
+                                                            [salonProfilePostArray[index]],
                                                         selectedLessonIndex:
-                                                            index,
+                                                            0,
                                                         usertype:
                                                             salonProfileDetails!
                                                                 .userType!
@@ -1438,9 +1438,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                         context,
                                                       ) => ShowPostImage(
                                                         postData:
-                                                            salonProfilePostArray,
+                                                            [salonProfilePostArray[index]],
                                                         selectedLessonIndex:
-                                                            index,
+                                                            0,
                                                         usertype:
                                                             salonProfileDetails!
                                                                 .userType!
