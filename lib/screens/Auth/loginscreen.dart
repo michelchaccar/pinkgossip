@@ -538,10 +538,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 await updateFirebaseId(model.response!.firebaseId!, fcmToken);
               }
               prefs.setBool("isLogin", true);
-              prefs.setBool(
-                "onboarding_completed_${model.response!.id.toString()}",
-                true,
-              );
+
               prefs.setBool(
                 "tooltip_seen_search_${model.response!.id.toString()}",
                 true,
