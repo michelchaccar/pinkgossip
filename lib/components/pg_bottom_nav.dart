@@ -74,7 +74,7 @@ class PgBottomNav extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
-        vertical: 16,
+        vertical: 20,
       ),
       decoration: const BoxDecoration(
         color: AppColors.actionPrimary,
@@ -95,7 +95,7 @@ class PgBottomNav extends StatelessWidget {
           Widget iconWidget = Icon(
             isActive ? (item.activeIcon ?? item.icon) : item.icon,
             color: Colors.white,
-            size: AppIconSize.lg,
+            size: 26,
           );
 
           if (item.key != null) {
