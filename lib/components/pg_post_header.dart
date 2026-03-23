@@ -41,7 +41,7 @@ class PgPostHeader extends StatelessWidget {
                 ? NetworkImage(imageUrl!)
                 : null,
             label: '',
-            size: 37,
+            size: 40,
           ),
         ),
         const SizedBox(width: 5),
@@ -55,11 +55,8 @@ class PgPostHeader extends StatelessWidget {
                 // Username
                 Text(
                   username,
-                  style: const TextStyle(
-                    fontFamily: 'Geist',
-                    fontSize: 13,
+                  style: AppTypography.bodySemiBold.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -67,11 +64,8 @@ class PgPostHeader extends StatelessWidget {
                 if (subtitle != null && subtitle!.isNotEmpty) ...[
                   Text(
                     subtitle!,
-                    style: const TextStyle(
-                      fontFamily: 'Geist',
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF4A5565),
+                    style: AppTypography.captionMedium.copyWith(
+                      color: const Color(0xFF4A5565),
                       height: 1.0,
                     ),
                     maxLines: 1,
@@ -103,7 +97,7 @@ class PgPostHeader extends StatelessWidget {
           final filledCount = (rating ?? 0).round();
           return Icon(
             PhosphorIconsRegular.star,
-            size: 11,
+            size: 13,
             color: index < filledCount
                 ? AppColors.actionPrimary
                 : const Color(0xFFD1D5DB),
@@ -112,10 +106,7 @@ class PgPostHeader extends StatelessWidget {
         if (ratingCount != null)
           Text(
             ' ($ratingCount)',
-            style: const TextStyle(
-              fontFamily: 'Geist',
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
+            style: AppTypography.captionMedium.copyWith(
               color: AppColors.actionPrimary,
             ),
           ),

@@ -9,7 +9,7 @@ class AppTypography {
   // ── Headings ──
   static const TextStyle heading1 = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: FontWeight.w700,
     height: 1.3,
     color: AppColors.textPrimary,
@@ -17,7 +17,7 @@ class AppTypography {
 
   static const TextStyle heading2 = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: FontWeight.w700,
     height: 1.4,
     color: AppColors.textPrimary,
@@ -25,7 +25,7 @@ class AppTypography {
 
   static const TextStyle heading3 = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: FontWeight.w600,
     height: 1.4,
     color: AppColors.textPrimary,
@@ -34,7 +34,7 @@ class AppTypography {
   // ── Body ──
   static const TextStyle body = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w400,
     height: 1.5,
     color: AppColors.textPrimary,
@@ -42,7 +42,7 @@ class AppTypography {
 
   static const TextStyle bodyMedium = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w500,
     height: 1.5,
     color: AppColors.textPrimary,
@@ -50,7 +50,7 @@ class AppTypography {
 
   static const TextStyle bodySemiBold = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w600,
     height: 1.5,
     color: AppColors.textPrimary,
@@ -59,7 +59,7 @@ class AppTypography {
   // ── Caption ──
   static const TextStyle caption = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: FontWeight.w400,
     height: 1.4,
     color: AppColors.textSecondary,
@@ -67,7 +67,7 @@ class AppTypography {
 
   static const TextStyle captionMedium = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: FontWeight.w500,
     height: 1.4,
     color: AppColors.textSecondary,
@@ -76,14 +76,14 @@ class AppTypography {
   // ── Button ──
   static const TextStyle buttonText = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.w600,
     color: AppColors.bgPrimary,
   );
 
   static const TextStyle buttonTextSmall = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w600,
     color: AppColors.bgPrimary,
   );
@@ -91,7 +91,7 @@ class AppTypography {
   // ── Nav ──
   static const TextStyle navLabel = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: FontWeight.w500,
     color: AppColors.textSecondary,
   );
@@ -99,7 +99,7 @@ class AppTypography {
   // ── Input ──
   static const TextStyle input = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.w500,
     color: AppColors.textTertiary,
   );

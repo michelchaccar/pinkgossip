@@ -671,11 +671,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: [
                           Container(
-                            padding: const EdgeInsets.only(
+                            padding: EdgeInsets.only(
                               left: 12,
                               right: 12,
                               top: 8,
-                              bottom: 8,
+                              bottom: (item.userType == 1 && item.beforeImage == "") ? 2 : 8,
                             ),
                             color: Colors.white,
                             child: PgPostHeader(
@@ -686,7 +686,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? item.userName!
                                   : "${item.firstName!} ${item.lastName!}",
                               subtitle: (item.userType == 1 && item.beforeImage == "")
-                                  ? null
+                                  ? "GOSSIPER 🦋"
                                   : item.salonName,
                               rating: (item.userType == 1 && item.beforeImage == "")
                                   ? null
@@ -874,15 +874,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 icon: const Icon(
                                   PhosphorIconsRegular.dotsThreeVertical,
-                                  size: 18,
+                                  size: AppIconSize.md,
                                   color: Color(0xFF9CA3AF),
                                 ),
                                 itemBuilder: (BuildContext context) {
-                                  const menuTextStyle = TextStyle(
-                                    fontFamily: 'Geist',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF4A5565),
+                                  final menuTextStyle = AppTypography.bodyMedium.copyWith(
+                                    color: const Color(0xFF4A5565),
                                   );
                                   return [
                                     PopupMenuItem<String>(
@@ -1168,15 +1165,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             child: Center(
                                                               child: Text(
                                                                 "${pageviewindex + 1}/${item.otherMultiPost!.length + 1}",
-                                                                style: const TextStyle(
-                                                                  color:
-                                                                      Colors
-                                                                          .white,
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
+                                                                style: AppTypography.captionMedium.copyWith(
+                                                                  color: Colors.white,
+                                                                  fontWeight: FontWeight.w600,
                                                                 ),
                                                               ),
                                                             ),
@@ -1297,15 +1288,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             child: Center(
                                                               child: Text(
                                                                 "${pageviewindex + 1}/${item.otherMultiPost!.length}",
-                                                                style: const TextStyle(
-                                                                  color:
-                                                                      Colors
-                                                                          .white,
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
+                                                                style: AppTypography.captionMedium.copyWith(
+                                                                  color: Colors.white,
+                                                                  fontWeight: FontWeight.w600,
                                                                 ),
                                                               ),
                                                             ),
@@ -1421,11 +1406,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 child: Center(
                                                   child: Text(
                                                     "${pageviewindex + 1}/${item.otherMultiPost!.length}",
-                                                    style: const TextStyle(
+                                                    style: AppTypography.captionMedium.copyWith(
                                                       color: Colors.white,
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                                      fontWeight: FontWeight.w600,
                                                     ),
                                                   ),
                                                 ),
@@ -1468,7 +1451,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     item.like == 1
                                         ? PhosphorIconsFill.heart
                                         : PhosphorIconsRegular.heart,
-                                    size: 20,
+                                    size: AppIconSize.lg,
                                     color: item.like == 1
                                         ? AppColors.actionPrimary
                                         : AppColors.textPrimary,
@@ -1486,7 +1469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: const Icon(
                                     PhosphorIconsRegular.chatCircle,
-                                    size: 20,
+                                    size: AppIconSize.lg,
                                     color: AppColors.textPrimary,
                                   ),
                                 ),
@@ -1505,7 +1488,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: const Icon(
                                     PhosphorIconsRegular.paperPlaneTilt,
-                                    size: 20,
+                                    size: AppIconSize.lg,
                                     color: AppColors.textPrimary,
                                   ),
                                 ),
@@ -1518,33 +1501,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               '${item.likeCount.toString()} ${Languages.of(context)!.likesText}',
-                              style: const TextStyle(
-                                fontFamily: 'Geist',
-                                fontSize: 11,
+                              style: AppTypography.captionMedium.copyWith(
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black,
+                                color: AppColors.textPrimary,
                               ),
                             ),
                           ),
                           const SizedBox(height: 4),
                           // Username
-                          if (item.review!.isNotEmpty)
-                            Container(
-                              padding: const EdgeInsets.only(left: 18, right: 18),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                item.userName!.isNotEmpty
-                                    ? item.userName!
-                                    : "${item.firstName!} ${item.lastName!}",
-                                style: const TextStyle(
-                                  fontFamily: 'Geist',
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFF101828),
-                                  height: 1.5,
-                                ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 18, right: 18),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              item.userName!.isNotEmpty
+                                  ? item.userName!
+                                  : "${item.firstName!} ${item.lastName!}",
+                              style: AppTypography.bodySemiBold.copyWith(
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
+                          ),
                           // Review text
                           if (item.review!.isNotEmpty)
                             Padding(
@@ -1576,11 +1552,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 },
                                                 child: Text(
                                                   "  ${Languages.of(context)!.lessText}",
-                                                  style: const TextStyle(
-                                                    fontFamily: 'Geist',
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Color(0xFF6A7282),
+                                                  style: AppTypography.bodySemiBold.copyWith(
+                                                    color: const Color(0xFF6A7282),
                                                   ),
                                                 ),
                                               ),
@@ -1606,11 +1579,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   : true,
                                           child: Text(
                                             "..${Languages.of(context)!.moreText}",
-                                            style: const TextStyle(
-                                              fontFamily: 'Geist',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFF6A7282),
+                                            style: AppTypography.bodySemiBold.copyWith(
+                                              color: const Color(0xFF6A7282),
                                             ),
                                           ),
                                         ),
@@ -1679,11 +1649,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: Text(
                                     "${Languages.of(context)!.viewallText} ${item.commentCount.toString()} ${Languages.of(context)!.commentsText}",
-                                    style: const TextStyle(
-                                      fontFamily: 'Geist',
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF6A7282),
+                                    style: AppTypography.bodyMedium.copyWith(
+                                      color: const Color(0xFF6A7282),
                                     ),
                                   ),
                                 ),
@@ -1694,11 +1661,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               getpostTime(item.createdAt!),
-                              style: const TextStyle(
-                                fontFamily: 'Geist',
-                                fontSize: 11,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF6A7282),
+                              style: AppTypography.caption.copyWith(
+                                color: const Color(0xFF6A7282),
                               ),
                             ),
                           ),
@@ -1765,11 +1729,8 @@ class _HomeScreenState extends State<HomeScreen> {
         textSpans.add(
           TextSpan(
             text: '$word ',
-            style: const TextStyle(
-              fontFamily: 'Geist',
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF3B82F6),
+            style: AppTypography.bodySemiBold.copyWith(
+              color: const Color(0xFF3B82F6),
               height: 1.43,
             ),
             recognizer:
@@ -1784,11 +1745,8 @@ class _HomeScreenState extends State<HomeScreen> {
         textSpans.add(
           TextSpan(
             text: '$word ',
-            style: const TextStyle(
-              fontFamily: 'Geist',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Color(0xFF6A7282),
+            style: AppTypography.body.copyWith(
+              color: const Color(0xFF6A7282),
               height: 1.43,
             ),
           ),
