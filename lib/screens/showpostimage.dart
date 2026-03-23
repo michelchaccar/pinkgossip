@@ -379,7 +379,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                               .isNotEmpty
                                           ? widget.postData[index].userName!
                                           : "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
-                                      style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
+                                      style: AppTypography.bodySemiBold.copyWith(fontWeight: FontWeight.w700),
                                     ),
                                   ),
                                   widget.postData[index].beforeImage != ""
@@ -404,7 +404,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                         child: Text(
                                           widget.postData[index].salonName!,
                                           style:
-                                              AppTypography.captionMedium.copyWith(color: Colors.black54, fontWeight: FontWeight.w600),
+                                              AppTypography.captionMedium.copyWith(color: Colors.black54, fontWeight: FontWeight.w700),
                                         ),
                                       )
                                       : Container(),
@@ -478,7 +478,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                               .isNotEmpty
                                           ? widget.postData[index].userName!
                                           : "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
-                                      style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600),
+                                      style: AppTypography.bodySemiBold.copyWith(fontWeight: FontWeight.w700),
                                     ),
                                   ),
                                   GestureDetector(
@@ -500,7 +500,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                     },
                                     child: Text(
                                       widget.postData[index].salonName!,
-                                      style: AppTypography.captionMedium.copyWith(color: Colors.black54, fontWeight: FontWeight.w600),
+                                      style: AppTypography.captionMedium.copyWith(color: Colors.black54, fontWeight: FontWeight.w700),
                                     ),
                                   ),
                                   Row(
@@ -549,7 +549,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                         },
                         child: const Icon(
                           PhosphorIconsRegular.dotsThreeVertical,
-                          size: 20,
+                          size: AppIconSize.md,
                           color: AppColors.textPrimary,
                         ),
                       ),
@@ -747,9 +747,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                         child: Center(
                                           child: Text(
                                             "${pageviewindex + 1}/${widget.postData[index].otherMultiPost!.length + 1}",
-                                            style: const TextStyle(
+                                            style: AppTypography.captionMedium.copyWith(
                                               color: Colors.white,
-                                              fontSize: 12.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -855,9 +854,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                         child: Center(
                                           child: Text(
                                             "${pageviewindex + 1}/${widget.postData[index].otherMultiPost!.length}",
-                                            style: const TextStyle(
+                                            style: AppTypography.captionMedium.copyWith(
                                               color: Colors.white,
-                                              fontSize: 12.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -1054,9 +1052,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                     child: Center(
                                       child: Text(
                                         "${pageviewindex + 1}/${widget.postData[index].otherMultiPost!.length + 1}",
-                                        style: const TextStyle(
+                                        style: AppTypography.captionMedium.copyWith(
                                           color: Colors.white,
-                                          fontSize: 12.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -1157,9 +1154,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                     child: Center(
                                       child: Text(
                                         "${pageviewindex + 1}/${widget.postData[index].otherMultiPost!.length}",
-                                        style: const TextStyle(
+                                        style: AppTypography.captionMedium.copyWith(
                                           color: Colors.white,
-                                          fontSize: 12.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -1205,7 +1201,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                           widget.postData[index].like == 1
                               ? PhosphorIconsFill.heart
                               : PhosphorIconsRegular.heart,
-                          size: 20,
+                          size: AppIconSize.lg,
                           color: widget.postData[index].like == 1
                               ? AppColors.actionPrimary
                               : AppColors.textPrimary,
@@ -1218,7 +1214,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                         },
                         child: const Icon(
                           PhosphorIconsRegular.chatCircle,
-                          size: 20,
+                          size: AppIconSize.lg,
                           color: AppColors.textPrimary,
                         ),
                       ),
@@ -1237,7 +1233,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                         },
                         child: const Icon(
                           PhosphorIconsRegular.paperPlaneTilt,
-                          size: 20,
+                          size: AppIconSize.lg,
                           color: AppColors.textPrimary,
                         ),
                       ),
@@ -1249,33 +1245,26 @@ class _ShowPostImageState extends State<ShowPostImage> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     "${widget.postData[index].likeCount} ${Languages.of(context)!.likesText}",
-                    style: const TextStyle(
-                      fontFamily: 'Geist',
-                      fontSize: 11,
+                    style: AppTypography.captionMedium.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: Colors.black,
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 ),
                 // const SizedBox(height: 8),
                 const SizedBox(height: 4),
-                if (widget.postData[index].review!.isNotEmpty)
-                  Container(
-                    padding: const EdgeInsets.only(left: 18, right: 18),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      widget.postData[index].userName!.isNotEmpty
-                          ? widget.postData[index].userName!
-                          : "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
-                      style: const TextStyle(
-                        fontFamily: 'Geist',
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF101828),
-                        height: 1.5,
-                      ),
+                Container(
+                  padding: const EdgeInsets.only(left: 18, right: 18),
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    widget.postData[index].userName!.isNotEmpty
+                        ? widget.postData[index].userName!
+                        : "${widget.postData[index].firstName!} ${widget.postData[index].lastName!}",
+                    style: AppTypography.bodySemiBold.copyWith(
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
+                ),
                 if (widget.postData[index].review!.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(left: 18, right: 18),
@@ -1305,11 +1294,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                       },
                                       child: Text(
                                         "  ${Languages.of(context)!.lessText}",
-                                        style: const TextStyle(
-                                          fontFamily: 'Geist',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xFF6A7282),
+                                        style: AppTypography.bodySemiBold.copyWith(
+                                          color: const Color(0xFF6A7282),
                                         ),
                                       ),
                                     ),
@@ -1332,11 +1318,8 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                 visible: selectindex == index ? more : true,
                                 child: Text(
                                   "..${Languages.of(context)!.moreText}",
-                                  style: const TextStyle(
-                                    fontFamily: 'Geist',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF6A7282),
+                                  style: AppTypography.bodySemiBold.copyWith(
+                                    color: const Color(0xFF6A7282),
                                   ),
                                 ),
                               ),
@@ -1401,7 +1384,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                         },
                         child: Text(
                           "${Languages.of(context)!.viewallText} ${widget.postData[index].commentCount.toString()} ${Languages.of(context)!.commentsText}",
-                          style: AppTypography.captionMedium.copyWith(color: AppColors.textTertiary),
+                          style: AppTypography.bodyMedium.copyWith(color: const Color(0xFF6A7282)),
                         ),
                       ),
                     )
@@ -1411,7 +1394,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     getpostTime(widget.postData[index].createdAt!),
-                    style: AppTypography.captionMedium.copyWith(color: AppColors.textTertiary),
+                    style: AppTypography.caption.copyWith(color: const Color(0xFF6A7282)),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -1914,7 +1897,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
               backgroundColor: AppColors.bgPrimary,
               elevation: 0,
               title: Text(Languages.of(context)!.deleteText),
-              titleTextStyle: AppTypography.heading1.copyWith(fontSize: 22),
+              titleTextStyle: AppTypography.heading1,
               insetPadding: const EdgeInsets.only(left: 20, right: 20),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -1943,7 +1926,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -1966,7 +1949,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -2027,7 +2010,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
         textSpans.add(
           TextSpan(
             text: '$word ',
-            style: AppTypography.captionMedium.copyWith(fontWeight: FontWeight.w600).copyWith(
+            style: AppTypography.bodySemiBold.copyWith(
               color: AppColors.kblueColor,
             ),
             recognizer:
@@ -2040,7 +2023,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
         );
       } else {
         textSpans.add(
-          TextSpan(text: '$word ', style: AppTypography.caption.copyWith(color: AppColors.textTertiary)),
+          TextSpan(text: '$word ', style: AppTypography.body.copyWith(color: const Color(0xFF6A7282), height: 1.43)),
         );
       }
     }
@@ -2122,7 +2105,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                       alignment: Alignment.topCenter,
                                       child: Text(
                                         Languages.of(context)!.CommentsText,
-                                        style: AppTypography.heading1.copyWith(fontSize: 20),
+                                        style: AppTypography.heading2,
                                       ),
                                     ),
                                   ],
@@ -2230,7 +2213,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                                             context,
                                           )!.NoCommentsavailableText,
                                           style:
-                                              AppTypography.heading1.copyWith(fontSize: 20),
+                                              AppTypography.heading2,
                                         ),
                                       ),
                                     ),
