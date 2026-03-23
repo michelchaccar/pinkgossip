@@ -771,12 +771,11 @@ class _AddPostState extends State<AddPost> {
                                             ? AppColors.actionPrimary
                                             : AppColors.drktxtGrey,
                                   ),
-                                  child: const Center(
+                                  child: Center(
                                     child: Text(
                                       "1",
-                                      style: TextStyle(
+                                      style: AppTypography.heading3.copyWith(
                                         color: Colors.white,
-                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -789,8 +788,8 @@ class _AddPostState extends State<AddPost> {
                                 Languages.of(context)!.pictureVideoText,
                                 style:
                                     salonselectindex == 1
-                                        ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
-                                        : AppTypography.captionMedium.copyWith(fontSize: 10),
+                                        ? AppTypography.navLabel.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                        : AppTypography.navLabel,
                               ),
                             ],
                           ),
@@ -850,12 +849,11 @@ class _AddPostState extends State<AddPost> {
                                             ? AppColors.actionPrimary
                                             : AppColors.drktxtGrey,
                                   ),
-                                  child: const Center(
+                                  child: Center(
                                     child: Text(
                                       "2",
-                                      style: TextStyle(
+                                      style: AppTypography.heading3.copyWith(
                                         color: Colors.white,
-                                        fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -868,8 +866,8 @@ class _AddPostState extends State<AddPost> {
                                 Languages.of(context)!.submitpostText,
                                 style:
                                     salonselectindex == 2
-                                        ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
-                                        : AppTypography.captionMedium.copyWith(fontSize: 10),
+                                        ? AppTypography.navLabel.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                        : AppTypography.navLabel,
                               ),
                             ],
                           ),
@@ -952,11 +950,9 @@ class _AddPostState extends State<AddPost> {
                                                 child: Center(
                                                   child: Text(
                                                     '${index + 1}/${allOtherdata.length}',
-                                                    style: const TextStyle(
+                                                    style: AppTypography.captionMedium.copyWith(
                                                       color: Colors.white,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w600,
                                                     ),
                                                   ),
                                                 ),
@@ -982,7 +978,7 @@ class _AddPostState extends State<AddPost> {
                           const SizedBox(height: 5),
                           Text(
                             Languages.of(context)!.UploadpictureorvideoText,
-                            style: AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textSecondary),
+                            style: AppTypography.heading3.copyWith(color: AppColors.textSecondary),
                           ),
                           const SizedBox(height: 10),
                           Container(
@@ -1180,7 +1176,7 @@ class _AddPostState extends State<AddPost> {
                                 child: Center(
                                   child: Text(
                                     Languages.of(context)!.previousText,
-                                    style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                    style: AppTypography.bodySemiBold,
                                   ),
                                 ),
                               ),
@@ -1237,12 +1233,11 @@ class _AddPostState extends State<AddPost> {
                                               ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "1",
-                                        style: TextStyle(
+                                        style: AppTypography.heading3.copyWith(
                                           color: Colors.white,
-                                          fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -1255,8 +1250,8 @@ class _AddPostState extends State<AddPost> {
                                   textAlign: TextAlign.center,
                                   style:
                                       selectindex == 1
-                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
-                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
+                                          ? AppTypography.navLabel.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.navLabel,
                                 ),
                               ],
                             ),
@@ -1360,12 +1355,11 @@ class _AddPostState extends State<AddPost> {
                                               ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "2",
-                                        style: TextStyle(
+                                        style: AppTypography.heading3.copyWith(
                                           color: Colors.white,
-                                          fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -1378,8 +1372,8 @@ class _AddPostState extends State<AddPost> {
                                   textAlign: TextAlign.center,
                                   style:
                                       selectindex == 2
-                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
-                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
+                                          ? AppTypography.navLabel.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.navLabel,
                                 ),
                               ],
                             ),
@@ -1445,12 +1439,11 @@ class _AddPostState extends State<AddPost> {
                                               ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "3",
-                                        style: TextStyle(
+                                        style: AppTypography.heading3.copyWith(
                                           color: Colors.white,
-                                          fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -1463,8 +1456,8 @@ class _AddPostState extends State<AddPost> {
                                   textAlign: TextAlign.center,
                                   style:
                                       selectindex == 3
-                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
-                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
+                                          ? AppTypography.navLabel.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.navLabel,
                                 ),
                               ],
                             ),
@@ -1544,12 +1537,11 @@ class _AddPostState extends State<AddPost> {
                                               ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "4",
-                                        style: TextStyle(
+                                        style: AppTypography.heading3.copyWith(
                                           color: Colors.white,
-                                          fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -1562,8 +1554,8 @@ class _AddPostState extends State<AddPost> {
                                   Languages.of(context)!.pictureVideoText,
                                   style:
                                       selectindex == 4
-                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
-                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
+                                          ? AppTypography.navLabel.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.navLabel,
                                 ),
                               ],
                             ),
@@ -1637,12 +1629,11 @@ class _AddPostState extends State<AddPost> {
                                               ? AppColors.actionPrimary
                                               : AppColors.drktxtGrey,
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "5",
-                                        style: TextStyle(
+                                        style: AppTypography.heading3.copyWith(
                                           color: Colors.white,
-                                          fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -1655,8 +1646,8 @@ class _AddPostState extends State<AddPost> {
                                   Languages.of(context)!.writereviewText,
                                   style:
                                       selectindex == 5
-                                          ? AppTypography.captionMedium.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textPrimary)
-                                          : AppTypography.captionMedium.copyWith(fontSize: 10),
+                                          ? AppTypography.navLabel.copyWith(fontWeight: FontWeight.w600, color: AppColors.textPrimary)
+                                          : AppTypography.navLabel,
                                 ),
                               ],
                             ),
@@ -1967,7 +1958,7 @@ class _AddPostState extends State<AddPost> {
                             Languages.of(
                               context,
                             )!.ClicktotakeorselectyourbeforeimageText,
-                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                            style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                           ),
                           const SizedBox(height: 10),
                           Container(
@@ -2056,7 +2047,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.previousText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                               ),
                             ),
@@ -2102,7 +2093,7 @@ class _AddPostState extends State<AddPost> {
                             Languages.of(
                               context,
                             )!.ClicktotakeorselectyourbeforeimageText,
-                            style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                            style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                           ),
                           const SizedBox(height: 10),
                           Container(
@@ -2185,7 +2176,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.previousText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                               ),
                             ),
@@ -2275,10 +2266,9 @@ class _AddPostState extends State<AddPost> {
                                             child: Center(
                                               child: Text(
                                                 '${index + 1}/${allOtherdatatype1.length}',
-                                                style: const TextStyle(
+                                                style: AppTypography.captionMedium.copyWith(
                                                   color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
                                             ),
@@ -2305,7 +2295,7 @@ class _AddPostState extends State<AddPost> {
                             Languages.of(
                               context,
                             )!.uploadotherpictureorvideoText,
-                            style: AppTypography.bodyMedium.copyWith(fontSize: 16, color: AppColors.textSecondary),
+                            style: AppTypography.heading3.copyWith(color: AppColors.textSecondary),
                           ),
                           const SizedBox(height: 10),
                           Container(
@@ -2376,7 +2366,7 @@ class _AddPostState extends State<AddPost> {
                               child: Center(
                                 child: Text(
                                   Languages.of(context)!.previousText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                               ),
                             ),
@@ -2396,7 +2386,7 @@ class _AddPostState extends State<AddPost> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 Languages.of(context)!.RatingText,
-                                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                style: AppTypography.heading3,
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -2404,7 +2394,7 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.CleanlinessText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
@@ -2438,7 +2428,7 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.StafffriendlinessText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
@@ -2474,7 +2464,7 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.OrganizationText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
@@ -2508,7 +2498,7 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.TimemanagementText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
@@ -2540,7 +2530,7 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.ModernText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
@@ -2574,7 +2564,7 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.BookingprocessText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
@@ -2606,7 +2596,7 @@ class _AddPostState extends State<AddPost> {
                               children: [
                                 Text(
                                   Languages.of(context)!.CommunicationText,
-                                  style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                  style: AppTypography.bodySemiBold,
                                 ),
                                 const SizedBox(width: 10),
                                 FivePointedStar(
@@ -2639,7 +2629,7 @@ class _AddPostState extends State<AddPost> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 Languages.of(context)!.writereviewText,
-                                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                style: AppTypography.heading3,
                               ),
                             ),
                             const SizedBox(height: 25),
@@ -2816,7 +2806,7 @@ class _AddPostState extends State<AddPost> {
                             //     child: Center(
                             //       child: Text(
                             //         Languages.of(context)!.cancelText,
-                            //         style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                            //         style: AppTypography.bodySemiBold,
                             //       ),
                             //     ),
                             //   ),
@@ -2865,7 +2855,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.TakePhotoText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.camera_alt_outlined,
@@ -2891,7 +2881,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.PhotoLibraryText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.photo_library_outlined,
@@ -2913,7 +2903,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.CancelText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(Icons.cancel_outlined, color: Colors.black),
                     ],
@@ -3456,7 +3446,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.TakePhotoText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.camera_alt_outlined,
@@ -3482,7 +3472,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.PhotoLibraryText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.photo_library_outlined,
@@ -3505,7 +3495,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.CancelText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(Icons.cancel_outlined, color: Colors.black),
                     ],
@@ -3826,7 +3816,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.TakePhotoText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.camera_alt_outlined,
@@ -3855,7 +3845,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.PhotoLibraryText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(
                         Icons.photo_library_outlined,
@@ -3877,7 +3867,7 @@ class _AddPostState extends State<AddPost> {
                     children: [
                       Text(
                         Languages.of(context)!.cancelText,
-                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                       ),
                       const Icon(Icons.cancel_outlined, color: Colors.black),
                     ],
@@ -4082,7 +4072,7 @@ class _AddPostState extends State<AddPost> {
   //               ),
   //               title: Text(
   //                 "Upload image & Video",
-  //                 style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+  //                 style: AppTypography.bodySemiBold,
   //               ),
   //               actions: <Widget>[
   //                 Column(
@@ -4144,7 +4134,7 @@ class _AddPostState extends State<AddPost> {
               ),
               content: Text(
                 Languages.of(context)!.postreviewcanceltitleText,
-                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                style: AppTypography.heading3,
               ),
               actions: <Widget>[
                 SizedBox(
@@ -4166,7 +4156,7 @@ class _AddPostState extends State<AddPost> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -4245,7 +4235,7 @@ class _AddPostState extends State<AddPost> {
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
