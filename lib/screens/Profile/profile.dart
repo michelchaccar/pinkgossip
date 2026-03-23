@@ -302,20 +302,14 @@ class _ProfileScreenState extends State<ProfileScreen>
       children: [
         Text(
           value,
-          style: const TextStyle(
-            fontFamily: 'Geist',
-            fontSize: 15,
+          style: AppTypography.heading3.copyWith(
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
           ),
         ),
         Text(
           label,
-          style: const TextStyle(
-            fontFamily: 'Geist',
-            fontSize: 10,
-            fontWeight: FontWeight.w400,
-            color: Color(0xFF6A7282),
+          style: AppTypography.bodyMedium.copyWith(
+            color: const Color(0xFF6A7282),
           ),
         ),
       ],
@@ -357,12 +351,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         const SizedBox(width: 10),
                         Text(
                           '@${userName}',
-                          style: const TextStyle(
-                            fontFamily: 'Geist',
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: AppTypography.heading3,
                         ),
                       ],
                     ),
@@ -520,7 +509,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(PhosphorIconsRegular.qrCode),
                           title: Text(
                             Languages.of(context)!.QRCodeText,
-                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                            style: AppTypography.bodySemiBold,
                           ),
                           onTap: () {
                             Navigator.push(
@@ -541,7 +530,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               leading: const Icon(PhosphorIconsRegular.gift),
                               title: Text(
                                 "My Rewards",
-                                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                                style: AppTypography.bodySemiBold,
                               ),
                               onTap: () {
                                 Navigator.push(
@@ -557,7 +546,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(PhosphorIconsRegular.globe),
                           title: Text(
                             Languages.of(context)!.LanguageText,
-                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                            style: AppTypography.bodySemiBold,
                           ),
                           onTap: () async {
                             Navigator.push(
@@ -574,7 +563,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(PhosphorIconsRegular.graduationCap),
                           title: Text(
                             Languages.of(context)!.tutorialText,
-                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                            style: AppTypography.bodySemiBold,
                           ),
                           onTap: () async {
                             // Navigator.push(
@@ -602,7 +591,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(PhosphorIconsRegular.userMinus),
                           title: Text(
                             Languages.of(context)!.blockedusersText,
-                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                            style: AppTypography.bodySemiBold,
                           ),
                           onTap: () async {
                             Navigator.push(
@@ -619,7 +608,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(PhosphorIconsRegular.envelope),
                           title: Text(
                             "Email Visibility",
-                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                            style: AppTypography.bodySemiBold,
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -652,7 +641,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(PhosphorIconsRegular.trash),
                           title: Text(
                             Languages.of(context)!.deleteaccountText,
-                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                            style: AppTypography.bodySemiBold,
                           ),
                           onTap: () async {
                             deleteAccAlert(context, kSize);
@@ -662,7 +651,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           leading: const Icon(PhosphorIconsRegular.signOut),
                           title: Text(
                             Languages.of(context)!.logoutText,
-                            style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                            style: AppTypography.bodySemiBold,
                           ),
                           onTap: () async {
                             LogoutAlert(context, kSize);
@@ -675,7 +664,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         //   ),
                         //   title: Text(
                         //     "Test Gossiper Onboarding",
-                        //     style: AppTypography.bodySemiBold.copyWith(fontSize: 15).copyWith(
+                        //     style: AppTypography.bodySemiBold.copyWith(
                         //       color: Colors.green,
                         //     ),
                         //   ),
@@ -707,7 +696,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         //   ),
                         //   title: Text(
                         //     "Test Salon Onboarding",
-                        //     style: AppTypography.bodySemiBold.copyWith(fontSize: 15).copyWith(
+                        //     style: AppTypography.bodySemiBold.copyWith(
                         //       color: Colors.orange,
                         //     ),
                         //   ),
@@ -922,11 +911,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 salonProfileDetails!.userType == 1
                                     ? "${salonProfileDetails!.firstName!} ${salonProfileDetails!.lastName!}"
                                     : salonProfileDetails!.salonName ?? "",
-                                style: const TextStyle(
-                                  fontFamily: 'Geist',
-                                  fontSize: 14,
+                                style: AppTypography.heading3.copyWith(
                                   fontWeight: FontWeight.w700,
-                                  color: AppColors.textPrimary,
                                 ),
                               ),
                               // User type label
@@ -934,11 +920,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 salonProfileDetails!.userType == 1
                                     ? Languages.of(context)!.gossiperText
                                     : Languages.of(context)!.beautybusinessText,
-                                style: const TextStyle(
-                                  fontFamily: 'Geist',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFF6A7282),
+                                style: AppTypography.bodyMedium.copyWith(
+                                  color: const Color(0xFF6A7282),
                                 ),
                               ),
                               // Star rating for salons
@@ -950,9 +933,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     children: [
                                       Text(
                                         double.parse(salonProfileDetails!.averageRating!).toStringAsFixed(1),
-                                        style: const TextStyle(
-                                          fontFamily: 'Geist',
-                                          fontSize: 12,
+                                        style: AppTypography.captionMedium.copyWith(
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.textPrimary,
                                         ),
@@ -961,7 +942,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       RatingBarIndicator(
                                         rating: double.parse(salonProfileDetails!.averageRating!),
                                         itemCount: 5,
-                                        itemSize: 14.0,
+                                        itemSize: 15.0,
                                         unratedColor: AppColors.klightGreyColor,
                                         physics: const BouncingScrollPhysics(),
                                         itemBuilder: (context, _) => const Icon(
@@ -972,12 +953,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       const SizedBox(width: 4),
                                       Text(
                                         "(${salonProfileDetails!.ratingCount.toString()})",
-                                        style: const TextStyle(
-                                          fontFamily: 'Geist',
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xFF6A7282),
-                                        ),
+                                        style: AppTypography.caption,
                                       ),
                                     ],
                                   ),
@@ -988,11 +964,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   salonProfileDetails!.bio!.isNotEmpty)
                                 Text(
                                   salonProfileDetails!.bio!,
-                                  style: const TextStyle(
-                                    fontFamily: 'Geist',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xFF6A7282),
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: const Color(0xFF6A7282),
                                     height: 1.43,
                                   ),
                                 ),
@@ -1014,12 +987,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       padding: const EdgeInsets.only(top: 2),
                                       child: Text(
                                         salonProfileDetails!.contactNo!,
-                                        style: const TextStyle(
-                                          fontFamily: 'Geist',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xFF6A7282),
-                                        ),
+                                        style: AppTypography.caption,
                                       ),
                                     ),
                                   ),
@@ -1041,10 +1009,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       padding: const EdgeInsets.only(top: 2),
                                       child: Text(
                                         salonProfileDetails!.siteName!,
-                                        style: const TextStyle(
-                                          fontFamily: 'Geist',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
+                                        style: AppTypography.caption.copyWith(
                                           color: Colors.blue,
                                           decoration: TextDecoration.underline,
                                           decorationColor: Colors.blue,
@@ -1058,12 +1023,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     padding: const EdgeInsets.only(top: 2),
                                     child: Text(
                                       salonProfileDetails!.address!,
-                                      style: const TextStyle(
-                                        fontFamily: 'Geist',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xFF6A7282),
-                                      ),
+                                      style: AppTypography.caption,
                                     ),
                                   ),
                               ],
@@ -1195,9 +1155,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                                 salonProfileDetails!.isFollowed == 0
                                                     ? Languages.of(context)!.followText
                                                     : Languages.of(context)!.followingText,
-                                                style: TextStyle(
-                                                  fontFamily: 'Geist',
-                                                  fontSize: 12,
+                                                style: AppTypography.captionMedium.copyWith(
                                                   fontWeight: FontWeight.w600,
                                                   color: salonProfileDetails!.isFollowed == 0
                                                       ? Colors.white
@@ -1239,7 +1197,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                         child: const Center(
                                           child: Icon(
                                             PhosphorIconsRegular.chatCircle,
-                                            size: 17,
+                                            size: AppIconSize.md,
                                             color: AppColors.actionPrimary,
                                           ),
                                         ),
@@ -1298,7 +1256,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           currentindex == 0
                                               ? PhosphorIconsFill.squaresFour
                                               : PhosphorIconsRegular.squaresFour,
-                                          size: 17,
+                                          size: AppIconSize.md,
                                         ),
                                       ),
                                       Tab(
@@ -1306,7 +1264,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           currentindex == 1
                                               ? PhosphorIconsFill.playCircle
                                               : PhosphorIconsRegular.playCircle,
-                                          size: 17,
+                                          size: AppIconSize.md,
                                         ),
                                       ),
                                       Tab(
@@ -1314,7 +1272,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           currentindex == 2
                                               ? PhosphorIconsFill.at
                                               : PhosphorIconsRegular.at,
-                                          size: 17,
+                                          size: AppIconSize.md,
                                         ),
                                       ),
                                     ]
@@ -1324,7 +1282,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           currentindex == 0
                                               ? PhosphorIconsFill.squaresFour
                                               : PhosphorIconsRegular.squaresFour,
-                                          size: 17,
+                                          size: AppIconSize.md,
                                         ),
                                       ),
                                       Tab(
@@ -1332,7 +1290,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           currentindex == 1
                                               ? PhosphorIconsFill.playCircle
                                               : PhosphorIconsRegular.playCircle,
-                                          size: 17,
+                                          size: AppIconSize.md,
                                         ),
                                       ),
                                       Tab(
@@ -1340,7 +1298,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           currentindex == 2
                                               ? PhosphorIconsFill.at
                                               : PhosphorIconsRegular.at,
-                                          size: 17,
+                                          size: AppIconSize.md,
                                         ),
                                       ),
                                     ],
@@ -1726,7 +1684,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     children: [
                                       Text(
                                         Languages.of(context)!.postofyouText,
-                                        style: AppTypography.heading2.copyWith(fontSize: 20),
+                                        style: AppTypography.heading2,
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
@@ -1734,7 +1692,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                           context,
                                         )!.emptytaglisttitleText,
                                         textAlign: TextAlign.center,
-                                        style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                        style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                                       ),
                                     ],
                                   ),
@@ -1780,7 +1738,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
               content: Text(
                 Languages.of(context)!.logouttiletText,
-                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                style: AppTypography.bodySemiBold,
               ),
               actions: <Widget>[
                 SizedBox(
@@ -1802,7 +1760,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -1839,7 +1797,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -1869,7 +1827,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
               content: Text(
                 Languages.of(context)!.deleteaccountmsgText,
-                style: AppTypography.bodySemiBold.copyWith(fontSize: 15),
+                style: AppTypography.bodySemiBold,
               ),
               actions: <Widget>[
                 SizedBox(
@@ -1891,7 +1849,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -1913,7 +1871,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -2291,9 +2249,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     _showHours
                         ? Languages.of(context)!.hideStoreHours
                         : Languages.of(context)!.viewStorehours,
-                    style: const TextStyle(
-                      fontFamily: 'Geist',
-                      fontSize: 12,
+                    style: AppTypography.captionMedium.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
                     ),
@@ -2325,9 +2281,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         width: 30,
                         child: Text(
                           salonOpenDays[index].open!,
-                          style: const TextStyle(
-                            fontFamily: 'Geist',
-                            fontSize: 11,
+                          style: AppTypography.caption.copyWith(
                             color: AppColors.textPrimary,
                           ),
                         ),
@@ -2335,27 +2289,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                       const SizedBox(width: 5),
                       Text(
                         formatTime(salonOpenDays[index].startTime!),
-                        style: const TextStyle(
-                          fontFamily: 'Geist',
-                          fontSize: 11,
+                        style: AppTypography.caption.copyWith(
                           color: AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         Languages.of(context)!.toText,
-                        style: const TextStyle(
-                          fontFamily: 'Geist',
-                          fontSize: 11,
-                          color: Color(0xFF6A7282),
-                        ),
+                        style: AppTypography.caption,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         formatTime(salonOpenDays[index].endTime!),
-                        style: const TextStyle(
-                          fontFamily: 'Geist',
-                          fontSize: 11,
+                        style: AppTypography.caption.copyWith(
                           color: AppColors.textPrimary,
                         ),
                       ),
@@ -2561,7 +2507,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               backgroundColor: AppColors.bgPrimary,
               elevation: 0,
               title: Text(Languages.of(context)!.deleteText),
-              titleTextStyle: AppTypography.heading1.copyWith(fontSize: 22),
+              titleTextStyle: AppTypography.heading1,
               insetPadding: const EdgeInsets.only(left: 20, right: 20),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -2590,7 +2536,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.noText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
@@ -2613,7 +2559,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Center(
                               child: Text(
                                 Languages.of(context)!.yesText,
-                                style: AppTypography.body.copyWith(fontSize: 15, fontWeight: FontWeight.w300),
+                                style: AppTypography.body.copyWith(fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
